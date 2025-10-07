@@ -232,7 +232,7 @@ export default function IndependentPharmacyPage() {
   return (
     <div>
       {/** Dashboard */}
-      <section className="bg-gradient-to-b from-blue-50 to-white py-20 text-center">
+      <section className="bg-gradient-to-b from-blue-50 to-white py-10 text-center">
         <div className="container mx-auto px-4 lg:px-80">
           <h1 className="text-h1 font-bold text-ink">
             Phần Mềm Quản Lý Nhà Thuốc Toàn Diện V-Pharma

@@ -9,52 +9,7 @@ import FadeInOnScroll from "@/components/animations/FadeInOnScroll";
 import FlipCard from "@/components/animations/FlipCard";
 import FaqSection from "@/components/Faq";
 
-// DỮ LIỆU - Accordion Items cho Section tôi ưu luân chuyển hàng hóa
-const accordionItems = [
-  {
-    title: "Kho Tổng & Tồn kho Liên chi nhánh",
-    content:
-      "Xem tồn kho từng chi nhánh và tổng toàn bộ thống theo thời gian. Giúp quản lý vốn thực thời. Điều quản hiệu chuyển hàng liệu định thị trường hợp.",
-  },
-  {
-    title: "Luân chuyển & Tối ưu Hàng hóa",
-    content:
-      "Theo dõi vận chuyển hàng hóa giữa các chi nhánh một cách dễ dàng và minh bạch. Hệ thống tự động đề xuất tối ưu luân chuyển.",
-  },
-];
-interface AccordionItemProps {
-  title: string;
-  children: React.ReactNode;
-  isOpen: boolean;
-  onClick: () => void;
-}
-function AccordionItem({
-  title,
-  children,
-  isOpen,
-  onClick,
-}: AccordionItemProps) {
-  return (
-    <div className="rounded-lg bg-primary/9 p-4 shadow-sm">
-      <button
-        className="flex w-full items-center justify-between text-left font-semibold text-ink"
-        onClick={onClick}
-      >
-        <span className="text-h6 font-semibold text-ink">{title}</span>
-        {isOpen ? (
-          <FiMinus className="text-white bg-primary rounded text-h6" />
-        ) : (
-          <FiPlus className="text-white bg-primary rounded text-h6" />
-        )}
-      </button>
-      {isOpen && (
-        <div className="mt-4 text-sm text-sub1 text-text/80">{children}</div>
-      )}
-    </div>
-  );
-}
-
-//data những thách thức khi vận hành chuổi nhà thuốc
+//data section1
 const challengeCards = [
   {
     frontTitle: "Khó kiểm soát tài chính và giá bán",
@@ -196,51 +151,94 @@ const challengeCards = [
   },
 ];
 
+// Data section2
+const accordionItems = [
+  {
+    title: "Kho Tổng & Tồn kho Liên chi nhánh",
+    content:
+      "Xem tồn kho từng chi nhánh và tổng toàn bộ thống theo thời gian. Giúp quản lý vốn thực thời. Điều quản hiệu chuyển hàng liệu định thị trường hợp.",
+  },
+  {
+    title: "Luân chuyển & Tối ưu Hàng hóa",
+    content:
+      "Theo dõi vận chuyển hàng hóa giữa các chi nhánh một cách dễ dàng và minh bạch. Hệ thống tự động đề xuất tối ưu luân chuyển.",
+  },
+];
+interface AccordionItemProps {
+  title: string;
+  children: React.ReactNode;
+  isOpen: boolean;
+  onClick: () => void;
+}
+function AccordionItem({
+  title,
+  children,
+  isOpen,
+  onClick,
+}: AccordionItemProps) {
+  return (
+    <div className="rounded-lg bg-primary/9 p-4 shadow-sm">
+      <button
+        className="flex w-full items-center justify-between text-left font-semibold text-ink"
+        onClick={onClick}
+      >
+        <span className="text-h6 font-semibold text-ink">{title}</span>
+        {isOpen ? (
+          <FiMinus className="text-white bg-primary rounded text-h6" />
+        ) : (
+          <FiPlus className="text-white bg-primary rounded text-h6" />
+        )}
+      </button>
+      {isOpen && (
+        <div className="mt-4 text-sm text-sub1 text-text/80">{children}</div>
+      )}
+    </div>
+  );
+}
+
+const maxCards = 6;
+// data section 4
 const customerSystemCards = [
   {
-    id: 1,
     title: "Website bán hàng",
-    description:
+    content:
       "Cho phép khách hàng đặt thuốc online. Tự động kiểm tra tồn kho và phân đơn về chi nhánh gần nhất để tối ưu tốc độ giao hàng.",
     image: "/features-dashboard1.png",
   },
   {
-    id: 2,
     title: "App Quản lý Cho Chủ chuỗi",
-    description:
+    content:
       "App quản lý dành cho chủ chuỗi đề suôn sẻn báo cáo doanh thu, hiệu suất tổng các nhảnh ngay trên di động bất kỳ đâu.",
     image: "/features-dashboard1.png",
   },
   {
-    id: 3,
     title: "App Quản lý Cho Chủ chuỗi",
-    description:
+    content:
       "App quản lý dành cho chủ chuỗi đề suôn sẻn báo cáo doanh thu, hiệu suất tổng các nhảnh ngay trên di động bất kỳ đâu.",
     image: "/features-dashboard1.png",
   },
   {
-    id: 4,
     title: "App Quản lý Cho Chủ chuỗi",
-    description:
+    content:
       "App quản lý dành cho chủ chuỗi đề suôn sẻn báo cáo doanh thu, hiệu suất tổng các nhảnh ngay trên di động bất kỳ đâu.",
     image: "/features-dashboard1.png",
   },
   {
-    id: 5,
     title: "Hệ thống CRM",
-    description:
+    content:
       "Quản lý thông tin khách hàng, lịch sử mua hàng và chương trình khách hàng thân thiết một cách chuyên nghiệp.",
     image: "/features-dashboard1.png",
   },
   {
-    id: 6,
     title: "Báo cáo thông minh",
-    description:
+    content:
       "Phân tích dữ liệu chi tiết về doanh thu, tồn kho và hiệu quả kinh doanh từng chi nhánh trong thời gian thực.",
     image: "/features-dashboard1.png",
   },
 ];
+const cards = customerSystemCards.slice(0, maxCards);
 
+//data section 5
 const loyaltyCards = [
   {
     id: 1,
@@ -288,8 +286,7 @@ const loyaltyCards = [
   },
 ];
 
-
-//Data section dashboard scrolling carousel
+//Data section 6 dashboard scrolling carousel
 const dashboardImages = [
   { src: "/hero-dashboard.jpg", alt: "V-Pharma Dashboard Overview" },
   { src: "/features-dashboard1.png", alt: "Sales Dashboard" },
@@ -371,97 +368,86 @@ function DashboardCarousel({
   );
 }
 
-//DATA section nhà thuoc tin dung
+//DATA section 8 nhà thuoc tin dung
 const pharmacyCards = [
   {
     title: "Nhà thuốc Thanh Hoài 1",
     content: "789 Đường Hai Bà Trưng, Quận 1, TP.Hồ Chí Minh",
-    image: "/mock-convo.jpg", // Đổi đường dẫn đúng ảnh mockup trong card!
+    image: "/hero-dashboard.jpg",
   },
   {
     title: "Nhà thuốc Thanh Hoài 2",
     content: "123 Lý Thái Tổ, Quận 10, TP.Hồ Chí Minh",
-    image: "/mock-convo.jpg",
+    image: "/features-dashboard1.png",
   },
   {
     title: "Nhà thuốc Thanh Hoài 3",
     content: "456 Nguyễn Trãi, Quận 5, TP.Hồ Chí Minh",
-    image: "/mock-convo.jpg",
+    image: "/hero-dashboard.jpg",
   },
   {
     title: "Nhà thuốc Thanh Hoài 4",
     content: "12 Cách Mạng Tháng 8, Quận 3, TP.Hồ Chí Minh",
-    image: "/mock-convo.jpg",
+    image: "/features-dashboard1.png",
   },
   {
     title: "Nhà thuốc Thanh Hoài 5",
     content: "999 Võ Văn Tần, Quận 3, TP.Hồ Chí Minh",
-    image: "/mock-convo.jpg",
+    image: "/hero-dashboard.jpg",
   },
   {
     title: "Nhà thuốc Thanh Hoài 6",
     content: "36 Trường Sa, Quận Bình Thạnh, TP.Hồ Chí Minh",
-    image: "/mock-convo.jpg",
+    image: "/features-dashboard1.png",
   },
 ];
-const maxCards = 6;
-const cards = pharmacyCards.slice(0, maxCards);
-const cardsPerView = 3;
+const cards2 = pharmacyCards.slice(0, maxCards);
 
 // COMPONENT CHÍNH
 export default function ChuoiNhaThuocPage() {
   const [activeCard, setActiveCard] = useState<number | null>(null);
   const [openAccordion, setOpenAccordion] = useState(0);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const cardsPerView = 3; // Hiển thị 3 cards cùng lúc
-  const totalSlides = Math.ceil(customerSystemCards.length / cardsPerView); // Tổng số slides (mỗi slide hiển thị 3 cards)
+  
+  // State quản lý chỉ số slide hiện tại cho từng bộ card
+  const [indexCustomer, setIndexCustomer] = useState(0);
+  const [indexPharmacy, setIndexPharmacy] = useState(0);
 
+  const cardsPerView = 3; // số card hiển thị trên 1 lần slide
 
+  // Tính tổng số slides theo dữ liệu
+  const totalSlidesCustomer = Math.ceil(customerSystemCards.length / cardsPerView);
+  const totalSlidesPharmacy = Math.ceil(pharmacyCards.length / cardsPerView);
 
-  // onst [currentIndex, setCurrentIndex] = useState(0);
-  const totalCards = cards.length;
-
-
-
-  // Hàm chuyển đến slide trước
-  const handlePrevious = () => {
-    setCurrentIndex((prev) => (prev === 0 ? totalSlides - 1 : prev - 1));
-  };
-
-  // Hàm chuyển đến slide tiếp theo
-  // const handleNext = () => {
-  //   setCurrentIndex((prev) => (prev === totalSlides - 1 ? 0 : prev + 1));
-  // };
-
-
-  const handlePrev = () => {
-    setCurrentIndex((prev) =>
-      prev === 0 ? totalCards - cardsPerView : prev - 1
-    );
-  };
-  const handleNext = () => {
-    setCurrentIndex((prev) =>
-      prev === totalCards - cardsPerView ? 0 : prev + 1
-    );
-  };
-
-  // Hiện 3 card liền kề, dịch từng card một
-  const getVisibleCards = () => {
-    const arr = [];
-    for (let i = 0; i < cardsPerView; i++) {
-      arr.push(cards[(currentIndex + i) % totalCards]);
-    }
-    return arr;
-  };
-  // const visibleCards = getVisibleCards();
-
-  const startIndex = currentIndex * cardsPerView; // Tính toán cards hiển thị trong slide hiện tại
-  const visibleCards = customerSystemCards.slice(
-    startIndex,
-    startIndex + cardsPerView
+  // Lấy slice dữ liệu tương ứng cho từng bộ card
+  const currentCustomerCards = customerSystemCards.slice(
+    indexCustomer * cardsPerView,
+    indexCustomer * cardsPerView + cardsPerView
   );
+
+  const currentPharmacyCards = pharmacyCards.slice(
+    indexPharmacy * cardsPerView,
+    indexPharmacy * cardsPerView + cardsPerView
+  );
+
+  // Các hàm điều hướng slide
+  function handlePrevCustomer() {
+    setIndexCustomer((prev) => (prev === 0 ? totalSlidesCustomer - 1 : prev - 1));
+  }
+
+  function handleNextCustomer() {
+    setIndexCustomer((prev) => (prev === totalSlidesCustomer - 1 ? 0 : prev + 1));
+  }
+
+  function handlePrevPharmacy() {
+    setIndexPharmacy((prev) => (prev === 0 ? totalSlidesPharmacy - 1 : prev - 1));
+  }
+
+  function handleNextPharmacy() {
+    setIndexPharmacy((prev) => (prev === totalSlidesPharmacy - 1 ? 0 : prev + 1));
+  }
+  
   return (
-    <div className="bg-white">
+    <div className="bg-white py-10">
       {/* SECTION: HERO*/}
       <section className="container mx-auto px-4 py-20 ">
         <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
@@ -469,7 +455,7 @@ export default function ChuoiNhaThuocPage() {
             <p className="mb-4 text-body2 font-semibold uppercase tracking-wide text-primary">
               GIẢI PHÁP QUẢN LÝ CHUỖI NHÀ THUỐC V-PHARMA
             </p>
-            <h1 className="mb-6 text-h1 font-bold text-ink">
+            <h1 className="mb-6 text-ink">
               Kiểm Soát Chính Xác
               <br />
               Tăng Trưởng Toàn Diện
@@ -497,12 +483,12 @@ export default function ChuoiNhaThuocPage() {
         </div>
       </section>
 
-      {/* SECTION: Thách thức */}
+      {/* SECTION 1: Thách thức */}
       <FadeInOnScroll>
         <section className="bg-gradient-to-b from-white to-blue-50">
           <div className="container mx-auto px-4">
             <div className="mx-auto mb-12 max-w-6xl text-center">
-              <h2 className="mb-4 text-h2 font-bold text-ink">
+              <h2 className="mb-4 text-ink">
                 Những Thách Thức Khi Vận Hành Chuỗi Nhà Thuốc
               </h2>
               <p className="text-h6 text-text/80">
@@ -524,7 +510,7 @@ export default function ChuoiNhaThuocPage() {
         </section>
       </FadeInOnScroll>
 
-      {/* SECTION: tối ưu và luân chuyển*/}
+      {/* SECTION 2: tối ưu và luân chuyển*/}
       <FadeInOnScroll>
         <section className="bg-gradient-to-b from-blue-50 to-white ">
           <div className="container mx-auto px-4 py-20">
@@ -565,7 +551,7 @@ export default function ChuoiNhaThuocPage() {
         </section>
       </FadeInOnScroll>
 
-      {/* SECTION : Chuẩn Hóa Vận Hành*/}
+      {/* SECTION 3: Chuẩn Hóa Vận Hành*/}
       <FadeInOnScroll>
         <section className="bg-white py-20">
           <div className="container mx-auto px-4">
@@ -684,11 +670,11 @@ export default function ChuoiNhaThuocPage() {
         </section>
       </FadeInOnScroll>
 
-      {/* SECTION Xây dựng hệ thống thân thiết chuyên nghiệp */}
+      {/* SECTION 4 Xây dựng hệ thống thân thiết chuyên nghiệp */}
       <FadeInOnScroll>
         <section className="bg-gradient-to-b from-white to-blue-50 py-20">
           <div className="container mx-auto px-4">
-            <div className="mx-auto mb-12 max-w-5xl text-center">
+            <div className="mx-auto mb-12 max-w-6xl text-center">
               <p className="mb-2 text-body2 font-semibold uppercase tracking-wide text-primary">
                 TĂNG TRẢI NGHIỆM KHÁCH HÀNG
               </p>
@@ -699,95 +685,79 @@ export default function ChuoiNhaThuocPage() {
               </h2>
             </div>
 
-            {/* ========== CAROUSEL CONTAINER ========== */}
-            <div className="relative">
-              {/* Navigation Arrow - Previous */}
+            <div className="relative flex items-center justify-center">
               <button
-                onClick={handlePrevious}
-                className="absolute left-0 top-1/2 z-10 flex h-12 w-12 -translate-x-6 -translate-y-1/2 items-center justify-center rounded-full bg-white shadow-lg transition-all hover:bg-gray-50 hover:shadow-xl"
+                onClick={handlePrevCustomer}
+                className="absolute left-0 z-10 h-12 w-12 -translate-x-8 rounded-full border border-gray-300 bg-white hover:bg-gray-100 flex items-center justify-center transition"
                 aria-label="Previous"
               >
                 <svg
-                  className="h-6 w-6 text-ink"
+                  className="h-7 w-7"
                   fill="none"
                   stroke="currentColor"
+                  strokeWidth={2}
                   viewBox="0 0 24 24"
                 >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth={2}
                     d="M15 19l-7-7 7-7"
                   />
                 </svg>
               </button>
-
-              {/* Navigation Arrow - Next */}
+              <div className=" w-full max-w-6xl overflow-hidden">
+                <div
+                  className="flex transition-transform duration-700"
+                  style={{
+                    transform: `translateX(-${indexCustomer * (100 / 3)}%)`,
+                  }}
+                >
+                  {cards.map((card, idx) => (
+                    <div
+                      key={idx}
+                      className="card-custom mx-4 min-w-[350px] max-w-[350px] flex-shrink-0 rounded-xl border border-gray-400 bg-white shadow-lg transition hover:shadow-xl"
+                      style={{ height: 420 }}
+                    >
+                      <div className="p-7">
+                        <h4 className="mb-2 text-h6 font-bold text-ink">
+                          {card.title}
+                        </h4>
+                        <div className="mb-4 text-sub1 text-ink">
+                          {card.content}
+                        </div>
+                        <div className="mt-3 rounded-lg bg-gray-50 py-6 px-4 flex flex-col items-center">
+                          <Image
+                            src={card.image}
+                            alt={card.title}
+                            width={310}
+                            height={110}
+                            className="h-[110px] w-full object-contain"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
               <button
-                onClick={handleNext}
-                className="absolute right-0 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 translate-x-6 items-center justify-center rounded-full bg-white shadow-lg transition-all hover:bg-gray-50 hover:shadow-xl"
+                onClick={handleNextCustomer}
+                className="absolute right-0 z-10 h-12 w-12 translate-x-8 rounded-full border border-gray-300 bg-white hover:bg-gray-100 flex items-center justify-center transition"
                 aria-label="Next"
               >
                 <svg
-                  className="h-6 w-6 text-ink"
+                  className="h-7 w-7"
                   fill="none"
                   stroke="currentColor"
+                  strokeWidth={2}
                   viewBox="0 0 24 24"
                 >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth={2}
                     d="M9 5l7 7-7 7"
                   />
                 </svg>
               </button>
-
-              {/* ========== CARDS GRID ========== */}
-              <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-                {visibleCards.map((card) => (
-                  <div
-                    key={card.id}
-                    className="group rounded-xl bg-gray-50 p-8 transition-shadow hover:shadow-lg"
-                  >
-                    {/* Title */}
-                    <h3 className="mb-4 text-center text-h6 font-bold text-ink">
-                      {card.title}
-                    </h3>
-
-                    {/* Description */}
-                    <p className="mb-6 text-center text-sub1 text-text/80">
-                      {card.description}
-                    </p>
-
-                    <div className="overflow-hidden rounded-lg shadow-md">
-                      <Image
-                        src={card.image}
-                        alt={card.title}
-                        width={400}
-                        height={300}
-                        className="h-auto w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* ========== DOTS INDICATOR ========== */}
-              <div className="mt-8 flex justify-center gap-2">
-                {Array.from({ length: totalSlides }).map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentIndex(index)}
-                    className={`h-2 w-2 rounded-full transition-all ${
-                      currentIndex === index
-                        ? "w-8 bg-primary"
-                        : "bg-gray-300 hover:bg-gray-400"
-                    }`}
-                    aria-label={`Go to slide ${index + 1}`}
-                  />
-                ))}
-              </div>
             </div>
           </div>
         </section>
@@ -1052,85 +1022,95 @@ export default function ChuoiNhaThuocPage() {
           SECTION 7: Được Tin Dùng - Carousel
           ======================================== */}
 
-         
       <FadeInOnScroll>
         <section className="bg-white py-20">
-      <div className="container mx-auto px-4">
-        <div className="mb-2 text-center text-body2 font-semibold uppercase tracking-wide text-primary">
-          TĂNG TRẢI NGHIỆM KHÁCH HÀNG
-        </div>
-        <h2 className="mb-10 text-center text-h2 font-extrabold text-ink">
-          Được Tin Dùng Bởi Các Chuỗi Nhà Thuốc Hàng Đầu
-        </h2>
-        <div className="relative flex items-center justify-center">
-          {/* Arrow prev */}
-          <button
-            onClick={handlePrev}
-            className="absolute left-0 z-10 h-12 w-12 -translate-x-8 rounded-full border border-gray-300 bg-white hover:bg-gray-100 flex items-center justify-center transition"
-            aria-label="Previous"
-          >
-            <svg className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          {/* Carousel card row */}
-          <div className="w-full max-w-6xl overflow-hidden">
-            <div
-              className="flex transition-transform duration-700"
-              style={{
-                transform: `translateX(-${currentIndex * (100/3)}%)`
-              }}
-            >
-              {cards.map((card, idx) => (
-                <div
-                  key={idx}
-                  className="card-custom mx-4 min-w-[360px] max-w-[360px] flex-shrink-0 rounded-xl border border-gray-400 bg-white shadow-lg transition hover:shadow-xl"
-                  style={{ height: 350 }}
+          <div className="container mx-auto px-4">
+            <div className="mx-auto mb-12 max-w-6xl text-center">
+              <p className="mb-2 text-center text-body2 font-semibold uppercase tracking-wide text-primary">
+                TĂNG TRẢI NGHIỆM KHÁCH HÀNG
+              </p>
+              <h2 className="mb-4 text-h2 font-bold text-ink">
+                Được Tin Dùng Bởi Các Chuỗi Nhà Thuốc Hàng Đầu
+              </h2>
+            </div>
+
+            <div className="relative flex items-center justify-center">
+              <button
+                onClick={handlePrevPharmacy}
+                className="absolute left-0 z-10 h-12 w-12 -translate-x-8 rounded-full border border-gray-300 bg-white hover:bg-gray-100 flex items-center justify-center transition"
+                aria-label="Previous"
+              >
+                <svg
+                  className="h-7 w-7"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  viewBox="0 0 24 24"
                 >
-                  <div className="p-7">
-                    <h3 className="mb-2 text-h5 font-bold text-ink">{card.title}</h3>
-                    <div className="mb-4 text-sub1 text-ink">{card.content}</div>
-                    <div className="mt-3 rounded-lg bg-gray-50 py-6 px-4 flex flex-col items-center">
-                      <Image
-                        src={card.image}
-                        alt={card.title}
-                        width={310}
-                        height={110}
-                        className="h-[110px] w-full object-contain"
-                      />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </button>
+              <div className=" w-full max-w-6xl overflow-hidden">
+                <div
+                  className="flex transition-transform duration-700"
+                  style={{
+                    transform: `translateX(-${indexPharmacy * (100 / 3)}%)`,
+                  }}
+                >
+                  {cards2.map((card, idx) => (
+                    <div
+                      key={idx}
+                      className="card-custom mx-4 min-w-[350px] max-w-[350px] flex-shrink-0 rounded-xl border border-gray-400 bg-white shadow-lg transition hover:shadow-xl"
+                      style={{ height: 350 }}
+                    >
+                      <div className="p-7">
+                        <h4 className="mb-2 text-h6 font-bold text-ink">
+                          {card.title}
+                        </h4>
+                        <div className="mb-4 text-sub1 text-ink">
+                          {card.content}
+                        </div>
+                        <div className="mt-3 rounded-lg bg-gray-50 py-6 px-4 flex flex-col items-center">
+                          <Image
+                            src={card.image}
+                            alt={card.title}
+                            width={310}
+                            height={110}
+                            className="h-[110px] w-full object-contain"
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+              {/* Arrow next */}
+              <button
+                onClick={handleNextPharmacy}
+                className="absolute right-0 z-10 h-12 w-12 translate-x-8 rounded-full border border-gray-300 bg-white hover:bg-gray-100 flex items-center justify-center transition"
+                aria-label="Next"
+              >
+                <svg
+                  className="h-7 w-7"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
             </div>
           </div>
-          {/* Arrow next */}
-          <button
-            onClick={handleNext}
-            className="absolute right-0 z-10 h-12 w-12 translate-x-8 rounded-full border border-gray-300 bg-white hover:bg-gray-100 flex items-center justify-center transition"
-            aria-label="Next"
-          >
-            <svg className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>
-
-        {/* Dots */}
-        <div className="mt-9 flex justify-center gap-2">
-          {Array.from({ length: totalCards - cardsPerView + 1 }).map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setCurrentIndex(idx)}
-              className={`h-2 w-8 rounded-full transition-all duration-150 ${
-                currentIndex === idx ? "bg-primary" : "bg-gray-300"
-              }`}
-              aria-label={`Go to slide ${idx + 1}`}
-            />
-          ))}
-        </div>
-      </div>
-    </section>
+        </section>
       </FadeInOnScroll>
 
       {/* SECTION : CTA Email*/}
