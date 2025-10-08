@@ -69,7 +69,7 @@
   h2 {
     font-size: var(--text-h2);
     line-height: var(--leading-h2);
-    font-weight: 600;
+    font-weight: 700;
   }
 
   h3 {
@@ -96,10 +96,10 @@
     font-weight: 500;
   }
 
-  p {
+  /* p {
     font-size: var(--text-body2);
     line-height: var(--leading-body2);
-  }
+  } */
 }
 
 /* Các lớp tiện ích tùy chỉnh cho component (nếu cần) */

@@ -116,6 +116,26 @@ const accordionItems = [
       "Hạ tầng mạnh mẽ, bảo mật hàng đầu, hỗ trợ 10.000 lượt truy cập đồng thời. Giao diện và tính năng linh hoạt, tùy chỉnh theo đặc thù doanh nghiệp.",
   },
   {
+    title: "Triển khai & đào tạo dễ dàng",
+    content:
+      "Hạ tầng mạnh mẽ, bảo mật hàng đầu, hỗ trợ 10.000 lượt truy cập đồng thời. Giao diện và tính năng linh hoạt, tùy chỉnh theo đặc thù doanh nghiệp.",
+  },
+  {
+    title: "Triển khai & đào tạo dễ dàng",
+    content:
+      "Hạ tầng mạnh mẽ, bảo mật hàng đầu, hỗ trợ 10.000 lượt truy cập đồng thời. Giao diện và tính năng linh hoạt, tùy chỉnh theo đặc thù doanh nghiệp.",
+  },
+  {
+    title: "Triển khai & đào tạo dễ dàng",
+    content:
+      "Hạ tầng mạnh mẽ, bảo mật hàng đầu, hỗ trợ 10.000 lượt truy cập đồng thời. Giao diện và tính năng linh hoạt, tùy chỉnh theo đặc thù doanh nghiệp.",
+  },
+  {
+    title: "Triển khai & đào tạo dễ dàng",
+    content:
+      "Hạ tầng mạnh mẽ, bảo mật hàng đầu, hỗ trợ 10.000 lượt truy cập đồng thời. Giao diện và tính năng linh hoạt, tùy chỉnh theo đặc thù doanh nghiệp.",
+  },
+  {
     title: "Hỗ trợ kỹ thuật 24/7",
     content:
       "Đội ngũ hỗ trợ của chúng tôi luôn sẵn sàng giải đáp mọi thắc mắc và xử lý các vấn đề kỹ thuật nhanh chóng.",
@@ -123,7 +143,7 @@ const accordionItems = [
   {
     title: "Cập nhật tính năng liên tục",
     content:
-      "V-Pharma liên tục được cập nhật các tính năng mới nhất để đáp ứng nhu cầu thay đổi của thị trường.",
+      "V-Pharma liên tục được cập nhật các tính năng mới nhất để đáp ứng nhu cầu thay đổi của thị trường  V-Pharma liên tục được cập nhật các tính năng mới nhất để đáp ứng nhu cầu thay đổi của thị trườn    ggggggggggg ggggggggggggggggggggggggggggggggggg.",
   },
   {
     title: "Tích hợp linh hoạt",
@@ -184,7 +204,7 @@ const DashboardCarousel = ({
   }, [images.length]);
 
   return (
-    <div className="relative mx-auto mt-12 max-w-4xl overflow-hidden rounded-lg shadow-2xl">
+    <div className="relative mx-auto mt-12 max-w-4xl overflow-hidden rounded-lg ">
       <div
         className="flex transition-transform duration-700 ease-in-out"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -201,7 +221,7 @@ const DashboardCarousel = ({
           </div>
         ))}
       </div>
-      <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 space-x-2">
+      {/* <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 space-x-2">
         {images.map((_, index) => (
           <button
             key={index}
@@ -210,6 +230,18 @@ const DashboardCarousel = ({
             className={`h-3 w-3 rounded-full transition-colors ${
               currentIndex === index ? "bg-primary" : "bg-white/50"
             }`}
+          />
+        ))}
+      </div> */}
+      <div className="mt-6 flex justify-center gap-2">
+        {images.map((_, idx) => (
+          <button
+            key={idx}
+            className={`h-3 w-7 rounded-full transition-all duration-200 ${
+              currentIndex === idx ? "bg-primary" : "bg-gray-200"
+            }`}
+            aria-label={`Go to slide ${idx + 1}`}
+            onClick={() => setCurrentIndex(idx)}
           />
         ))}
       </div>
@@ -232,7 +264,7 @@ export default function IndependentPharmacyPage() {
   return (
     <div>
       {/** Dashboard */}
-      <section className="bg-gradient-to-b from-blue-50 to-white py-20 text-center">
+      <section className="bg-gradient-to-b from-blue-50 to-white py-10 text-center">
         <div className="container mx-auto px-4 lg:px-80">
           <h1 className="text-h1 font-bold text-ink">
             Phần Mềm Quản Lý Nhà Thuốc Toàn Diện V-Pharma
@@ -490,7 +522,6 @@ export default function IndependentPharmacyPage() {
               Trải nghiệm miễn phí
             </button>
           </div>
-          {/* -- THAY THẾ IMAGE TĨNH BẰNG CAROUSEL -- */}
           <DashboardCarousel images={dashboardImages} />
         </section>
       </FadeInOnScroll>
