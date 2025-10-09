@@ -23,7 +23,7 @@ function FaqItem({
         className="flex w-full items-center justify-between text-left text-lg font-medium text-text"
         onClick={onClick}
       >
-        <span className="text-h6 font-semibold text-ink">
+        <span className="text-sub1 font-bold text-ink">
           {item.question}
         </span>
         {isOpen ? (
@@ -33,7 +33,7 @@ function FaqItem({
         )}
       </button>
       {isOpen && (
-        <div className="mt-4 text-sub1 text-sm text-body2">
+        <div className="mt-4 text-sub2 text-sm text-body2">
           <p>{item.answer}</p>
         </div>
       )}
@@ -69,7 +69,7 @@ export default function FaqSection() {
 
   return (
     <section className="container mx-auto max-w-4xl px-4 py-20">
-      <h2 className="text-center text-h2 font-bold text-ink">
+      <h2 className="text-center text-black">
         Câu hỏi thường gặp
       </h2>
       <div className="mt-10">
