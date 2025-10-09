@@ -9,6 +9,11 @@ import {
   FiPlus,
   FiMinus,
 } from "react-icons/fi";
+import { independentPharmacyData } from "@/lib/api/solution";
+import { Button } from "@/components/ui/Button";
+
+import { button } from "framer-motion/client";
+
 
 // Dữ liệu cho Các Tính Năng Nổi Bật Của V-Pharma
 const featureTabs = [
@@ -252,9 +257,8 @@ const DashboardCarousel = ({
             key={index}
             onClick={() => setCurrentIndex(index)}
             aria-label={`Go to slide ${index + 1}`}
-            className={`h-3 w-3 rounded-full transition-colors ${
-              currentIndex === index ? "bg-primary" : "bg-white/50"
-            }`}
+            className={`h-3 w-3 rounded-full transition-colors ${currentIndex === index ? "bg-primary" : "bg-white/50"
+              }`}
           />
         ))}
       </div>
@@ -400,6 +404,9 @@ const reviewsData = [
   },
 ];
 
+
+
+
 function ReviewCarousel() {
   const REVIEWS_PER_PAGE = 4;
   const [currentPage, setCurrentPage] = useState(0);
@@ -451,9 +458,8 @@ function ReviewCarousel() {
               <button
                 key={index}
                 onClick={() => setCurrentPage(index)}
-                className={`h-3 w-3 rounded-full transition-colors ${
-                  currentPage === index ? "bg-primary" : "bg-gray-300"
-                }`}
+                className={`h-3 w-3 rounded-full transition-colors ${currentPage === index ? "bg-primary" : "bg-gray-300"
+                  }`}
                 aria-label={`Go to page ${index + 1}`}
               />
             ))}
@@ -465,28 +471,31 @@ function ReviewCarousel() {
 }
 
 export default function IndependentPharmacyPage() {
+
   const [activeTab, setActiveTab] = useState("ban-hang");
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [openAccordion, setOpenAccordion] = useState(0);
+  const { heroSection, featureSection } = independentPharmacyData;
   return (
     <div>
       {/** Dashboard */}
       <section className="bg-gradient-to-b from-blue-50 to-white py-20 text-center">
         <div className="container mx-auto px-4 lg:px-80">
           <h1 className="text-h1 font-bold text-ink">
-            Phần Mềm Quản Lý Nhà Thuốc Toàn Diện V-Pharma
+            {heroSection.mainTitle}
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-h6">
-            Giải pháp toàn diện cho quản lý nhà thuốc, từ tồn kho đến bán hàng,
-            với công nghệ hiện đại và dễ sử dụng.
+            {heroSection.mainDescription}
           </p>
           <div className="mt-8 flex justify-center gap-4">
-            <button className="rounded-full bg-primary px-6 py-3 font-semibold text-white hover:opacity-90">
-              Trải nghiệm miễn phí
-            </button>
-            <button className="rounded-full border border-primary bg-white px-6 py-3 font-semibold text-primary hover:bg-primary/10">
-              Xem video
-            </button>
+            {heroSection.ctaButtons.map((button, index) => (
+              <Button
+                key={button.title}
+                variant={index === 0 ? 'primary' : 'secondary'}
+              >
+                {button.title}
+              </Button>
+            ))}
           </div>
           <div className="relative mx-auto mt-12 max-w-4xl">
             <Image
@@ -551,11 +560,10 @@ export default function IndependentPharmacyPage() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`rounded-full text-body2 border px-5 py-2 text-sm font-medium transition-colors ${
-                activeTab === tab.id
-                  ? "bg-primary text-white"
-                  : "border-primary bg-white text-text hover:bg-primary/10"
-              }`}
+              className={`rounded-full text-body2 border px-5 py-2 text-sm font-medium transition-colors ${activeTab === tab.id
+                ? "bg-primary text-white"
+                : "border-primary bg-white text-text hover:bg-primary/10"
+                }`}
             >
               {tab.label}
             </button>
