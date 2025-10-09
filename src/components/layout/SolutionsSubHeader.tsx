@@ -1,14 +1,17 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-const cn = (...classes: string[]) => classes.filter(Boolean).join(' ');
+const cn = (...classes: string[]) => classes.filter(Boolean).join(" ");
 
 const subNavLinks = [
   { href: "/giai-phap/tong-quan", label: "Tổng quan" },
-  { href: "/giai-phap/chuoi-nha-thuoc", label: 'Giải pháp chuỗi nhà thuốc' },
-  { href: "/giai-phap/giai-phap-tich-hop-cho-phong-kham", label: "Giải pháp tích hợp cho phòng khám/mạch" },
+  { href: "/giai-phap/chuoi-nha-thuoc", label: "Giải pháp chuỗi nhà thuốc" },
+  {
+    href: "/giai-phap/giai-phap-tich-hop-cho-phong-kham",
+    label: "Giải pháp tích hợp cho phòng khám/mạch",
+  },
 ];
 
 export function SolutionsSubHeader() {
@@ -16,9 +19,15 @@ export function SolutionsSubHeader() {
 
   return (
     <header className="sticky top-[72px] z-30 bg-ink text-white shadow-md">
-      <div className="container mx-auto flex items-center gap-8 px-4 py-4">
-        <h2 className="text-lg font-semibold">Phần mềm quản lý nhà thuốc</h2>
-        <nav className="flex items-center gap-6 text-sm">
+      <div className="container mx-auto flex items-center  px-4 py-4">
+        <div className="flex items-center">
+          <p className="text-h6 text-white font-semibold">
+            Phần mềm quản lý nhà thuốc
+          </p>
+          {/* Divider dọc */}
+          <span className="rounded-2xl mx-4 h-9 w-1 bg-white" />
+        </div>
+        <nav className="flex items-center gap-6 text-sub2 flex-1">
           {subNavLinks.map((link) => {
             const isActive = pathname === link.href;
             return (

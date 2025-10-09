@@ -118,10 +118,10 @@ function ReviewCarousel() {
   );
 
   return (
-    <section className="bg-gray-50 py-20">
+    <section className=" py-20">
       <div className="container mx-auto px-4 text-center">
         <p className="text-primary font-semibold">Reviews</p>
-        <h2 className="text-h2 font-bold text-ink mt-2">
+        <h2 className="text-h2 font-bold text-black mt-2">
           Khách Hàng Nói Gì Về V-Pharma
         </h2>
 
@@ -133,8 +133,8 @@ function ReviewCarousel() {
                 key={startIndex + index}
                 className="flex flex-col rounded-lg bg-white p-6 text-left shadow-lg transition-transform duration-300 hover:scale-105"
               >
-                <h4 className="text-h6 font-bold text-ink">{review.name}</h4>
-                <p className="text-sub1 text-gray-600 italic">{review.position}</p>
+                <h4 className="text-sub2 font-bold text-black">{review.name}</h4>
+                <p className="text-sub2 text-gray-600 italic">{review.position}</p>
 
                 <div className="my-3 flex text-yellow-400 ">
                   {Array.from({ length: review.starCount }).map((_, i) => (
@@ -142,7 +142,7 @@ function ReviewCarousel() {
                   ))}
                 </div>
 
-                <p className="flex-grow text-sub1  italic">
+                <p className="text-body2 flex-grow italic">
                   “{review.content}”
                 </p>
               </div>
@@ -155,7 +155,7 @@ function ReviewCarousel() {
               <button
                 key={index}
                 onClick={() => setCurrentPage(index)}
-                className={`h-3 w-3 rounded-full transition-colors ${
+                className={`h-3 w-7 rounded-full transition-colors ${
                   currentPage === index ? "bg-primary" : "bg-gray-300"
                 }`}
                 aria-label={`Go to page ${index + 1}`}

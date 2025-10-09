@@ -18,8 +18,8 @@ export function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="fixed top-0 left-0 z-50 w-full border-b border-gray-200 bg-white/80 backdrop-blur-md">
-      <div className="mx-auto flex h-[72px] max-w-[1536px] items-center justify-between px-4 md:px-8">
+    <header className="fixed top-0 left-0 z-50 w-full border-b border-gray-200 bg-white backdrop-blur-md">
+      <div className="mx-auto flex h-[72px] max-w-[1536px] items-center justify-between px-4">
         {/* Logo */}
         <Link href="/" className="flex items-center flex-shrink-0">
           <img
@@ -30,7 +30,7 @@ export function Header() {
         </Link>
 
         {/* Main Nav */}
-        <nav className="hidden lg:flex items-center gap-6 text-sm font-medium text-sub2 text-text">
+        <nav className="hidden lg:flex items-center gap-6 text-sm font-medium text-sub2 text-text ">
           {mainNavLinks.map((link) => {
             const pathToMatch = link.matchPath || link.href;
             const isActive =
@@ -41,9 +41,9 @@ export function Header() {
                 key={link.label}
                 href={link.href}
                 className={cn(
-                  "transition-all duration-200 px-3 py-1 rounded-full",
+                  "transition-all duration-200 px-3 py-1 rounded-full text-sub1",
                   isActive
-                    ? "bg-primary text-white shadow-sm hover:bg-primary/90"
+                    ? "bg-blue-100 text-primary shadow-sm hover:bg-blue-100"
                     : "hover:text-primary"
                 )}
               >

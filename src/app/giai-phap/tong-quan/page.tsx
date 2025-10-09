@@ -123,7 +123,7 @@ const accordionItems = [
   {
     title: "Cập nhật tính năng liên tục",
     content:
-      "V-Pharma liên tục được cập nhật các tính năng mới nhất để đáp ứng nhu cầu thay đổi của thị trường.",
+      "V-Pharma liên tục được cập nhật các tính năng mới nhất để đáp ứng nhu cầu thay đổi của thị trường  V-Pharma liên tục được cập nhật các tính năng mới nhất để đáp ứng nhu cầu thay đổi của thị trườn    ggggggggggg ggggggggggggggggggggggggggggggggggg.",
   },
   {
     title: "Tích hợp linh hoạt",
@@ -148,10 +148,10 @@ function AccordionItem({
   return (
     <div className="rounded-lg bg-primary/9 p-4 shadow-sm">
       <button
-        className="flex w-full items-center justify-between text-left font-semibold text-ink"
+        className="flex w-full items-center justify-between text-left font-semibold"
         onClick={onClick}
       >
-        <span className="text-h6 font-semibold text-ink">{title}</span>
+        <span className="text-sub1 font-bold text-black">{title}</span>
         {isOpen ? (
           <FiMinus className="text-white bg-primary rounded text-h6" />
         ) : (
@@ -159,7 +159,7 @@ function AccordionItem({
         )}
       </button>
       {isOpen && (
-        <div className="mt-4 text-sm text-sub1 text-text/80">{children}</div>
+        <p className="mt-4 text-sm text-sub2 max-w-xl">{children}</p>
       )}
     </div>
   );
@@ -184,7 +184,7 @@ const DashboardCarousel = ({
   }, [images.length]);
 
   return (
-    <div className="relative mx-auto mt-12 max-w-4xl overflow-hidden rounded-lg shadow-2xl">
+    <div className="relative mx-auto mt-12 max-w-4xl overflow-hidden rounded-lg ">
       <div
         className="flex transition-transform duration-700 ease-in-out"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -201,15 +201,15 @@ const DashboardCarousel = ({
           </div>
         ))}
       </div>
-      <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 space-x-2">
-        {images.map((_, index) => (
+      <div className="mt-6 flex justify-center gap-2">
+        {images.map((_, idx) => (
           <button
-            key={index}
-            onClick={() => setCurrentIndex(index)}
-            aria-label={`Go to slide ${index + 1}`}
-            className={`h-3 w-3 rounded-full transition-colors ${
-              currentIndex === index ? "bg-primary" : "bg-white/50"
+            key={idx}
+            className={`h-3 w-7 rounded-full transition-all duration-200 ${
+              currentIndex === idx ? "bg-primary" : "bg-white"
             }`}
+            aria-label={`Go to slide ${idx + 1}`}
+            onClick={() => setCurrentIndex(idx)}
           />
         ))}
       </div>
@@ -222,30 +222,30 @@ const dashboardImages = [
   { src: "/hero-dashboard.jpg", alt: "V-Pharma Dashboard Overview" },
   { src: "/features-dashboard1.png", alt: "Sales Dashboard" },
   { src: "/features-dashboard2.png", alt: "Inventory Dashboard" },
-  { src: "/features-dashboard4.png", alt: "Reports Dashboard" },
+  { src: "/features-dashboard3.jpg", alt: "Reports Dashboard" },
   { src: "/features-dashboard5.jpg", alt: "Accounting Dashboard" },
 ];
 
-export default function IndependentPharmacyPage() {
+export default function TongQuan() {
   const [activeTab, setActiveTab] = useState("ban-hang");
   const [openAccordion, setOpenAccordion] = useState(0);
   return (
     <div>
       {/** Dashboard */}
-      <section className="bg-gradient-to-b from-blue-50 to-white py-20 text-center">
+      <section className="bg-gradient-to-b from-blue-100 to-white py-20 text-center">
         <div className="container mx-auto px-4 lg:px-80">
-          <h1 className="text-h1 font-bold text-ink">
+          <h1 className="text-h1 font-bold text-black">
             Phần Mềm Quản Lý Nhà Thuốc Toàn Diện V-Pharma
           </h1>
-          <p className="mx-auto mt-4 max-w-3xl text-h5">
+          <p className="mx-auto mt-4 max-w-3xl text-h6">
             Giải pháp toàn diện cho quản lý nhà thuốc, từ tồn kho đến bán hàng,
             với công nghệ hiện đại và dễ sử dụng.
           </p>
-          <div className="mt-8 flex justify-center gap-4">
-            <button className="rounded-full bg-primary px-6 py-3 font-semibold text-white hover:opacity-90">
-              Trải nghiệm miễn phí
+          <div className="mt-8 flex justify-center gap-4 ">
+            <button className="text-sub1 rounded-full bg-primary px-6 py-3 font-semibold text-white hover:opacity-90">
+              Đăng ký dùng thử
             </button>
-            <button className="rounded-full border border-primary bg-white px-6 py-3 font-semibold text-primary hover:bg-primary/10">
+            <button className="text-sub1 rounded-full border border-primary bg-white px-6 py-3 font-semibold text-primary hover:bg-primary/10">
               Xem video
             </button>
           </div>
@@ -293,79 +293,81 @@ export default function IndependentPharmacyPage() {
               <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
                 <div className="h-6 w-6 rounded bg-primary"></div>
               </div>
-              <h4 className="text-h6 font-bold text-ink">{item.title}</h4>
-              <p className="mt-2 text-sm text-sub1">{item.description}</p>
+              <h4 className="text-sub1 font-bold text-black">{item.title}</h4>
+              <p className="mt-2 text-body2">{item.description}</p>
             </div>
           ))}
         </section>
       </FadeInOnScroll>
 
       {/* Features Section: Các Tính Năng Nổi Bật Của V-Pharma*/}
-      <FadeInOnScroll>
-        <section className="container mx-auto px-4 py-20">
-          <h2 className="text-center text-h2 font-bold text-ink">
+      <section className="bg-gradient-to-b from-white to-blue-100 py-20">
+        <FadeInOnScroll>
+          <h2 className="text-center text-black ">
             Các Tính Năng Nổi Bật Của V-Pharma
           </h2>
-          <p className="mx-auto mt-4 max-w-3xl text-center text-h6">
+          <p className="mx-auto mt-4 max-w-2xl text-center text-h6">
             Giải pháp quản lý nhà thuốc toàn diện, tối ưu hóa quy trình vận hành
             và nâng cao hiệu quả kinh doanh.
           </p>
-          <div className="mt-10 flex flex-wrap justify-center gap-6">
+          <div className="container flex flex-wrap justify-center gap-6 max-w-4xl">
             {featureTabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`rounded-full text-body2 border px-5 py-2 text-sm font-medium transition-colors ${
+                className={`rounded-full text-sub2  border px-5 py-2 text-sm font-medium transition-colors ${
                   activeTab === tab.id
                     ? "bg-primary text-white"
-                    : "border-primary bg-white text-text hover:bg-primary/10"
+                    : "border-primary bg-white  hover:bg-primary/10"
                 }`}
               >
                 {tab.label}
               </button>
             ))}
           </div>
-          <div className="mt-12 grid grid-cols-1 items-center gap-12 md:grid-cols-2">
-            <div className="relative">
-              <Image
-                src={featureTabs.find((t) => t.id === activeTab)?.image || ""}
-                alt="Feature Dashboard"
-                width={600}
-                height={400}
-                className="rounded-lg shadow-xl"
-              />
-            </div>
-            <div>
-              <h3 className="text-h3 font-bold text-ink">
-                {featureTabs.find((t) => t.id === activeTab)?.label}
-              </h3>
-              <p className="text-body1 text-ink">
-                {featureTabs.find((t) => t.id === activeTab)?.descriptions}
-              </p>
-              <ul className="mt-4 text-body1 space-y-3">
-                {featureTabs
-                  .find((t) => t.id === activeTab)
-                  ?.points.map((point, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <FiCheckCircle className="mt-1 flex-shrink-0 text-success" />
-                      <span>{point}</span>
-                    </li>
-                  ))}
-              </ul>
-              <button className="mt-8 rounded-full bg-primary px-6 py-3 font-semibold text-white hover:opacity-90">
-                Trải nghiệm miễn phí
-              </button>
+          <div className="container">
+            <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
+              <div className="relative">
+                <Image
+                  src={featureTabs.find((t) => t.id === activeTab)?.image || ""}
+                  alt="Feature Dashboard"
+                  width={600}
+                  height={400}
+                  className="rounded-lg shadow-xl"
+                />
+              </div>
+              <div>
+                <h3 className="text-black">
+                  {featureTabs.find((t) => t.id === activeTab)?.label}
+                </h3>
+                <p className="text-sub1">
+                  {featureTabs.find((t) => t.id === activeTab)?.descriptions}
+                </p>
+                <ul className="mt-4 text-sub2 space-y-3">
+                  {featureTabs
+                    .find((t) => t.id === activeTab)
+                    ?.points.map((point, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <FiCheckCircle className="mt-1 flex-shrink-0 text-success" />
+                        <span className="text-sub2">{point}</span>
+                      </li>
+                    ))}
+                </ul>
+                <button className="mt-8 rounded-full bg-primary px-6 py-3 font-semibold text-sub1 text-white hover:opacity-90">
+                  Đăng ký dùng thử
+                </button>
+              </div>
             </div>
           </div>
-        </section>
-      </FadeInOnScroll>
+        </FadeInOnScroll>
+      </section>
 
       {/* --- Section: An Tâm Và Vận Hành Hiệu Quả --- */}
-      <FadeInOnScroll>
-        <section className="bg-ink py-20 text-white">
+      <section className="bg-ink py-20 text-white">
+        <FadeInOnScroll>
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-3xl text-center">
-              <h2 className="text-h2 font-bold">An Tâm Và Vận Hành Hiệu Quả</h2>
+              <h2>An Tâm Và Vận Hành Hiệu Quả</h2>
               <p className="mt-4 text-h6 text-white/80">
                 Nền tảng V-Pharma biến quản lý phức tạp thành tự động hóa dễ
                 dàng, giúp bạn tập trung vào Khách hàng và Tăng trưởng.
@@ -384,10 +386,10 @@ export default function IndependentPharmacyPage() {
                   />
                 </div>
                 <div>
-                  <h3 className="text-h3 font-semibold text-success">
+                  <h3 className="text-success">
                     Quản Lý Tài Chính Rõ Ràng
                   </h3>
-                  <p className="text-sub1 mt-4 line-clamp-3 text-white/80">
+                  <p className="text-sub2 mt-4 line-clamp-3 text-white/80">
                     Chấm dứt việc “tiền bán thuốc không rõ lý do” hay nhập quá
                     nhiều vì nghe khuyến mại. Hệ thống ghi nhận chi tiêu/giao
                     dịch. Dễ dàng nắm được lãi gộp và tiền mặt thực tế ngay lập
@@ -409,10 +411,10 @@ export default function IndependentPharmacyPage() {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-h3 font-semibold text-success">
+                  <h3 className="text-success">
                     Nâng Cao Hiệu Quả Kinh Doanh
                   </h3>
-                  <p className="text-sub1 mt-4 line-clamp-3 text-white/80">
+                  <p className="text-sub2 mt-4 line-clamp-3 text-white/80">
                     Chuyển từ nỗi sợ nhập liệu sang lợi ích. AI Scan Hóa đơn đầu
                     vào giúp bạn nhập liệu nhanh chóng mà không cần gõ tay, giảm
                     đáng kể thời gian nhập liệu.
@@ -431,10 +433,10 @@ export default function IndependentPharmacyPage() {
                   />
                 </div>
                 <div>
-                  <h3 className="text-h3 font-semibold text-success">
+                  <h3 className="text-success">
                     Chăm Sóc Khách Hàng Hiệu Quả
                   </h3>
-                  <p className="text-sub1 mt-4 line-clamp-3 text-white/80">
+                  <p className="text-sub2 mt-4 line-clamp-3 text-white/80">
                     Quản lý hồ sơ khách hàng để tư vấn thuốc chính xác hơn, dựa
                     trên dữ liệu đã ghi nhận trước đó. Nâng cao trải nghiệm
                     khách hàng để họ luôn quay lại.
@@ -455,10 +457,10 @@ export default function IndependentPharmacyPage() {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-h3 font-semibold text-success">
+                  <h3 className="text-success">
                     Tăng Cạnh Tranh Và Mở Rộng
                   </h3>
-                  <p className="text-sub1 mt-4 line-clamp-3 text-white/80">
+                  <p className="text-sub2 mt-4 line-clamp-3 text-white/80">
                     Dù là nhà thuốc độc lập, bạn vẫn cần tầm nhìn. Mọi dữ liệu
                     đã được số hóa và chuẩn hóa, tạo nền tảng vững chắc để mở
                     rộng quầy/chi nhánh khi bạn sẵn sàng.
@@ -467,58 +469,61 @@ export default function IndependentPharmacyPage() {
               </div>
             </div>
             <div className="mt-20 text-center">
-              <button className="rounded-full bg-primary px-8 py-3 font-semibold text-white hover:opacity-90">
-                Trải nghiệm miễn phí
+              <button className=" text-sub1 rounded-full bg-primary px-8 py-3 font-semibold text-white hover:opacity-90">
+                Đăng ký dùng thử
               </button>
             </div>
           </div>
-        </section>
-      </FadeInOnScroll>
+        </FadeInOnScroll>
+      </section>
 
       {/** section Công nghệ AI - Trợ lý Kinh doanh 24/7 */}
-      <FadeInOnScroll>
-        <section className="container mx-auto px-4 py-20 text-center">
-          <h2 className="text-h2 font-bold text-ink">
-            Công nghệ AI - Trợ lý Kinh doanh 24/7
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-h6 text-text/80">
-            Ứng dụng công nghệ AI phân tích dữ liệu và đề xuất việc cần làm thay
-            vì những con số khô khan.
-          </p>
-          <div className="mt-8">
-            <button className="rounded-full bg-primary px-6 py-3 font-semibold text-white hover:opacity-90">
-              Trải nghiệm miễn phí
-            </button>
-          </div>
-          {/* -- THAY THẾ IMAGE TĨNH BẰNG CAROUSEL -- */}
-          <DashboardCarousel images={dashboardImages} />
-        </section>
-      </FadeInOnScroll>
+
+      <section className="bg-blue-100 py-20 ">
+        <div className="container mx-auto px-4 text-center">
+          <FadeInOnScroll>
+            <h2 className="text-black">
+              Công nghệ AI - Trợ lý Kinh doanh 24/7
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-h6 ">
+              Ứng dụng công nghệ AI phân tích dữ liệu và đề xuất việc cần làm
+              thay vì những con số khô khan.
+            </p>
+            <div className="mt-8">
+              <button className="rounded-full bg-primary px-6 py-3 text-body1 font-semibold text-white hover:opacity-90">
+                Đăng ký dùng thử
+              </button>
+            </div>
+            <DashboardCarousel images={dashboardImages} />
+          </FadeInOnScroll>
+        </div>
+      </section>
 
       {/** section Giải Pháp Chuyên Biệt */}
-      <FadeInOnScroll>
-        <section className=" py-20">
+
+      <section className=" bg-gradient-to-b from-blue-100 to-white-100 py-20">
+        <FadeInOnScroll>
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-2xl text-center">
-              <h2 className="text-h2 font-bold text-ink">
-                Giải Pháp Chuyên Biệt
-              </h2>
-              <p className="mt-4 text-h6 text-text/80">
+              <h2 className="text-black">Giải Pháp Chuyên Biệt</h2>
+              <p className="mt-4 text-h6">
                 Nền tảng của chúng tôi sử dụng Trí tuệ nhân tạo để phân tích dữ
                 liệu và đưa ra các gợi ý hành động trực quan.
               </p>
             </div>
             <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-2">
-              <div className="rounded-xl bg-white p-8 text-center shadow-lg">
-                <h3 className="mt-6 text-h3 font-bold text-ink">
+              <div className="container mx-auto rounded-3xl max-w-lg bg-white p-8 text-center shadow-lg">
+                <h3 className="mt-6 text-h4 text-black">
                   Chuỗi nhà thuốc
                 </h3>
-                <p className="mt-2 text-sub1">
-                  Tối ưu vận hành cho chuỗi nhà thuốc, dễ dàng kiểm soát.
+                <p className="mt-2 text-h6">
+                  Tối ưu vận hành cho chuỗi nhà thuốc,
+                  <br />
+                  dễ dàng kiểm soát.
                 </p>
                 <a
-                  href="#"
-                  className="mt-4 inline-block font-semibold text-primary hover:underline"
+                  href="/giai-phap/chuoi-nha-thuoc"
+                  className="mt-4 mb-4 inline-block font-semibold text-primary hover:underline"
                 >
                   Tìm hiểu thêm →
                 </a>
@@ -530,16 +535,18 @@ export default function IndependentPharmacyPage() {
                   className="mx-auto"
                 />
               </div>
-              <div className="rounded-xl bg-white p-8 text-center shadow-lg">
-                <h3 className="mt-6 text-h3 font-bold text-ink">
+              <div className="container mx-auto rounded-3xl max-w-lg bg-white p-8 text-center shadow-lg">
+                <h3 className="mt-6 text-h4 text-black">
                   Phòng khám/phòng mạch
                 </h3>
-                <p className="mt-2 text-sub1">
-                  Giải pháp tích hợp quản lý thuốc và hồ sơ bệnh nhân hiệu quả.
+                <p className="mt-2 text-h6">
+                  Giải pháp tích hợp quản lý thuốc
+                  <br />
+                  và hồ sơ bệnh nhân hiệu quả.
                 </p>
                 <a
                   href="#"
-                  className="mt-4 inline-block font-semibold text-primary hover:underline"
+                  className="mt-4 mb-4 inline-block font-semibold text-primary hover:underline"
                 >
                   Tìm hiểu thêm →
                 </a>
@@ -553,16 +560,14 @@ export default function IndependentPharmacyPage() {
               </div>
             </div>
           </div>
-        </section>
-      </FadeInOnScroll>
+        </FadeInOnScroll>
+      </section>
 
       {/* --- Section: Cam Kết Đồng Hành Cùng Nhà Thuốc --- */}
       <FadeInOnScroll>
         <section className="container mx-auto px-4 py-20">
           <div className="mx-auto max-w-4xl text-center">
-            <h2 className="text-h2 font-bold text-ink">
-              Cam Kết Đồng Hành Cùng Nhà Thuốc
-            </h2>
+            <h2 className="text-black">Cam Kết Đồng Hành Cùng Nhà Thuốc</h2>
             <p className="mx-auto mt-4 max-w-3xl text-center text-h6">
               Nền tảng của chúng tôi sử dụng Trí tuệ nhân tạo để phân tích dữ
               liệu và đưa ra các gợi ý hành động trực quan.
@@ -603,15 +608,13 @@ export default function IndependentPharmacyPage() {
       <FadeInOnScroll>
         <section className="container mx-auto px-4 py-20">
           <div className="rounded-2xl bg-ink p-12 text-center text-white">
-            <h2 className="text-h2 font-bold">
-              Sẵn Sàng Số Hóa Nhà Thuốc Của Bạn?
-            </h2>
+            <h2>Sẵn Sàng Số Hóa Nhà Thuốc Của Bạn?</h2>
             <p className="mx-auto text-h6 mt-4 max-w-1xl text-white/80">
               Trải nghiệm đầy đủ các tính năng ưu việt của V-Pharma hoàn toàn
               miễn phí trong 15 ngày. Không cần thẻ tín dụng.
             </p>
-            <button className="mt-8 rounded-full bg-primary px-6 py-3 font-semibold text-white hover:opacity-90">
-              Trải nghiệm miễn phí
+            <button className="mt-8 text-sub1 rounded-full bg-primary px-6 py-3 font-semibold text-white hover:opacity-90">
+              Đăng ký dùng thử
             </button>
           </div>
         </section>
