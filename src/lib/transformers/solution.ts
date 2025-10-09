@@ -2,8 +2,10 @@ import { CtaButton } from "@/types/common";
 import { FeatureGrid, FeatureTab, IndependentPharmacyData } from "@/types";
 import { IndependentPharmacyApiResponse } from "@/types";
 const createImageUrl = (apiUrl: string, relativeUrl: string | null): string => {
-  if (!relativeUrl) return "/placeholder.png"; // Ảnh mặc định nếu không có
-  return `${apiUrl}${relativeUrl}`;
+  if (!relativeUrl) return "/placeholder.png";
+  const apiBase = apiUrl.replace(/\/api$/, "");
+  const cleanedRelativeUrl = relativeUrl.startsWith("/") ? relativeUrl : `/${relativeUrl}`;
+  return `${apiBase}${cleanedRelativeUrl}`;
 };
 
 export function transformPageData(
@@ -13,9 +15,9 @@ export function transformPageData(
   const { data } = response;
 
   const heroSection = data?.heroSection?.hero;
-  console.log("heroSection", heroSection);
   const featureSection = data?.featureSection;
-  // const benefitSection = data?.featureBenefitsSection;
+  const benefitSection = data?.featureBenefitsSection;
+  console.log("benefitSection", benefitSection);
   // const showcaseSection = data?.featureShowcaseSection;
   // const solutionSection = data?.solutionSection;
   // const testimonialSection = data?.testimonialSection;
@@ -31,6 +33,11 @@ export function transformPageData(
           title: btn.title,
           link: btn.link,
         })) ?? [],
+      image: {
+        url: createImageUrl(apiUrl, heroSection?.image?.image?.url),
+        alt: heroSection?.image?.alt ?? "",
+        caption: heroSection?.image?.caption ?? "",
+      },
     },
 
     featureSection: {
@@ -43,32 +50,33 @@ export function transformPageData(
         })) ?? [],
       tabs:
         featureSection?.tabs?.map((tab: FeatureTab) => ({
+          id: tab.id,
           label: tab.label ?? "",
           title: tab.title ?? "",
           description: tab.description ?? "",
           image: {
-            url: createImageUrl(apiUrl, tab.image?.url),
+            url: createImageUrl(apiUrl, tab.image?.image?.url ?? null),
             alt: tab.image?.alt ?? "",
             caption: tab.image?.caption ?? "",
           },
         })) ?? [],
     },
-    // benefits: {
-    //   title: benefitSection?.title ?? 'Lợi ích',
-    //   description: benefitSection?.description ?? '',
-    //   contents: benefitSection?.contents?.map(item => ({
-    //     title: item.title ?? '',
-    //     description: item.description ?? '',
-    //     image: {
-    //       url: createImageUrl(apiUrl, item.image?.url),
-    //       alternativeText: item.alt ?? '',
-    //     },
-    //   })) ?? [],
-    //   ctaButton: {
-    //     title: benefitSection?.ctaButton?.title ?? 'Tìm hiểu thêm',
-    //     link: benefitSection?.ctaButton?.link ?? '#',
-    //   },
-    // },
+    featureBenefitsSection: {
+      title: benefitSection?.title ?? 'Lợi ích',
+      description: benefitSection?.description ?? '',
+      contents: benefitSection?.contents?.map((item: any) => ({
+        title: item.title ?? '',
+        description: item.description ?? '',
+        image: {
+          url: createImageUrl(apiUrl, item.image?.url),
+          alternativeText: item.alt ?? '',
+        },
+      })) ?? [],
+      ctaButton: {
+        title: benefitSection?.ctaButton?.title ?? 'Tìm hiểu thêm',
+        link: benefitSection?.ctaButton?.link ?? '#',
+      },
+    },
     // showcase: {
     //   title: showcaseSection?.title ?? '',
     //   description: showcaseSection?.description ?? '',

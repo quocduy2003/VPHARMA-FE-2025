@@ -1,9 +1,10 @@
-import { CtaButton, StrapiImage } from "@/types";
+import { CtaButton, RichTextBlock, StrapiImage } from "@/types";
 // ---------- Section Types ----------
 export interface HeroSection {
   mainTitle: string;
   mainDescription: string;
   ctaButtons: CtaButton[];
+  image: StrapiImage;
 }
 
 export interface FeatureGrid {
@@ -12,9 +13,10 @@ export interface FeatureGrid {
 }
 
 export interface FeatureTab {
+  id: number;
   label: string;
   title: string;
-  description: string;
+  description: RichTextBlock[];
   image: StrapiImage;
 }
 
@@ -86,7 +88,7 @@ export interface CTASection {
 export interface IndependentPharmacyData {
   heroSection: HeroSection;
   featureSection: FeatureSection;
-//   featureBenefitsSection: FeatureBenefitsSection;
+  featureBenefitsSection: FeatureBenefitsSection;
 //   featureShowcaseSection: FeatureShowcaseSection;
 //   solutionSection: SolutionSection;
 //   testimonialSection: TestimonialSection;
