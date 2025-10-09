@@ -18,6 +18,7 @@
   --color-gray: #BFBFBF;
   --color-danger: #F0422E;
   --color-ink: #16215B;
+  --color-colordesription: #111827;
   /* Navy đậm – dùng làm text đậm hoặc background */
   --color-text: #545454;
   --color-white: #FFFFFF;
@@ -31,24 +32,34 @@
   /* Typography Scale */
   --text-h1: 60px;
   --leading-h1: 72px;
-  --text-h2: 46px;
+
+  --text-h2: 40px;
   --leading-h2: 58px;
+
   --text-h3: 38px;
   --leading-h3: 48px;
+
   --text-h4: 30px;
   --leading-h4: 38px;
+
   --text-h5: 28px;
   --leading-h5: 40px;
+
   --text-h6: 24px;
   --leading-h6: 30px;
+
   --text-sub1: 20px;
   --leading-sub1: 26px;
+
   --text-sub2: 18px;
   --leading-sub2: 26px;
-  --text-body1: 20px;
+
+  /* --text-body1: 20px; */
   --leading-body1: 24px;
+
   --text-body2: 16px;
   --leading-body2: 24px;
+
   --text-xs: 12px;
   --leading-xs: 20px;
 }
@@ -64,6 +75,7 @@
     font-size: var(--text-h1);
     line-height: var(--leading-h1);
     font-weight: 700;
+    color:black;
   }
 
   h2 {
@@ -73,9 +85,9 @@
   }
 
   h3 {
-    font-size: var(--text-h3);
-    line-height: var(--leading-h3);
-    font-weight: 600;
+    font-size: var(--text-h6);
+    line-height: var(--leading-h6);
+    font-weight: 700;
   }
 
   h4 {
@@ -96,10 +108,9 @@
     font-weight: 500;
   }
 
-  /* p {
-    font-size: var(--text-body2);
-    line-height: var(--leading-body2);
-  } */
+  p {
+    color: var(--color-colordesription);
+  }
 }
 
 /* Các lớp tiện ích tùy chỉnh cho component (nếu cần) */

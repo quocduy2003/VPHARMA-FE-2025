@@ -180,19 +180,17 @@ function AccordionItem({
   return (
     <div className="rounded-lg bg-primary/9 p-4 shadow-sm">
       <button
-        className="flex w-full items-center justify-between text-left font-semibold text-ink"
+        className="flex w-full items-center justify-between text-left"
         onClick={onClick}
       >
-        <span className="text-h6 font-semibold text-ink">{title}</span>
+        <span className="text-sub1 font-bold text-black">{title}</span>
         {isOpen ? (
           <FiMinus className="text-white bg-primary rounded text-h6" />
         ) : (
           <FiPlus className="text-white bg-primary rounded text-h6" />
         )}
       </button>
-      {isOpen && (
-        <div className="mt-4 text-sm text-sub1 text-text/80">{children}</div>
-      )}
+      {isOpen && <p className="mt-4 text-sm text-sub2">{children}</p>}
     </div>
   );
 }
@@ -316,9 +314,6 @@ function DashboardCarousel({
 
   return (
     <div className="flex flex-col items-center">
-      <div className="mb-8 text-center text-h6 font-semibold text-primary">
-        Marketing Dashboards
-      </div>
       <div className="flex justify-between items-center w-full gap-6 md:gap-10">
         {/* Slide left */}
         <div className="relative h-[180px] w-[280px] opacity-70 transition-all duration-500">
@@ -327,7 +322,7 @@ function DashboardCarousel({
               src={getImg(-1).src}
               alt={getImg(-1).alt}
               fill
-              className="rounded-xl object-contain bg-white"
+              className="rounded-xl "
             />
           </div>
         </div>
@@ -338,7 +333,7 @@ function DashboardCarousel({
             src={getImg(0).src}
             alt={getImg(0).alt}
             fill
-            className="rounded-2xl border-[5px] border-white shadow-2xl object-contain bg-white"
+            className="rounded-2xl "
           />
         </div>
 
@@ -349,7 +344,7 @@ function DashboardCarousel({
               src={getImg(1).src}
               alt={getImg(1).alt}
               fill
-              className="rounded-xl object-contain bg-white"
+              className="rounded-xl "
             />
           </div>
         </div>
@@ -408,7 +403,7 @@ const pharmacyCards = [
 const cards2 = pharmacyCards.slice(0, maxCards);
 
 // COMPONENT CHÍNH
-export default function ChuoiNhaThuocPage() {
+export default function ChuoiNhaThuoc() {
   const [openAccordion, setOpenAccordion] = useState(0);
 
   // State quản lý chỉ số slide hiện tại cho từng bộ card
@@ -443,7 +438,6 @@ export default function ChuoiNhaThuocPage() {
     return arr;
   };
 
-
   function handlePrevPharmacy() {
     setIndexPharmacy((prev) =>
       prev === 0 ? totalSlidesPharmacy - cardsPerView : prev - 1
@@ -470,24 +464,26 @@ export default function ChuoiNhaThuocPage() {
       <section className="container mx-auto px-4 py-20 ">
         <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
           <div>
-            <p className="mb-4 text-body2 font-semibold uppercase tracking-wide text-primary">
+            <p className="mb-4 text-h6 font-bold uppercase tracking-wide text-primary">
               GIẢI PHÁP QUẢN LÝ CHUỖI NHÀ THUỐC V-PHARMA
             </p>
-            <h1 className="mb-6 text-ink">
+            <h1 className="mb-6">
               Kiểm Soát Chính Xác
               <br />
               Tăng Trưởng Toàn Diện
             </h1>
-            <p className="mb-8 text-h5 text-text/80">
+            <p className="mb-8 text-h6">
               Kết nối đa kênh, chăm sóc khách liên mạch từ lúc qua năng. Hỗ trợ
               chuyên nghiệp 24/7 với Haravan AI Chat.
             </p>
-            <Link
-              href="#"
-              className="inline-block rounded-full bg-primary px-8 py-3 text-body1 font-semibold text-white shadow-lg hover:bg-primary/90"
-            >
-              Liên hệ tư vấn
-            </Link>
+            <div className="mt-8 flex gap-4 ">
+              <button className="text-sub1 rounded-full bg-primary px-6 py-3 font-bold text-white hover:opacity-90">
+                Đăng ký dùng thử
+              </button>
+              <button className="text-sub1 rounded-full border border-primary bg-white px-6 py-3 font-bold text-primary hover:bg-primary/10">
+                Xem video
+              </button>
+            </div>
           </div>
           <div>
             <Image
@@ -503,13 +499,13 @@ export default function ChuoiNhaThuocPage() {
 
       {/* SECTION 1: Thách thức */}
       <FadeInOnScroll>
-        <section className="bg-gradient-to-b from-white to-blue-50">
+        <section className="bg-gradient-to-b from-white to-blue-100">
           <div className="container mx-auto px-4">
-            <div className="mx-auto mb-12 max-w-6xl text-center">
-              <h2 className="mb-4 text-ink">
+            <div className=" mb-12 ">
+              <h2 className="mb-4 mx-auto max-w-5xl text-center text-black">
                 Những Thách Thức Khi Vận Hành Chuỗi Nhà Thuốc
               </h2>
-              <p className="text-h6 text-text/80">
+              <p className="text-h6 mx-auto max-w-3xl text-center">
                 Giải pháp quản lý nhà thuốc toàn diện, tối ưu hóa quy trình vận
                 hành và nâng cao hiệu quả kinh doanh.
               </p>
@@ -529,11 +525,11 @@ export default function ChuoiNhaThuocPage() {
       </FadeInOnScroll>
 
       {/* SECTION 2: tối ưu và luân chuyển*/}
-      <FadeInOnScroll>
-        <section className="bg-gradient-to-b from-blue-50 to-white ">
+      <section className="bg-gradient-to-b from-blue-100 to-white ">
+        <FadeInOnScroll>
           <div className="container mx-auto px-4 py-20">
             <div className="mx-auto max-w-5xl text-center">
-              <h2 className="text-h2 font-bold text-ink">
+              <h2 className="text-black">
                 Tối Ưu Hóa Vốn & Luân Chuyển Hàng Hóa
               </h2>
               <p className="mx-auto mt-4 max-w-3xl text-center text-h6">
@@ -566,18 +562,18 @@ export default function ChuoiNhaThuocPage() {
               </div>
             </div>
           </div>
-        </section>
-      </FadeInOnScroll>
+        </FadeInOnScroll>
+      </section>
 
       {/* SECTION 3: Chuẩn Hóa Vận Hành*/}
       <FadeInOnScroll>
         <section className="bg-white py-20">
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-5xl text-center">
-              <p className="mb-2 text-body2 font-semibold uppercase tracking-wide text-primary">
+              <p className="mb-2 text-h6 font-bold uppercase tracking-wide text-primary">
                 TĂNG TRẢI NGHIỆM KHÁCH HÀNG
               </p>
-              <h2 className="text-h2 font-bold text-ink">
+              <h2 className="text-black">
                 Chuẩn Hóa Vận Hành và Kiểm Soát
                 <br />
                 Giá Bán Toàn Chuỗi
@@ -630,10 +626,10 @@ export default function ChuoiNhaThuocPage() {
 
                     {/* Content */}
                     <div className="flex-1">
-                      <h4 className="mb-2 text-h6 font-semibold text-ink">
+                      <h3 className="mb-2 text-black">
                         Quản lý Giá Bán Toàn Chuỗi
-                      </h4>
-                      <p className="text-sub1 leading-relaxed text-text/80">
+                      </h3>
+                      <p className="text-sub2">
                         Chuẩn hóa danh mục thuốc & giá bán toàn chuỗi bằng cách
                         sử dụng danh mục chung. Dễ dàng cập nhật giá từ 1 nơi
                         trên toàn hệ thống. Dễ dàng cập nhật giá từ 1 nơi trên
@@ -664,10 +660,10 @@ export default function ChuoiNhaThuocPage() {
 
                     {/* Content */}
                     <div className="flex-1">
-                      <h4 className="mb-2 text-h6 font-semibold text-ink">
+                      <h3 className="mb-2 text-black">
                         Quản lý Danh mục & Dữ liệu
-                      </h4>
-                      <p className="text-sub1 leading-relaxed text-text/80">
+                      </h3>
+                      <p className="text-sub2">
                         Chuẩn hóa danh mục thuốc & giá bán toàn chuỗi bằng cách
                         sử dụng danh mục chung. Dễ dàng cập nhật giá từ 1 nơi
                         trên toàn hệ thống. Dễ dàng cập nhật giá từ 1 nơi trên
@@ -679,8 +675,8 @@ export default function ChuoiNhaThuocPage() {
                 </div>
 
                 {/* CTA Button */}
-                <button className="mt-8 rounded-full bg-primary px-8 py-3 text-body1 font-semibold text-white shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl">
-                  Liên hệ tư vấn
+                <button className=" text-sub1 mt-8 rounded-full bg-primary px-8 py-3 font-bold text-white shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl">
+                  Đăng ký dùng thử
                 </button>
               </div>
             </div>
@@ -690,13 +686,13 @@ export default function ChuoiNhaThuocPage() {
 
       {/* SECTION 4 Xây dựng hệ thống thân thiết chuyên nghiệp */}
       <FadeInOnScroll>
-        <section className="bg-gradient-to-b from-white to-blue-50 py-20">
+        <section className="bg-gradient-to-b from-white to-blue-100 py-20">
           <div className="container mx-auto px-4">
             <div className="mx-auto mb-12 max-w-5xl text-center">
-              <p className="mb-2 text-body2 font-semibold uppercase tracking-wide text-primary">
+              <p className="mb-2 text-h6 font-bold uppercase tracking-wide text-primary">
                 TĂNG TRẢI NGHIỆM KHÁCH HÀNG
               </p>
-              <h2 className="mb-4 text-h2 font-bold text-ink">
+              <h2 className="mb-4 text-black">
                 Xây Dựng Hệ Thống Khách Hàng Thân Thiết
                 <br />
                 Chuyên Nghiệp
@@ -707,7 +703,7 @@ export default function ChuoiNhaThuocPage() {
               {/* Arrow prev */}
               <button
                 onClick={handlePrevCustomer}
-                className="absolute left-0 z-10 h-12 w-12 -translate-x-4 rounded-full border border-gray-300 bg-white hover:bg-gray-100 flex items-center justify-center transition"
+                className="absolute left-0 z-10 h-12 w-12 rounded-full border border-gray-300 bg-white hover:bg-gray-100 flex items-center justify-center transition"
                 aria-label="Previous"
               >
                 <svg
@@ -739,13 +735,13 @@ export default function ChuoiNhaThuocPage() {
                       style={{ height: 400 }}
                     >
                       <div className="p-7">
-                        <h3 className="mb-2 text-sub1 font-bold text-ink">
+                        <h3 className="mb-2 text-sub1 text-black">
                           {card.title}
                         </h3>
-                        <div className="mb-4 text-sub2 text-ink">
+                        <p className="mb-4 text-sub2 text-black">
                           {card.content}
-                        </div>
-                        <div className="mt-3 rounded-lg bg-gray-50 py-6 px-4 flex flex-col items-center">
+                        </p>
+                        <div className="mt-2 rounded-lg py-6 px-4 flex flex-col items-center">
                           <Image
                             src={card.image}
                             alt={card.title}
@@ -762,7 +758,7 @@ export default function ChuoiNhaThuocPage() {
               {/* Arrow next */}
               <button
                 onClick={handleNextCustomer}
-                className="absolute right-0 z-10 h-12 w-12 translate-x-4 rounded-full border border-gray-300 bg-white hover:bg-gray-100 flex items-center justify-center transition"
+                className="absolute right-0 z-10 h-12 w-12 rounded-full border border-gray-300 bg-white hover:bg-gray-100 flex items-center justify-center transition"
                 aria-label="Next"
               >
                 <svg
@@ -785,17 +781,18 @@ export default function ChuoiNhaThuocPage() {
       </FadeInOnScroll>
 
       {/* SECTION Xây Dựng Hệ Thống Khách Hàng 4 card có hover */}
-      <FadeInOnScroll>
-        <section className="bg-gradient-to-b from-blue-50 to-white py-20">
+
+      <section className="bg-gradient-to-b from-blue-100 to-white py-20">
+        <FadeInOnScroll>
           <div className="container mx-auto px-4">
             <div className="mx-auto mb-12 max-w-5xl text-center">
-              <p className="mb-2 text-body2 font-semibold uppercase tracking-wide text-primary">
+              <p className="mb-2 text-h6 font-bold uppercase tracking-wide text-primary">
                 TĂNG TRẢI NGHIỆM KHÁCH HÀNG
               </p>
-              <h2 className="mb-4 text-h2 font-bold text-ink">
-                Xây Dựng Hệ Thống Khách Hàng
+              <h2 className="mb-4 text-black">
+                Xây Dựng Hệ Thống Khách Hàng Thân Thiết
                 <br />
-                Thân Thiết Chuyên Nghiệp
+                 Chuyên Nghiệp
               </h2>
             </div>
 
@@ -809,51 +806,36 @@ export default function ChuoiNhaThuocPage() {
                     {card.icon}
                   </div>
 
-                  <h3 className="mb-3 text-h6 font-bold text-ink transition-colors duration-300 group-hover:text-white">
+                  <h3 className="mb-3 text-black transition-colors duration-300 group-hover:text-white">
                     {card.title}
                   </h3>
 
-                  <p className="text-sub1 text-text/80 transition-colors duration-300 group-hover:text-white/90">
+                  <p className="text-sub1 transition-colors duration-300 group-hover:text-white">
                     {card.description}
                   </p>
-
-                  <div className="absolute right-4 top-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    <svg
-                      className="h-6 w-6 text-success"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
                 </div>
               ))}
             </div>
-
             <div className="mt-12 text-center">
-              <button className="rounded-full bg-primary px-8 py-3 text-body1 font-semibold text-white shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl">
-                Liên hệ tư vấn
+              <button className=" text-sub1 mt-8 rounded-full bg-primary px-8 py-3 font-bold text-white shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl">
+                Đăng ký dùng thử
               </button>
             </div>
           </div>
-        </section>
-      </FadeInOnScroll>
+        </FadeInOnScroll>
+      </section>
 
       {/** section dashboard scrolling carousel */}
       <FadeInOnScroll>
         <section className="py-20 text-center">
           <div className="container mx-auto">
-            <p className="mb-2 text-body2 font-semibold uppercase tracking-wide text-primary">
+            <p className="mb-2 text-h6 font-bold uppercase tracking-wide text-primary">
               TĂNG TRẢI NGHIỆM KHÁCH HÀNG
             </p>
-            <h2 className="text-h2 mb- font-bold text-ink">
+            <h2 className="text-black">
               Quyết Định Tối Ưu Với Trợ Lý AI
             </h2>
-            <p className="mx-auto mb-20 max-w-2xl text-h6 text-text/80">
+            <p className="mx-auto mt-4 mb-20 max-w-2xl text-h6 ">
               Ứng dụng công nghệ AI để biến dữ liệu khổng lồ thành thông tin
               hành động, hỗ trợ các quyết định kinh doanh
             </p>
@@ -867,10 +849,10 @@ export default function ChuoiNhaThuocPage() {
         <section className="bg-ink py-20">
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-5xl text-center">
-              <p className="mb-2 text-body2 font-semibold uppercase tracking-wide text-primary">
+              <p className="mb-2 text-h6 font-bold uppercase tracking-wide text-primary">
                 TĂNG TRẢI NGHIỆM KHÁCH HÀNG
               </p>
-              <h2 className="text-h2 font-bold text-white">
+              <h2 className="text-white">
                 Chuẩn Hóa Vận Hành và Kiểm Soát
                 <br />
                 Giá Bán Toàn Chuỗi
@@ -923,10 +905,10 @@ export default function ChuoiNhaThuocPage() {
 
                     {/* Content */}
                     <div className="flex-1">
-                      <h4 className="mb-2 text-h6 font-semibold text-white">
+                      <h3 className="mb-2 text-success">
                         Quản lý Giá Bán Toàn Chuỗi
-                      </h4>
-                      <p className="text-sub1 leading-relaxed text-white">
+                      </h3>
+                      <p className="text-sub2 leading-relaxed text-white">
                         Chuẩn hóa danh mục thuốc & giá bán toàn chuỗi bằng cách
                         sử dụng danh mục chung. Dễ dàng cập nhật giá từ 1 nơi
                         trên toàn hệ thống. Dễ dàng cập nhật giá từ 1 nơi trên
@@ -957,10 +939,10 @@ export default function ChuoiNhaThuocPage() {
 
                     {/* Content */}
                     <div className="flex-1">
-                      <h4 className="mb-2 text-h6 font-semibold text-white">
+                      <h3 className="mb-2 text-success">
                         Quản lý Danh mục & Dữ liệu
-                      </h4>
-                      <p className="text-sub1 leading-relaxed text-white">
+                      </h3>
+                      <p className="text-sub2 leading-relaxed text-white">
                         Chuẩn hóa danh mục thuốc & giá bán toàn chuỗi bằng cách
                         sử dụng danh mục chung. Dễ dàng cập nhật giá từ 1 nơi
                         trên toàn hệ thống. Dễ dàng cập nhật giá từ 1 nơi trên
@@ -991,10 +973,10 @@ export default function ChuoiNhaThuocPage() {
 
                     {/* Content */}
                     <div className="flex-1">
-                      <h4 className="mb-2 text-h6 font-semibold text-white">
+                      <h4 className="mb-2 text-success">
                         Quản lý Danh mục & Dữ liệu
                       </h4>
-                      <p className="text-sub1 leading-relaxed text-white">
+                      <p className="text-sub2 leading-relaxed text-white">
                         Chuẩn hóa danh mục thuốc & giá bán toàn chuỗi bằng cách
                         sử dụng danh mục chung. Dễ dàng cập nhật giá từ 1 nơi
                         trên toàn hệ thống. Dễ dàng cập nhật giá từ 1 nơi trên
@@ -1006,8 +988,8 @@ export default function ChuoiNhaThuocPage() {
                 </div>
 
                 {/* CTA Button */}
-                <button className="mt-8 rounded-full bg-primary px-8 py-3 text-body1 font-semibold text-white shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl">
-                  Liên hệ tư vấn
+                <button className=" text-sub1 mt-8 rounded-full bg-primary px-8 py-3 font-bold text-white shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl">
+                  Đăng ký dùng thử
                 </button>
               </div>
             </div>
@@ -1015,18 +997,15 @@ export default function ChuoiNhaThuocPage() {
         </section>
       </FadeInOnScroll>
 
-      {/* ========================================
-          SECTION 7: Được Tin Dùng - Carousel
-          ======================================== */}
-
+      {/*SECTION 7: Được Tin Dùng - Carousel*/}
       <FadeInOnScroll>
         <section className="bg-white py-20">
           <div className="container mx-auto px-4">
             <div className="mx-auto mb-12 max-w-6xl text-center">
-              <p className="mb-2 text-center text-body2 font-semibold uppercase tracking-wide text-primary">
+              <p className="mb-2 text-h6 font-bold uppercase tracking-wide text-primary">
                 TĂNG TRẢI NGHIỆM KHÁCH HÀNG
               </p>
-              <h2 className="mb-4 text-h2 font-bold text-ink">
+              <h2 className="mb-4 text-black">
                 Được Tin Dùng Bởi Các Chuỗi Nhà Thuốc Hàng Đầu
               </h2>
             </div>
@@ -1035,7 +1014,7 @@ export default function ChuoiNhaThuocPage() {
               {/* Arrow prev */}
               <button
                 onClick={handlePrevPharmacy}
-                className="absolute left-0 z-10 h-12 w-12 -translate-x-4 rounded-full border border-gray-300 bg-white hover:bg-gray-100 flex items-center justify-center transition"
+                className="absolute left-0 z-10 h-12 w-12 rounded-full border border-gray-300 bg-white hover:bg-gray-100 flex items-center justify-center transition"
                 aria-label="Previous"
               >
                 <svg
@@ -1067,13 +1046,13 @@ export default function ChuoiNhaThuocPage() {
                       style={{ height: 350 }}
                     >
                       <div className="p-7">
-                        <h3 className="mb-2 text-h6 font-bold text-ink">
+                        <h3 className="mb-2 text-black">
                           {card.title}
                         </h3>
-                        <div className="mb-4 text-sub1 text-ink">
+                        <p className="mb-4 text-sub1 text-black">
                           {card.content}
-                        </div>
-                        <div className="mt-3 rounded-lg bg-gray-50 py-6 px-4 flex flex-col items-center">
+                        </p>
+                        <div className="mt-3 rounded-lg py-6 px-4 flex flex-col items-center">
                           <Image
                             src={card.image}
                             alt={card.title}
@@ -1090,7 +1069,7 @@ export default function ChuoiNhaThuocPage() {
               {/* Arrow next */}
               <button
                 onClick={handleNextPharmacy}
-                className="absolute right-0 z-10 h-12 w-12 translate-x-4 rounded-full border border-gray-300 bg-white hover:bg-gray-100 flex items-center justify-center transition"
+                className="absolute right-0 z-10 h-12 w-12 rounded-full border border-gray-300 bg-white hover:bg-gray-100 flex items-center justify-center transition"
                 aria-label="Next"
               >
                 <svg
