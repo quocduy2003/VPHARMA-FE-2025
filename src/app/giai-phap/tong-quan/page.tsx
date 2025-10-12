@@ -12,6 +12,7 @@ import {
 import ReviewCarousel from "@/components/ReviewCarousel";
 import FaqSection from "@/components/Faq";
 import FadeInOnScroll from "@/components/animations/FadeInOnScroll";
+import CTASection from "@/components/CTA";
 
 // Dữ liệu Các Tính Năng Nổi Bật Của V-Pharma
 const featureTabs = [
@@ -158,9 +159,7 @@ function AccordionItem({
           <FiPlus className="text-white bg-primary rounded text-h6" />
         )}
       </button>
-      {isOpen && (
-        <p className="mt-4 text-sm text-sub2 max-w-xl">{children}</p>
-      )}
+      {isOpen && <p className="mt-4 text-sm text-sub2 max-w-xl">{children}</p>}
     </div>
   );
 }
@@ -178,9 +177,9 @@ const DashboardCarousel = ({
       setCurrentIndex((prevIndex) =>
         prevIndex === images.length - 1 ? 0 : prevIndex + 1
       );
-    }, 3000); // Thay đổi slide mỗi 3 giây
+    }, 2500); // Thay đổi slide mỗi 3 giây
 
-    return () => clearInterval(interval); // Dọn dẹp interval khi component unmount
+    return () => clearInterval(interval);
   }, [images.length]);
 
   return (
@@ -201,23 +200,10 @@ const DashboardCarousel = ({
           </div>
         ))}
       </div>
-      <div className="mt-6 flex justify-center gap-2">
-        {images.map((_, idx) => (
-          <button
-            key={idx}
-            className={`h-3 w-7 rounded-full transition-all duration-200 ${
-              currentIndex === idx ? "bg-primary" : "bg-white"
-            }`}
-            aria-label={`Go to slide ${idx + 1}`}
-            onClick={() => setCurrentIndex(idx)}
-          />
-        ))}
-      </div>
     </div>
   );
 };
 
-// Dữ liệu hình ảnh cho dashboard scrolling carousel
 const dashboardImages = [
   { src: "/hero-dashboard.jpg", alt: "V-Pharma Dashboard Overview" },
   { src: "/features-dashboard1.png", alt: "Sales Dashboard" },
@@ -232,33 +218,37 @@ export default function TongQuan() {
   return (
     <div>
       {/** Dashboard */}
-      <section className="bg-gradient-to-b from-blue-100 to-white py-20 text-center">
-        <div className="container mx-auto px-4 lg:px-80">
-          <h1 className="text-h1 font-bold text-black">
-            Phần Mềm Quản Lý Nhà Thuốc Toàn Diện V-Pharma
-          </h1>
-          <p className="mx-auto mt-4 max-w-3xl text-h6">
-            Giải pháp toàn diện cho quản lý nhà thuốc, từ tồn kho đến bán hàng,
-            với công nghệ hiện đại và dễ sử dụng.
-          </p>
-          <div className="mt-8 flex justify-center gap-4 ">
-            <button className="text-sub1 rounded-full bg-primary px-6 py-3 font-semibold text-white hover:opacity-90">
-              Đăng ký dùng thử
-            </button>
-            <button className="text-sub1 rounded-full border border-primary bg-white px-6 py-3 font-semibold text-primary hover:bg-primary/10">
-              Xem video
-            </button>
+      <section className="bg-gradient-to-b from-blue-100 to-white py-20 ">
+        <FadeInOnScroll>
+          <div className="container mx-auto max-w-8xl text-center">
+            <h1>
+              Phần Mềm Quản Lý Nhà Thuốc Toàn Diện
+              <br />
+              <span className="text-h1 font-bold text-primary">V-Pharma</span>
+            </h1>
+            <p className="mx-auto mt-4 max-w-3xl text-h6">
+              Giải pháp toàn diện cho quản lý nhà thuốc, từ tồn kho đến bán
+              hàng, với công nghệ hiện đại và dễ sử dụng.
+            </p>
+            <div className="mt-8 flex justify-center gap-4 ">
+              <button className="text-sub1 rounded-full bg-primary px-6 py-3 font-semibold text-white hover:opacity-90">
+                Đăng ký dùng thử
+              </button>
+              <button className="text-sub1 rounded-full border border-primary bg-white px-6 py-3 font-semibold text-primary hover:bg-primary/10">
+                Xem video
+              </button>
+            </div>
+            <div className="relative mx-auto mt-12 max-w-4xl">
+              <Image
+                src="/hero-dashboard.jpg"
+                alt="V-Pharma Dashboard"
+                width={1000}
+                height={600}
+                className="rounded-lg shadow-2xl"
+              />
+            </div>
           </div>
-          <div className="relative mx-auto mt-12 max-w-4xl">
-            <Image
-              src="/hero-dashboard.jpg"
-              alt="V-Pharma Dashboard"
-              width={1000}
-              height={600}
-              className="rounded-lg shadow-2xl"
-            />
-          </div>
-        </div>
+        </FadeInOnScroll>
       </section>
 
       {/* 4 hero-section */}
@@ -288,7 +278,7 @@ export default function TongQuan() {
           ].map((item, index) => (
             <div
               key={index}
-              className="rounded-xl bg-white p-6 text-center shadow-lg"
+              className="rounded-xl bg-white p-6 text-center shadow-lg  hover:shadow-blue-100"
             >
               <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
                 <div className="h-6 w-6 rounded bg-primary"></div>
@@ -368,7 +358,7 @@ export default function TongQuan() {
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-3xl text-center">
               <h2>An Tâm Và Vận Hành Hiệu Quả</h2>
-              <p className="mt-4 text-h6 text-white/80">
+              <p className="mt-4 text-h6 text-white">
                 Nền tảng V-Pharma biến quản lý phức tạp thành tự động hóa dễ
                 dàng, giúp bạn tập trung vào Khách hàng và Tăng trưởng.
               </p>
@@ -377,7 +367,7 @@ export default function TongQuan() {
             <div className="mt-16 space-y-20">
               {/* Feature 1*/}
               <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
-                <div className="relative aspect-video rounded-lg bg-white/10 p-2">
+                <div className="relative aspect-video rounded-lg p-2">
                   <Image
                     src="/features-dashboard1.png"
                     alt="Marketing Dashboards"
@@ -386,10 +376,8 @@ export default function TongQuan() {
                   />
                 </div>
                 <div>
-                  <h3 className="text-success">
-                    Quản Lý Tài Chính Rõ Ràng
-                  </h3>
-                  <p className="text-sub2 mt-4 line-clamp-3 text-white/80">
+                  <h3 className="text-success">Quản Lý Tài Chính Rõ Ràng</h3>
+                  <p className="text-sub2 mt-4 line-clamp-3 text-white">
                     Chấm dứt việc “tiền bán thuốc không rõ lý do” hay nhập quá
                     nhiều vì nghe khuyến mại. Hệ thống ghi nhận chi tiêu/giao
                     dịch. Dễ dàng nắm được lãi gộp và tiền mặt thực tế ngay lập
@@ -401,7 +389,7 @@ export default function TongQuan() {
               {/* Feature 2*/}
               <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
                 <div className="md:order-last">
-                  <div className="relative aspect-video rounded-lg bg-white/10 p-2">
+                  <div className="relative aspect-video rounded-lg p-2">
                     <Image
                       src="/features-dashboard2.png"
                       alt="Marketing Dashboards"
@@ -411,10 +399,8 @@ export default function TongQuan() {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-success">
-                    Nâng Cao Hiệu Quả Kinh Doanh
-                  </h3>
-                  <p className="text-sub2 mt-4 line-clamp-3 text-white/80">
+                  <h3 className="text-success">Nâng Cao Hiệu Quả Kinh Doanh</h3>
+                  <p className="text-sub2 mt-4 line-clamp-3 text-white">
                     Chuyển từ nỗi sợ nhập liệu sang lợi ích. AI Scan Hóa đơn đầu
                     vào giúp bạn nhập liệu nhanh chóng mà không cần gõ tay, giảm
                     đáng kể thời gian nhập liệu.
@@ -424,7 +410,7 @@ export default function TongQuan() {
 
               {/* Feature 3*/}
               <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
-                <div className="relative aspect-video rounded-lg bg-white/10 p-2">
+                <div className="relative aspect-video rounded-lg p-2">
                   <Image
                     src="/features-dashboard3.jpg"
                     alt="Marketing Dashboards"
@@ -433,10 +419,8 @@ export default function TongQuan() {
                   />
                 </div>
                 <div>
-                  <h3 className="text-success">
-                    Chăm Sóc Khách Hàng Hiệu Quả
-                  </h3>
-                  <p className="text-sub2 mt-4 line-clamp-3 text-white/80">
+                  <h3 className="text-success">Chăm Sóc Khách Hàng Hiệu Quả</h3>
+                  <p className="text-sub2 mt-4 line-clamp-3 text-white">
                     Quản lý hồ sơ khách hàng để tư vấn thuốc chính xác hơn, dựa
                     trên dữ liệu đã ghi nhận trước đó. Nâng cao trải nghiệm
                     khách hàng để họ luôn quay lại.
@@ -447,7 +431,7 @@ export default function TongQuan() {
               {/* Feature 4 */}
               <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
                 <div className="md:order-last">
-                  <div className="relative aspect-video rounded-lg bg-white/10 p-2">
+                  <div className="relative aspect-video rounded-lg p-2">
                     <Image
                       src="/features-dashboard5.jpg"
                       alt="Marketing Dashboards"
@@ -457,10 +441,8 @@ export default function TongQuan() {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-success">
-                    Tăng Cạnh Tranh Và Mở Rộng
-                  </h3>
-                  <p className="text-sub2 mt-4 line-clamp-3 text-white/80">
+                  <h3 className="text-success">Tăng Cạnh Tranh Và Mở Rộng</h3>
+                  <p className="text-sub2 mt-4 line-clamp-3 text-white">
                     Dù là nhà thuốc độc lập, bạn vẫn cần tầm nhìn. Mọi dữ liệu
                     đã được số hóa và chuẩn hóa, tạo nền tảng vững chắc để mở
                     rộng quầy/chi nhánh khi bạn sẵn sàng.
@@ -513,9 +495,7 @@ export default function TongQuan() {
             </div>
             <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-2">
               <div className="container mx-auto rounded-3xl max-w-lg bg-white p-8 text-center shadow-lg">
-                <h3 className="mt-6 text-h4 text-black">
-                  Chuỗi nhà thuốc
-                </h3>
+                <h3 className="mt-6 text-h4 text-black">Chuỗi nhà thuốc</h3>
                 <p className="mt-2 text-h6">
                   Tối ưu vận hành cho chuỗi nhà thuốc,
                   <br />
@@ -604,20 +584,8 @@ export default function TongQuan() {
         <ReviewCarousel />
       </FadeInOnScroll>
 
-      {/* Final CTA Section */}
       <FadeInOnScroll>
-        <section className="container mx-auto px-4 py-20">
-          <div className="rounded-2xl bg-ink p-12 text-center text-white">
-            <h2>Sẵn Sàng Số Hóa Nhà Thuốc Của Bạn?</h2>
-            <p className="mx-auto text-h6 mt-4 max-w-1xl text-white/80">
-              Trải nghiệm đầy đủ các tính năng ưu việt của V-Pharma hoàn toàn
-              miễn phí trong 15 ngày. Không cần thẻ tín dụng.
-            </p>
-            <button className="mt-8 text-sub1 rounded-full bg-primary px-6 py-3 font-semibold text-white hover:opacity-90">
-              Đăng ký dùng thử
-            </button>
-          </div>
-        </section>
+        <CTASection />
       </FadeInOnScroll>
 
       <FadeInOnScroll>
