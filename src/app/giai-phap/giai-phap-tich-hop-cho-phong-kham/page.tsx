@@ -9,6 +9,11 @@ import {
   FiPlus,
   FiMinus,
 } from "react-icons/fi";
+import { independentPharmacyData } from "@/lib/api/solution";
+import { Button } from "@/components/ui/Button";
+import { RichTextRenderer } from "@/components/ui/RichTextRenderer";
+import { button } from "framer-motion/client";
+
 
 // Dữ liệu cho Các Tính Năng Nổi Bật Của V-Pharma
 const featureTabs = [
@@ -252,9 +257,8 @@ const DashboardCarousel = ({
             key={index}
             onClick={() => setCurrentIndex(index)}
             aria-label={`Go to slide ${index + 1}`}
-            className={`h-3 w-3 rounded-full transition-colors ${
-              currentIndex === index ? "bg-primary" : "bg-white/50"
-            }`}
+            className={`h-3 w-3 rounded-full transition-colors ${currentIndex === index ? "bg-primary" : "bg-white/50"
+              }`}
           />
         ))}
       </div>
@@ -267,7 +271,7 @@ const dashboardImages = [
   { src: "/hero-dashboard.jpg", alt: "V-Pharma Dashboard Overview" },
   { src: "/features-dashboard1.png", alt: "Sales Dashboard" },
   { src: "/features-dashboard2.png", alt: "Inventory Dashboard" },
-  { src: "/features-dashboard4.png", alt: "Reports Dashboard" },
+  { src: "/features-dashboard1.png", alt: "Reports Dashboard" },
   { src: "/features-dashboard5.jpg", alt: "Accounting Dashboard" },
 ];
 
@@ -400,6 +404,9 @@ const reviewsData = [
   },
 ];
 
+
+
+
 function ReviewCarousel() {
   const REVIEWS_PER_PAGE = 4;
   const [currentPage, setCurrentPage] = useState(0);
@@ -451,9 +458,8 @@ function ReviewCarousel() {
               <button
                 key={index}
                 onClick={() => setCurrentPage(index)}
-                className={`h-3 w-3 rounded-full transition-colors ${
-                  currentPage === index ? "bg-primary" : "bg-gray-300"
-                }`}
+                className={`h-3 w-3 rounded-full transition-colors ${currentPage === index ? "bg-primary" : "bg-gray-300"
+                  }`}
                 aria-label={`Go to page ${index + 1}`}
               />
             ))}
@@ -465,36 +471,41 @@ function ReviewCarousel() {
 }
 
 export default function IndependentPharmacyPage() {
-  const [activeTab, setActiveTab] = useState("ban-hang");
+  const { heroSection, featureSection, featureBenefitsSection } = independentPharmacyData;
+  const [activeTab, setActiveTab] = useState<number | null>(featureSection.tabs[0].id);
+  const current = featureSection.tabs.find((tab) => tab.id === activeTab);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [openAccordion, setOpenAccordion] = useState(0);
+
   return (
     <div>
       {/** Dashboard */}
       <section className="bg-gradient-to-b from-blue-50 to-white py-20 text-center">
         <div className="container mx-auto px-4 lg:px-80">
           <h1 className="text-h1 font-bold text-ink">
-            Phần Mềm Quản Lý Nhà Thuốc Toàn Diện V-Pharma
+            {heroSection.mainTitle}
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-h6">
-            Giải pháp toàn diện cho quản lý nhà thuốc, từ tồn kho đến bán hàng,
-            với công nghệ hiện đại và dễ sử dụng.
+            {heroSection.mainDescription}
           </p>
           <div className="mt-8 flex justify-center gap-4">
-            <button className="rounded-full bg-primary px-6 py-3 font-semibold text-white hover:opacity-90">
-              Trải nghiệm miễn phí
-            </button>
-            <button className="rounded-full border border-primary bg-white px-6 py-3 font-semibold text-primary hover:bg-primary/10">
-              Xem video
-            </button>
+            {heroSection.ctaButtons.map((button, index) => (
+              <Button
+                key={button.title}
+                variant={index === 0 ? 'primary' : 'secondary'}
+              >
+                {button.title}
+              </Button>
+            ))}
           </div>
           <div className="relative mx-auto mt-12 max-w-4xl">
             <Image
-              src="/features-dashboard1.png"
+              src={heroSection.image.url}
               alt="V-Pharma Dashboard"
               width={1000}
               height={600}
-              className="rounded-lg shadow-2xl"
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 896px"
+              className="w-full h-auto rounded-lg shadow-2xl"
             />
           </div>
         </div>
@@ -502,28 +513,7 @@ export default function IndependentPharmacyPage() {
 
       {/* 4 hero-section */}
       <section className="container mx-auto grid grid-cols-1 gap-8 px-4 py-20 md:grid-cols-2 lg:grid-cols-4">
-        {[
-          {
-            title: "Dễ dùng & Đơn giản",
-            description:
-              "Giao diện chuẩn hóa riêng cho nhà thuốc, thành thạo ngay từ lần đầu sử dụng.",
-          },
-          {
-            title: "Quản lý mọi lúc mọi nơi",
-            description:
-              "Dễ dàng truy cập và kiểm soát thông tin dữ liệu hoạt động nhà thuốc từ mọi lúc mọi nơi.",
-          },
-          {
-            title: "Tuân thủ chuẩn GPP",
-            description:
-              "Tích hợp liên thông Dược Quốc gia. Hỗ trợ kết nối với các đơn vị cung cấp hóa đơn điện tử.",
-          },
-          {
-            title: "Hạn chế thất thoát",
-            description:
-              "Tự động theo dõi số lô, cảnh báo thiếu hụt/hết hạn. Dữ liệu rõ ràng, giúp kiểm kê định kỳ.",
-          },
-        ].map((item, index) => (
+        {featureSection.gridItems.map((item, index) => (
           <div
             key={index}
             className="rounded-xl bg-white p-6 text-center shadow-lg"
@@ -540,22 +530,20 @@ export default function IndependentPharmacyPage() {
       {/* Features Section: Các Tính Năng Nổi Bật Của V-Pharma*/}
       <section className="container mx-auto px-4 py-20">
         <h2 className="text-center text-h3 font-bold text-ink">
-          Các Tính Năng Nổi Bật Của V-Pharma
+          {featureSection.title}
         </h2>
         <p className="mx-auto mt-4 max-w-3xl text-center text-h6">
-          Giải pháp quản lý nhà thuốc toàn diện, tối ưu hóa quy trình vận hành
-          và nâng cao hiệu quả kinh doanh.
+          {featureSection.description}
         </p>
         <div className="mt-10 flex flex-wrap justify-center gap-6">
-          {featureTabs.map((tab) => (
+          {featureSection.tabs.map((tab, idx) => (
             <button
-              key={tab.id}
+              key={idx}
               onClick={() => setActiveTab(tab.id)}
-              className={`rounded-full text-body2 border px-5 py-2 text-sm font-medium transition-colors ${
-                activeTab === tab.id
-                  ? "bg-primary text-white"
-                  : "border-primary bg-white text-text hover:bg-primary/10"
-              }`}
+              className={`rounded-full text-body2 border px-5 py-2 text-sm font-medium transition-colors ${activeTab === tab.id
+                ? "bg-primary text-white"
+                : "border-primary bg-white text-text hover:bg-primary/10"
+                }`}
             >
               {tab.label}
             </button>
@@ -563,28 +551,29 @@ export default function IndependentPharmacyPage() {
         </div>
         <div className="mt-12 grid grid-cols-1 items-center gap-12 md:grid-cols-2">
           <div className="relative">
-            <Image
-              src={featureTabs.find((t) => t.id === activeTab)?.image || ""}
-              alt="Feature Dashboard"
-              width={600}
-              height={400}
-              className="rounded-lg shadow-xl"
-            />
+            {current?.image && (
+              <Image
+                src={current.image.url}
+                alt={current.label || "Feature Dashboard"}
+                width={600}
+                height={400}
+                className="rounded-lg shadow-xl object-cover"
+              />
+            )}
           </div>
           <div>
             <h3 className="text-h5 font-bold text-ink">
-              {featureTabs.find((t) => t.id === activeTab)?.label}
+              {current?.label}
             </h3>
             <p className="text-body1 text-ink">
-              {featureTabs.find((t) => t.id === activeTab)?.discriptions}
+              {current?.title}
             </p>
             <ul className="mt-4 text-body1 space-y-3">
-              {featureTabs
-                .find((t) => t.id === activeTab)
-                ?.points.map((point, i) => (
-                  <li key={i} className="flex items-start gap-3">
+              {Array.isArray(current?.description) &&
+                current.description.map((block, index) => (
+                  <li key={index} className="flex items-start gap-3">
                     <FiCheckCircle className="mt-1 flex-shrink-0 text-success" />
-                    <span>{point}</span>
+                    <RichTextRenderer content={[block]} />
                   </li>
                 ))}
             </ul>
@@ -599,60 +588,38 @@ export default function IndependentPharmacyPage() {
       <section className="bg-ink py-20 text-white">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-h3 font-bold">An Tâm Và Vận Hành Hiệu Quả</h2>
+            <h2 className="text-h3 font-bold">{featureBenefitsSection.title}</h2>
             <p className="mt-4 text-h6 text-white/80">
-              Nền tảng V-Pharma biến quản lý phức tạp thành tự động hóa dễ dàng,
-              giúp bạn tập trung vào Khách hàng và Tăng trưởng.
+              {featureBenefitsSection.description}
             </p>
           </div>
 
           {/* Feature 1*/}
           <div className="mt-16 space-y-20">
-            <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
-              <div className="relative aspect-video rounded-lg bg-white/10 p-2">
-                <Image
-                  src="/features-dashboard1.png"
-                  alt="Marketing Dashboards"
-                  layout="fill"
-                  objectFit="contain"
-                />
-              </div>
-              <div>
-                <h3 className="text-h5 font-semibold text-success">
-                  Quản Lý Tài Chính Rõ Ràng
-                </h3>
-                <p className="text-sub1 mt-4 line-clamp-3 text-white/80">
-                  Chấm dứt việc “tiền bán thuốc không rõ lý do” hay nhập quá
-                  nhiều vì nghe khuyến mại. Hệ thống ghi nhận chi tiêu/giao
-                  dịch. Dễ dàng nắm được lãi gộp và tiền mặt thực tế ngay lập
-                  tức, tránh nhầm lẫn vốn và lãi.
-                </p>
-              </div>
-            </div>
-
-            {/* Feature 2*/}
-            <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
-              <div className="md:order-last">
-                <div className="relative aspect-video rounded-lg bg-white/10 p-2">
-                  <Image
-                    src="/features-dashboard2.png"
-                    alt="Marketing Dashboards"
-                    layout="fill"
-                    objectFit="contain"
-                  />
+            {featureBenefitsSection.contents.map((feature, index) => {
+              const isEven = index % 2 === 1;
+              return (
+                <div key={index} className={`grid grid-cols-1 items-center gap-12 md:grid-cols-2`}>
+                  <div className={`relative aspect-video rounded-lg bg-white/10 p-2 ${isEven ? "md:order-2" : "md:order-1"
+                    }`}>
+                    <Image
+                      src={feature.image.url}
+                      alt={feature.image.alt}
+                      layout="fill"
+                      objectFit="contain"
+                    />
+                  </div>
+                  <div className={`${isEven ? "md:order-1" : "md:order-2"}`}>
+                    <h3 className="text-h5 font-semibold text-success">
+                      {feature.title}
+                    </h3>
+                    <p className="text-sub1 mt-4 line-clamp-3 text-white/80">
+                      {feature.description}
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div>
-                <h3 className="text-h5 font-semibold text-success">
-                  Nâng Cao Hiệu Quả Kinh Doanh
-                </h3>
-                <p className="text-sub1 mt-4 line-clamp-3 text-white/80">
-                  Chuyển từ nỗi sợ nhập liệu sang lợi ích. AI Scan Hóa đơn đầu
-                  vào giúp bạn nhập liệu nhanh chóng mà không cần gõ tay, giảm
-                  đáng kể thời gian nhập liệu.
-                </p>
-              </div>
-            </div>
+              );
+            })}
 
             {/* Feature 3*/}
             <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
@@ -703,7 +670,7 @@ export default function IndependentPharmacyPage() {
 
           <div className="mt-20 text-center">
             <button className="rounded-full bg-primary px-8 py-3 font-semibold text-white hover:opacity-90">
-              Trải nghiệm miễn phí
+              {featureBenefitsSection.ctaButton.title}
             </button>
           </div>
         </div>
