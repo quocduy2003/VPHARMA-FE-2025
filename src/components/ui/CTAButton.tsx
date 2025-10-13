@@ -1,7 +1,8 @@
 // File: components/ui/Button.tsx
 
 import React from 'react';
-import { ButtonHTMLAttributes } from 'react';
+import { ButtonHTMLAttributes,  } from 'react';
+import Link from 'next/link';
 
 // Định nghĩa các kiểu dáng (variant) có sẵn
 const buttonVariants = {

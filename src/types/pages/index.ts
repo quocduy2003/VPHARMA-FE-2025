@@ -1,2 +1,4 @@
-//export * from "@/types/pages/solution";
-export * from "./solution";
+// Independent Pharmacy Solution Types
+export * from "./independentPharmacySolution";
+// Chain Pharmacy Solution Types
+export * from "./chainPharmacySolution";
