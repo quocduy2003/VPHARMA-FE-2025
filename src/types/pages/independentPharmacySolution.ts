@@ -1,18 +1,18 @@
 import { CtaButton, RichTextBlock, StrapiImage } from "@/types";
 // ---------- Section Types ----------
-export interface HeroSection {
+interface HeroSection {
   mainTitle: string;
   mainDescription: string;
   ctaButtons: CtaButton[];
   image: StrapiImage;
 }
 
-export interface FeatureGrid {
+interface FeatureGrid {
   title: string;
   description: string;
 }
 
-export interface FeatureTab {
+interface FeatureTab {
   id: number;
   label: string;
   title: string;
@@ -20,14 +20,14 @@ export interface FeatureTab {
   image: StrapiImage;
 }
 
-export interface FeatureSection {
+interface FeatureSection {
   title: string;
   description: string;
   gridItems: FeatureGrid[];
   tabs: FeatureTab[];
 }
 
-export interface FeatureBenefitsSection {
+interface FeatureBenefitsSection {
   title: string;
   description: string;
   contents: {
@@ -39,26 +39,26 @@ export interface FeatureBenefitsSection {
   ctaButton: CtaButton;
 }
 
-export interface FeatureShowcaseSection {
+interface FeatureShowcaseSection {
   title: string;
   description: string;
   ctaButton: CtaButton;
-  image: ImageData;
+  images: StrapiImage[];
 }
 
-export interface SolutionCard {
+interface SolutionCard {
   title: string;
   description: string;
   image: ImageData;
 }
 
-export interface SolutionSection {
+interface SolutionSection {
   title: string;
   description: string;
   solutionCard: SolutionCard[];
 }
 
-export interface TestimonialSection {
+interface TestimonialSection {
   title: string;
   testimonials: {
     id: number;
@@ -72,13 +72,13 @@ export interface CommitmentContent {
   alt?: string;
 }
 
-export interface CommitmentSection {
+interface CommitmentSection {
   title: string;
   description?: string; // có thể bị typo "desription" trong dữ liệu
   contents: CommitmentContent[];
 }
 
-export interface CTASection {
+interface CTASection {
   title: string;
   description: string;
   ctaButton: CtaButton;
@@ -89,7 +89,7 @@ export interface IndependentPharmacyData {
   heroSection: HeroSection;
   featureSection: FeatureSection;
   featureBenefitsSection: FeatureBenefitsSection;
-//   featureShowcaseSection: FeatureShowcaseSection;
+  featureShowcaseSection: FeatureShowcaseSection;
 //   solutionSection: SolutionSection;
 //   testimonialSection: TestimonialSection;
 //   CommitmentSection: CommitmentSection;

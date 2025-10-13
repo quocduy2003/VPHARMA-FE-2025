@@ -9,7 +9,7 @@ import FadeInOnScroll from "@/components/animations/FadeInOnScroll";
 import FlipCard from "@/components/animations/FlipCard";
 import FaqSection from "@/components/Faq";
 import CTAEmail from "@/components/CTAEmail";
-
+import { chainPharmacyData } from "@/lib/api/chainPharmacySolution";
 //data section1
 const challengeCards = [
   {
@@ -405,6 +405,11 @@ const cards2 = pharmacyCards.slice(0, maxCards);
 // COMPONENT CHÍNH
 export default function ChuoiNhaThuoc() {
   const [openAccordion, setOpenAccordion] = useState(0);
+  const { heroSection }= chainPharmacyData;
+  console.log('hẻoSection',heroSection);
+  
+  
+
 
   // State quản lý chỉ số slide hiện tại cho từng bộ card
   const [indexCustomer, setIndexCustomer] = useState(0);
@@ -465,16 +470,13 @@ export default function ChuoiNhaThuoc() {
         <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
           <div>
             <p className="mb-4 text-h6 font-bold uppercase tracking-wide text-primary">
-              GIẢI PHÁP QUẢN LÝ CHUỖI NHÀ THUỐC V-PHARMA
+              {heroSection.eyebrow}
             </p>
             <h1 className="mb-6">
-              Kiểm Soát Chính Xác
-              <br />
-              Tăng Trưởng Toàn Diện
+              {heroSection.mainTitle}
             </h1>
             <p className="mb-8 text-h6">
-              Kết nối đa kênh, chăm sóc khách liên mạch từ lúc qua năng. Hỗ trợ
-              chuyên nghiệp 24/7 với Haravan AI Chat.
+              {heroSection.mainDescription}
             </p>
             <div className="mt-8 flex gap-4 ">
               <button className="text-sub1 rounded-full bg-primary px-6 py-3 font-bold text-white hover:opacity-90">
