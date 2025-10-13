@@ -124,7 +124,7 @@
     overflow-x: clip;
     max-width: 1536px;
     @media (min-width: theme("screens.md")) {
-      padding-inline: 4.5rem;
+      padding-inline: 2rem;
       padding-block: 3rem;
     }
   }
