@@ -2,6 +2,9 @@
 import Link from "next/link";
 import { useState } from "react";
 import FadeInOnScroll from "@/components/animations/FadeInOnScroll";
+import PhoneInputField from "@/components/ho-tro/PhoneInputField";
+import { FiLoader, FiXCircle, FiCheckCircle } from "react-icons/fi";
+
 import {
   FiFacebook,
   FiYoutube,
@@ -12,29 +15,86 @@ import {
   FiChevronDown,
 } from "react-icons/fi";
 
-export default function ChuoiNhaThuoc() {
-  const [selectedCountry, setSelectedCountry] = useState({
-    code: "+84",
-    flag: "🇻🇳",
-    name: "Vietnam",
-  });
-  const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false);
+export default function HoTro() {
+  const [fullName, setFullName] = useState("");
+  const [fullNameError, setFullNameError] = useState("");
+  const handleFullNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.trimStart(); // loại bỏ ký tự space ở đầu nhưng giữ lại ở giữa tên
+    setFullName(value);
+    // Có thể thêm kiểm tra trường này trống hay định dạng đặc biệt để set fullNameError
+    if (!value.trim()) {
+      setFullNameError("Vui lòng nhập họ và tên.");
+      return;
+    }
 
-  const countries = [
-    { code: "+84", flag: "🇻🇳", name: "Vietnam" },
-    { code: "+1", flag: "🇺🇸", name: "United States" },
-    { code: "+44", flag: "🇬🇧", name: "United Kingdom" },
-    { code: "+86", flag: "🇨🇳", name: "China" },
-    { code: "+81", flag: "🇯🇵", name: "Japan" },
-    { code: "+82", flag: "🇰🇷", name: "South Korea" },
-    { code: "+65", flag: "🇸🇬", name: "Singapore" },
-    { code: "+60", flag: "🇲🇾", name: "Malaysia" },
-    { code: "+66", flag: "🇹🇭", name: "Thailand" },
-    { code: "+62", flag: "🇮🇩", name: "Indonesia" },
-    { code: "+63", flag: "🇵🇭", name: "Philippines" },
-    { code: "+91", flag: "🇮🇳", name: "India" },
-  ];
+    // Kiểm tra độ dài tối thiểu (ví dụ: từ 3 ký tự)
+    if (value.length < 3) {
+      setFullNameError("Họ và tên phải từ 3 ký tự trở lên.");
+      return;
+    }
 
+    // Kiểm tra không chứa số hoặc ký tự đặc biệt
+    const validNameRegex = /^[A-Za-zÀ-ỹ\s'-]+$/u;
+    if (!validNameRegex.test(value)) {
+      setFullNameError("Họ và tên không chứa số hoặc ký tự đặc biệt.");
+      return;
+    }
+    setFullNameError("");
+  };
+
+  const [phone, setPhone] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const handlePhoneChange = (value: string) => {
+    setPhone(value);
+    // Nếu muốn validate realtime:
+    const onlyNumber = /^[0-9]{9,12}$/;
+    if (!onlyNumber.test(value.replace(/\s+/g, ""))) {
+      setPhoneError("Vui lòng kiểm tra lại số điện thoại.");
+    } else {
+      setPhoneError("");
+    }
+  };
+
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+    //kiểm tra định dạng email
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!re.test(e.target.value)) {
+      setEmailError("Email cần có định dạng ten@domain.com.");
+    } else {
+      setEmailError("");
+    }
+  };
+
+  const [subject, setSubject] = useState("");
+  const handleSubjectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSubject(e.target.value);
+    // Nếu cần validate thì bổ sung tại đây.
+  };
+
+  const [description, setDescription] = useState("");
+  const handleDescriptionChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setDescription(e.target.value);
+    // Nếu muốn validate, hãy bổ sung logic tại đây.
+  };
+
+  const [formError, setFormError] = useState<string>("");
+
+  const [formSuccess, setFormSuccess] = useState<string>("");
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    // xử lý gửi dữ liệu...
+
+    setIsSubmitting(false);
+  };
   return (
     <div>
       {/** Dashboard */}
@@ -59,172 +119,135 @@ export default function ChuoiNhaThuoc() {
               </p>
               <form className="space-y-6">
                 {/* Họ và Tên */}
-                <div className="relative">
-                  <input
-                    type="text"
-                    id="fullName"
-                    required
-                    className="peer w-full rounded-lg border border-gray-300 px-4 py-3 pt-6 pb-2 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 placeholder-transparent"
-                    placeholder="Họ và Tên"
-                  />
+                <div>
                   <label
                     htmlFor="fullName"
-                    className="absolute left-4 top-2 text-xs font-medium text-gray-600 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-xs peer-focus:font-medium peer-focus:text-blue-500"
+                    className="block text-gray-500 font-medium text-sm mb-2"
                   >
                     Họ và Tên
                   </label>
+                  <input
+                    type="text"
+                    id="fullName"
+                    value={fullName}
+                    onChange={handleFullNameChange}
+                    required
+                    className={`w-full rounded-lg border-2 px-4 py-3 text-base placeholder-gray-400 
+        ${fullNameError ? "border-red-500" : "border-gray-300"}
+        outline-none focus:border-blue-500 transition-all`}
+                    placeholder="Họ và Tên"
+                  />
+                  {fullNameError && (
+                    <div className="mt-1 text-sm text-red-600">
+                      {fullNameError}
+                    </div>
+                  )}
                 </div>
 
                 {/* Số điện thoại */}
-                <div className="relative">
-                  <div className="flex">
-                    {/* Country Code Selector */}
-                    <div className="relative">
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setIsCountryDropdownOpen(!isCountryDropdownOpen)
-                        }
-                        className="flex items-center justify-center w-20 h-12 border border-r-0 border-gray-300 rounded-l-lg bg-gray-50 hover:bg-gray-100 focus:outline-none"
-                      >
-                        <span className="text-lg mr-1">
-                          {selectedCountry.flag}
-                        </span>
-                        <FiChevronDown size={14} className="text-gray-500" />
-                      </button>
-
-                      {/* Dropdown */}
-                      {isCountryDropdownOpen && (
-                        <div className="absolute top-full left-0 z-10 w-64 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                          {countries.map((country) => (
-                            <button
-                              key={country.code}
-                              type="button"
-                              onClick={() => {
-                                setSelectedCountry(country);
-                                setIsCountryDropdownOpen(false);
-                              }}
-                              className="flex items-center w-full px-4 py-2 hover:bg-gray-100 text-left"
-                            >
-                              <span className="text-lg mr-3">
-                                {country.flag}
-                              </span>
-                              <span className="text-sm font-medium mr-2">
-                                {country.code}
-                              </span>
-                              <span className="text-sm text-gray-600">
-                                {country.name}
-                              </span>
-                            </button>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Phone Input */}
-                    <div className="flex-1 relative">
-                      <input
-                        type="tel"
-                        id="phoneNumber"
-                        className="peer w-full rounded-r-lg border border-gray-300 px-4 py-3 pt-6 pb-2 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 placeholder-transparent"
-                        placeholder="Số điện thoại"
-                      />
-                      <label
-                        htmlFor="phoneNumber"
-                        className="absolute left-4 top-2 text-xs font-medium text-gray-600 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-xs peer-focus:font-medium peer-focus:text-blue-500"
-                      >
-                        Số điện thoại
-                      </label>
-                      {/* Country code display */}
-                      <span className="absolute left-4 top-8 text-sm text-gray-400">
-                        {selectedCountry.code}
-                      </span>
-                    </div>
-                  </div>
+                <div>
+                  <label
+                    htmlFor="phone"
+                    className="block text-gray-500 font-medium text-sm mb-2"
+                  >
+                    Số điện thoại
+                  </label>
+                  <PhoneInputField
+                    value={phone}
+                    onChange={handlePhoneChange}
+                    error={phoneError}
+                  />
                 </div>
 
-                {/* Row 2: Email */}
-                <div className="relative">
-                  <input
-                    type="email"
-                    id="email"
-                    required
-                    className="peer w-full rounded-lg border border-gray-300 px-4 py-3 pt-6 pb-2 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 placeholder-transparent"
-                    placeholder="Địa chỉ Email"
-                  />
+                {/* Email */}
+                <div>
                   <label
                     htmlFor="email"
-                    className="absolute left-4 top-2 text-xs font-medium text-gray-600 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-xs peer-focus:font-medium peer-focus:text-blue-500"
+                    className="block text-gray-500 font-medium text-sm mb-2"
                   >
                     Địa chỉ Email
                   </label>
+                  <input
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={handleEmailChange}
+                    required
+                    className={`w-full rounded-lg border-2 px-4 py-3 text-base placeholder-gray-400 
+                    ${emailError ? "border-red-500" : "border-gray-300"}
+                    outline-none focus:border-blue-500 transition-all`}
+                    placeholder="Địa chỉ Email"
+                  />
+                  {emailError && (
+                    <div className="mt-1 text-sm text-red-600">
+                      {emailError}
+                    </div>
+                  )}
                 </div>
 
-                {/* Row 3: Chủ đề chính */}
-                <div className="relative">
-                  <select
-                    id="subject"
-                    className="peer w-full rounded-lg border border-gray-300 px-4 py-3 pt-6 pb-2 text-gray-900 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 appearance-none bg-white"
-                    defaultValue=""
-                  >
-                    <option value="" disabled hidden></option>
-                    <option value="consulting">Tư vấn sản phẩm</option>
-                    <option value="support">Hỗ trợ kỹ thuật</option>
-                    <option value="partnership">Hợp tác kinh doanh</option>
-                    <option value="other">Khác</option>
-                  </select>
+                {/* Chủ đề chính */}
+                <div>
                   <label
                     htmlFor="subject"
-                    className="absolute left-4 top-2 text-xs font-medium text-gray-600 transition-all peer-[:not(:focus):invalid]:top-3.5 peer-[:not(:focus):invalid]:text-base peer-[:not(:focus):invalid]:text-gray-400"
+                    className="block text-gray-500 font-medium text-sm mb-2"
                   >
                     Chủ đề chính
                   </label>
-                  <FiChevronDown
-                    className="absolute right-4 top-4 text-gray-400 pointer-events-none"
-                    size={16}
-                  />
+                  <select
+                    id="subject"
+                    value={subject}
+                    onChange={handleSubjectChange}
+                    required
+                    className="w-full rounded-lg border-2 border-gray-300 px-4 py-3 text-base outline-none focus:border-blue-500 transition-all bg-white"
+                  >
+                    <option value="" disabled hidden>
+                      Chủ đề chính
+                    </option>
+                    <option value="tuvan">Tư vấn sản phẩm</option>
+                    <option value="hotro">Hỗ trợ kỹ thuật</option>
+                    <option value="hopTac">Hợp tác kinh doanh</option>
+                  </select>
                 </div>
 
                 {/* Mô tả chi tiết */}
-                <div className="relative">
-                  <textarea
-                    id="description"
-                    rows={4}
-                    className="peer w-full rounded-lg border border-gray-300 px-4 py-3 pt-6 pb-2 resize-none outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 placeholder-transparent"
-                    placeholder="Mô tả chi tiết (không bắt buộc)"
-                  />
+                <div>
                   <label
                     htmlFor="description"
-                    className="absolute left-4 top-2 text-xs font-medium text-gray-600 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-xs peer-focus:font-medium peer-focus:text-blue-500"
+                    className="block text-gray-500 font-medium text-sm mb-2"
                   >
                     Mô tả chi tiết (không bắt buộc)
                   </label>
-                  <div className="absolute left-4 top-8 text-sm text-gray-400 peer-focus:hidden peer-[:not(:placeholder-shown)]:hidden">
-                    Nhà thuốc của tôi có 2 chi nhánh, đang cần quản lý tồn kho,
-                    hạn sử dụng và kết nối với hệ thống bán hàng online...
-                  </div>
+                  <textarea
+                    id="description"
+                    rows={4}
+                    value={description}
+                    onChange={handleDescriptionChange}
+                    className="w-full rounded-lg border-2 border-gray-300 px-4 py-3 text-base outline-none resize-none focus:border-blue-500 transition-all min-h-[90px]"
+                    placeholder="Mô tả chi tiết"
+                  />
                 </div>
 
-                {/* Chính sách bảo mật */}
-                <div className="text-sm text-gray-600">
-                  <span>
-                    Chúng tôi cam kết bảo mật thông tin của bạn. Xem chi tiết
-                    tại{" "}
-                    <Link
-                      href="/privacy-policy"
-                      className="text-blue-500 hover:underline"
-                    >
-                      Chính sách Bảo mật
-                    </Link>
-                    .
-                  </span>
-                </div>
+                {/* Trạng thái lỗi/ thành công */}
+                {formError && (
+                  <div className="w-full p-4 rounded bg-red-100 text-red-600 mb-4 flex items-center">
+                    <FiXCircle className="mr-2" /> {formError}
+                  </div>
+                )}
+                {formSuccess && (
+                  <div className="w-full p-4 rounded bg-green-100 text-green-600 mb-4 flex items-center">
+                    <FiCheckCircle className="mr-2" /> {formSuccess}
+                  </div>
+                )}
 
                 {/* Submit button */}
                 <button
                   type="submit"
-                  className="w-full md:w-auto mt-6 rounded-lg bg-blue-500 hover:bg-blue-600 px-8 py-3 font-semibold text-white transition-colors duration-200"
+                  className="w-full md:w-auto mt-6 rounded-lg bg-blue-500 hover:bg-blue-600 px-8 py-3 font-semibold text-white transition-colors duration-200 flex items-center justify-center disabled:bg-blue-300"
+                  disabled={isSubmitting}
                 >
+                  {isSubmitting ? (
+                    <FiLoader className="mr-2 animate-spin" />
+                  ) : null}
                   Gửi yêu cầu
                 </button>
               </form>
