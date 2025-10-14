@@ -9,8 +9,8 @@ import {
   FiPlus,
   FiMinus,
 } from "react-icons/fi";
-import { independentPharmacyData } from "@/lib/api/solution";
-import { Button } from "@/components/ui/Button";
+import { independentPharmacyData } from "@/lib/api";
+import { Button } from "@/components/ui/CTAButton";
 import { RichTextRenderer } from "@/components/ui/RichTextRenderer";
 import { button } from "framer-motion/client";
 
@@ -219,7 +219,7 @@ function AccordionItem({ title, children, isOpen, onClick }: any) {
 const DashboardCarousel = ({
   images,
 }: {
-  images: { src: string; alt: string }[];
+  images: { url: string; alt: string }[];
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -242,7 +242,7 @@ const DashboardCarousel = ({
         {images.map((image, index) => (
           <div key={index} className="relative h-[600px] w-full flex-shrink-0">
             <Image
-              src={image.src}
+              src={image.url}
               alt={image.alt}
               layout="fill"
               objectFit="cover"
@@ -471,11 +471,12 @@ function ReviewCarousel() {
 }
 
 export default function IndependentPharmacyPage() {
-  const { heroSection, featureSection, featureBenefitsSection } = independentPharmacyData;
+  const { heroSection, featureSection, featureBenefitsSection, featureShowcaseSection } = independentPharmacyData;
   const [activeTab, setActiveTab] = useState<number | null>(featureSection.tabs[0].id);
   const current = featureSection.tabs.find((tab) => tab.id === activeTab);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [openAccordion, setOpenAccordion] = useState(0);
+  console.log("featureShowcaseSection:", featureShowcaseSection.images);
 
   return (
     <div>
@@ -679,19 +680,20 @@ export default function IndependentPharmacyPage() {
       {/** section Công nghệ AI - Trợ lý Kinh doanh 24/7 */}
       <section className="container mx-auto px-4 py-20 text-center">
         <h2 className="text-h3 font-bold text-ink">
-          Công nghệ AI - Trợ lý Kinh doanh 24/7
+          {featureShowcaseSection.title}
         </h2>
         <p className="mx-auto mt-4 max-w-2xl text-h6 text-text/80">
-          Ứng dụng công nghệ AI phân tích dữ liệu và đề xuất việc cần làm thay
-          vì những con số khô khan.
+          {featureShowcaseSection.description}
         </p>
         <div className="mt-8">
           <button className="rounded-full bg-primary px-6 py-3 font-semibold text-white hover:opacity-90">
-            Trải nghiệm miễn phí
+            {featureShowcaseSection.ctaButton.title}
           </button>
         </div>
         {/* -- THAY THẾ IMAGE TĨNH BẰNG CAROUSEL -- */}
-        <DashboardCarousel images={dashboardImages} />
+        {featureShowcaseSection.images && featureShowcaseSection.images.length > 0 && (
+          <DashboardCarousel images={featureShowcaseSection.images} />
+        )}
       </section>
 
       {/** section Giải Pháp Chuyên Biệt */}
