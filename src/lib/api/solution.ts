@@ -26,6 +26,10 @@ const independentPharmacyPaths = [
   ['featureBenefitsSection', 'contents', ''],
   ['featureBenefitsSection', 'ctaButton'],
 
+  //featureShowcaseSection
+  ['featureShowcaseSection', 'images'],
+  ['featureShowcaseSection', 'ctaButton'],
+
   //http://localhost:1337/api/independent-pharmacy-solution?
   // populate[heroSection][populate][hero][populate][ctaButton]=*&
   // populate[featureSection][populate][featureGrid]=*&populate[featureSection][populate][tabs][populate]=*

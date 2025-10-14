@@ -401,7 +401,7 @@ export default function ChuoiNhaThuoc() {
             <p className="mb-4 text-h6 font-bold uppercase tracking-wide text-primary">
               GIẢI PHÁP QUẢN LÝ CHUỖI NHÀ THUỐC V-PHARMA
             </p>
-            <h1 className="mb-6">
+            <h1 className="text-black mb-6">
               Kiểm Soát Chính Xác
               <br />
               Tăng Trưởng Toàn Diện
