@@ -3,45 +3,104 @@ import { fetchAPI } from "@/lib/dataService";
 import { IndependentPharmacyData } from "@/types";
 import { combinePopulate } from "@/lib/dataService";
 import { transformIndependentPharmacyData } from "@/lib/transformers/independentPharmacySolution";
+import qs from "qs";
 
+const query = qs.stringify(
+  {
+    populate: {
+      // Hero Section
+      heroSection: {
+        populate: {
+          hero: {
+            populate: {
+              ctaButtons: true,
+              image: { populate: "*" },
+            },
+          },
+        },
+      },
 
-//
-async function getIndependentPharmacyData(queryPath: string): Promise<IndependentPharmacyData> {
-  const endpoint = `independent-pharmacy-solution?${queryPath}`;
-  const response = await fetchAPI(endpoint);
-  const apiUrl = API_URL || ""; // Đảm bảo API_URL không undefined
-  return transformIndependentPharmacyData(response, apiUrl); // Đảm bảo API_URL không undefined
-}
+      // Feature Section
+      featureSection: {
+        populate: {
+          featureGrid: { populate: "*" },
+          tabs: {
+            populate: {
+              image: { populate: "*" },
+            },
+          },
+        },
+      },
 
-const independentPharmacyPaths = [
-  //heroSection
-  ['heroSection', 'hero', 'ctaButtons'],
-  ['heroSection', 'hero', 'image'],
+      // Feature Benefits Section
+      featureBenefitsSection: {
+        populate: {
+          contents: { populate: "*" },
+          ctaButton: true,
+        },
+      },
 
-  //featureSection
-  ['featureSection', 'featureGrid'],
-  ['featureSection', 'tabs', 'image'],
+      // Feature Showcase Section
+      featureShowcaseSection: {
+        populate: {
+          images: { populate: "*" },
+          ctaButton: true,
+        },
+      },
 
-  //benefitSection
-  ['featureBenefitsSection', 'contents', ''],
-  ['featureBenefitsSection', 'ctaButton'],
+      // Solution Section
+      independentSolutionSection: {
+        populate: {
+          independentSolutionCards: {
+            populate: {
+              ctaButton: true,
+              image: true,
+            },
+          },
+        },
+      },
 
-  //featureShowcaseSection
-  ['featureShowcaseSection', 'images'],
-  ['featureShowcaseSection', 'ctaButton'],
-
-  //http://localhost:1337/api/independent-pharmacy-solution?
-  // populate[heroSection][populate][hero][populate][ctaButton]=*&
-  // populate[featureSection][populate][featureGrid]=*&populate[featureSection][populate][tabs][populate]=*
-]
-
-function getIndependentPharmacyPopulateQuery(): string {
-  return combinePopulate(independentPharmacyPaths);
-}
-
-
-export const independentPharmacyData = await getIndependentPharmacyData(
-  getIndependentPharmacyPopulateQuery()
+      // Commitment Section
+      commitmentSection: {
+        populate: {
+          image: { populate: "*" },
+          contents: { populate: "*" },
+        },
+      },
+      // Testimonial Section
+      testimonialSection: {
+        populate: {
+          testimonials: {
+            populate: {
+              avatar: { populate: "*" },
+            },
+          },
+        },
+      },
+      // CTA Section
+      ctaSection: {
+        populate: {
+          ctaButton: { populate: "*"},
+        },
+      },
+      // FAQ Section
+      faqSection: {
+        populate: {
+          questions: true,
+        },
+      },
+    },
+  },
+  { encodeValuesOnly: true }
 );
 
+async function getIndependentPharmacyData(
+  queryPath: string
+): Promise<IndependentPharmacyData> {
+  const endpoint = `independent-pharmacy-solution?${queryPath}`;
+  const response = await fetchAPI(endpoint);
+  const apiUrl = API_URL || "";
+  return transformIndependentPharmacyData(response, apiUrl);
+}
 
+export const independentPharmacyData = await getIndependentPharmacyData(query);

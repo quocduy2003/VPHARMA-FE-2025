@@ -7,9 +7,9 @@ export default function Toaster() {
   const [items, setItems] = useState<Toast[]>([]);
 
   useEffect(() => {
-    const handler = (e: any) => {
+    const handler = (e: unknown) => {
       const id = crypto.randomUUID();
-      const t = { id, title: e.detail?.title ?? "Thông báo", meta: e.detail?.meta };
+      const t = { id, title: (e as any).detail?.title ?? "Thông báo", meta: (e as any).detail?.meta };
       setItems((s) => [t, ...s]);
       setTimeout(() => remove(id), 4000);
     };
