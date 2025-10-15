@@ -58,13 +58,15 @@ export function Header() {
               <span>Thêm</span>
               <FiChevronDown className="text-base" />
             </button>
+            <div className="absolute left-0 right-0 h-2 top-full" />
             <div className="absolute right-0 top-full z-10 mt-2 hidden w-48 flex-col rounded-lg bg-white p-2 shadow-lg group-hover:flex">
               <Link
-                href="#"
+                href="about-us"
                 className="rounded-md px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-primary"
               >
                 Về V-Pharma
               </Link>
+              
               <Link
                 href="#"
                 className="rounded-md px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-primary"

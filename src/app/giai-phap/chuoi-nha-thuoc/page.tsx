@@ -10,10 +10,8 @@ import FlipCard from "@/components/animations/FlipCard";
 import FaqSection from "@/components/Faq";
 
 import PharmacyCarousel from "@/components/PharmacyCarousel";
-
-
-import CTASection from "@/components/CTA";
 import { chainPharmacyData } from "@/lib/api/chainPharmacySolution";
+import CTASection from "@/components/CTA";
 
 //data section1
 const challengeCards = [
@@ -376,8 +374,8 @@ function DashboardCarousel({
 export default function ChuoiNhaThuoc() {
   const [openAccordion, setOpenAccordion] = useState(0);
 
-  const { heroSection }= chainPharmacyData;
-  console.log('hẻoSection',heroSection);
+  const { heroSection } = chainPharmacyData;
+  console.log("hẻoSection", heroSection);
 
   const [indexCustomer, setIndexCustomer] = useState(0);
   const cardsPerView = 3;
@@ -409,12 +407,8 @@ export default function ChuoiNhaThuoc() {
             <p className="mb-4 text-h6 font-bold uppercase tracking-wide text-primary">
               {heroSection.eyebrow}
             </p>
-            <h1 className="mb-6">
-              {heroSection.mainTitle}
-            </h1>
-            <p className="mb-8 text-h6">
-              {heroSection.mainDescription}
-            </p>
+            <h1 className="mb-6">{heroSection.mainTitle}</h1>
+            <p className="mb-8 text-h6">{heroSection.mainDescription}</p>
             <div className="mt-8 flex gap-4 ">
               <button className="text-sub1 rounded-full bg-primary px-6 py-3 font-bold text-white hover:opacity-90">
                 Đăng ký dùng thử

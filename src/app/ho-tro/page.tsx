@@ -100,8 +100,8 @@ export default function HoTro() {
       {/** Dashboard */}
       <section className="bg-gradient-to-b from-blue-100 to-white py-20 text-center">
         <div className="container mx-auto px-4 lg:px-80">
-          <h1 className="text-h1 font-bold text-ink">Liên Hệ Hỗ Trợ</h1>
-          <p className="mx-auto mt-4 max-w-3xl text-h5">
+          <h1 className="text-h1 font-bold text-black">Liên Hệ Hỗ Trợ</h1>
+          <p className="mx-auto mt-4 max-w-3x">
             Giải pháp toàn diện cho quản lý nhà thuốc, từ tồn kho đến bán hàng,
             với công nghệ hiện đại và dễ sử dụng.
           </p>
