@@ -36,7 +36,7 @@ export function SolutionsSubHeader() {
                 href={link.href}
                 className={cn(
                   "transition-colors hover:text-white",
-                  isActive ? "font-semibold text-white" : "text-white/70"
+                  isActive ? "font-bold text-white" : "text-white/70"
                 )}
               >
                 {link.label}

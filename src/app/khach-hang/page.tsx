@@ -151,116 +151,251 @@ function TestimonialStackedCards() {
   );
 }
 
+// Định nghĩa kiểu cho một bài blog
+interface BlogItem {
+  id: number;
+  title: string;
+  image: string; // URL của hình ảnh
+}
+
+// Định nghĩa kiểu cho Card Trống (Filler)
+interface FillerCard {
+  id: string;
+  empty: true; // Dùng để xác định đây là card trống
+}
+
+// Kiểu cho các item sẽ được render
+type CardToRender = BlogItem | FillerCard;
 const blogs = [
   {
     id: 1,
     title: "Nhà thuốc Quỳnh Anh: Nhân đôi mô hình kinh doanh cùng V-Pharma",
-    image: "/avt1.jpg"
+    image: "/avt1.jpg",
   },
   {
     id: 2,
     title: "Nhà thuốc Quỳnh Anh: Nhân đôi mô hình kinh doanh cùng V-Pharma",
-    image: "/avt2.jpg"
+    image: "/avt2.jpg",
   },
   {
     id: 3,
     title: "Nhà thuốc Quỳnh Anh: Nhân đôi mô hình kinh doanh cùng V-Pharma",
-    image: "/avt3.jpg"
+    image: "/avt3.jpg",
   },
   {
     id: 4,
     title: "Nhà thuốc Quỳnh Anh: Nhân đôi mô hình kinh doanh cùng V-Pharma",
-    image: "/avt1.jpg"
+    image: "/avt1.jpg",
   },
   {
     id: 5,
     title: "Nhà thuốc Quỳnh Anh: Nhân đôi mô hình kinh doanh cùng V-Pharma",
-    image: "/avt4.jpg"
+    image: "/avt4.jpg",
   },
   {
     id: 6,
     title: "Nhà thuốc Quỳnh Anh: Nhân đôi mô hình kinh doanh cùng V-Pharma",
-    image: "/avt2.jpg"
+    image: "/avt2.jpg",
   },
   {
     id: 7,
     title: "Nhà thuốc Quỳnh Anh: Nhân đôi mô hình kinh doanh cùng V-Pharma",
-    image: "/avt3.jpg"
+    image: "/avt3.jpg",
+  },
+  {
+    id: 8,
+    title: "Nhà thuốc Quỳnh Anh: Nhân đôi mô hình kinh doanh cùng V-Pharma",
+    image: "/avt1.jpg",
+  },
+  {
+    id: 9,
+    title: "Nhà thuốc Quỳnh Anh: Nhân đôi mô hình kinh doanh cùng V-Pharma",
+    image: "/avt2.jpg",
+  },
+  {
+    id: 10,
+    title: "Nhà thuốc Quỳnh Anh: Nhân đôi mô hình kinh doanh cùng V-Pharma",
+    image: "/avt3.jpg",
+  },
+  {
+    id: 11,
+    title: "Nhà thuốc Quỳnh Anh: Nhân đôi mô hình kinh doanh cùng V-Pharma",
+    image: "/avt1.jpg",
+  },
+  {
+    id: 12,
+    title: "Nhà thuốc Quỳnh Anh: Nhân đôi mô hình kinh doanh cùng V-Pharma",
+    image: "/avt4.jpg",
+  },
+  {
+    id: 13,
+    title: "Nhà thuốc Quỳnh Anh: Nhân đôi mô hình kinh doanh cùng V-Pharma",
+    image: "/avt2.jpg",
+  },
+  {
+    id: 14,
+    title: "Nhà thuốc Quỳnh Anh: Nhân đôi mô hình kinh doanh cùng V-Pharma",
+    image: "/avt3.jpg",
   },
 ];
 
 function BlogCarouselSection() {
   const [page, setPage] = useState(0);
-  const blogsPerPage = 4;
   const router = useRouter();
-  const pageCount = Math.ceil(blogs.length / blogsPerPage);
 
+  // LOGIC TRƯỢT 2 CARD
+  const cardsPerView = 4; // Số card luôn hiển thị
+  const step = 2; // Số card trượt qua khi chuyển trang (Overlap 2)
+
+  // Công thức tính số trang tối đa có thể trượt
+  const maxPage = Math.max(
+    0,
+    Math.ceil((blogs.length - cardsPerView) / step) + 1
+  );
+  const pageCount = maxPage > 0 ? maxPage : 1;
+
+  // Tính toán chỉ số BẮT ĐẦU VÀ KẾT THÚC
+  const startIndex = page * step;
+  const endIndex = startIndex + cardsPerView;
+
+  // Lấy các bài blog cho trang hiện tại
+  const currentBlogs: BlogItem[] = blogs.slice(
+    startIndex,
+    endIndex
+  ) as BlogItem[];
+
+  // LOGIC LẤP ĐẦY (FILLER): Đảm bảo cardsToRender luôn có 4 phần tử (trừ khi blogs.length < 4)
+  let cardsToRender: CardToRender[];
+
+  if (blogs.length < cardsPerView) {
+    // Nếu tổng số blog ít hơn 4 (trang đầu), thêm filler
+    const fillerCount = cardsPerView - blogs.length;
+    const fillerArray: FillerCard[] = Array.from(
+      { length: fillerCount },
+      (_, i) => ({ id: `filler-${i}`, empty: true })
+    );
+    cardsToRender = [...currentBlogs, ...fillerArray];
+  } else {
+    // Với cơ chế trượt, ta chỉ render các blog đã slice, không cần filler
+    // vì pageCount đã được tính toán để trang cuối cùng vẫn lấy đủ cardsPerView
+    // (ví dụ: 6 blogs -> page 1 lấy 3,4,5,6)
+    cardsToRender = currentBlogs;
+  }
   return (
     <section className="py-16 bg-gradient-to-b from-blue-50 to-white">
       <div className="container mx-auto px-4 max-w-6xl">
-        {/* Title */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">
+          <h2 className="mb-4 text-black">
             Những Thách Thức Khi Vận Hành Chuỗi Nhà Thuốc
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Giải pháp quản lý nhà thuốc toàn diện, tối ưu hóa quy trình vận hành và nâng cao hiệu quả kinh doanh.
+          <p className="text-h6 mx-auto max-w-3xl">
+            Giải pháp quản lý nhà thuốc toàn diện, tối ưu hóa quy trình vận hành
+            và nâng cao hiệu quả kinh doanh.
           </p>
         </div>
 
-        {/* Blog Grid - 2x2 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          {blogs.slice(page * blogsPerPage, (page + 1) * blogsPerPage).map(blog => (
-            <div
-              key={blog.id}
-              className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-              onClick={() => router.push(`/blog/${blog.id}`)}
-            >
-              {/* Image Container */}
-              <div className="relative h-48 w-full bg-gray-200">
-                <Image
-                  src={blog.image}
-                  alt={blog.title}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
+          {cardsToRender.map((card) => {
+            const isBlog = "title" in card;
+
+            if (isBlog) {
+              const blog = card as BlogItem;
+              return (
+                <div
+                  key={blog.id}
+                  className="bg-white rounded-lg shadow-md cursor-pointer hover:shadow-xl transition-all duration-300 hover:-translate-y-1" // Loại bỏ overflow-hidden ở đây
+                  onClick={() => router.push(`/blog/${blog.id}`)}
+                >
+                  {/* Div chứa ảnh với padding và bo góc */}
+                  <div className="p-4">
+                    {" "}
+                    {/* Thêm padding vào đây */}
+                    <div className="relative h-48 w-full rounded-lg overflow-hidden">
+                      {" "}
+                      {/* Thêm rounded-lg và overflow-hidden cho div này */}
+                      <Image
+                        src={blog.image}
+                        alt={blog.title}
+                        fill // Vẫn dùng fill nếu bạn muốn ảnh chiếm hết div bọc nó
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Quan trọng cho responsive
+                      />
+                    </div>
+                  </div>
+
+                  <div className="container flex flex-col items-center text-center justify-center p-6">
+                    {" "}
+                    {/* Thêm padding cho nội dung */}
+                    <h3 className="font-bold text-h5 mb-4 line-clamp-2 min-h-[56px]">
+                      {blog.title}
+                    </h3>
+                    <button className="text-primary text-sub1 font-bold hover:gap-3 flex items-center gap-1 transition-all">
+                      Đọc thêm
+                      <span>→</span>
+                    </button>
+                  </div>
+                </div>
+              );
+            }
+
+            // Trường hợp là card trống (FILLER CARD)
+            return (
+              <div
+                key={card.id}
+                className="bg-transparent border-none opacity-0 pointer-events-none"
+              >
+                {/* Giữ nguyên cấu trúc để duy trì chiều cao của grid item */}
+                <div className="relative h-48 w-full"></div>
+                <div className="p-6 h-[100px]"></div>
               </div>
-              
-              {/* Content */}
-              <div className="p-6">
-                <h3 className="font-bold text-lg mb-4 line-clamp-2 min-h-[56px]">
-                  {blog.title}
-                </h3>
-                <button className="text-blue-500 font-medium flex items-center gap-2 hover:gap-3 transition-all">
-                  Đọc thêm
-                  <span>→</span>
-                </button>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Pagination Buttons */}
-        <div className="flex justify-center gap-4">
+        <div className="relative mx-auto w-30 mt-10">
           <button
-            className="p-3 rounded-full bg-white shadow hover:shadow-lg disabled:opacity-40 disabled:cursor-not-allowed transition-all"
-            onClick={() => setPage(p => Math.max(0, p - 1))}
+            className="absolute text-primary left-0 z-10 h-12 w-12 
+            rounded-full bg-blue-50 hover:bg-blue-100  
+            flex items-center justify-center transition"
+            onClick={() => setPage((p) => Math.max(0, p - 1))}
             disabled={page === 0}
             aria-label="Previous page"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
             </svg>
           </button>
           <button
-            className="p-3 rounded-full bg-white shadow hover:shadow-lg disabled:opacity-40 disabled:cursor-not-allowed transition-all"
-            onClick={() => setPage(p => Math.min(pageCount - 1, p + 1))}
+            className="absolute text-primary right-0 z-10 h-12 w-12 
+            rounded-full bg-blue-50 hover:bg-blue-100 flex items-center 
+            justify-center transition"
+            onClick={() => setPage((p) => Math.min(pageCount - 1, p + 1))}
             disabled={page === pageCount - 1}
             aria-label="Next page"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
             </svg>
           </button>
         </div>

@@ -18,7 +18,7 @@
   --color-gray: #BFBFBF;
   --color-danger: #F0422E;
   --color-ink: #16215B;
-  --color-colordesription: #111827;
+  --color-colordescription: #111827;
   /* Navy đậm – dùng làm text đậm hoặc background */
   --color-text: #545454;
   --color-white: #FFFFFF;
@@ -42,7 +42,7 @@
   --text-h4: 30px;
   --leading-h4: 38px;
 
-  --text-h5: 28px;
+  --text-h5: 26px;
   --leading-h5: 40px;
 
   --text-h6: 24px;
@@ -109,7 +109,7 @@
   }
 
   p {
-    color: var(--color-colordesription);
+    color: var(--color-colordescription);
   }
 }
 

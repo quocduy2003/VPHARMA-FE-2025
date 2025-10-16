@@ -66,12 +66,11 @@ export function Header() {
               >
                 Về V-Pharma
               </Link>
-              
               <Link
-                href="#"
+                href="blog/blog-home"
                 className="rounded-md px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-primary"
               >
-                Kiến Thức
+                Blog
               </Link>
             </div>
           </div>
