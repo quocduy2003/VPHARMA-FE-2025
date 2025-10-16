@@ -109,7 +109,9 @@ export default function PharmacyCarousel() {
         <div className=" relative mx-auto w-30 mt-10 ">
           <button
             onClick={handlePrevPharmacy}
-            className="absolute text-primary left-0 z-10 h-12 w-12 rounded-full bg-blue-50 hover:bg-blue-100  flex items-center justify-center transition"
+            className="absolute text-primary left-0 z-10 h-12 w-12 
+            rounded-full bg-blue-50 hover:bg-blue-100  
+            flex items-center justify-center transition"
             aria-label="Previous"
           >
             <svg
@@ -128,7 +130,9 @@ export default function PharmacyCarousel() {
           </button>
           <button
             onClick={handleNextPharmacy}
-            className="absolute text-primary right-0 z-10 h-12 w-12 rounded-full bg-blue-50 hover:bg-blue-100 flex items-center justify-center transition"
+            className="absolute text-primary right-0 z-10 h-12 w-12 
+            rounded-full bg-blue-50 hover:bg-blue-100 flex items-center 
+            justify-center transition"
             aria-label="Next"
           >
             <svg
