@@ -223,14 +223,14 @@ export default function AboutUsPage() {
               <div className="mt-15 flex justify-center gap-4">
                  <button 
                   onClick={handlePrevMember} 
-                  className="rounded-full bg-white p-3 text-primary shadow-lg transition hover:bg-primary hover:text-white hover:scale-110"
+                  className="rounded-full bg-blue-100 p-3 text-primary shadow-lg transition hover:bg-primary hover:text-white hover:scale-110"
                   aria-label="Thành viên trước"
                  >
                     <FiArrowLeft size={24} />
                 </button>
                  <button 
                   onClick={handleNextMember} 
-                  className="rounded-full bg-white p-3 text-primary shadow-lg transition hover:bg-primary hover:text-white hover:scale-110"
+                  className="rounded-full bg-blue-100 p-3 text-primary shadow-lg transition hover:bg-primary hover:text-white hover:scale-110"
                   aria-label="Thành viên kế tiếp"
                   >
                     <FiArrowRight size={24} />

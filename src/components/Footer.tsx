@@ -1,6 +1,6 @@
 
 import Link from 'next/link';
-import { FiFacebook, FiYoutube, FiInstagram, FiLinkedin, FiPhone, FiMapPin, FiMail, FiGlobe, } from 'react-icons/fi';
+import { FiFacebook, FiYoutube, FiInstagram, FiLinkedin, FiPhone, FiMapPin, FiMail, FiGlobe } from 'react-icons/fi';
 
 export function Footer() {
   return (
@@ -17,8 +17,6 @@ export function Footer() {
             <Link href="https://www.facebook.com/amitgroup.vn" target="_blank" aria-label="Facebook"><FiFacebook className="h-7 w-7 hover:text-primary" /></Link>
             <Link href="https://www.youtube.com/@AmitGROUPmkt" target="_blank" aria-label="YouTube"><FiYoutube className="h-7 w-7 hover:text-primary" /></Link>
             <Link href="https://amitgroup.asia/" target="_blank" aria-label="Website"><FiGlobe className="h-7 w-7 hover:text-primary" /></Link>
-            {/* <Link href="#" aria-label="Instagram"><FiInstagram className="h-7 w-7 hover:text-primary" /></Link> */}
-            {/* <Link href="#" aria-label="LinkedIn"><FiLinkedin className="h-7 w-7 hover:text-primary" /></Link> */}
           </div>
           <ul className="mt-8 space-y-4 text-sub2 text-white/90">
             <li className="flex items-start gap-3">

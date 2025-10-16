@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect } from "react"; // Thêm useEffect
+import { useState, useEffect } from "react"; 
 import {
   FiCheckCircle,
   FiChevronLeft,
