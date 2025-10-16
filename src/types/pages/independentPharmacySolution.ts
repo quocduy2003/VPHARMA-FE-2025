@@ -32,9 +32,9 @@ interface FeatureBenefitsSection {
   description: string;
   contents: {
     title: string;
-    description: string;
+    description: RichTextBlock[];
     image: StrapiImage;
-    alt?: string;
+    alt: string;
   }[];
   ctaButton: CtaButton;
 }
@@ -43,13 +43,15 @@ interface FeatureShowcaseSection {
   title: string;
   description: string;
   ctaButton: CtaButton;
+  alt: string;
   images: StrapiImage[];
 }
 
 interface SolutionCard {
   title: string;
   description: string;
-  image: ImageData;
+  ctaButton: CtaButton;
+  image: StrapiImage;
 }
 
 interface SolutionSection {
@@ -57,24 +59,28 @@ interface SolutionSection {
   description: string;
   solutionCard: SolutionCard[];
 }
-
+interface Testimonial {
+  id: number;
+  authorName: string;
+  authorLocation: string;
+  quote: string;
+  avatar: StrapiImage;
+}
 interface TestimonialSection {
   title: string;
-  testimonials: {
-    id: number;
-  }[];
+  testimonials: Testimonial[];
 }
 
-export interface CommitmentContent {
+interface CommitmentContent {
   title: string;
   description: string;
-  image: StrapiImage;
-  alt?: string;
 }
 
 interface CommitmentSection {
   title: string;
   description?: string; // có thể bị typo "desription" trong dữ liệu
+  alt?: string;
+  image: StrapiImage;
   contents: CommitmentContent[];
 }
 
@@ -84,14 +90,32 @@ interface CTASection {
   ctaButton: CtaButton;
 }
 
+interface FAQItem {
+  question: string;
+  answer: string
+}
+interface FAQSection {
+  title: string;
+  faqItems: FAQItem[];
+}
+
 // ---------- Root ----------
 export interface IndependentPharmacyData {
   heroSection: HeroSection;
+
   featureSection: FeatureSection;
+
   featureBenefitsSection: FeatureBenefitsSection;
+
   featureShowcaseSection: FeatureShowcaseSection;
-//   solutionSection: SolutionSection;
-//   testimonialSection: TestimonialSection;
-//   CommitmentSection: CommitmentSection;
-//   CTASection: CTASection;
+
+  solutionSection: SolutionSection;
+
+  commitmentSection: CommitmentSection;
+
+  testimonialSection: TestimonialSection;
+
+  ctaSection: CTASection;
+
+  faqSection: FAQSection;
 }

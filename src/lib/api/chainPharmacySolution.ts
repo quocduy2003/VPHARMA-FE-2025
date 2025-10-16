@@ -1,4 +1,5 @@
 const API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
+
 import { fetchAPI } from "@/lib/dataService";
 import { ChainPharmacyData } from "@/types";
 import { combinePopulate } from "@/lib/dataService";

@@ -305,11 +305,10 @@ export default function TongQuan() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`rounded-full text-sub2  border px-5 py-2 text-sm font-medium transition-colors ${
-                  activeTab === tab.id
-                    ? "bg-primary text-white"
-                    : "border-primary bg-white  hover:bg-primary/10"
-                }`}
+                className={`rounded-full text-sub2  border px-5 py-2 text-sm font-medium transition-colors ${activeTab === tab.id
+                  ? "bg-primary text-white"
+                  : "border-primary bg-white  hover:bg-primary/10"
+                  }`}
               >
                 {tab.label}
               </button>
@@ -580,9 +579,9 @@ export default function TongQuan() {
         </section>
       </FadeInOnScroll>
 
-      <FadeInOnScroll>
+      {/* <FadeInOnScroll>
         <ReviewCarousel />
-      </FadeInOnScroll>
+      </FadeInOnScroll> */}
 
       <FadeInOnScroll>
         <CTASection />

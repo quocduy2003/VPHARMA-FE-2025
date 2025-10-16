@@ -1,115 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect } from "react"; // Thêm useEffect
+import { useState, useEffect } from "react";
 import {
   FiCheckCircle,
-  FiChevronLeft,
-  FiChevronRight,
-  FiPlus,
-  FiMinus,
 } from "react-icons/fi";
 import { independentPharmacyData } from "@/lib/api";
 import { Button } from "@/components/ui/CTAButton";
 import { RichTextRenderer } from "@/components/ui/RichTextRenderer";
-import { button } from "framer-motion/client";
+import { AccordionItem } from "@/components/ui/AccordionIteam";
+import ReviewCarousel from "@/components/ReviewCarousel";
 
-
-// Dữ liệu cho Các Tính Năng Nổi Bật Của V-Pharma
-const featureTabs = [
-  {
-    id: "ban-hang",
-    label: "Bán hàng",
-    image: "/features-dashboard1.png",
-    discriptions:
-      "Theo dõi và quản lý tồn kho thuốc chính xác, giảm thiểu sai sót và tối ưu hóa nguồn hàng.",
-    points: [
-      "Nhập hàng từ nhà cung cấp, xuất kho điều chuyển",
-      "Xem báo cáo tồn kho",
-      "Kiểm kê định kỳ, cảnh báo hàng thiếu hoặc sắp hết hạn",
-      "Hỗ trợ định biên hàng tồn, khai báo hàng thiếu và trả hàng NCC",
-    ],
-  },
-  {
-    id: "quan_ly-kho",
-    label: "Quản Lý Kho",
-    image: "/features-dashboard2.png",
-    discriptions:
-      "Theo dõi và quản lý tồn kho thuốc chính xác, giảm thiểu sai sót và tối ưu hóa nguồn hàng.",
-    points: [
-      "Nhập hàng từ nhà cung cấp, xuất kho điều chuyển",
-      "Xem báo cáo tồn kho",
-      "Kiểm kê định kỳ, cảnh báo hàng thiếu hoặc sắp hết hạn",
-      "Hỗ trợ định biên hàng tồn, khai báo hàng thiếu và trả hàng NCC",
-    ],
-  },
-  {
-    id: "danh-muc",
-    label: "Danh mục",
-    image: "/features-dashboard3.jpg",
-    discriptions:
-      "Theo dõi và quản lý tồn kho thuốc chính xác, giảm thiểu sai sót và tối ưu hóa nguồn hàng.",
-    points: [
-      "Nhập hàng từ nhà cung cấp, xuất kho điều chuyển",
-      "Xem báo cáo tồn kho",
-      "Kiểm kê định kỳ, cảnh báo hàng thiếu hoặc sắp hết hạn",
-      "Hỗ trợ định biên hàng tồn, khai báo hàng thiếu và trả hàng NCC",
-    ],
-  },
-  {
-    id: "bao-cao",
-    label: "Báo cáo",
-    image: "/features-dashboard4.png",
-    discriptions:
-      "Theo dõi và quản lý tồn kho thuốc chính xác, giảm thiểu sai sót và tối ưu hóa nguồn hàng.",
-    points: [
-      "Nhập hàng từ nhà cung cấp, xuất kho điều chuyển",
-      "Xem báo cáo tồn kho",
-      "Kiểm kê định kỳ, cảnh báo hàng thiếu hoặc sắp hết hạn",
-      "Hỗ trợ định biên hàng tồn, khai báo hàng thiếu và trả hàng NCC",
-    ],
-  },
-  {
-    id: "ke-toan",
-    label: "Kế toán",
-    image: "/features-dashboard5.jpg",
-    discriptions:
-      "Theo dõi và quản lý tồn kho thuốc chính xác, giảm thiểu sai sót và tối ưu hóa nguồn hàng.",
-    points: [
-      "Nhập hàng từ nhà cung cấp, xuất kho điều chuyển",
-      "Xem báo cáo tồn kho",
-      "Kiểm kê định kỳ, cảnh báo hàng thiếu hoặc sắp hết hạn",
-      "Hỗ trợ định biên hàng tồn, khai báo hàng thiếu và trả hàng NCC",
-    ],
-  },
-  {
-    id: "xuat-hoa-don-dien-tu",
-    label: "Xuất hóa đơn điện tử",
-    image: "/features-dashboard6.png",
-    discriptions:
-      "Theo dõi và quản lý tồn kho thuốc chính xác, giảm thiểu sai sót và tối ưu hóa nguồn hàng.",
-    points: [
-      "Nhập hàng từ nhà cung cấp, xuất kho điều chuyển",
-      "Xem báo cáo tồn kho",
-      "Kiểm kê định kỳ, cảnh báo hàng thiếu hoặc sắp hết hạn",
-      "Hỗ trợ định biên hàng tồn, khai báo hàng thiếu và trả hàng NCC",
-    ],
-  },
-  {
-    id: "lien-ket-duoc-quoc-gia",
-    label: "Liên kết dược quốc gia",
-    image: "/features-dashboard7.png",
-    discriptions:
-      "Theo dõi và quản lý tồn kho thuốc chính xác, giảm thiểu sai sót và tối ưu hóa nguồn hàng.",
-    points: [
-      "Nhập hàng từ nhà cung cấp, xuất kho điều chuyển",
-      "Xem báo cáo tồn kho",
-      "Kiểm kê định kỳ, cảnh báo hàng thiếu hoặc sắp hết hạn",
-      "Hỗ trợ định biên hàng tồn, khai báo hàng thiếu và trả hàng NCC",
-    ],
-  },
-  // Thêm các tab khác ở đây nếu có...
-];
 
 // Dữ liệu cho câu hỏi thường gặp (FAQ)
 const faqItems = [
@@ -135,91 +36,14 @@ const faqItems = [
   },
 ];
 
-const accordionItems = [
-  {
-    title: "Triển khai & đào tạo dễ dàng",
-    content:
-      "Hạ tầng mạnh mẽ, đáp ứng tới 10.000 lượt truy cập đồng thời cùng hệ thống bảo mật hàng đầu. Giao diện và tính năng thiết kế theo đặc thù doanh nghiệp, cho phép tuỳ chỉnh linh hoạt.",
-  },
-  {
-    title: "Hỗ trợ kỹ thuật 24/7",
-    content:
-      "Đội ngũ hỗ trợ của chúng tôi luôn sẵn sàng giải đáp mọi thắc mắc và xử lý các vấn đề kỹ thuật nhanh chóng.",
-  },
-  {
-    title: "Cập nhật tính năng liên tục",
-    content:
-      "V-Pharma liên tục được cập nhật các tính năng mới nhất để đáp ứng nhu cầu thay đổi của thị trường.",
-  },
-  {
-    title: "Tích hợp linh hoạt",
-    content:
-      "Dễ dàng kết nối với các phần mềm kế toán, hóa đơn điện tử và các đối tác vận chuyển phổ biến.",
-  },
-];
 
-// Component con cho từng câu hỏi FAQ
-function FaqItem({
-  item,
-  isOpen,
-  onClick,
-}: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  item: any;
-  isOpen: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <div className="border-b border-gray-200 py-4">
-      <button
-        className="flex w-full items-center justify-between text-left text-lg font-medium text-text"
-        onClick={onClick}
-      >
-        <span className="text-sub1 font-semibold text-ink">
-          {item.question}
-        </span>
-        {isOpen ? (
-          <FiMinus className="text-white bg-primary rounded text-h6" />
-        ) : (
-          <FiPlus className="text-white bg-primary rounded text-h6" />
-        )}
-      </button>
-      {isOpen && (
-        <div className="mt-4 text-sm text-body2">
-          <p>{item.answer}</p>
-        </div>
-      )}
-    </div>
-  );
-}
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function AccordionItem({ title, children, isOpen, onClick }: any) {
-  return (
-    <div className="rounded-lg bg-primary/9 p-4 shadow-sm">
-      <button
-        className="flex w-full items-center justify-between text-left font-semibold text-ink"
-        onClick={onClick}
-      >
-        <span className="text-sub1 font-semibold text-ink">{title}</span>
-        {isOpen ? (
-          <FiMinus className="text-white bg-primary rounded text-h6" />
-        ) : (
-          <FiPlus className="text-white bg-primary rounded text-h6" />
-        )}
-      </button>
-      {isOpen && (
-        <div className="mt-4 text-sm text-body2 text-text/80">{children}</div>
-      )}
-    </div>
-  );
-}
-
-// Component mới cho dashboard scrolling carousel
 const DashboardCarousel = ({
   images,
+  alt,
 }: {
-  images: { url: string; alt: string }[];
+  images: { url: string }[];
+  alt: string;
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -243,7 +67,7 @@ const DashboardCarousel = ({
           <div key={index} className="relative h-[600px] w-full flex-shrink-0">
             <Image
               src={image.url}
-              alt={image.alt}
+              alt={alt}
               layout="fill"
               objectFit="cover"
               className="rounded-lg"
@@ -266,217 +90,25 @@ const DashboardCarousel = ({
   );
 };
 
-// Dữ liệu hình ảnh cho carousel
-const dashboardImages = [
-  { src: "/hero-dashboard.jpg", alt: "V-Pharma Dashboard Overview" },
-  { src: "/features-dashboard1.png", alt: "Sales Dashboard" },
-  { src: "/features-dashboard2.png", alt: "Inventory Dashboard" },
-  { src: "/features-dashboard1.png", alt: "Reports Dashboard" },
-  { src: "/features-dashboard5.jpg", alt: "Accounting Dashboard" },
-];
-
-const reviewsData = [
-  {
-    name: "Chị Ngọc Anh",
-    position: "Nhà thuốc Cô Nở 2",
-    starCount: 5,
-    content: "Dịch vụ hỗ trợ 1:1 thực sự khác biệt.",
-  },
-  {
-    name: "Anh Minh",
-    position: "Nhà thuốc Minh Tâm",
-    starCount: 5,
-    content: "Phần mềm rất dễ sử dụng, giao diện thân thiện.",
-  },
-  {
-    name: "Chị Lan Anh",
-    position: "Quầy thuốc Sức Khỏe Xanh",
-    starCount: 5,
-    content: "Tính năng báo cáo và quản lý tồn kho thông minh.",
-  },
-  {
-    name: "Anh Tuấn",
-    position: "Nhà thuốc An Lạc",
-    starCount: 5,
-    content: "Đội ngũ kỹ thuật chuyên nghiệp và tận tâm.",
-  },
-  {
-    name: "Chị Hà",
-    position: "Nhà thuốc An Khang",
-    starCount: 5,
-    content: "AI Scan hóa đơn tiết kiệm thời gian nhập liệu.",
-  },
-  {
-    name: "Anh Bảo",
-    position: "Nhà thuốc Gia Đình",
-    starCount: 5,
-    content: "Hệ thống báo cáo trực quan giúp nắm bắt kinh doanh.",
-  },
-  {
-    name: "Chị Mai",
-    position: "Quầy thuốc FPT Long Châu",
-    starCount: 5,
-    content: "Tuân thủ chuẩn GPP và liên thông Dược Quốc gia.",
-  },
-  {
-    name: "Anh Phong",
-    position: "Nhà thuốc Việt",
-    starCount: 5,
-    content: "Kiểm kê hàng hóa và cảnh báo date hiệu quả.",
-  },
-  {
-    name: "Chị Quỳnh",
-    position: "Nhà thuốc Pharmacity",
-    starCount: 5,
-    content: "Giao diện hiện đại, dễ dàng thao tác trên mọi thiết bị.",
-  },
-  {
-    name: "Anh Hùng",
-    position: "Nhà thuốc An Tâm",
-    starCount: 5,
-    content: "Tính năng quản lý khách hàng giúp chăm sóc tốt hơn.",
-  },
-  {
-    name: "Chị Yến",
-    position: "Quầy thuốc Hạnh Phúc",
-    starCount: 4,
-    content: "Rất hài lòng với sự ổn định và tốc độ của phần mềm.",
-  },
-  {
-    name: "Anh Khoa",
-    position: "Nhà thuốc Trung Sơn",
-    starCount: 4,
-    content: "Tích hợp hóa đơn điện tử tiện lợi và nhanh chóng.",
-  },
-  {
-    name: "Chị Dung",
-    position: "Nhà thuốc Phước Thiện",
-    starCount: 3,
-    content: "Phần mềm giúp tôi giảm thất thoát đáng kể.",
-  },
-  {
-    name: "Anh Long",
-    position: "Nhà thuốc An Bình",
-    starCount: 3,
-    content: "Đáng tiền! Một giải pháp toàn diện cho nhà thuốc.",
-  },
-  {
-    name: "Chị Thảo",
-    position: "Quầy thuốc V-Pharma",
-    starCount: 4,
-    content: "Hỗ trợ 24/7 thực sự cứu cánh những lúc cần gấp.",
-  },
-  {
-    name: "Chị Ngọc Anh",
-    position: "Nhà thuốc Cô Nở 2",
-    starCount: 5,
-    content: "Dịch vụ hỗ trợ 1:1 thực sự khác biệt.",
-  },
-  {
-    name: "Chị Ngọc Anh",
-    position: "Nhà thuốc Cô Nở 2",
-    starCount: 4,
-    content: "Dịch vụ hỗ trợ 1:1 thực sự khác biệt.",
-  },
-  {
-    name: "Chị Ngọc Anh",
-    position: "Nhà thuốc Cô Nở 2",
-    starCount: 3,
-    content: "Dịch vụ hỗ trợ 1:1 thực sự khác biệt.",
-  },
-  {
-    name: "Chị Ngọc Anh",
-    position: "Nhà thuốc Cô Nở 2",
-    starCount: 4,
-    content: "Dịch vụ hỗ trợ 1:1 thực sự khác biệt.",
-  },
-  {
-    name: "Chị Ngọc Anh",
-    position: "Nhà thuốc Cô Nở 2",
-    starCount: 1,
-    content: "Dịch vụ hỗ trợ 1:1 thực sự khác biệt.",
-  },
-  {
-    name: "Anh Kiên",
-    position: "Nhà thuốc Medigo",
-    starCount: 3,
-    content: "Mọi hoạt động của chuỗi nhà thuốc được quản lý tập trung.",
-  },
-];
 
 
-
-
-function ReviewCarousel() {
-  const REVIEWS_PER_PAGE = 4;
-  const [currentPage, setCurrentPage] = useState(0);
-
-  // Lọc và giới hạn 16 bình luận tốt nhất
-  const bestReviews = reviewsData
-    .sort((a, b) => b.starCount - a.starCount)
-    .slice(0, 16);
-
-  const totalPages = Math.ceil(bestReviews.length / REVIEWS_PER_PAGE);
-
-  const startIndex = currentPage * REVIEWS_PER_PAGE;
-  const selectedReviews = bestReviews.slice(
-    startIndex,
-    startIndex + REVIEWS_PER_PAGE
-  );
-
-  return (
-    <section className="bg-gray-50 py-20">
-      <div className="container mx-auto px-4 text-center">
-        <p className="text-primary font-semibold">Reviews</p>
-        <h2 className="text-h3 font-bold text-ink mt-2">
-          Khách Hàng Nói Gì Về V-Pharma
-        </h2>
-        <div className="relative mx-auto mt-10">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-            {selectedReviews.map((review, index) => (
-              <div
-                key={startIndex + index}
-                className="flex transform-gpu flex-col rounded-lg bg-white p-6 text-left shadow-lg transition-all duration-300 hover:scale-105"
-              >
-                <h3 className="text-lg font-bold text-ink">{review.name}</h3>
-                <p className="text-sm text-gray-500">{review.position}</p>
-                <div className="my-3 flex text-yellow-400">
-                  {Array.from({ length: review.starCount }).map((_, i) => (
-                    <span key={i}>⭐</span>
-                  ))}
-                </div>
-                <p className="flex-grow text-gray-600 italic">
-                  “{review.content}”
-                </p>
-              </div>
-            ))}
-          </div>
-
-          {/* Navigation Dots */}
-          <div className="mt-8 flex justify-center space-x-2">
-            {Array.from({ length: totalPages }).map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentPage(index)}
-                className={`h-3 w-3 rounded-full transition-colors ${currentPage === index ? "bg-primary" : "bg-gray-300"
-                  }`}
-                aria-label={`Go to page ${index + 1}`}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 export default function IndependentPharmacyPage() {
-  const { heroSection, featureSection, featureBenefitsSection, featureShowcaseSection } = independentPharmacyData;
+  const { heroSection,
+    featureSection,
+    featureBenefitsSection,
+    featureShowcaseSection,
+    solutionSection,
+    commitmentSection,
+    testimonialSection,
+    ctaSection,
+    faqSection
+  } = independentPharmacyData;
   const [activeTab, setActiveTab] = useState<number | null>(featureSection.tabs[0].id);
   const current = featureSection.tabs.find((tab) => tab.id === activeTab);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [openAccordion, setOpenAccordion] = useState(0);
-  console.log("featureShowcaseSection:", featureShowcaseSection.images);
+
 
   return (
     <div>
@@ -578,9 +210,6 @@ export default function IndependentPharmacyPage() {
                   </li>
                 ))}
             </ul>
-            <button className="mt-8 rounded-full bg-primary px-6 py-3 font-semibold text-white hover:opacity-90">
-              Trải nghiệm miễn phí
-            </button>
           </div>
         </div>
       </section>
@@ -605,7 +234,7 @@ export default function IndependentPharmacyPage() {
                     }`}>
                     <Image
                       src={feature.image.url}
-                      alt={feature.image.alt}
+                      alt={feature.alt}
                       layout="fill"
                       objectFit="contain"
                     />
@@ -614,9 +243,7 @@ export default function IndependentPharmacyPage() {
                     <h3 className="text-h5 font-semibold text-success">
                       {feature.title}
                     </h3>
-                    <p className="text-sub1 mt-4 line-clamp-3 text-white/80">
-                      {feature.description}
-                    </p>
+                    <RichTextRenderer content={feature.description} className="text-sub1 mt-4 line-clamp-3 text-white/80" />
                   </div>
                 </div>
               );
@@ -692,7 +319,7 @@ export default function IndependentPharmacyPage() {
         </div>
         {/* -- THAY THẾ IMAGE TĨNH BẰNG CAROUSEL -- */}
         {featureShowcaseSection.images && featureShowcaseSection.images.length > 0 && (
-          <DashboardCarousel images={featureShowcaseSection.images} />
+          <DashboardCarousel images={featureShowcaseSection.images} alt={featureShowcaseSection.alt} />
         )}
       </section>
 
@@ -701,56 +328,39 @@ export default function IndependentPharmacyPage() {
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-h3 font-bold text-ink">
-              Giải Pháp Chuyên Biệt
+              {solutionSection.title}
             </h2>
             <p className="mt-4 text-h6 text-text/80">
-              Nền tảng của chúng tôi sử dụng Trí tuệ nhân tạo để phân tích dữ
-              liệu và đưa ra các gợi ý hành động trực quan.
+              {solutionSection.description}
             </p>
           </div>
           <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-2">
-            <div className="rounded-xl bg-white p-8 text-center shadow-lg">
-              <h3 className="mt-6 text-h5 font-bold text-ink">
-                Chuỗi nhà thuốc
-              </h3>
-              <p className="mt-2 text-sub1">
-                Tối ưu vận hành cho chuỗi nhà thuốc, dễ dàng kiểm soát.
-              </p>
-              <a
-                href="#"
-                className="mt-4 inline-block font-semibold text-primary hover:underline"
+            {solutionSection.solutionCard?.map((card, index) => (
+              <div
+                key={index}
+                className="rounded-xl bg-white p-8 text-center shadow-lg"
               >
-                Tìm hiểu thêm →
-              </a>
-              <Image
-                src="/features-dashboard1.png"
-                alt="Chuỗi nhà thuốc"
-                width={250}
-                height={250}
-                className="mx-auto"
-              />
-            </div>
-            <div className="rounded-xl bg-white p-8 text-center shadow-lg">
-              <h3 className="mt-6 text-h5 font-bold text-ink">
-                Phòng khám/phòng mạch
-              </h3>
-              <p className="mt-2 text-sub1">
-                Giải pháp tích hợp quản lý thuốc và hồ sơ bệnh nhân hiệu quả.
-              </p>
-              <a
-                href="#"
-                className="mt-4 inline-block font-semibold text-primary hover:underline"
-              >
-                Tìm hiểu thêm →
-              </a>
-              <Image
-                src="/features-dashboard1.png"
-                alt="Phòng khám"
-                width={250}
-                height={250}
-                className="mx-auto"
-              />
-            </div>
+                <h3 className="mt-6 text-h5 font-bold text-ink">
+                  {card.title}
+                </h3>
+                <p className="mt-2 text-sub1">
+                  {card.description}
+                </p>
+                <a
+                  href={card.ctaButton.link || "#"}
+                  className="mt-4 inline-block font-semibold text-primary hover:underline"
+                >
+                  {card.ctaButton.title}
+                </a>
+                <Image
+                  src={card.image?.url || "/features-dashboard1.png"}
+                  alt={card.image?.alt || card.title}
+                  width={250}
+                  height={250}
+                  className="mx-auto"
+                />
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -759,51 +369,57 @@ export default function IndependentPharmacyPage() {
       <section className="container mx-auto px-4 py-20">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-h3 font-bold text-ink">
-            Cam Kết Đồng Hành Cùng Nhà Thuốc
+            {commitmentSection.title}
           </h2>
           <p className="mx-auto mt-4 max-w-3xl text-center text-h6">
-            Nền tảng của chúng tôi sử dụng Trí tuệ nhân tạo để phân tích dữ liệu
-            và đưa ra các gợi ý hành động trực quan.
+            {commitmentSection.description}
           </p>
         </div>
-        <div className="mt-12 grid grid-cols-1 items-center gap-12 md:grid-cols-2">
+
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-12 h-[400px]">
+          {/* Ảnh bên trái */}
           <div className="relative aspect-video rounded-lg bg-white p-2 shadow-xl">
             <Image
-              src="/features-dashboard1.png"
+              src={commitmentSection.image.url}
               alt="Marketing Dashboards"
               layout="fill"
               objectFit="contain"
             />
           </div>
-          <div className="space-y-4">
-            {accordionItems.map((item, index) => (
-              <AccordionItem
-                key={index}
-                title={item.title}
-                isOpen={openAccordion === index}
-                onClick={() =>
-                  setOpenAccordion(openAccordion === index ? -1 : index)
-                }
-              >
-                {item.content}
-              </AccordionItem>
-            ))}
+
+          {/* Khung Accordion bên phải */}
+          <div className="relative w-full max-w-[500px] mx-auto h-full">
+            {/* Nội dung Accordion cố định container, scroll khi dài */}
+            <div className="absolute inset-0 overflow-hidden flex flex-col items-center justify-start space-y-4 p-2">
+              {commitmentSection.contents.map((item, index) => (
+                <AccordionItem
+                  key={index}
+                  title={item.title}
+                  description={item.description}
+                  isOpen={openAccordion === index}
+                  onClick={() =>
+                    setOpenAccordion(openAccordion === index ? -1 : index)
+                  }
+                  buttonClassName="bg-primary/9 w-full"
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
-      <ReviewCarousel />
+
+      <ReviewCarousel sectionData={testimonialSection} />
       {/* Final CTA Section */}
       <section className="container mx-auto px-4 py-20">
         <div className="rounded-2xl bg-ink p-12 text-center text-white">
           <h2 className="text-h3 font-bold">
-            Sẵn Sàng Số Hóa Nhà Thuốc Của Bạn?
+            {ctaSection.title}
           </h2>
           <p className="mx-auto text-h6 mt-4 max-w-1xl text-white/80">
-            Trải nghiệm đầy đủ các tính năng ưu việt của V-Pharma hoàn toàn miễn
-            phí trong 15 ngày. Không cần thẻ tín dụng.
+            {ctaSection.description}
           </p>
           <button className="mt-8 rounded-full bg-primary px-6 py-3 font-semibold text-white hover:opacity-90">
-            Trải nghiệm miễn phí
+            {ctaSection.ctaButton.title}
           </button>
         </div>
       </section>
@@ -811,13 +427,14 @@ export default function IndependentPharmacyPage() {
       {/* FAQ Section */}
       <section className="container mx-auto max-w-4xl px-4 py-20">
         <h2 className="text-center text-h3 font-bold text-ink">
-          Câu hỏi thường gặp
+          {faqSection.title}
         </h2>
         <div className="mt-10">
-          {faqItems.map((item, index) => (
-            <FaqItem
+          {faqSection.faqItems.map((item, index) => (
+            <AccordionItem
               key={index}
-              item={item}
+              title={item.question}
+              description={item.answer}
               isOpen={openFaq === index}
               onClick={() => setOpenFaq(openFaq === index ? null : index)}
             />
