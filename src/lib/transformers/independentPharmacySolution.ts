@@ -5,7 +5,6 @@ import { createImageUrl } from "@/lib/utils/imageUtils";
 
 export function transformIndependentPharmacyData(
   response: any,
-  apiUrl: string
 ): IndependentPharmacyData {
   const { data } = response;
 
@@ -29,7 +28,7 @@ export function transformIndependentPharmacyData(
           link: btn.link,
         })) ?? [],
       image: {
-        url: createImageUrl(apiUrl, heroSection?.image?.image?.url),
+        url: createImageUrl(heroSection?.image?.image?.url),
         alt: heroSection?.image?.alt ?? "",
         caption: heroSection?.image?.caption ?? "",
       },
@@ -49,7 +48,7 @@ export function transformIndependentPharmacyData(
           title: tab.title ?? "",
           description: tab.description ?? "",
           image: {
-            url: createImageUrl(apiUrl, tab.image?.image?.url ?? null),
+            url: createImageUrl(tab.image?.image?.url ?? null),
             alt: tab.image?.alt ?? "",
             caption: tab.image?.caption ?? "",
           },
@@ -64,7 +63,7 @@ export function transformIndependentPharmacyData(
           description: item.description ?? "",
           alt: item.alt ?? "V-pharma Benefit Image",
           image: {
-            url: createImageUrl(apiUrl, item.image?.url),
+            url: createImageUrl(item.image?.url),
           },
         })) ?? [],
       ctaButton: {
@@ -82,7 +81,7 @@ export function transformIndependentPharmacyData(
       alt: featureShowcaseSection?.alt ?? "V-pharma Showcase Image",
       images:
         featureShowcaseSection?.images?.map((image: any) => ({
-          url: createImageUrl(apiUrl, image?.image?.url),
+          url: createImageUrl(image?.image?.url),
           alt: image?.alt ?? "V-pharma Showcase Image",
         })) ?? [],
     },
@@ -101,7 +100,7 @@ export function transformIndependentPharmacyData(
             link: card.ctaButton?.link ?? "#",
           },
           image: {
-            url: createImageUrl(apiUrl, card.image?.url),
+            url: createImageUrl(card.image?.url),
           },
         })) ?? [],
     },
@@ -110,7 +109,7 @@ export function transformIndependentPharmacyData(
       title: commitmentSection?.title ?? "Cam kết của chúng tôi!!!",
       description: commitmentSection?.description ?? "",
       image: {
-        url: createImageUrl(apiUrl, commitmentSection?.image?.url),
+        url: createImageUrl(commitmentSection?.image?.url),
       },
       alt: commitmentSection?.alt ?? "",
       contents:
@@ -128,7 +127,7 @@ export function transformIndependentPharmacyData(
           authorLocation: item.authorLocation ?? "",
           quote: item.quote ?? "",
           avatar: {
-            url: createImageUrl(apiUrl, item.avatar?.url),
+            url: createImageUrl(item.avatar?.url),
             alt: item.avatar?.alternativeText ?? "Avatar",
           },
         })) ?? [],

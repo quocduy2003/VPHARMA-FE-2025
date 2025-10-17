@@ -25,6 +25,11 @@ export interface CtaButton {
   title: string;
   link: string | null;
 }
+export interface CTASection {
+  title: string;
+  description: string;
+  ctaButton: CtaButton;
+}
 export interface RichTextNode {
   type: "text";
   text: string;

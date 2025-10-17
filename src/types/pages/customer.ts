@@ -1,4 +1,4 @@
-import { CtaButton, StrapiImage } from "../common";
+import { CTASection } from "@/types";
 
 interface HeroSection {
   eyebrow: string;
@@ -6,10 +6,11 @@ interface HeroSection {
   mainDescription: string;
 }
 
-interface Card{
+export interface Card {
   name: string;
   address: string;
-  image: StrapiImage;
+  quote: string;
+  image: string;
   alt: string;
 }
 
@@ -20,24 +21,49 @@ interface ChallengeSection {
 }
 
 interface BrandReviewSection {
+  eyebrow: string;
   title: string;
-  description: string;
   reviewCards: Card[];
 }
 
-interface BlogCategory {
-    name: string;
-    slug: string;
-    blogPosts:number;
+interface blog_category {
+  name: string;
+  slug: string;
 }
 
-interface CustChallengerSection   {
-    title: string;
-    description: string;
-    blog_category: string;
+interface CustBlogSection {
+  title: string;
+  description: string;
+  blog_category: blog_category;
+}
+
+export interface CustBlogPost {
+  title: string;
+  description: string;
+  coverImage: {
+    url: string;
+    alt: string;
+  };
+  slug: string;
+  meta: {
+    pagination: {
+      page: number;
+      pageSize: number;
+      pageCount: number;
+      total: number;
+    };
+  };
 }
 
 export interface CustomerData extends HeroSection {
   challengeSection: ChallengeSection;
   brandReviewSection: BrandReviewSection;
+  custBlogSection: CustBlogSection;
+  ctaSection: CTASection;
+}
+
+export interface BlogSectionProps {
+  slug: string;
+  sectionTitle: string;
+  sectionDesc: string;
 }

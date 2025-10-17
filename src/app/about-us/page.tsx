@@ -241,7 +241,7 @@ export default function AboutUsPage() {
         </div>
       </section>
 
-      <CTASection />
+      {/* <CTASection /> */}
     </div>
   );
 }
