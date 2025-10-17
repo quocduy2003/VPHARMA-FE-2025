@@ -69,7 +69,7 @@ const query = qs.stringify(
       // Testimonial Section
       testimonialSection: {
         populate: {
-          testimonial: {
+          testimonials : {
             populate: {
               avatar: { populate: "*" },
             },

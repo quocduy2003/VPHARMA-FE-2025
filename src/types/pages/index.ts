@@ -4,3 +4,5 @@ export * from "./independentPharmacySolution";
 export * from "./chainPharmacySolution";
 // Customer Page Types
 export * from "./customer";
+// About Us Page Types
+export * from "./aboutUs";

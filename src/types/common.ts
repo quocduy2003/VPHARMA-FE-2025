@@ -30,6 +30,13 @@ export interface CTASection {
   description: string;
   ctaButton: CtaButton;
 }
+export interface Testimonial {
+  id: number;
+  authorName: string;
+  authorLocation: string;
+  quote: string;
+  avatar: StrapiImage;
+}
 export interface RichTextNode {
   type: "text";
   text: string;
