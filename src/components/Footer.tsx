@@ -47,7 +47,7 @@ export function Footer() {
           <h4 className="mb-4 font-semibold text-success text-h6">Hỗ trợ</h4>
           <ul className="space-y-3 text-sub2 text-white/80">
             <li><Link href="#" className="hover:text-white">Hướng dẫn sử dụng</Link></li>
-            <li><Link href="#" className="hover:text-white">Blog</Link></li>
+            <li><Link href="/blog/blog-home" className="hover:text-white">Blog</Link></li>
             <li><Link href="#" className="hover:text-white">Tư vấn giải pháp</Link></li>
           </ul>
         </div>
