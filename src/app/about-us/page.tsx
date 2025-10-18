@@ -5,243 +5,236 @@ import Image from "next/image";
 import FadeInOnScroll from "@/components/animations/FadeInOnScroll";
 import CTASection from "@/components/CTA";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
+import { aboutUsData } from "@/lib/api/aboutUs";
+import { BlockItems } from "@/types";
 
-// --- THÊM CÁC KIỂU DỮ LIỆU TYPESCRIPT ---
-interface Vision {
-  id: number;
-  title: string;
-  description: string;
-}
 
-interface Value {
-  id: number;
-  title: string;
-  description: string;
-  image: string;
-}
+const StorySection = ({ data }: { data: Extract<BlockItems, { __component: 'about.story-section' }> }) => (
+  <section className="bg-white py-20">
+    <div className="container mx-auto px-4">
+      <div className="rounded-2xl bg-ink p-8 text-white shadow-xl md:p-12 lg:p-16">
+        <div className="mb-12 text-center">
+          <p className="mb-4 text-h6 font-bold uppercase tracking-wide text-primary">{data.eyebrow}sdjhfgasdf</p>
+          <h2 className="mb-8 text-white">{data.title}</h2>
+          <p className="mx-auto max-w-6xl text-h6 leading-relaxed text-white">{data.description}</p>
+        </div>
+        <div className="container grid gap-8 md:grid-cols-2 md:gap-12 lg:gap-16">
+          {data.items.map((item, index) => (
+            <div key={index} className="text-left">
+              <div className="relative mb-6">
+                <div className="absolute left-0 top-0 h-full w-1 bg-primary" />
+                <h3 className="pl-6 text-h4 font-bold text-primary">{item.title}</h3>
+              </div>
+              <p className="text-sub1 max-w-xl text-white">{item.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+);
 
-interface TeamMember {
-  id: number;
-  name: string;
-  role: string;
-  image: string;
-}
+// Hàm render cho phần "Giá trị"
+const ValuesSection = ({ data }: { data: Extract<BlockItems, { __component: 'about.values-section' }> }) => (
+  <section className="bg-gradient-to-b from-white to-cyan-50 py-20">
+    <div className="container mx-auto px-4">
+      <div className="text-center">
+        <p className="mb-4 text-h6 font-bold uppercase tracking-wide text-primary">{data.eyebrow}</p>
+        <h2 className="mb-12 text-black">{data.title}</h2>
+      </div>
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {data.cards.map((card, index) => (
+          <div key={index} className="group cursor-pointer rounded-2xl border border-gray-200/80 bg-white p-8 text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/20">
+            <Image src={card.image} alt={card.title} width={200} height={150} className="mx-auto mb-6 rounded-lg object-contain" />
+            <h3 className="mb-4 text-sub1 font-bold">{card.title}</h3>
+            <p className="text-sub2 max-w-xs mx-auto">{card.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
 
-// --- DỮ LIỆU TĨNH ---
-const storyData: { title: string; heading: string; description: string; visions: Vision[] } = {
-  title: "Câu chuyện của V-Pharma",
-  heading: "Bắt Nguồn Từ Sự Thấu Hiểu",
-  description:
-    "V-Pharma được thành lập bởi những chuyên gia công nghệ có người thân làm trong ngành dược. Chúng tôi đã chứng kiến những khó khăn hàng ngày trong việc quản lý thủ công, từ kiểm kho, theo dõi hạn dùng đến chăm sóc khách hàng. Đó là lý do chúng tôi quyết tâm xây dựng một giải pháp đơn giản, mạnh mẽ và đáng tin cậy cho nhà thuốc Việt Nam.",
-  visions: [
-    { id: 1, title: "Tầm nhìn", description: "Cung cấp nền tảng công nghệ ưu việt, giúp các nhà thuốc, quầy thuốc tối ưu hóa vận hành, nâng cao hiệu quả kinh doanh và chất lượng dịch vụ." },
-    { id: 2, title: "Tầm nhìn", description: "Trở thành đối tác công nghệ đáng tin cậy và không thể thiếu của mọi nhà thuốc tại Việt Nam, góp phần vào sự phát triển chung của ngành y tế." },
-  ],
+// Hàm render cho phần "Đội ngũ"
+const FounderSection = ({
+  data,
+  currentIndex,
+  handleNext,
+  handlePrev,
+}: {
+  data: Extract<BlockItems, { __component: "about.founder-section" }>;
+  currentIndex: number;
+  handleNext: () => void;
+  handlePrev: () => void;
+}) => {
+  // Nếu không có founders hoặc founders không phải là mảng => fallback rỗng
+  const founders = Array.isArray(data?.founders) ? data.founders : [];
+
+  const totalMembers = founders.length;
+
+  if (totalMembers === 0) {
+    return (
+      <section className="bg-gradient-to-b from-cyan-50 to-white py-20">
+        <div className="container mx-auto px-4 text-center">
+          <p className="mb-4 text-h6 font-bold uppercase tracking-wide text-primary">
+            {data.eyebrow}
+          </p>
+          <h2 className="mb-4 text-black">{data.title}</h2>
+          <p className="mx-auto max-w-3xl text-h6">{data.description}</p>
+          <p className="text-sub1 text-gray-500">
+            Hiện chưa có thông tin thành viên sáng lập để hiển thị.
+          </p>
+        </div>
+      </section>
+    );
+  }
+
+  // Tính vị trí card
+  const getCardPosition = (
+    index: number
+  ): "center" | "left" | "right" | "hidden" => {
+    if (index === currentIndex) return "center";
+    const prevIndex = (currentIndex - 1 + totalMembers) % totalMembers;
+    if (index === prevIndex) return "left";
+    const nextIndex = (currentIndex + 1) % totalMembers;
+    if (index === nextIndex) return "right";
+    return "hidden";
+  };
+
+  return (
+    <section className="bg-gradient-to-b from-cyan-50 to-white py-20 overflow-hidden">
+      <div className="container mx-auto px-4">
+        <div className="mb-20 text-center">
+          <p className="mb-4 text-h6 font-bold uppercase tracking-wide text-primary">
+            {data?.eyebrow || ""}
+          </p>
+          <h2 className="mb-4 text-black">{data?.title || ""}</h2>
+          <p className="mx-auto max-w-3xl text-h6">{data?.description || ""}</p>
+        </div>
+
+        <div className="relative h-96">
+          <div className="relative flex h-full items-center justify-center">
+            {founders.map((founder, index) => {
+              const position = getCardPosition(index);
+              let classes = "transition-all duration-500 ease-in-out";
+              let infoClasses = "transition-opacity duration-300 delay-200";
+
+              switch (position) {
+                case "center":
+                  classes += " z-10 scale-[1.6]";
+                  infoClasses += " opacity-100";
+                  break;
+                case "left":
+                  classes +=
+                    " z-0 scale-90 -translate-x-[150%] opacity-60";
+                  infoClasses += " opacity-0";
+                  break;
+                case "right":
+                  classes +=
+                    " z-0 scale-90 translate-x-[150%] opacity-60";
+                  infoClasses += " opacity-0";
+                  break;
+                default:
+                  classes += " z-0 scale-0 opacity-0";
+                  infoClasses += " opacity-0";
+                  break;
+              }
+
+              return (
+                <div
+                  key={index}
+                  className={`absolute flex w-64 flex-col items-center text-center ${classes}`}
+                >
+                  <Image
+                    src={founder.photo || "/placeholder.jpg"}
+                    alt={founder.name || "Thành viên"}
+                    width={200}
+                    height={200}
+                    className="h-52 w-52 rounded-full object-cover shadow-lg"
+                  />
+                  <div className={infoClasses}>
+                    <h3 className="mt-6 text-h4 font-bold">
+                      {founder.name || "Không rõ tên"}
+                    </h3>
+                    <p className="mt-2 text-sub1 text-primary">
+                      {founder.role || ""}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="mt-15 flex justify-center gap-4">
+            <button
+              onClick={handlePrev}
+              className="rounded-full bg-blue-100 p-3 text-primary shadow-lg transition hover:bg-primary hover:text-white hover:scale-110"
+              aria-label="Thành viên trước"
+            >
+              <FiArrowLeft size={24} />
+            </button>
+            <button
+              onClick={handleNext}
+              className="rounded-full bg-blue-100 p-3 text-primary shadow-lg transition hover:bg-primary hover:text-white hover:scale-110"
+              aria-label="Thành viên kế tiếp"
+            >
+              <FiArrowRight size={24} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
-const valuesData: { title: string; heading: string; values: Value[] } = {
-  title: "Câu chuyện của V-Pharma",
-  heading: "Những Giá Trị Chúng Tôi Theo Đuổi",
-  values: [
-    { id: 1, title: "Lấy khách hàng làm trọng tâm", description: "Mọi quyết định và hành động của chúng tôi đều bắt đầu và kết thúc bằng lợi ích của khách hàng.", image: "/features-dashboard1.png" },
-    { id: 2, title: "Đổi mới và Sáng tạo", description: "Chúng tôi không ngừng tìm kiếm và áp dụng công nghệ mới để mang lại giải pháp tốt nhất, hiệu quả nhất.", image: "/features-dashboard2.png" },
-    { id: 3, title: "Cam kết chất lượng", description: "Sản phẩm và dịch vụ của chúng tôi luôn được đảm bảo chất lượng cao nhất, ổn định và đáng tin cậy.", image: "/features-dashboard2.png" }
-  ]
-};
 
-const teamData: { title: string; heading: string; description: string; members: TeamMember[] } = {
-  title: "Câu chuyện của V-Pharma",
-  heading: "Đội Ngũ Chuyên Gia Của Chúng Tôi",
-  description: "Chúng tôi là sự kết hợp giữa các kỹ sư công nghệ đam mê và những chuyên gia am hiểu sâu sắc về ngành dược.",
-  members: [
-    { id: 1, name: "Nguyễn Văn An", role: "CEO & Co-Founder", image: "/avt1.jpg" },
-    { id: 2, name: "Nguyễn Thị B", role: "CTO & Co-Founder", image: "/avt2.jpg" },
-    { id: 3, name: "Trần Văn C", role: "Head of Product", image: "/avt3.jpg" },
-    { id: 4, name: "Lê Thị D", role: "Lead Engineer", image: "/avt4.jpg" },
-    { id: 5, name: "Phạm Văn E", role: "Senior Developer", image: "/avt1.jpg" },
-  ]
-};
 
-const getCardPosition = (index: number, currentIndex: number, totalItems: number): 'center' | 'left' | 'right' | 'hidden' => {
-  if (index === currentIndex) return 'center';
-  const prevIndex = (currentIndex - 1 + totalItems) % totalItems;
-  if (index === prevIndex) return 'left';
-  const nextIndex = (currentIndex + 1) % totalItems;
-  if (index === nextIndex) return 'right';
-  return 'hidden';
-};
-
+// --- COMPONENT CHÍNH ---
 export default function AboutUsPage() {
   const [currentMemberIndex, setCurrentMemberIndex] = useState(0);
-  const totalMembers = teamData.members.length;
+  const { blocks } = aboutUsData;
+  const founderSection = blocks.find(block => block.__component === 'about.founder-section') as Extract<BlockItems, { __component: 'about.founder-section' }> | undefined;
+  const founderCount = founderSection?.founders.length || 1;
+  const handleNextMember = () => setCurrentMemberIndex((prev) => (prev + 1) % founderCount);
+  const handlePrevMember = () => setCurrentMemberIndex((prev) => (prev - 1 + founderCount) % founderCount);
+  console.log('About Us Blocks:', blocks);
 
-  const handleNextMember = () => setCurrentMemberIndex((prev) => (prev + 1) % totalMembers);
-  const handlePrevMember = () => setCurrentMemberIndex((prev) => (prev - 1 + totalMembers) % totalMembers);
+  // Take blocks as blocks[]
+  const renderBlock = (block: BlockItems) => {
+    switch (block.__component) {
+      case 'about.story-section':
+        return <StorySection data={block} />;
+      case 'about.values-section':
+        return <ValuesSection data={block} />;
+      case 'about.founder-section':
+        return <FounderSection data={block} currentIndex={currentMemberIndex} handleNext={handleNextMember} handlePrev={handlePrevMember} />;
+      case 'solution.cta-section':
+        return <CTASection ctaSection={block} />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <div>
-      {/* Dashboard */}
+      {/* Dashboard Section (Phần tĩnh) */}
       <section className="bg-gradient-to-b from-blue-100 to-white py-20 text-center">
         <div className="container mt-5 mx-auto max-w-6xl text-center">
-          <p className="mb-4 text-h6 font-bold uppercase tracking-wide text-primary">
-            VỀ V-PHARMA
-          </p>
-          <h1 className="text-black">
-            Mang công nghệ đến gần hơn với nhà Thuốc Nhà Thuốc Việt Nam
-          </h1>
-          <p className="mx-auto mt-4 max-w-8xl text-h6">
-            Chúng tôi tin rằng công nghệ là chìa khóa để giải phóng tiềm năng
-            của các nhà thuốc, giúp dược sĩ có thêm thời gian chuyên tâm vào sứ
-            mệnh chăm sóc sức
-          </p>
+          <p className="mb-4 text-h6 font-bold uppercase tracking-wide text-primary">{aboutUsData.eyebrow}</p>
+          <h1 className="text-black">{aboutUsData.title}</h1>
+          <p className="mx-auto mt-4 max-w-8xl text-h6">{aboutUsData.description}</p>
         </div>
       </section>
 
-      {/* STORY SECTION */}
-      <section className="bg-white py-20">
-        <div className="container mx-auto px-4">
-          <FadeInOnScroll>
-            <div className="rounded-2xl bg-ink p-8 text-white shadow-xl md:p-12 lg:p-16">
-              <div className="mb-12 text-center">
-                <p className="mb-4 text-h6 font-bold uppercase tracking-wide text-primary">
-                  {storyData.title}
-                </p>
-                <h2 className="mb-8 text-white">{storyData.heading}</h2>
-                <p className="mx-auto max-w-6xl text-h6 leading-relaxed text-white">
-                  {storyData.description}
-                </p>
-              </div>
-              <div className="container grid gap-8 md:grid-cols-2 md:gap-12 lg:gap-16">
-                {storyData.visions.map((vision) => (
-                  <div key={vision.id} className="text-left">
-                    <div className="relative mb-6">
-                      <div className="absolute left-0 top-0 h-full w-1 bg-primary" />
-                      <h3 className="pl-6 text-h4 font-bold text-primary">
-                        {vision.title}
-                      </h3>
-                    </div>
-                    <p className="text-sub1 max-w-xl text-white">
-                      {vision.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </FadeInOnScroll>
-        </div>
-      </section>
-      
-      {/* VALUES SECTION */}
-      <section className="bg-gradient-to-b from-white to-cyan-50 py-20">
-        <div className="container mx-auto px-4">
-          <FadeInOnScroll>
-              <div className="text-center">
-                  <p className="mb-4 text-h6 font-bold uppercase tracking-wide text-primary">
-                      {valuesData.title}
-                  </p>
-                  <h2 className="mb-12 text-black">{valuesData.heading}</h2>
-              </div>
-              <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-                  {valuesData.values.map((value) => (
-                      <div key={value.id} className="group cursor-pointer rounded-2xl border border-gray-200/80 bg-white p-8 text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/20">
-                          <Image 
-                              src={value.image}
-                              alt={value.title}
-                              width={200}
-                              height={150}
-                              className="mx-auto mb-6 rounded-lg object-contain"
-                          />
-                          <h3 className="mb-4 text-sub1 font-bold">{value.title}</h3>
-                          <p className="text-sub2 max-w-xs mx-auto"> 
-                              {value.description}
-                          </p>
-                      </div>
-                  ))}
-              </div>
-          </FadeInOnScroll>
-        </div>
-      </section>
+      {/* Dynamic Zone (Vùng động) */}
+      {blocks.map((block, index) => (
+        <FadeInOnScroll key={`${block.__component}-${index}`}>
+          {renderBlock(block)}
+        </FadeInOnScroll>
+      ))}
 
-      {/* TEAM SECTION */}
-      <section className="bg-gradient-to-b from-cyan-50 to-white  py-20 overflow-hidden">
-        <div className="container mx-auto px-4">
-          <FadeInOnScroll>
-            <div className="mb-20 text-center">
-              <p className="mb-4 text-h6 font-bold uppercase tracking-wide text-primary">
-                {teamData.title}
-              </p>
-              <h2 className="mb-4 text-black">{teamData.heading}</h2>
-              <p className="mx-auto max-w-3xl text-h6">{teamData.description}</p>
-            </div>
-            
-            <div className="relative h-96">
-              <div className="relative flex h-full items-center justify-center">
-                {teamData.members.map((member, index) => {
-                  const position = getCardPosition(index, currentMemberIndex, totalMembers);
-                  
-                  let classes = 'transition-all duration-500 ease-in-out';
-                  let infoClasses = 'transition-opacity duration-300 delay-200';
-                  
-                  switch (position) {
-                    case 'center':
-                      classes += ' z-10 scale-[1.6]'; // Tăng kích thước hình giữa lên 160%
-                      infoClasses += ' opacity-100';
-                      break;
-                    case 'left':
-                      classes += ' z-0 scale-90 -translate-x-[150%] opacity-60'; // Tăng khoảng cách ra xa hơn
-                      infoClasses += ' opacity-0';
-                      break;
-                    case 'right':
-                      classes += ' z-0 scale-90 translate-x-[150%] opacity-60'; // Tăng khoảng cách ra xa hơn
-                       infoClasses += ' opacity-0';
-                      break;
-                    default:
-                      classes += ' z-0 scale-0 opacity-0';
-                       infoClasses += ' opacity-0';
-                      break;
-                  }
-
-                  return (
-                    <div key={member.id} className={`absolute flex w-64 flex-col items-center text-center ${classes}`}>
-                      <Image
-                        src={member.image}
-                        alt={member.name}
-                        width={200}
-                        height={200}
-                        className="h-52 w-52 rounded-full object-cover shadow-lg"
-                      />
-                      <div className={infoClasses}>
-                          <h3 className="mt-6 text-h4 font-bold">{member.name}</h3>
-                          <p className="mt-2 text-sub1 text-primary">{member.role}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Nút điều khiển */}
-              <div className="mt-15 flex justify-center gap-4">
-                 <button 
-                  onClick={handlePrevMember} 
-                  className="rounded-full bg-blue-100 p-3 text-primary shadow-lg transition hover:bg-primary hover:text-white hover:scale-110"
-                  aria-label="Thành viên trước"
-                 >
-                    <FiArrowLeft size={24} />
-                </button>
-                 <button 
-                  onClick={handleNextMember} 
-                  className="rounded-full bg-blue-100 p-3 text-primary shadow-lg transition hover:bg-primary hover:text-white hover:scale-110"
-                  aria-label="Thành viên kế tiếp"
-                  >
-                    <FiArrowRight size={24} />
-                </button>
-              </div>
-            </div>
-          </FadeInOnScroll>
-        </div>
-      </section>
-
-      <CTASection />
+      {/* CTA Section (Phần tĩnh) */}
+      {/* <CTASection /> */}
     </div>
   );
 }

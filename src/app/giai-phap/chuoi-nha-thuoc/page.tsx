@@ -930,14 +930,14 @@ export default function ChuoiNhaThuoc() {
       </FadeInOnScroll>
 
       {/*SECTION 7: Pharmacy  Carousel*/}
-      <FadeInOnScroll>
+      {/* <FadeInOnScroll>
         <PharmacyCarousel />
-      </FadeInOnScroll>
+      </FadeInOnScroll> */}
 
       {/* SECTION : CTA */}
-      <FadeInOnScroll>
+      {/* <FadeInOnScroll>
         <CTASection />
-      </FadeInOnScroll>
+      </FadeInOnScroll> */}
 
       {/* SECTION : FAQ*/}
       <FadeInOnScroll>

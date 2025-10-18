@@ -583,9 +583,9 @@ export default function TongQuan() {
         <ReviewCarousel />
       </FadeInOnScroll> */}
 
-      <FadeInOnScroll>
+      {/* <FadeInOnScroll>
         <CTASection />
-      </FadeInOnScroll>
+      </FadeInOnScroll> */}
 
       <FadeInOnScroll>
         <FaqSection />

@@ -1,7 +1,6 @@
 const API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
 import { fetchAPI } from "@/lib/dataService";
 import { IndependentPharmacyData } from "@/types";
-import { combinePopulate } from "@/lib/dataService";
 import { transformIndependentPharmacyData } from "@/lib/transformers/independentPharmacySolution";
 import qs from "qs";
 
@@ -70,7 +69,7 @@ const query = qs.stringify(
       // Testimonial Section
       testimonialSection: {
         populate: {
-          testimonials: {
+          testimonials : {
             populate: {
               avatar: { populate: "*" },
             },
@@ -99,8 +98,7 @@ async function getIndependentPharmacyData(
 ): Promise<IndependentPharmacyData> {
   const endpoint = `independent-pharmacy-solution?${queryPath}`;
   const response = await fetchAPI(endpoint);
-  const apiUrl = API_URL || "";
-  return transformIndependentPharmacyData(response, apiUrl);
+  return transformIndependentPharmacyData(response);
 }
 
 export const independentPharmacyData = await getIndependentPharmacyData(query);

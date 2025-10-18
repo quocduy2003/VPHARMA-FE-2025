@@ -8,8 +8,10 @@ export async function fetchAPI(endpoint : string){
            throw new Error(`Failed to fetch: ${endpoint}`);
        }
        return await response.json();
-    } catch (error) {
-       console.error('Error fetching API:', error);
+    } catch (error: any) {
+      //Trả lỗi chi tiết 
+
+       console.error('Error fetching API:', error.message);
        throw error;
     }
 }

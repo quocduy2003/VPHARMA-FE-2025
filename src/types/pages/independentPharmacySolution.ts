@@ -1,4 +1,4 @@
-import { CtaButton, RichTextBlock, StrapiImage } from "@/types";
+import { CtaButton, RichTextBlock, StrapiImage, CTASection, Testimonial } from "@/types";
 // ---------- Section Types ----------
 interface HeroSection {
   mainTitle: string;
@@ -59,13 +59,7 @@ interface SolutionSection {
   description: string;
   solutionCard: SolutionCard[];
 }
-interface Testimonial {
-  id: number;
-  authorName: string;
-  authorLocation: string;
-  quote: string;
-  avatar: StrapiImage;
-}
+
 interface TestimonialSection {
   title: string;
   testimonials: Testimonial[];
@@ -84,11 +78,7 @@ interface CommitmentSection {
   contents: CommitmentContent[];
 }
 
-interface CTASection {
-  title: string;
-  description: string;
-  ctaButton: CtaButton;
-}
+
 
 interface FAQItem {
   question: string;

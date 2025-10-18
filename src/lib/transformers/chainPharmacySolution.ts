@@ -15,7 +15,7 @@ export function transformChainPharmacyData(
       mainDescription: heroSection?.description || "",
       ctaButtons: heroSection?.ctaButtons || [],
       image: {
-        url: createImageUrl(apiUrl, heroSection?.image?.image?.url),
+        url: createImageUrl( heroSection?.image?.image?.url),
         alt: heroSection?.image?.alt ?? "",
         caption: heroSection?.image?.caption ?? "",
       },

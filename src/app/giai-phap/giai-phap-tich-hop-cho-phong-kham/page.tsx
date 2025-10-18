@@ -12,32 +12,6 @@ import { AccordionItem } from "@/components/ui/AccordionIteam";
 import ReviewCarousel from "@/components/ReviewCarousel";
 
 
-// Dữ liệu cho câu hỏi thường gặp (FAQ)
-const faqItems = [
-  {
-    question: "Phần mềm V-Pharma có dễ sử dụng không?",
-    answer:
-      "Tuyệt đối! V-Pharma được thiết kế với giao diện thân thiện, trực quan, phù hợp với cả những người không rành về công nghệ. Đội ngũ của chúng tôi sẽ đào tạo 1-1 cho đến khi bạn và nhân viên thành thạo.",
-  },
-  {
-    question: "Chi phí sử dụng phần mềm là bao nhiêu?",
-    answer:
-      "Chi phí rất hợp lý và linh hoạt theo quy mô của nhà thuốc. Vui lòng liên hệ để nhận báo giá chi tiết.",
-  },
-  {
-    question: "Tôi có cần cài đặt phần mềm phức tạp không?",
-    answer:
-      "Không, V-Pharma là giải pháp dựa trên nền tảng web, bạn có thể truy cập từ bất kỳ đâu mà không cần cài đặt phức tạp.",
-  },
-  {
-    question: "Dữ liệu của tôi có được bảo mật không?",
-    answer:
-      "An toàn dữ liệu là ưu tiên hàng đầu của chúng tôi. Hệ thống sử dụng các biện pháp bảo mật tiên tiến và sao lưu dữ liệu thường xuyên.",
-  },
-];
-
-
-
 const DashboardCarousel = ({
   images,
   alt,
@@ -108,6 +82,7 @@ export default function IndependentPharmacyPage() {
   const current = featureSection.tabs.find((tab) => tab.id === activeTab);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [openAccordion, setOpenAccordion] = useState(0);
+  console.log("Testimonial Section Data:", testimonialSection);
 
 
   return (
