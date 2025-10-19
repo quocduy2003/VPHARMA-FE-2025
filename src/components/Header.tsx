@@ -30,7 +30,7 @@ export function Header() {
         </Link>
 
         {/* Main Nav */}
-        <nav className="hidden lg:flex items-center gap-6 text-sm font-medium text-sub2 text-text ">
+        <nav className="hidden lg:flex items-center gap-6 text-sm font-medium text-sub2 text-black ">
           {mainNavLinks.map((link) => {
             const pathToMatch = link.matchPath || link.href;
             const isActive =
@@ -53,7 +53,7 @@ export function Header() {
           })}
 
           {/* Dropdown */}
-          <div className="group relative">
+          <div className="group relative ">
             <button className="flex items-center gap-1 hover:text-primary">
               <span>Thêm</span>
               <FiChevronDown className="text-base" />
