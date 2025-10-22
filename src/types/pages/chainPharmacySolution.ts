@@ -3,8 +3,8 @@ import { CtaButton, RichTextBlock, StrapiImage } from "@/types";
 
 interface HeroSection {
   eyebrow: string;
-  mainTitle: string;
-  mainDescription: string;
+  title: string;
+  description: string;
   ctaButtons: CtaButton[];
   image: StrapiImage;
 }

@@ -8,6 +8,8 @@ import ReviewCarousel from "@/components/ReviewCarousel";
 import Link from 'next/link';
 import { blogPosts } from "@/data/blogData";
 import { FiArrowRight } from 'react-icons/fi';
+import FeatureCard from '@/components/ui/FeatureCard';
+
 type Feature = {
   title: string;
   desc: string;
@@ -95,6 +97,7 @@ export default function HomePage() {
   const filteredBlogs = BLOGS.filter((b) => b.category === selectedCategory);
   const { solutionSection, experienceSection, testimonialSection, featureSection } = homePageData;
   console.log('homepage', homePageData);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const allCategories = [
     "Tất cả",
     "Kinh nghiệm kinh doanh",
@@ -188,60 +191,7 @@ export default function HomePage() {
         </div>
 
         <div className="mt-10 space-y-16">
-          {featureSection.featureCards.map((content, index) => (
-            <div
-              key={index}
-              className={`grid items-center gap-10 lg:grid-cols-2 ${index % 2 === 1 ? "lg:flex-row-reverse" : ""
-                }`}
-            >
-              {/* Cột trái: text */}
-              <div>
-                <ul className="space-y-7">
-                  <li className="flex gap-4 group">
-                    <span
-                      className="mt-1 inline-flex h-9 w-9 flex-none items-center justify-center rounded-full 
-                bg-emerald-100 text-success ring-1 ring-inset ring-emerald-200
-                transition-all duration-300
-                group-hover:bg-success group-hover:text-white group-hover:ring-emerald-500"
-                    >
-                      <svg
-                        viewBox="0 0 24 24"
-                        className="h-5 w-5"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      >
-                        <path d="M12 6v12M6 12h12" />
-                      </svg>
-                    </span>
-                    <div>
-                      <h3 className="font-semibold text-black group-hover:text-h5 group-hover:text-primary">
-                        {content.title}
-                      </h3>
-                      <p className="mt-1 text-sub2 leading-6 text-colordescription group-hover:text-sub1 group-hover:text-primary">
-                        {content.description}
-                      </p>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Cột phải: hình ảnh */}
-              <div className="relative">
-                <div className="rounded-2xl p-10">
-                  <div className="mx-auto h-64 w-full max-w-[520px]">
-                    <Image
-                      src={content.image}
-                      alt={content.title}
-                      width={640}
-                      height={420}
-                      className="absolute -top-4 right-0 w-[85%] h-auto rounded-xl shadow-lg"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
+          <FeatureCard features={featureSection.featureCards} direction='right'/>
         </div>
 
         {/* CTA */}
