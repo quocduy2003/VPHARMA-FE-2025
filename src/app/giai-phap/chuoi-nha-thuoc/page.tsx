@@ -940,9 +940,9 @@ export default function ChuoiNhaThuoc() {
       </FadeInOnScroll> */}
 
       {/* SECTION : FAQ*/}
-      <FadeInOnScroll>
+      {/* <FadeInOnScroll>
         <FaqSection />
-      </FadeInOnScroll>
+      </FadeInOnScroll> */}
     </div>
   );
 }

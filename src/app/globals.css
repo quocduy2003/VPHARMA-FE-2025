@@ -57,8 +57,13 @@
   /* --text-body1: 20px; */
   --leading-body1: 24px;
 
+  --text-body3: 22px;
+
   --text-body2: 16px;
   --leading-body2: 24px;
+
+  --text-sm: 14px;
+  --leading-sm: 22px;
 
   --text-xs: 12px;
   --leading-xs: 20px;
