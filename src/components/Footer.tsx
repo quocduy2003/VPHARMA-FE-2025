@@ -40,7 +40,7 @@ export function Footer() {
           <ul className="space-y-3 text-sub2 text-white/80">
             <li><Link href="/giai-phap/tong-quan" className="hover:text-white">Nhà thuốc/Quầy thuốc</Link></li>
             <li><Link href="/giai-phap/chuoi-nha-thuoc" className="hover:text-white">Chuỗi nhà thuốc</Link></li>
-            <li><Link href="#" className="hover:text-white">Phòng khám có nhà thuốc</Link></li>
+            <li><Link href="/giai-phap/phong-kham-co-nha-thuoc" className="hover:text-white">Phòng khám có nhà thuốc</Link></li>
           </ul>
         </div>
         <div>
@@ -60,8 +60,8 @@ export function Footer() {
         <div>
           <h4 className="mb-4 font-semibold text-success text-h6">Về V-Pharma</h4>
           <ul className="space-y-3 text-sub2 text-white/80">
-            <li><Link href="#" className="hover:text-white">Giới thiệu</Link></li>
-            <li><Link href="#" className="hover:text-white">Khách hàng</Link></li>
+            <li><Link href="/about-us" className="hover:text-white">Giới thiệu</Link></li>
+            <li><Link href="/khach-hang" className="hover:text-white">Khách hàng</Link></li>
             <li><Link href="#" className="hover:text-white">Điều khoản bảo mật</Link></li>
             <li><Link href="#" className="hover:text-white">Chính sách sử dụng</Link></li>
           </ul>

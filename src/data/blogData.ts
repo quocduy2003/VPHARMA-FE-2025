@@ -27,7 +27,7 @@ export const blogPosts: BlogPost[] = [
   {
     title: "12 Cách Kiểm Kê Hiệu Quả Vừa Tiết Kiệm Thời Gian Cho Nhà Thuốc",
     description: "Khám phá 12 phương pháp kiểm kê kho hàng hiệu quả, giúp nhà thuốc tối ưu hóa quy trình, tiết kiệm thời gian và đảm bảo độ chính xác cao. Khám phá 12 phương pháp kiểm kê kho hàng hiệu quả, giúp nhà thuốc tối ưu hóa quy trình, tiết kiệm thời gian và đảm bảo độ chính xác cao. Khám phá 12 phương pháp kiểm kê kho hàng hiệu quả, giúp nhà thuốc tối ưu hóa quy trình, tiết kiệm thời gian và đảm bảo độ chính xác cao. Khám phá 12 phương pháp kiểm kê kho hàng hiệu quả, giúp nhà thuốc tối ưu hóa quy trình, tiết kiệm thời gian và đảm bảo độ chính xác cao.",
-    categories: ["Quản lý kho", "Kinh nghiệm kinh doanh", "123","thiet ke"],
+    categories: ["Quản lý kho", "Kinh nghiệm kinh doanh", "123","thiet ke","thiet ke1","thiet ke2","thiet ke4"],
     imageTitle: images[0],
     date: "2025-10-26",
     sections: [

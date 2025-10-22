@@ -2,13 +2,14 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import FadeInOnScroll from "@/components/animations/FadeInOnScroll";
 import PharmacyCarousel from "@/components/PharmacyCarousel";
 import CTASection from "@/components/CTA";
 import { customerData, getBlogsByCategorySlug } from "@/lib/api";
 import { Card, CustBlogPost } from "@/types";
 import { transformCustomerBlogData } from "@/lib/transformers/customer";
+import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 
 function ChallengeStackedCards({ challengeCards }: { challengeCards: Card[] }) {
   const [active, setActive] = useState(0);
@@ -27,17 +28,20 @@ function ChallengeStackedCards({ challengeCards }: { challengeCards: Card[] }) {
       if (e.deltaY > 0) {
         setActive((a) => (a + 1) % challengeCards.length);
       } else {
-        setActive((a) => (a - 1 + challengeCards.length) % challengeCards.length);
+        setActive(
+          (a) => (a - 1 + challengeCards.length) % challengeCards.length
+        );
       }
 
       setTimeout(() => {
         isScrolling.current = false;
-      }, 400);
+      }, 500);
     };
 
     node.addEventListener("wheel", wheelHandler, { passive: false });
     return () => node.removeEventListener("wheel", wheelHandler);
-  }, [active, challengeCards.length]);
+    // }, [active, challengeCards.length]);
+  }, [challengeCards.length]);
 
   const stackCards = [];
   for (let i = 0; i < 3; i++) {
@@ -46,10 +50,10 @@ function ChallengeStackedCards({ challengeCards }: { challengeCards: Card[] }) {
   }
 
   return (
-    <div className="mx-auto max-w-2xl">
+    <div className="mx-auto max-w-4xl ">
       <div
         ref={cardRef}
-        className="flex justify-center w-full max-w-2xl h-[500px] items-center cursor-pointer select-none relative"
+        className="flex justify-center w-full max-w-4xl h-[500px] items-center cursor-pointer select-none relative"
         tabIndex={0}
       >
         {stackCards
@@ -58,15 +62,14 @@ function ChallengeStackedCards({ challengeCards }: { challengeCards: Card[] }) {
           .map((item, reverseIdx) => {
             const stackIdx = stackCards.length - 1 - reverseIdx;
             const isActive = stackIdx === 2;
-
-            const scale = isActive ? 1 : stackIdx === 1 ? 1.1 : 0.9;
-            const translateY = isActive ? 0 : stackIdx === 1 ? 35 : 60;
-            const opacity = isActive ? 1 : 0.6;
+            const scale = isActive ? 1 : stackIdx === 1 ? 0.95 : 0.9;
+            const translateY = isActive ? 0 : stackIdx === 1 ? 25 : 50;
+            const opacity = isActive ? 1 : stackIdx === 1 ? 0.7 : 0.4;
             const zIndex = 10 + stackIdx;
 
             return (
               <motion.div
-                key={`${active}-${stackIdx}`}
+                key={item.name}
                 initial={{ scale: 0.85, opacity: 0, y: 100 }}
                 animate={{ scale, opacity, y: translateY }}
                 transition={{ duration: 0.4, type: "spring", stiffness: 120 }}
@@ -112,9 +115,9 @@ function BlogSection({ slug }: { slug: string }) {
   }, [slug, page]);
 
   return (
-    <section className="py-10 bg-gradient-to-b from-blue-50 to-white">
+    <section>
       <div className="mx-auto w-full px-4 sm:px-6 md:px-8 max-w-6xl overflow-x-clip">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-8 justify-center">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-4 gap-y-8 justify-center">
           {blogs.map((blog, index) => (
             <div
               key={index}
@@ -140,25 +143,25 @@ function BlogSection({ slug }: { slug: string }) {
             </div>
           ))}
         </div>
-        <div className="flex justify-center items-center mt-6 gap-x-4">
+        <div className="flex justify-center mx-auto items-center mt-6 gap-x-4">
           <button
-            className="text-primary h-10 w-10 rounded-full bg-blue-50 hover:bg-blue-100 flex items-center justify-center transition"
+            className="z-10 flex h-12 w-12 items-center justify-center rounded-full bg-blue-50 text-primary transition hover:bg-blue-100 text-3xl font-bold"
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page === 1}
             aria-label="Previous page"
           >
-            ←
+            <FiArrowLeft className="h-6 w-6" />
           </button>
-          <span>
+          {/* <span>
             {page}/{pageCount}
-          </span>
+          </span> */}
           <button
-            className="text-primary h-10 w-10 rounded-full bg-blue-50 hover:bg-blue-100 flex items-center justify-center transition"
+            className="z-10 flex h-12 w-12 items-center justify-center rounded-full bg-blue-50 text-primary transition hover:bg-blue-100 text-3xl font-bold"
             onClick={() => setPage((p) => Math.min(pageCount, p + 1))}
             disabled={page === pageCount}
             aria-label="Next page"
           >
-            →
+            <FiArrowRight className="h-6 w-6" />
           </button>
         </div>
       </div>
@@ -167,25 +170,32 @@ function BlogSection({ slug }: { slug: string }) {
 }
 
 export default function KhachHang() {
-  const { challengeSection, brandReviewSection, custBlogSection, ctaSection } = customerData;
+  const { challengeSection, brandReviewSection, custBlogSection, ctaSection } =
+    customerData;
 
   return (
-    <div className="py-10">
-      <section className="h-screen bg-blue-100 py-20 text-center">
-        <div className="container mx-auto max-w-6xl ">
+    <>
+      <section className="h-screen bg-gradient-to-b from-blue-100 to-white flex items-center justify-center">
+        <div className="container max-w-6xl text-center">
           <p className="mb-2 text-h6 font-bold uppercase tracking-wide text-primary">
             {customerData.eyebrow}
           </p>
           <h1 className="text-black">{customerData.mainTitle}</h1>
-          <p className="mx-auto mt-4 max-w-3xl text-h6">{customerData.mainDescription}</p>
+          <p className="mx-auto mt-4 max-w-3xl text-h6">
+            {customerData.mainDescription}
+          </p>
         </div>
       </section>
 
-      <section className="py-20">
+      <section className="">
         <FadeInOnScroll>
           <div className="container mx-auto px-4">
-            <h2 className="mb-12 text-center text-black">{challengeSection.title}</h2>
-            <p className="text-h6 mx-auto max-w-3xl text-center">{challengeSection.description}</p>
+            <h2 className="mb-12 text-center text-black">
+              {challengeSection.title}
+            </h2>
+            <p className="text-h6 mx-auto max-w-3xl text-center">
+              {challengeSection.description}
+            </p>
             <ChallengeStackedCards challengeCards={challengeSection.cards} />
           </div>
         </FadeInOnScroll>
@@ -195,7 +205,9 @@ export default function KhachHang() {
         <section className="bg-white py-20">
           <div className="container mx-auto px-4">
             <div className="mx-auto mb-12 max-w-6xl text-center">
-              <p className="mb-2 text-h6 font-bold uppercase tracking-wide text-primary">{brandReviewSection.eyebrow}</p>
+              <p className="mb-2 text-h6 font-bold uppercase tracking-wide text-primary">
+                {brandReviewSection.eyebrow}
+              </p>
               <h2 className="mb-4 text-black">{brandReviewSection.title}</h2>
             </div>
             <PharmacyCarousel cards={brandReviewSection.reviewCards} />
@@ -204,20 +216,24 @@ export default function KhachHang() {
       </FadeInOnScroll>
 
       <FadeInOnScroll>
-        <section className="bg-gradient-to-b from-blue-50 to-white">
+        <section className="bg-white">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <h2 className="mb-4 text-black">{custBlogSection.title}</h2>
-              <p className="text-h6 mx-auto max-w-3xl">{custBlogSection.description}</p>
+              <p className="text-h6 mx-auto max-w-3xl">
+                {custBlogSection.description}
+              </p>
             </div>
             <BlogSection slug={custBlogSection.blog_category.slug} />
           </div>
         </section>
       </FadeInOnScroll>
 
-      <FadeInOnScroll>
-        <CTASection ctaSection={ctaSection} />
-      </FadeInOnScroll>
-    </div>
+      <section className="bg-gradient-to-t from-blue-100 to-white">
+        <FadeInOnScroll>
+          <CTASection ctaSection={ctaSection} />
+        </FadeInOnScroll>
+      </section>
+    </>
   );
 }
