@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { BlogPost } from "@/data/blogData";
+import { BlogPost } from "@/types";
 
 const styles = `
 @keyframes scroll-up {
@@ -37,8 +37,8 @@ export function FeaturedNews({ posts }: { posts: BlogPost[] }) {
             >
               <div className="flex items-start gap-3">
                 <img
-                  src={post.imageTitle}
-                  alt={post.title}
+                  src={post.coverImage.url}
+                  alt={post.alt}
                   className="h-15 w-15 flex-shrink-0 rounded-md object-cover"
                 />
                 <p className="text-sub2 font-bold hover:text-primary line-clamp-2">

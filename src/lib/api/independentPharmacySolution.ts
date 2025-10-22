@@ -71,8 +71,9 @@ const query = qs.stringify(
         populate: {
           testimonials : {
             populate: {
-              avatar: { populate: "*" },
-            },
+              avatar: true,
+            }
+
           },
         },
       },

@@ -3,9 +3,6 @@ import { CustomerData } from "@/types/pages/customer";
 import { transformCustomerData } from "@/lib/transformers/customer";
 import { CustBlogPost } from "@/types";
 import qs from "qs";
-import CTASection from "@/components/CTA";
-
-const API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
 
 const query = qs.stringify(
   {
@@ -29,7 +26,7 @@ const query = qs.stringify(
         populate: {
           ctaButton: true,
         },
-      }
+      },
     },
   },
   { encodeValuesOnly: true }
@@ -56,10 +53,10 @@ export async function getBlogsByCategorySlug(
           },
         },
       },
-      fields: ['title', 'description', 'slug'],
-       populate: {
-      coverImage: { fields: ['url', 'alternativeText'] } 
-    },
+      fields: ["title", "description", "slug"],
+      populate: {
+        coverImage: { fields: ["url", "alternativeText"] },
+      },
       pagination: {
         page,
         pageSize,

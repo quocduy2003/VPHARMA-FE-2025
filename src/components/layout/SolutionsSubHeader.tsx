@@ -9,7 +9,7 @@ const subNavLinks = [
   { href: "/giai-phap/tong-quan", label: "Tổng quan" },
   { href: "/giai-phap/chuoi-nha-thuoc", label: "Giải pháp chuỗi nhà thuốc" },
   {
-    href: "/giai-phap/giai-phap-tich-hop-cho-phong-kham",
+    href: "/giai-phap/phong-kham-co-nha-thuoc",
     label: "Giải pháp tích hợp cho phòng khám/mạch",
   },
 ];
