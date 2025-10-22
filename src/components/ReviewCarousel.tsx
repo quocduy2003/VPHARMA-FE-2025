@@ -13,6 +13,7 @@ type Testimonial = {
 };
 
 interface TestimonialSection {
+  eyebrow?: string;
   title: string;
   testimonials: Testimonial[];
 }

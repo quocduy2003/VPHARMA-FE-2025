@@ -1,7 +1,7 @@
 import { CustomerData } from "@/types/pages/customer";
 import { createImageUrl } from "@/lib/utils/imageUtils";
 import { Card, CustBlogPost } from "@/types/pages/customer";
-import { url } from "inspector";
+
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
