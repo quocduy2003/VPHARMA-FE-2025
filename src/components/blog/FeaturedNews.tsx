@@ -31,7 +31,7 @@ export function FeaturedNews({ posts }: { posts: BlogPost[] }) {
         <div className="animate-scroll-up">
           {duplicatedPosts.map((post, index) => (
             <Link
-              href={`/blog/blog-detail?title=${encodeURIComponent(post.title)}`}
+              href={`/blog/${post.slug}/${post.slug}`}
               key={`${post.title}-${index}`}
               className="mb-3 mt-5 block border-b border-blue-500 pb-3 last:mb-0 last:border-b-0"
             >

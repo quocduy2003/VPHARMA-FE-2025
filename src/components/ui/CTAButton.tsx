@@ -1,44 +1,60 @@
 // File: components/ui/Button.tsx
+"use client";
 
-import React from 'react';
-import { ButtonHTMLAttributes,  } from 'react';
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
+import { ButtonHTMLAttributes, AnchorHTMLAttributes } from "react";
 
-// Định nghĩa các kiểu dáng (variant) có sẵn
+// ----- Các kiểu dáng (variant) -----
 const buttonVariants = {
-  primary: 'bg-primary text-white hover:opacity-90',
-  secondary: 'border border-primary bg-white text-primary hover:bg-primary/10',
-  ghost: 'text-primary hover:bg-primary/10',
-  danger: 'bg-red-500 text-white hover:bg-red-600',
+  primary: "bg-primary text-white hover:opacity-90",
+  secondary: "border border-primary bg-white text-primary hover:bg-primary/10",
+  ghost: "text-primary hover:bg-primary/10",
+  danger: "bg-red-500 text-white hover:bg-red-600",
 };
 
-// Định nghĩa các kích thước có sẵn
+// ----- Các kích thước -----
 const buttonSizes = {
-  sm: 'px-4 py-2 text-sm',
-  md: 'px-6 py-3 font-semibold',
-  lg: 'px-8 py-4 text-lg',
+  sm: "px-4 py-2 text-sm",
+  md: "px-6 py-3 font-semibold",
+  lg: "px-8 py-4 text-lg",
 };
 
-// Định nghĩa kiểu cho props của component Button
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: keyof typeof buttonVariants; // 'primary' | 'secondary' | 'ghost' | 'danger'
-  size?: keyof typeof buttonSizes; // 'sm' | 'md' | 'lg'
-  className?: string; // Cho phép ghi đè class từ bên ngoài
+// ----- Props cho Button -----
+interface BaseButtonProps {
+  variant?: keyof typeof buttonVariants;
+  size?: keyof typeof buttonSizes;
+  className?: string;
+  children: React.ReactNode;
 }
+
+// Nếu có href ⇒ render Link
+type LinkButtonProps = BaseButtonProps &
+  AnchorHTMLAttributes<HTMLAnchorElement> & {
+    href: string;
+  };
+
+// Nếu không có href ⇒ render button
+type RegularButtonProps = BaseButtonProps &
+  ButtonHTMLAttributes<HTMLButtonElement> & {
+    href?: undefined;
+  };
+
+// Union type cho cả hai trường hợp
+type ButtonProps = LinkButtonProps | RegularButtonProps;
+
 /**
- * Component Button tái sử dụng.
- * @param variant Kiểu dáng của nút ('primary', 'secondary', 'ghost', 'danger').
- * @param size Kích thước của nút ('sm', 'md', 'lg').
- * @param children Nội dung bên trong nút.
+ * Component Button tái sử dụng:
+ * - Nếu có prop `href` → render <Link>
+ * - Nếu không có `href` → render <button>
  */
 export const Button = ({
-  variant = 'primary',
-  size = 'md',
+  variant = "primary",
+  size = "md",
   className,
   children,
   ...props
 }: ButtonProps) => {
-
   const variantClasses = buttonVariants[variant];
   const sizeClasses = buttonSizes[size];
 
@@ -46,11 +62,28 @@ export const Button = ({
     inline-flex items-center justify-center rounded-full transition-colors
     ${variantClasses}
     ${sizeClasses}
-    ${className || ''} // Cho phép ghi đè class từ bên ngoài
+    ${className || ""}
   `.trim();
 
+  // Nếu có href ⇒ Link
+  if ("href" in props && props.href) {
+    return (
+      <Link
+        href={props.href}
+        className={finalClassName}
+        {...(props as AnchorHTMLAttributes<HTMLAnchorElement>)}
+      >
+        {children}
+      </Link>
+    );
+  }
+
+  // Nếu không có href ⇒ Button
   return (
-    <button className={finalClassName} {...props}>
+    <button
+      className={finalClassName}
+      {...(props as ButtonHTMLAttributes<HTMLButtonElement>)}
+    >
       {children}
     </button>
   );

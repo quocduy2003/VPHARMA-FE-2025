@@ -1,29 +1,35 @@
 const API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
-
-export async function fetchAPI(endpoint : string){
-    try{
-      console.log(`Fetching API: ${API_URL}/${endpoint}`);
-       const response = await fetch(`${API_URL}/${endpoint}`) 
-       if (!response.ok) {
-           throw new Error(`Failed to fetch: ${endpoint}`);
-       }
-       return await response.json();
-    } catch (error: any) {
-      //Trả lỗi chi tiết 
-
-       console.error('Error fetching API:', error.message);
-       throw error;
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export async function fetchAPI(endpoint: string) {
+  try {
+    console.log(`Fetching API: ${API_URL}/${endpoint}`);
+    const response = await fetch(`${API_URL}/${endpoint}`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch: ${endpoint}`);
     }
+    return await response.json();
+  } catch (error: any) {
+    //Trả lỗi chi tiết
+
+    console.error("Error fetching API:", error.message);
+    throw error;
+  }
 }
 
 export function populateQuery(levels: string[]): string {
-  if (levels.length === 0) return '';
+  if (levels.length === 0) return "";
 
-  const MEDIA_FIELDS = ['image', 'images', 'media', 'thumbnail', 'icon', 'logo'];
-  let query = 'populate';
+  const MEDIA_FIELDS = [
+    "image",
+    "images",
+    "media",
+    "thumbnail",
+    "icon",
+    "logo",
+  ];
+  let query = "populate";
 
- 
-  const hasEmptyMedia = levels[levels.length - 1] === '';
+  const hasEmptyMedia = levels[levels.length - 1] === "";
   // Clean levels if last is ''
   const cleanedLevels = hasEmptyMedia ? levels.slice(0, -1) : levels;
 
@@ -43,9 +49,9 @@ export function populateQuery(levels: string[]): string {
     query += `[populate]`;
   }
 
-  query += '=*';
+  query += "=*";
   return query;
 }
-  export function combinePopulate(paths: string[][]): string {
-    return paths.map(populateQuery).join("&");
-  }
+export function combinePopulate(paths: string[][]): string {
+  return paths.map(populateQuery).join("&");
+}

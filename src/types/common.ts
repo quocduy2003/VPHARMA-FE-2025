@@ -1,7 +1,8 @@
+
 export interface StrapiResponse {
   data: unknown; // Sẽ được ghi đè bởi kiểu cụ thể
   meta: {
-    pagination?: any;
+    pagination?: unknown;
   };
 }
 
