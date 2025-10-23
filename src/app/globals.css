@@ -78,7 +78,7 @@
 
   h1 {
     font-size: var(--text-h1);
-    line-height: var(--leading-h1);
+    line-height: 1.6;
     font-weight: 700;
     color:black;
   }
@@ -117,7 +117,6 @@
     color: var(--color-colordescription);
   }
 }
-
 /* Các lớp tiện ích tùy chỉnh cho component (nếu cần) */
 @layer components {
 
@@ -162,6 +161,7 @@
     color: var(--color-button-disabled-text);
   }
 }
+
 @layer utilities {
 /* ===== CKEditor Styles Fix ===== */
 .rich-text {
@@ -273,6 +273,5 @@
 .rich-text li {
   margin-bottom: 0.5rem;
 }
-
 
 }

@@ -176,29 +176,6 @@ interface AccordionItemProps {
   isOpen: boolean;
   onClick: () => void;
 }
-// function AccordionItem({
-//   title,
-//   children,
-//   isOpen,
-//   onClick,
-// }: AccordionItemProps) {
-//   return (
-//     <div className="rounded-lg bg-primary/9 p-4 shadow-sm">
-//       <button
-//         className="flex w-full items-center justify-between text-left"
-//         onClick={onClick}
-//       >
-//         <span className="text-sub1 font-bold text-black">{title}</span>
-//         {isOpen ? (
-//           <FiMinus className="text-white bg-primary rounded text-h6" />
-//         ) : (
-//           <FiPlus className="text-white bg-primary rounded text-h6" />
-//         )}
-//       </button>
-//       {isOpen && <p className="mt-4 text-sm text-sub2">{children}</p>}
-//     </div>
-//   );
-// }
 
 const maxCards = 6;
 // data section 4
@@ -231,7 +208,7 @@ const customerSystemCards = [
     title: "Hệ thống CRM",
     content:
       "Quản lý thông tin khách hàng, lịch sử mua hàng và chương trình khách hàng thân thiết một cách chuyên nghiệp.",
-    image: "/features-dashboard1.png",
+    image: "/features-dashboard3.png",
   },
   {
     title: "Báo cáo thông minh",
@@ -406,17 +383,11 @@ export default function ChuoiNhaThuoc() {
         <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
           <div>
             <p className="mb-4 text-h6 font-bold uppercase tracking-wide text-primary">
-              {heroSection.eyebrow}
+              edfsdfsfsf
             </p>
             <h1 className="mb-6">{heroSection.title}</h1>
             <p className="mb-8 text-h6">{heroSection.description}</p>
             <div className="mt-8 flex gap-4 ">
-              {/* <button className="text-sub1 rounded-full bg-primary px-6 py-3 font-bold text-white hover:opacity-90">
-                Đăng ký dùng thử
-              </button>
-              <button className="text-sub1 rounded-full border border-primary bg-white px-6 py-3 font-bold text-primary hover:bg-primary/10">
-                Xem video
-              </button> */}
               {heroSection.ctaButtons.map((button, index) => (
                 <Button
                   key={index}
@@ -879,7 +850,7 @@ export default function ChuoiNhaThuoc() {
 
                     {/* Content */}
                     <div className="flex-1">
-                      <h3 className="mb-2 text-success">
+                      <h3 className="mb-2 text-white">
                         Quản lý Danh mục & Dữ liệu
                       </h3>
                       <p className="text-sub2 leading-relaxed text-white">
@@ -897,7 +868,7 @@ export default function ChuoiNhaThuoc() {
                     {/* Icon */}
                     <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-success/10">
                       <svg
-                        className="h-6 w-6 text-success"
+                        className="h-6 w-6 text-white"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -913,7 +884,7 @@ export default function ChuoiNhaThuoc() {
 
                     {/* Content */}
                     <div className="flex-1">
-                      <h4 className="mb-2 text-success">
+                      <h4 className="mb-2 text-white">
                         Quản lý Danh mục & Dữ liệu
                       </h4>
                       <p className="text-sub2 leading-relaxed text-white">
