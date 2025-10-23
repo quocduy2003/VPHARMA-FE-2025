@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import Link from "next/link";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { FeaturedNews } from "@/components/blog/FeaturedNews";
@@ -20,8 +20,9 @@ import { BlogCardData } from "@/types";
 
 export default function BlogHomePage() {
   const pathname = usePathname();
-  const segments = pathname?.split('/') ?? [];
-  const categoryParam = segments[1] === 'blog' ? segments[2] ?? '' : '';
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams.get("category");
+  
   const activeCategory = categoryParam || "home";
 
   const [mainBlog, setMainBlog] = useState<BlogCardData | null>(null);
