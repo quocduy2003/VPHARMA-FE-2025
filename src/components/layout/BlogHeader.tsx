@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { FiHome, FiSearch, FiChevronDown } from "react-icons/fi";
 import { blogCategories } from "@/lib/api/blog";
 
@@ -15,14 +15,15 @@ const ebooksLink = { href: "/blog/ebook", label: "Ebooks" };
 
 export function BlogHeader() {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const activeCategory = searchParams.get("category");
+  const segments = pathname?.split('/') ?? [];
+  const categoryParam = segments[1] === 'blog' ? segments[2] ?? '' : '';
+  const activeCategory = categoryParam || "home";
 
   const isLinkActive = (categorySlug: string) => {
     return activeCategory === categorySlug;
   };
 
- const isHomeActive = pathname.startsWith("/blog/blog-home") && !activeCategory;
+  const isHomeActive = pathname.startsWith("/blog/blog-home") && !activeCategory;
 
 
   return (

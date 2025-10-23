@@ -1,3 +1,5 @@
+
+'use client';
 export default function EbookPage() {
   return (
     <div className="text-center">

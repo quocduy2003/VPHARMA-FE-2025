@@ -10,8 +10,10 @@ import FlipCard from "@/components/animations/FlipCard";
 import FaqSection from "@/components/Faq";
 
 import PharmacyCarousel from "@/components/PharmacyCarousel";
-import { chainPharmacyData } from "@/lib/api/chainPharmacySolution";
+import { chainPharmacyData } from "@/lib/api";
 import CTASection from "@/components/CTA";
+import { Button } from "@/components/ui/CTAButton";
+import { AccordionItem } from "@/components/ui/AccordionIteam";
 
 //data section1
 const challengeCards = [
@@ -174,29 +176,6 @@ interface AccordionItemProps {
   isOpen: boolean;
   onClick: () => void;
 }
-function AccordionItem({
-  title,
-  children,
-  isOpen,
-  onClick,
-}: AccordionItemProps) {
-  return (
-    <div className="rounded-lg bg-primary/9 p-4 shadow-sm">
-      <button
-        className="flex w-full items-center justify-between text-left"
-        onClick={onClick}
-      >
-        <span className="text-sub1 font-bold text-black">{title}</span>
-        {isOpen ? (
-          <FiMinus className="text-white bg-primary rounded text-h6" />
-        ) : (
-          <FiPlus className="text-white bg-primary rounded text-h6" />
-        )}
-      </button>
-      {isOpen && <p className="mt-4 text-sm text-sub2">{children}</p>}
-    </div>
-  );
-}
 
 const maxCards = 6;
 // data section 4
@@ -358,9 +337,8 @@ function DashboardCarousel({
         {images.map((_, idx) => (
           <button
             key={idx}
-            className={`h-3 w-7 rounded-full transition-all duration-200 ${
-              currentIndex === idx ? "bg-primary" : "bg-gray-200"
-            }`}
+            className={`h-3 w-7 rounded-full transition-all duration-200 ${currentIndex === idx ? "bg-primary" : "bg-gray-200"
+              }`}
             aria-label={`Go to slide ${idx + 1}`}
             onClick={() => setCurrentIndex(idx)}
           />
@@ -374,6 +352,8 @@ function DashboardCarousel({
 export default function ChuoiNhaThuoc() {
   const [openAccordion, setOpenAccordion] = useState(0);
 
+  const { heroSection, pharmacyChainChallengesSection, featureBenefitsSection } = chainPharmacyData;
+  console.log("featureBenefitsSection", featureBenefitsSection);
 
   const [indexCustomer, setIndexCustomer] = useState(0);
   const cardsPerView = 3;
@@ -405,15 +385,19 @@ export default function ChuoiNhaThuoc() {
             <p className="mb-4 text-h6 font-bold uppercase tracking-wide text-primary">
               edfsdfsfsf
             </p>
-            <h1 className="mb-6"></h1>
-            <p className="mb-8 text-h6"></p>
+            <h1 className="mb-6">{heroSection.title}</h1>
+            <p className="mb-8 text-h6">{heroSection.description}</p>
             <div className="mt-8 flex gap-4 ">
-              <button className="text-sub1 rounded-full bg-primary px-6 py-3 font-bold text-white hover:opacity-90">
-                Đăng ký dùng thử
-              </button>
-              <button className="text-sub1 rounded-full border border-primary bg-white px-6 py-3 font-bold text-primary hover:bg-primary/10">
-                Xem video
-              </button>
+              {heroSection.ctaButtons.map((button, index) => (
+                <Button
+                  key={index}
+                  variant={index === 0 ? "primary" : "secondary"}
+                  size="lg"
+                  href={button.link || "#"}
+                >
+                  {button.title}
+                </Button>
+              ))}
             </div>
           </div>
           <div>
@@ -434,20 +418,18 @@ export default function ChuoiNhaThuoc() {
           <div className="container mx-auto px-4">
             <div className=" mb-12 ">
               <h2 className="mb-4 mx-auto max-w-5xl text-center text-black">
-                Những Thách Thức Khi Vận Hành Chuỗi Nhà Thuốc
+                {pharmacyChainChallengesSection.title}
               </h2>
               <p className="text-h6 mx-auto max-w-3xl text-center">
-                Giải pháp quản lý nhà thuốc toàn diện, tối ưu hóa quy trình vận
-                hành và nâng cao hiệu quả kinh doanh.
+                {pharmacyChainChallengesSection.description}
               </p>
             </div>
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {challengeCards.map((card, index) => (
+              {pharmacyChainChallengesSection.challengeCards.map((card, index) => (
                 <FlipCard
                   key={index}
-                  frontTitle={card.frontTitle}
-                  backContent={card.backContent}
+                  challengeCard={card}
                 />
               ))}
             </div>
@@ -461,11 +443,10 @@ export default function ChuoiNhaThuoc() {
           <div className="container mx-auto px-4 py-20">
             <div className="mx-auto max-w-5xl text-center">
               <h2 className="text-black">
-                Tối Ưu Hóa Vốn & Luân Chuyển Hàng Hóa
+                {featureBenefitsSection.title}
               </h2>
               <p className="mx-auto mt-4 max-w-3xl text-center text-h6">
-                Giải pháp quản lý nhà thuốc toàn diện, tối ưu hóa quy trình vận
-                hành và nâng cao hiệu quả kinh doanh.
+                {featureBenefitsSection.description}
               </p>
             </div>
             <div className="mt-12 grid grid-cols-1 items-center gap-12 md:grid-cols-2">
@@ -478,17 +459,17 @@ export default function ChuoiNhaThuoc() {
                 />
               </div>
               <div className="space-y-4">
-                {accordionItems.map((item, index) => (
+                {featureBenefitsSection.contents.map((item, index) => (
                   <AccordionItem
                     key={index}
                     title={item.title}
+                    description={item.description}
                     isOpen={openAccordion === index}
                     onClick={() =>
                       setOpenAccordion(openAccordion === index ? -1 : index)
                     }
-                  >
-                    {item.content}
-                  </AccordionItem>
+                    buttonClassName="bg-primary/9 w-full"
+                  />
                 ))}
               </div>
             </div>

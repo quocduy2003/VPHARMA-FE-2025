@@ -12,14 +12,29 @@ const query = qs.stringify(
           image: true,
         },
       },
+      pharmacyChainChallengesSection: {
+        populate: {
+            challengeCards: {
+            populate: {
+              image: true,
+            },
+          },
+        },
+      },
+      featureBenefitsSection: {
+        populate: {
+          image: true,
+          contents: true,
+        },
+      },
     },
   },
   { encodeValuesOnly: true }
 );
-async function getChainPharmacyData(queryPath: string) {
+async function getChainPharmacyData(queryPath: string): Promise<ChainPharmacyData> {
   const endpoint = `chain-pharmacy-solution?${queryPath}`;
   const response = await fetchAPI(endpoint);
   return transformChainPharmacyData(response);
 }
 
-export const chainPharmacyData = getChainPharmacyData(query);
+export const chainPharmacyData = await getChainPharmacyData(query);

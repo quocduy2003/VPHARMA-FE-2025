@@ -373,10 +373,8 @@ export default function HomePage() {
                 key={post.title}
                 className="group flex flex-col overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
               >
-                <Link
-                  href={`/blog/blog-detail?title=${encodeURIComponent(
-                    post.title
-                  )}`}
+                {/* <Link
+                  href={`/blog/${post.categories.slug}/${post.slug}`}
                   className="block overflow-hidden"
                 >
                   <Image
@@ -404,7 +402,7 @@ export default function HomePage() {
                       {post.description}
                     </p>
                   </div>
-                </Link>
+                </Link> */}
               </article>
             ))}
           </div>

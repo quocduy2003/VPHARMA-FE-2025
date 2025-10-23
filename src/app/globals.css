@@ -161,6 +161,7 @@
     color: var(--color-button-disabled-text);
   }
 }
+
 @layer utilities {
 /* ===== CKEditor Styles Fix ===== */
 .rich-text {
