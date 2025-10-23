@@ -224,7 +224,7 @@ export default function HoTro() {
           <div className="max-w-5xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* Form Liên hệ */}
             <div>
-              <h2 className="mb-3 text-2xl font-semibold">Get In Touch</h2>
+              <h2 className="mb-3 text-2xl text-black font-semibold">Get In Touch</h2>
               <p className="mb-7 text-gray-600">
                 {/* We'd love to hear from you. Please fill out this form. */}
               </p>
@@ -396,7 +396,7 @@ export default function HoTro() {
                 <div>
                   <label
                     htmlFor="description"
-                    className="block text-gray-500 font-medium text-body2 mb-2"
+                    className="block text-gray-500 font-bold text-body2 mb-2"
                   >
                     Mô tả chi tiết (không bắt buộc)
                   </label>

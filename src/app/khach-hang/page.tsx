@@ -180,8 +180,8 @@ export default function KhachHang() {
           <p className="mb-2 text-h6 font-bold uppercase tracking-wide text-primary">
             {customerData.eyebrow}
           </p>
-          <h1 className="text-black">{customerData.mainTitle}</h1>
-          <p className="mx-auto mt-4 max-w-3xl text-h6">
+          <h1>{customerData.mainTitle}</h1>
+          <p className="mx-auto mt-10 max-w-3xl text-h6 ">
             {customerData.mainDescription}
           </p>
         </div>

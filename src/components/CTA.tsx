@@ -40,7 +40,7 @@ export default function CTASection({
 
         {/* 4. Dùng Link của Next.js và bọc button bên trong */}
         <Link href={ctaSection.ctaButton.link || "#"} passHref>
-          <button className="mt-8 rounded-full bg-primary px-6 py-3 font-semibold text-white hover:opacity-90">
+          <button className="mt-8 mx-auto max-w-3xl rounded-full bg-primary px-6 py-3 font-semibold text-white hover:opacity-90">
             {ctaSection.ctaButton.title}
           </button>
         </Link>

@@ -30,7 +30,7 @@ export default function FlipCard({ frontTitle, backContent }: FlipCardProps) {
               alt="Dashboard"
               width={700}
               height={500}
-              className="rounded-xl shadow-2xl"
+              className="rounded-xl shadow-2xl w-full h-48 object-cover"
             />
           </div>
         </div>

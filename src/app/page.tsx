@@ -1,23 +1,20 @@
 // app/page.tsx
-'use client';
+"use client";
 
-import Image from 'next/image';
-import { useState } from 'react';
-import { homePageData } from '@/lib/api/home';
+import Image from "next/image";
+import { useState } from "react";
+import { homePageData } from "@/lib/api/home";
 import ReviewCarousel from "@/components/ReviewCarousel";
-import Link from 'next/link';
+import Link from "next/link";
 import { blogPosts } from "@/data/blogData";
-import { FiArrowRight } from 'react-icons/fi';
-import FeatureCard from '@/components/ui/FeatureCard';
+import { FiArrowRight } from "react-icons/fi";
+import FeatureCard from "@/components/ui/FeatureCard";
 
 type Feature = {
   title: string;
   desc: string;
   icon?: string;
 };
-
-
-
 
 type Review = {
   id: number;
@@ -44,7 +41,8 @@ const REVIEWS: Review[] = [
     name: "Chị Ngọc Anh",
     role: "Nhà thuốc số 2",
     avatar: "/avatar1.png",
-    comment: "V-Pharma giúp tôi tối ưu hóa việc kiểm soát tồn kho và doanh thu hằng ngày rất hiệu quả.",
+    comment:
+      "V-Pharma giúp tôi tối ưu hóa việc kiểm soát tồn kho và doanh thu hằng ngày rất hiệu quả.",
     rating: 5,
   },
   {
@@ -52,7 +50,8 @@ const REVIEWS: Review[] = [
     name: "Anh Minh Tâm",
     role: "Chuỗi thuốc Tâm An",
     avatar: "/avatar2.png",
-    comment: "Từ khi áp dụng hệ thống, việc quản lý chi nhánh trở nên dễ dàng hơn rất nhiều.",
+    comment:
+      "Từ khi áp dụng hệ thống, việc quản lý chi nhánh trở nên dễ dàng hơn rất nhiều.",
     rating: 5,
   },
   {
@@ -60,7 +59,8 @@ const REVIEWS: Review[] = [
     name: "Chị Hồng Nhung",
     role: "Nhà thuốc Nhung Phát",
     avatar: "/avatar3.png",
-    comment: "Phần mềm thân thiện, đội ngũ hỗ trợ nhiệt tình, phản hồi nhanh chóng.",
+    comment:
+      "Phần mềm thân thiện, đội ngũ hỗ trợ nhiệt tình, phản hồi nhanh chóng.",
     rating: 5,
   },
 ];
@@ -68,7 +68,8 @@ const REVIEWS: Review[] = [
 const BLOGS: Blog[] = [
   {
     id: 1,
-    title: "Xây dựng quy trình chuẩn hóa cho các hoạt động bán lẻ sản phẩm chăm sóc sức khỏe",
+    title:
+      "Xây dựng quy trình chuẩn hóa cho các hoạt động bán lẻ sản phẩm chăm sóc sức khỏe",
     date: "29/04/2023",
     image: "/blog1.png",
     category: "Kinh nghiệm kinh doanh",
@@ -92,11 +93,18 @@ const BLOGS: Blog[] = [
   },
 ];
 export default function HomePage() {
-  const [selectedCategory, setSelectedCategory] = useState("Kinh nghiệm kinh doanh");
+  const [selectedCategory, setSelectedCategory] = useState(
+    "Kinh nghiệm kinh doanh"
+  );
 
   const filteredBlogs = BLOGS.filter((b) => b.category === selectedCategory);
-  const { solutionSection, experienceSection, testimonialSection, featureSection } = homePageData;
-  console.log('homepage', homePageData);
+  const {
+    solutionSection,
+    experienceSection,
+    testimonialSection,
+    featureSection,
+  } = homePageData;
+  console.log("homepage", homePageData);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const allCategories = [
     "Tất cả",
@@ -110,52 +118,40 @@ export default function HomePage() {
     activeCategory === "Tất cả"
       ? blogPosts
       : blogPosts.filter((post) => post.categories.includes(activeCategory))
-  ).slice(0, 3); // Chỉ lấy 3 bài viết đầu tiên
-  // <-- END NEW STATE FOR BLOG -->
+  ).slice(0, 3); 
   return (
     <>
       <section
         id="hero"
-        className="h-screen max-h-[1100px] bg-gradient-to-t from-blue-100 to-white overflow-y-clip"
+        className="h-screen max-h-[1100px] bg-gradient-to-t  rounded-2xl from-blue-100 to-white overflow-y-clip"
       >
         <div className="container h-full w-full flex items-center justify-center flex-col text-center">
-          <h6 className="capitalize">{homePageData.eyebrow}</h6>
-          <h1>{homePageData.title}</h1>
-          <div className="flex items-center justify-center">
-            <div className="flex w-full max-w-xl rounded-full border border-primary/30 mt-9">
-              <input
-                className="h-10 flex-1 rounded-full bg-transparent px-4 text-sm outline-none"
-                placeholder="Nhập email của bạn"
-                type="email"
-              />
-              <button className="btn ">
-                Bắt đầu
-              </button>
-            </div>
+          <h6 className="capitalize text-primary mb-10">{homePageData.eyebrow}</h6>
+          <h1 className="mx-auto max-w-7xl capitalize">{homePageData.title}</h1>
+          <div className="flex items-center  justify-center mt-10">
+            <button className="btn font-bold ">Đăng Ký dùng thử</button>
           </div>
         </div>
       </section>
 
       <section className="bg-ink ">
-        <div className="container  ">
+        <div className="container">
           <div className="text-center ">
-            <h2 className="font-semibold text-white">
+            <h2 className=" text-white">
               {solutionSection.title}
             </h2>
-            <p className="mt-5 text-lg text-white/80">
+            <p className="mt-5 text-h6 text-white/80">
               {solutionSection.description}
             </p>
           </div>
 
-          <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-3">
+          <div className="mt-15 grid grid-cols-1 gap-6 md:grid-cols-3">
             {solutionSection.solutionCards.map((card, index) => (
               <article
                 key={index}
                 className="group relative rounded-xl bg-white p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-1xl"
               >
-                <h3 className="text-center mt-2 text-black">
-                  {card.title}
-                </h3>
+                <h3 className="text-center mt-2 text-black">{card.title}</h3>
 
                 <img
                   src={card.image}
@@ -165,11 +161,13 @@ export default function HomePage() {
 
                 <div className="flex justify-center mt-5">
                   <Link
-                    href={card.ctaButton.link || '#'}
+                    href={card.ctaButton.link || "#"}
                     className="inline-flex items-center gap-2 rounded-full bg-sky-50 px-4 py-2 text-sub2 font-bold text-primary ring-1 ring-blue-500 hover:bg-sky-100"
                   >
                     {card.ctaButton.title}
-                    <span className="text-sky-600">→</span>
+                    <span className="text-sky-600">
+                      <FiArrowRight className="font bold" />
+                    </span>
                   </Link>
                 </div>
 
@@ -191,7 +189,10 @@ export default function HomePage() {
         </div>
 
         <div className="mt-10 space-y-16">
-          <FeatureCard features={featureSection.featureCards} direction='right'/>
+          <FeatureCard
+            features={featureSection.featureCards}
+            direction="right"
+          />
         </div>
 
         {/* CTA */}
@@ -201,35 +202,38 @@ export default function HomePage() {
             className="group inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 font-bold text-white shadow-lg shadow-primary/30 transition hover:opacity-90"
           >
             Khám phá thêm
-            <span aria-hidden className="transition-transform group-hover:translate-x-0.5">
-              →
+            <span
+              aria-hidden
+              className="transition-transform group-hover:translate-x-0.5"
+            >
+              <FiArrowRight />
             </span>
           </a>
         </div>
       </section>
 
-
-
-      <section className="relative overflow-hidden bg-blue-900">
+      <section className="relative overflow-hidden bg-ink">
         <div className="container mx-auto">
           {/* Eyebrow và title */}
-          <div className="max-w-xl mx-auto mb-10">
-            <p className="text-sky-300 text-center font-semibold text-sm mb-2 block">V-Pharma</p>
-            <h2 className="text-white font-bold mt-1 md:text-3xl">
+          <div className="max-w-5xl mx-auto mb-10">
+            <p className="text-sky-300 text-center font-bold text-sm mb-2 block">
+              V-Pharma
+            </p>
+            <h2 className="text-center text-white mt-1 max-w-4xl mx-auto ">
               Thiết Kế Riêng Biệt Cho Ngành Dược
             </h2>
           </div>
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-12 xl:gap-20 items-start max-w-5xl mx-auto">
             {/* Features bên trái */}
             <div>
-              <ul className="space-y-7">
+              <ul className="space-y-8">
                 {[0, 1, 2].map((i) => (
                   <li
                     key={i}
                     className="group flex items-start gap-4 rounded-xl p-5 transition-all duration-200
-                bg-blue-900 hover:bg-white hover:shadow-xl
+                bg-ink hover:bg-white hover:shadow-xl
                 border border-transparent hover:border-sky-100
-                max-w-xl mx-auto "
+                max-w-3xl mx-auto "
                   >
                     <span
                       className="inline-flex size-10 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 ring-1 ring-emerald-200 
@@ -247,11 +251,13 @@ export default function HomePage() {
                       </svg>
                     </span>
                     <div>
-                      <h3 className="font-semibold text-lg text-white group-hover:text-indigo-800">
-                        { }
+                      <h3 className="font-bold text-h6 text-white group-hover:text-black">
+                        1223
                       </h3>
-                      <p className="mt-1 text-[15px] leading-6 text-white/80 group-hover:text-gray-600">
-                        Hơn một thập kỷ gắn bó sâu sắc trong ngành y tế giúp chúng tôi thấu hiểu mọi quy trình vận hành và thách thức.
+                      <p className="mt-1 text-sub2 leading-6 text-white group-hover:text-colordescription">
+                        Hơn một thập kỷ gắn bó sâu sắc trong ngành y tế giúp
+                        chúng tôi thấu hiểu mọi quy trình vận hành và thách
+                        thức.
                       </p>
                     </div>
                   </li>
@@ -261,53 +267,73 @@ export default function HomePage() {
             {/* Chart bên phải */}
             <div className="relative min-h-[340px] flex items-center justify-center">
               {/* Nền lót phía sau (background block) */}
-              <div className="absolute left-[55px] top-[55px] w-[300px] h-[230px] rounded-lg bg-white/30" style={{ zIndex: 1 }}></div>
+              <div
+                className="absolute left-[55px] top-[55px] w-[300px] h-[230px] rounded-lg bg-white/30"
+                style={{ zIndex: 1 }}
+              ></div>
               {/* Card lớn phía trên */}
               <div
                 className="absolute left-[110px] top-[0px] bg-white rounded-xl shadow-lg w-[295px] p-5"
                 style={{ zIndex: 2 }}
               >
-                <div className="flex justify-between items-center mb-3">
-                  <span className="font-semibold text-gray-800">Total Balance</span>
+                {/* <div className="flex justify-between items-center mb-3">
+                  <span className="font-semibold text-gray-800">
+                    Total Balance
+                  </span>
                   <span className="font-bold text-gray-900">$4,200</span>
                 </div>
-                <div className="font-medium text-green-500 mb-3">+14%</div>
-                <img src="/chart.png" alt="Total Balance Chart" className="w-full h-28 object-contain" />
+                <div className="font-medium text-green-500 mb-3">+14%</div> */}
+                <img
+                  src="/chart.png"
+                  alt="Total Balance Chart"
+                  className="w-full h-60 object-contain"
+                />
               </div>
               {/* Card nhỏ ở dưới trái */}
               <div
-                className="absolute left-[0px] bottom-[0px] bg-white rounded-xl shadow-lg w-[195px] p-5"
+                className="absolute left-[0px] bottom-[0px] bg-gray-500 rounded-xl shadow-lg w-[195px] p-5"
                 style={{ zIndex: 3 }}
               >
-                <div className="flex justify-between items-center mb-1">
-                  <span className="font-semibold text-gray-800 text-sm">Total Balance</span>
-                  <span className="font-bold text-gray-900 text-sm">$4,200</span>
+                {/* <div className="flex justify-between items-center mb-1">
+                  <span className="font-semibold text-gray-800 text-sm">
+                    Total Balance
+                  </span>
+                  <span className="font-bold text-gray-900 text-sm">
+                    $4,200
+                  </span>
                 </div>
-                <div className="font-medium text-green-500 text-xs mb-2">+14%</div>
-                <img src="/chart.png" alt="Total Balance Mini Chart" className="w-full h-16 object-contain" />
+                <div className="font-medium text-green-500 text-xs mb-2">
+                  +14%
+                </div> */}
+                <img
+                  src="/chart.png"
+                  alt="Total Balance Mini Chart"
+                  className="w-full h-20 object-contain"
+                />
               </div>
             </div>
           </div>
           {/* CTA Button ngoài grid */}
           <div className="mt-10 w-full flex justify-center">
             <a
-              href="#"
-              className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-2.5 font-semibold text-sky-700 border border-sky-200 shadow transition hover:bg-blue-100"
+              href="/about-us"
+              className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-2.5 font-bold text-sky-700 border border-sky-200 shadow transition hover:bg-primary hover:text-white hover:border-transparent"
             >
               Tìm hiểu về V-Pharma
             </a>
           </div>
         </div>
       </section>
+
       {/* SECTION REVIEWS */}
       <ReviewCarousel sectionData={testimonialSection} />
 
       {/* <-- NEW SECTION 5: BLOG --> */}
-      <section className="py-20 bg-gradient-to-t from-white to-blue-100">
+      <section className="py-20 bg-gradient-to-b from-white to-blue-100">
         <div className="container">
           {/* Header (Centered) */}
           <div className="text-center">
-            <h2 className="mt-1 text-black">
+            <h2 className="mb-20 text-black">
               Cập Nhật Kiến Thức Cùng V-Pharma
             </h2>
           </div>
@@ -319,10 +345,11 @@ export default function HomePage() {
                 <button
                   key={category}
                   onClick={() => setActiveCategory(category)}
-                  className={`rounded-full px-4 py-2 text-sub2 font-semibold border border-gray transition-colors ${activeCategory === category
-                    ? "bg-primary  text-white shadow-md"
-                    : "bg-white text-black hover:bg-slate-100"
-                    }`}
+                  className={`rounded-full px-4 py-2 text-sub2 font-semibold border border-gray transition-colors ${
+                    activeCategory === category
+                      ? "bg-primary  text-white shadow-md"
+                      : "bg-white text-black hover:bg-slate-100"
+                  }`}
                 >
                   {category}
                 </button>
@@ -383,7 +410,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
     </>
   );
 }

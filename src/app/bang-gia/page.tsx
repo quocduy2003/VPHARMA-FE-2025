@@ -235,7 +235,6 @@ const renderFeatureValue = (value: FeatureValue) => {
 
 import FaqSection, { type Faq } from "@/components/Faq";
 const hoTroFaqData: Faq[] = [
-  // ... (dữ liệu FAQ của bạn)
   {
     question: "Phần mềm V-Pharma có dễ sử dụng không?",
     answer:
@@ -294,103 +293,103 @@ export default function PricePage() {
       {/* 2. CẬP NHẬT: Thêm nền xám (bg-gray-50) để làm nổi bật card trắng */}
       <section className="bg-gradient-to-b from-blue-100 to-white text-center ">
         <div className="container mx-auto max-w-7xl ">
-        <div className="overflow-x-auto">
-          {/* 3. CẬP NHẬT: grid-cols-5 và thêm gap-x-4 (khoảng cách) */}
-          <div className="min-w-[1200px] grid grid-cols-5 gap-x-4">
-            
-            {/* === CỘT TÍNH NĂNG (CỘT 1) === */}
-            <div className="sticky left-0">
-              {/* Header trái */}
-              <div className={`${HEADER_ROW_HEIGHT} pt-6`}>
-                <h2 className="text-xl font-bold text-ink">
-                  Thông Tin Về Các Gói 
-                  <br />
-                  <span className="text-primaty">V-Pharma</span>
-                </h2>
-                <button className="mt-6 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:opacity-90">
-                  Đăng ký dùng thử
-                </button>
-              </div>
-
-              {/* Lặp qua các category và feature titles */}
-              {featureCategories.map((category) => (
-                <div key={category.title}>
-                  {/* Tiêu đề Cấp 1 */}
-                  <div
-                    className={`${CATEGORY_ROW_HEIGHT} p-4 flex items-center border-t border-gray-200`}
-                  >
-                    <h4 className="text-base font-bold text-ink">
-                      {category.title}
-                    </h4>
-                  </div>
-                  {/* Tiêu đề Cấp 2 */}
-                  {category.features.map((feature) => (
-                    <div
-                      key={feature.id}
-                      className={`${FEATURE_ROW_HEIGHT} p-4 flex items-center border-t border-gray-200`}
-                    >
-                      <div className="text-sm text-gray-500">
-                        {feature.name}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-
-            {/* === 4 CARDS GÓI (CỘT 2-5) === */}
-            {/* 4. CẬP NHẬT: Lặp qua 4 plans, mỗi plan là 1 card hoàn chỉnh */}
-            {plans.map((plan) => (
-              <div
-                key={plan.id}
-                className="w-full rounded-lg border border-gray-200 bg-white shadow-sm"
-              >
-                {/* Header của Card */}
-                <div
-                  className={`${HEADER_ROW_HEIGHT} p-6 text-center`}
-                >
-                  <h3 className="text-xl font-bold text-ink">{plan.name}</h3>
-                  {/* CẬP NHẬT: h-[96px] và text-3xl (giống ảnh) */}
-                  <div className="">
-                    <h2 className="text-sub2 font-bold text-primary">
-                      {plan.price}
-                      <span className="text-sm colordescription text-gray-500">
-                        {" "}
-                        {plan.billingCycle}
-                      </span>
-                    </h2>
-                  </div>
-                  <div className="text-xs text-gray-500 h-[30px]">
-                    <p>{plan.trialNote}</p>
-                    <p>{plan.audienceNote}</p>
-                  </div>
+          <div className="overflow-x-auto">
+            {/* 3. CẬP NHẬT: grid-cols-5 và thêm gap-x-4 (khoảng cách) */}
+            <div className="min-w-[1200px] grid grid-cols-5 gap-x-4">
+              {/* === CỘT TÍNH NĂNG (CỘT 1) === */}
+              <div className="sticky left-0">
+                {/* Header trái */}
+                <div className={`${HEADER_ROW_HEIGHT} pt-6`}>
+                  <h2 className="text-xl font-bold text-ink">
+                    Thông Tin Về Các Gói
+                    <br />
+                    <span className="text-primaty">V-Pharma</span>
+                  </h2>
+                  <button className="mt-6 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:opacity-90">
+                    Đăng ký dùng thử
+                  </button>
                 </div>
 
-                {/* Body của Card (Lặp qua features) */}
+                {/* Lặp qua các category và feature titles */}
                 {featureCategories.map((category) => (
                   <div key={category.title}>
-                    {/* Ô trống cho Category title */}
+                    {/* Tiêu đề Cấp 1 */}
                     <div
-                      className={`${CATEGORY_ROW_HEIGHT} p-4 border-t border-gray-200`}
+                      className={`${CATEGORY_ROW_HEIGHT} p-4 flex items-center  border-gray-200`}
                     >
-                      &nbsp;
+                      <h4 className="text-base font-bold text-ink">
+                        {category.title}
+                      </h4>
                     </div>
-                    {/* Lặp qua các feature values */}
+                    {/* Tiêu đề Cấp 2 */}
                     {category.features.map((feature) => (
                       <div
                         key={feature.id}
-                        className={`${FEATURE_ROW_HEIGHT} p-4 text-center text-sm text-ink border-t border-gray-200`}
+                        // 1. Thay đổi 'items-center' thành 'items-start'
+                        //    để nội dung luôn bắt đầu từ trên cùng của ô
+                        className={`${FEATURE_ROW_HEIGHT} p-4 flex items-start border-t border-gray-200`}
                       >
-                        {renderFeatureValue(feature.values[plan.id])}
+                        {/* 2. Thêm 'text-left' để đảm bảo text luôn canh trái */}
+                        <div className="text-sm text-colordescription text-left">
+                          {feature.name}
+                        </div>
                       </div>
                     ))}
                   </div>
                 ))}
               </div>
-            ))}
+
+              {/* === 4 CARDS GÓI (CỘT 2-5) === */}
+              {/* 4. CẬP NHẬT: Lặp qua 4 plans, mỗi plan là 1 card hoàn chỉnh */}
+              {plans.map((plan) => (
+                <div
+                  key={plan.id}
+                  className="w-full rounded-lg border border-gray-200 bg-white shadow-sm"
+                >
+                  {/* Header của Card */}
+                  <div className={`${HEADER_ROW_HEIGHT} p-6 text-center`}>
+                    <h3 className="text-xl font-bold text-ink">{plan.name}</h3>
+                    {/* CẬP NHẬT: h-[96px] và text-3xl (giống ảnh) */}
+                    <div className="">
+                      <h2 className="text-sub2 font-bold text-primary">
+                        {plan.price}
+                        <span className="text-sm colordescription text-gray-500">
+                          {" "}
+                          {plan.billingCycle}
+                        </span>
+                      </h2>
+                    </div>
+                    <div className="text-xs text-gray-500 h-[30px]">
+                      <p>{plan.trialNote}</p>
+                      <p>{plan.audienceNote}</p>
+                    </div>
+                  </div>
+
+                  {/* Body của Card (Lặp qua features) */}
+                  {featureCategories.map((category) => (
+                    <div key={category.title}>
+                      {/* Ô trống cho Category title */}
+                      <div
+                        className={`${CATEGORY_ROW_HEIGHT} p-4  border-gray-200`}
+                      >
+                        &nbsp;
+                      </div>
+                      {/* Lặp qua các feature values */}
+                      {category.features.map((feature) => (
+                        <div
+                          key={feature.id}
+                          className={`${FEATURE_ROW_HEIGHT} p-4 text-center text-sm text-ink border-t border-gray-200`}
+                        >
+                          {renderFeatureValue(feature.values[plan.id])}
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
       </section>
 
       {/* FAQ Section */}
