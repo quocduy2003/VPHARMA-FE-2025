@@ -2,7 +2,7 @@ import { fetchAPI } from "@/lib/dataService";
 import qs from "qs";
 import { HomePageData } from "@/types";
 import { transformHomePageData } from "@/lib/transformers/home";
-import { i, image } from "framer-motion/client";
+
 
 const query = qs.stringify(
   {

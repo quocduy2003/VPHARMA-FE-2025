@@ -13,7 +13,7 @@ interface HeroSection {
   alt: string;
 }
 
-interface ChallengeCard {
+export interface ContentCard  {
   title: string;
   descriptionBlocks: RichTextBlock[];
   image: string;
@@ -23,7 +23,7 @@ interface ChallengeCard {
 interface PharmacyChainChallengesSection {
   title: string;
   description: string;
-  challengeCards: ChallengeCard[];
+  challengeCards: ContentCard [];
 }
 
 interface FeatureBenefitsSection {
@@ -33,14 +33,28 @@ interface FeatureBenefitsSection {
   image: string;
   alt: string;
 }
+interface OperationsStandardizationSection {
+  eyebrow: string;
+  title: string;
+  contents: ContentCard [];
+  ctaButton: CtaButton;
+}
 
 export interface ChainPharmacyData {
   heroSection: HeroSection;
   pharmacyChainChallengesSection: PharmacyChainChallengesSection;
   featureBenefitsSection: FeatureBenefitsSection;
+  operationsStandardizationSection: OperationsStandardizationSection;
 }
 
 // Types for other sections can be added here as needed
 export interface ChallengeCardProp {
-  challengeCard: ChallengeCard;
+  challengeCard: ContentCard;
+}
+
+
+export interface FeatureCardProps {
+  features: ContentCard[];
+  direction?: "left" | "right";
+  animation?: boolean;
 }

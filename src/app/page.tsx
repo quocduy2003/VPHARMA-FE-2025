@@ -105,6 +105,7 @@ export default function HomePage() {
     featureSection,
   } = homePageData;
   console.log("homepage", homePageData);
+  
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const allCategories = [
     "Tất cả",
@@ -123,33 +124,33 @@ export default function HomePage() {
     <>
       <section
         id="hero"
-        className="h-screen max-h-[1100px] bg-gradient-to-t  rounded-2xl from-blue-100 to-white overflow-y-clip"
+        className="h-screen max-h-[1100px] bg-gradient-to-b from-blue-100 to-white overflow-y-clip"
       >
         <div className="container h-full w-full flex items-center justify-center flex-col text-center">
           <h6 className="capitalize text-primary mb-10">{homePageData.eyebrow}</h6>
-          <h1 className="mx-auto max-w-7xl capitalize">{homePageData.title}</h1>
+          <h1 className="mx-auto max-w-5xl capitalize">{homePageData.title}</h1>
           <div className="flex items-center  justify-center mt-10">
             <button className="btn font-bold ">Đăng Ký dùng thử</button>
           </div>
         </div>
       </section>
 
-      <section className="bg-ink ">
-        <div className="container">
+      <section className="py-10">
+        <div className="container bg-ink rounded-2xl p-10">
           <div className="text-center ">
-            <h2 className=" text-white">
+            <h2 className=" text-white mb-8">
               {solutionSection.title}
             </h2>
-            <p className="mt-5 text-h6 text-white/80">
+            <p className="mb-15 text-h6 mx-auto max-w-2xl text-white/80">
               {solutionSection.description}
             </p>
           </div>
 
-          <div className="mt-15 grid grid-cols-1 gap-6 md:grid-cols-3">
+          <div className=" grid grid-cols-1 gap-10 md:grid-cols-3">
             {solutionSection.solutionCards.map((card, index) => (
               <article
                 key={index}
-                className="group relative rounded-xl bg-white p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-1xl"
+                className="group relative rounded-xl bg-white p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/40"
               >
                 <h3 className="text-center mt-2 text-black">{card.title}</h3>
 
@@ -162,7 +163,7 @@ export default function HomePage() {
                 <div className="flex justify-center mt-5">
                   <Link
                     href={card.ctaButton.link || "#"}
-                    className="inline-flex items-center gap-2 rounded-full bg-sky-50 px-4 py-2 text-sub2 font-bold text-primary ring-1 ring-blue-500 hover:bg-sky-100"
+                    className="inline-flex items-center gap-2  px-4 py-2 text-sub1 font-bold text-primary"
                   >
                     {card.ctaButton.title}
                     <span className="text-sky-600">
@@ -172,20 +173,19 @@ export default function HomePage() {
                 </div>
 
                 {/* Hiệu ứng glow bên dưới card */}
-                <div className="pointer-events-none absolute -inset-0.5 -z-10 rounded-2xl bg-gradient-to-b from-sky-400/20 to-transparent blur"></div>
+                <div className="pointer-events-none absolute -inset-0.5 -z-10 rounded-2xl bg-gradient-to-b from-blue-100 to-transparent blur"></div>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="container py-20">
-        {/* Tiêu đề section */}
+      <section className="container py-10">
         <div className="text-center">
-          <p className="text-sub2 font-bold uppercase tracking-wide text-primary">
+          <p className="text-h6 mb-8 font-bold uppercase tracking-wide text-primary">
             {featureSection.title}
           </p>
-          <h2 className="mt-3 text-black">{featureSection.description}</h2>
+          <h2 className="mb-15 text-black">{featureSection.description}</h2>
         </div>
 
         <div className="mt-10 space-y-16">
@@ -199,125 +199,34 @@ export default function HomePage() {
         <div className="mt-8 w-full text-center">
           <a
             href="/giai-phap/tong-quan"
-            className="group inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 font-bold text-white shadow-lg shadow-primary/30 transition hover:opacity-90"
+            className="group inline-flex items-center text-sub1 gap-2 rounded-full bg-primary px-5 py-3 font-bold text-white shadow-lg shadow-primary/30 transition hover:opacity-90"
           >
-            Khám phá thêm
-            <span
-              aria-hidden
-              className="transition-transform group-hover:translate-x-0.5"
-            >
-              <FiArrowRight />
-            </span>
+            Khám phá giải pháp
           </a>
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-ink">
-        <div className="container mx-auto">
-          {/* Eyebrow và title */}
-          <div className="max-w-5xl mx-auto mb-10">
-            <p className="text-sky-300 text-center font-bold text-sm mb-2 block">
+      <section className="bg-ink">
+        <div className="container">
+          <div className="text-center">
+            <p className="text-h6 mb-8 font-bold uppercase tracking-wide text-primary">
               V-Pharma
             </p>
-            <h2 className="text-center text-white mt-1 max-w-4xl mx-auto ">
+            <h2 className="mb-15 text-white">
               Thiết Kế Riêng Biệt Cho Ngành Dược
             </h2>
           </div>
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-12 xl:gap-20 items-start max-w-5xl mx-auto">
-            {/* Features bên trái */}
-            <div>
-              <ul className="space-y-8">
-                {[0, 1, 2].map((i) => (
-                  <li
-                    key={i}
-                    className="group flex items-start gap-4 rounded-xl p-5 transition-all duration-200
-                bg-ink hover:bg-white hover:shadow-xl
-                border border-transparent hover:border-sky-100
-                max-w-3xl mx-auto "
-                  >
-                    <span
-                      className="inline-flex size-10 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 ring-1 ring-emerald-200 
-  transition-all duration-200 group-hover:bg-emerald-200 group-hover:scale-105 aspect-square"
-                      aria-label="Feature icon"
-                    >
-                      <svg
-                        viewBox="0 0 24 24"
-                        className="h-4 w-4 md:h-5 md:w-5"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      >
-                        <path d="M12 6v12M6 12h12" />
-                      </svg>
-                    </span>
-                    <div>
-                      <h3 className="font-bold text-h6 text-white group-hover:text-black">
-                        1223
-                      </h3>
-                      <p className="mt-1 text-sub2 leading-6 text-white group-hover:text-colordescription">
-                        Hơn một thập kỷ gắn bó sâu sắc trong ngành y tế giúp
-                        chúng tôi thấu hiểu mọi quy trình vận hành và thách
-                        thức.
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            {/* Chart bên phải */}
-            <div className="relative min-h-[340px] flex items-center justify-center">
-              {/* Nền lót phía sau (background block) */}
-              <div
-                className="absolute left-[55px] top-[55px] w-[300px] h-[230px] rounded-lg bg-white/30"
-                style={{ zIndex: 1 }}
-              ></div>
-              {/* Card lớn phía trên */}
-              <div
-                className="absolute left-[110px] top-[0px] bg-white rounded-xl shadow-lg w-[295px] p-5"
-                style={{ zIndex: 2 }}
-              >
-                {/* <div className="flex justify-between items-center mb-3">
-                  <span className="font-semibold text-gray-800">
-                    Total Balance
-                  </span>
-                  <span className="font-bold text-gray-900">$4,200</span>
-                </div>
-                <div className="font-medium text-green-500 mb-3">+14%</div> */}
-                <img
-                  src="/chart.png"
-                  alt="Total Balance Chart"
-                  className="w-full h-60 object-contain"
-                />
-              </div>
-              {/* Card nhỏ ở dưới trái */}
-              <div
-                className="absolute left-[0px] bottom-[0px] bg-gray-500 rounded-xl shadow-lg w-[195px] p-5"
-                style={{ zIndex: 3 }}
-              >
-                {/* <div className="flex justify-between items-center mb-1">
-                  <span className="font-semibold text-gray-800 text-sm">
-                    Total Balance
-                  </span>
-                  <span className="font-bold text-gray-900 text-sm">
-                    $4,200
-                  </span>
-                </div>
-                <div className="font-medium text-green-500 text-xs mb-2">
-                  +14%
-                </div> */}
-                <img
-                  src="/chart.png"
-                  alt="Total Balance Mini Chart"
-                  className="w-full h-20 object-contain"
-                />
-              </div>
-            </div>
-          </div>
+          <div className="mt-10 space-y-16">
+          <FeatureCard
+            features={featureSection.featureCards}
+            direction="left"
+          />
+        </div>
           {/* CTA Button ngoài grid */}
           <div className="mt-10 w-full flex justify-center">
             <a
               href="/about-us"
-              className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-2.5 font-bold text-sky-700 border border-sky-200 shadow transition hover:bg-primary hover:text-white hover:border-transparent"
+              className="group inline-flex items-center text-sub1 gap-2 rounded-full bg-white px-5 py-3 font-bold text-primary shadow-lg shadow-primary/30 transition hover:opacity-90"
             >
               Tìm hiểu về V-Pharma
             </a>
@@ -329,18 +238,18 @@ export default function HomePage() {
       <ReviewCarousel sectionData={testimonialSection} />
 
       {/* <-- NEW SECTION 5: BLOG --> */}
-      <section className="py-20 bg-gradient-to-b from-white to-blue-100">
+      <section className="py-10 bg-white">
         <div className="container">
           {/* Header (Centered) */}
           <div className="text-center">
-            <h2 className="mb-20 text-black">
+            <h2 className="mb-15 text-black">
               Cập Nhật Kiến Thức Cùng V-Pharma
             </h2>
           </div>
 
           <div className="mt-8 flex flex-col items-center justify-between gap-4 md:flex-row">
             {/* Tabs (Left-aligned) */}
-            <div className="flex flex-wrap justify-center gap-2 md:justify-start">
+            <div className="flex flex-wrap justify-center gap-6 md:justify-start">
               {allCategories.map((category) => (
                 <button
                   key={category}
@@ -359,7 +268,7 @@ export default function HomePage() {
             {/* View All Link (Right-aligned) */}
             <Link
               href="/blog/blog-home"
-              className="inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-body2 font-bold text-primary transition-colors hover:bg-sky-100"
+              className="inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-sub2 font-bold text-primary transition-colors hover:bg-sky-100"
             >
               Xem tất cả bài viết
               <FiArrowRight className="h-5 w-5" />
@@ -373,7 +282,7 @@ export default function HomePage() {
                 key={post.title}
                 className="group flex flex-col overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
               >
-                {/* <Link
+                <Link
                   href={`/blog/${post.categories.slug}/${post.slug}`}
                   className="block overflow-hidden"
                 >
@@ -402,7 +311,7 @@ export default function HomePage() {
                       {post.description}
                     </p>
                   </div>
-                </Link> */}
+                </Link>
               </article>
             ))}
           </div>

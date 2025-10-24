@@ -5,12 +5,11 @@ import { useState } from "react";
 import { FeatureCardProps } from "@/types";
 
 export default function FeatureCard({ features, direction = "right" }: FeatureCardProps) {
-    // ✅ Mặc định hiển thị item đầu tiên
     const [hoveredIndex, setHoveredIndex] = useState<number>(0);
     const isLeft = direction === "left";
 
     return (
-        <div className={`grid items-center gap-10 lg:grid-cols-2`}>
+        <div className={`grid items-center  lg:grid-cols-2`}>
             {/* Cột hình ảnh */}
             <div
                 className={`${isLeft ? "lg:order-2" : "lg:order-1"} flex justify-center relative`}
@@ -62,13 +61,13 @@ export default function FeatureCard({ features, direction = "right" }: FeatureCa
                             </span>
                             <div>
                                 <h3
-                                    className={`font-semibold transition-colors duration-300 ${hoveredIndex === index ? "text-primary" : "text-black group-hover:text-primary"
+                                    className={`font-bold mb-2 transition-colors duration-300 ${hoveredIndex === index ? "text-primary" : "text-black group-hover:text-primary"
                                         }`}
                                 >
                                     {item.title}
                                 </h3>
                                 <p
-                                    className={`mt-1 text-sub2 leading-6 transition-colors duration-300 ${hoveredIndex === index
+                                    className={`text-sub2 leading-6 max-w-xl transition-colors  duration-300 ${hoveredIndex === index
                                         ? "text-primary"
                                         : "text-colordescription group-hover:text-primary"
                                         }`}

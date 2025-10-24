@@ -8,6 +8,7 @@ export function transformChainPharmacyData(
   const heroSection = data?.heroPharmacyChain;
   const pharmacyChainChallengesSection = data?.pharmacyChainChallengesSection;
   const featureBenefitsSection = data?.featureBenefitsSection;
+  const operationsStandardizationSection = data?.operationsStandardization;
   return {
     heroSection: {
       eyebrow: heroSection?.eyebrow || "V-Pharma Chain Pharmacy Solution",
@@ -39,6 +40,20 @@ export function transformChainPharmacyData(
       })) || [],
       alt: featureBenefitsSection?.image?.alternativeText || "Feature Benefits Image",
       image: createImageUrl( featureBenefitsSection?.image.url),
+    },
+    operationsStandardizationSection: {
+      eyebrow: operationsStandardizationSection?.eyebrow || "Tiêu chuẩn hóa vận hành",
+      title: operationsStandardizationSection?.title || "Đồng bộ quy trình vận hành cho chuỗi nhà thuốc",
+      contents: operationsStandardizationSection?.contents?.map((content: any) => ({
+        title: content?.title || "title",
+        descriptionBlocks: content?.description  || [],
+        alt: content?.image?.alternativeText || "Operation Standardization Image",
+        image: createImageUrl( content?.image.url),
+      })) || [],
+      ctaButton: {
+        title: operationsStandardizationSection?.ctaButton?.title || "",
+        link: operationsStandardizationSection?.ctaButton?.link || null,
+      }
     },
 
   };

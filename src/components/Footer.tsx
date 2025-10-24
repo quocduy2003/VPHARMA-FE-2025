@@ -4,7 +4,7 @@ import { FiFacebook, FiYoutube, FiInstagram, FiLinkedin, FiPhone, FiMapPin, FiMa
 
 export function Footer() {
   return (
-    <footer className="bg-ink text-sm text-white">
+    <footer className="bg-ink text-sm text-white rounded-t-4xl">
       <div className="container mx-auto grid grid-cols-1 gap-12 px-4 md:grid-cols-6">
         {/* Cột 1: Thông tin công ty */}
         <div className="col-span-2">
