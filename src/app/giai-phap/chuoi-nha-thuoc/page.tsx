@@ -14,6 +14,7 @@ import { chainPharmacyData } from "@/lib/api";
 import CTASection from "@/components/CTA";
 import { Button } from "@/components/ui/CTAButton";
 import { AccordionItem } from "@/components/ui/AccordionIteam";
+import FeatureCardTest from "@/components/ui/FeatureCardTest";
 
 //data section1
 const challengeCards = [
@@ -352,8 +353,8 @@ function DashboardCarousel({
 export default function ChuoiNhaThuoc() {
   const [openAccordion, setOpenAccordion] = useState(0);
 
-  const { heroSection, pharmacyChainChallengesSection, featureBenefitsSection } = chainPharmacyData;
-  console.log("featureBenefitsSection", featureBenefitsSection);
+  const { heroSection, pharmacyChainChallengesSection, featureBenefitsSection, operationsStandardizationSection } = chainPharmacyData;
+  console.log("operationsStandardizationSection", operationsStandardizationSection);
 
   const [indexCustomer, setIndexCustomer] = useState(0);
   const cardsPerView = 3;
@@ -383,7 +384,7 @@ export default function ChuoiNhaThuoc() {
         <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
           <div>
             <p className="mb-4 text-h6 font-bold uppercase tracking-wide text-primary">
-              edfsdfsfsf
+              {heroSection.eyebrow}
             </p>
             <h1 className="mb-6">{heroSection.title}</h1>
             <p className="mb-8 text-h6">{heroSection.description}</p>
@@ -483,115 +484,17 @@ export default function ChuoiNhaThuoc() {
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-5xl text-center">
               <p className="mb-2 text-h6 font-bold uppercase tracking-wide text-primary">
-                TĂNG TRẢI NGHIỆM KHÁCH HÀNG
+                {featureBenefitsSection.title}
               </p>
               <h2 className="text-black">
-                Chuẩn Hóa Vận Hành và Kiểm Soát
-                <br />
-                Giá Bán Toàn Chuỗi
+                {featureBenefitsSection.description}
               </h2>
             </div>
-            <div className="mt-12 grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-              <div className="relative">
-                {/* Main Image Container */}
-                <div className="relative z-10">
-                  <Image
-                    src="/people.jpg"
-                    alt="Quản lý giá bán"
-                    width={600}
-                    height={500}
-                    className="relative z-10 rounded-xl"
-                  />
-                  <div className="absolute bottom-8 left-8 rounded-xl bg-white p-6 shadow-2xl">
-                    <Image
-                      src="/hero-dashboard.jpg"
-                      alt="Quản lý giá bán"
-                      width={300}
-                      height={200}
-                      className="relative z-10 rounded-xl"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                {/* Feature List */}
-                <div className="space-y-6">
-                  {/* Feature 1 */}
-                  <div className="flex gap-4">
-                    {/* Icon */}
-                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-success/10">
-                      <svg
-                        className="h-6 w-6 text-success"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                    </div>
-
-                    {/* Content */}
-                    <div className="flex-1">
-                      <h3 className="mb-2 text-black">
-                        Quản lý Giá Bán Toàn Chuỗi
-                      </h3>
-                      <p className="text-sub2">
-                        Chuẩn hóa danh mục thuốc & giá bán toàn chuỗi bằng cách
-                        sử dụng danh mục chung. Dễ dàng cập nhật giá từ 1 nơi
-                        trên toàn hệ thống. Dễ dàng cập nhật giá từ 1 nơi trên
-                        toàn hệ thống để tối ưu tốt nhất chi phí và điều kiểm
-                        toàn tất cả điểm bán.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Feature 2 */}
-                  <div className="flex gap-4">
-                    {/* Icon */}
-                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-success/10">
-                      <svg
-                        className="h-6 w-6 text-success"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                    </div>
-
-                    {/* Content */}
-                    <div className="flex-1">
-                      <h3 className="mb-2 text-black">
-                        Quản lý Danh mục & Dữ liệu
-                      </h3>
-                      <p className="text-sub2">
-                        Chuẩn hóa danh mục thuốc & giá bán toàn chuỗi bằng cách
-                        sử dụng danh mục chung. Dễ dàng cập nhật giá từ 1 nơi
-                        trên toàn hệ thống. Dễ dàng cập nhật giá từ 1 nơi trên
-                        toàn hệ thống để tối ưu tốt nhất chi phí và điều kiểm
-                        toàn tất cả điểm bán.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* CTA Button */}
-                <button className=" text-sub1 mt-8 rounded-full bg-primary px-8 py-3 font-bold text-white shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl">
-                  Đăng ký dùng thử
-                </button>
-              </div>
-            </div>
+              <FeatureCardTest
+                features={operationsStandardizationSection.contents}
+                direction="left"
+                animation={true}
+              />
           </div>
         </section>
       </FadeInOnScroll>
@@ -602,12 +505,10 @@ export default function ChuoiNhaThuoc() {
           <div className="container mx-auto px-4">
             <div className="mx-auto mb-12 max-w-5xl text-center">
               <p className="mb-2 text-h6 font-bold uppercase tracking-wide text-primary">
-                TĂNG TRẢI NGHIỆM KHÁCH HÀNG
+                {operationsStandardizationSection.eyebrow}
               </p>
               <h2 className="mb-4 text-black">
-                Xây Dựng Hệ Thống Khách Hàng Thân Thiết
-                <br />
-                Chuyên Nghiệp
+                {operationsStandardizationSection.title}
               </h2>
             </div>
 

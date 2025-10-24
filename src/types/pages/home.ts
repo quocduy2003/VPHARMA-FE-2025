@@ -51,6 +51,7 @@ interface TestimonialSection {
 export interface FeatureCardProps {
   features: FeatureCard[];
   direction?: "left" | "right";
+  animation?: boolean;
 }
 
 export interface HomePageData extends Hero {

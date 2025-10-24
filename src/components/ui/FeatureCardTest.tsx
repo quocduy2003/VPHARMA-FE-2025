@@ -1,0 +1,185 @@
+"use client";
+
+import Image from "next/image";
+import { useState, useEffect, useRef } from "react";
+import { FeatureCardProps } from "@/types";
+import { RichTextRenderer } from "./RichTextRenderer";
+
+function useInView(ref: React.RefObject<HTMLElement>, threshold = 0.2) {
+    const [inView, setInView] = useState(false);
+
+    useEffect(() => {
+        if (!ref.current) return;
+        const observer = new window.IntersectionObserver(
+            ([entry]) => setInView(entry.isIntersecting),
+            { threshold }
+        );
+        observer.observe(ref.current);
+        return () => observer.disconnect();
+    }, [ref, threshold]);
+
+    return inView;
+}
+
+const DURATION = 7000; // ms
+const ICON_SIZE = 36; // px
+const NODE_GAP = 20; // px
+const NODE_HEIGHT = ICON_SIZE + NODE_GAP;
+
+export default function FeatureCardTest({ features, direction = "right", animation = false }: FeatureCardProps) {
+    const [activeIndex, setActiveIndex] = useState<number>(0);
+    const [progress, setProgress] = useState<number>(0); // percent chạy của mỗi segment
+    const [hasPlayed, setHasPlayed] = useState(false);
+    const isLeft = direction === "left";
+    const timerRef = useRef<any>(null);
+    const progressRef = useRef<any>(null);
+    const sectionRef = useRef<any>(null);
+
+    // Observer
+    const inView = useInView(sectionRef);
+
+    useEffect(() => {
+        if (animation && inView && !hasPlayed) setHasPlayed(true);
+    }, [animation, inView, hasPlayed]);
+
+    // Tăng dần progress mỗi 20ms theo DURATION
+    useEffect(() => {
+        if (animation && hasPlayed) {
+            setProgress(0);
+            progressRef.current = setInterval(() => {
+                setProgress((prev) => {
+                    if (prev >= 100) {
+                        clearInterval(progressRef.current);
+                        return 100;
+                    }
+                    return prev + (20 / DURATION) * 100; // ✅ Tính đúng tốc độ
+                });
+            }, 20);
+
+            timerRef.current = setTimeout(() => {
+                clearInterval(progressRef.current);
+                setProgress(0);
+                setActiveIndex((prev) => (prev + 1) % features.length);
+            }, DURATION);
+
+            return () => {
+                clearTimeout(timerRef.current);
+                clearInterval(progressRef.current);
+            };
+        }
+    }, [activeIndex, features.length, animation, hasPlayed]);
+
+    const ICONS = [
+        <svg key="1" viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2">
+            <rect x="5" y="5" width="14" height="14" rx="3" />
+        </svg>,
+        <svg key="2" viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2">
+            <circle cx="12" cy="12" r="7" />
+        </svg>,
+        <svg key="3" viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M12 2L2 22h20L12 2z" />
+        </svg>
+    ];
+
+    return (
+        <div ref={sectionRef} className={`grid items-center lg:grid-cols-2`}>
+            {/* Cột hình ảnh */}
+            <div className={`${isLeft ? "lg:order-2" : "lg:order-1"} flex justify-center relative`}>
+                <div className="relative w-full max-w-[520px] h-64 rounded-2xl overflow-hidden shadow-lg">
+                    {features.map((item, idx) => (
+                        <Image
+                            key={idx}
+                            src={item.image}
+                            alt={item.title}
+                            width={640}
+                            height={420}
+                            className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+                                w-[85%] h-auto rounded-xl object-cover transition-opacity duration-500
+                                ${activeIndex === idx ? "opacity-100 z-10" : "opacity-0 z-0"}`}
+                        />
+                    ))}
+                </div>
+            </div>
+            {/* Cột mô tả + timeline từng đoạn */}
+            <div className={`${isLeft ? "lg:order-1" : "lg:order-2"} relative flex`}>
+                <ul className="relative flex flex-col ml-[36px]">
+                    {features.map((item, index) => (
+                        <li
+                            key={index}
+                            className="relative flex items-start"
+                            style={{ minHeight: NODE_HEIGHT }}
+                        >
+                            {/* Icon + timeline */}
+                            <div className="relative flex flex-col items-center mr-4" style={{ width: ICON_SIZE }}>
+                                {/* Icon */}
+                                <span
+                                    className={`
+        flex items-center justify-center h-9 w-9 rounded-full border-2
+        transition-all duration-300
+        ${activeIndex === index
+                                            ? "bg-success text-white border-success shadow-lg"
+                                            : (activeIndex > index
+                                                ? "bg-gray-300 text-gray-400 border-gray-300"
+                                                : "bg-emerald-100 text-success border-emerald-300")}
+      `}
+                                >
+                                    {ICONS[index] || ICONS[0]}
+                                </span>
+
+                                {/* Timeline segment (nằm ngay dưới icon) */}
+                                {features.length > 1 && index < features.length - 1 && (
+                                    <div
+                                        className="absolute left-1/2 top-[36px] -translate-x-1/2 z-0 h-full"
+                                        style={{
+                                            width: "4px",
+                                            height: `${NODE_HEIGHT + ICON_SIZE}px`,
+                                            background: "#e5e7eb",
+                                            borderRadius: "4px",
+                                            overflow: "hidden",
+                                        }}
+                                    >
+                                        {activeIndex === index && hasPlayed && (
+                                            <div
+                                                className="absolute left-0 top-0 w-full bg-success"
+                                                style={{
+                                                    height: `${progress}%`,
+                                                    transition: "height 20ms linear",
+                                                }}
+                                            />
+                                        )}
+                                        {activeIndex > index && (
+                                            <div
+                                                className="absolute left-0 top-0 w-full"
+                                                style={{
+                                                    height: "100%",
+                                                    background: "#a3a3a3",
+                                                }}
+                                            />
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Nội dung */}
+                            <div className="flex-1 pl-2">
+                                <h3
+                                    className={`font-bold transition-colors duration-300 ${activeIndex === index ? "text-primary" : "text-black"
+                                        }`}
+                                >
+                                    {item.title}
+                                </h3>
+                                {/* <p
+                                    className={`text-sub2 leading-6 max-w-xl transition-colors duration-300 ${activeIndex === index ? "text-primary" : "text-colordescription"
+                                        }`}
+                                > */}
+                                    <RichTextRenderer content={item.descriptionBlocks} />
+
+                            </div>
+                        </li>
+
+                    ))}
+                </ul>
+            </div>
+        </div>
+    );
+}
