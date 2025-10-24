@@ -138,7 +138,7 @@ export default function HomePage() {
       <section className="py-10">
         <div className="container bg-ink rounded-2xl p-10">
           <div className="text-center ">
-            <h2 className=" text-white mb-8">
+            <h2 className=" text-white mb-5">
               {solutionSection.title}
             </h2>
             <p className="mb-15 text-h6 mx-auto max-w-2xl text-white/80">
@@ -182,7 +182,7 @@ export default function HomePage() {
 
       <section className="container py-10">
         <div className="text-center">
-          <p className="text-h6 mb-8 font-bold uppercase tracking-wide text-primary">
+          <p className="text-h6 mb-5 font-bold uppercase tracking-wide text-primary">
             {featureSection.title}
           </p>
           <h2 className="mb-15 text-black">{featureSection.description}</h2>
@@ -209,7 +209,7 @@ export default function HomePage() {
       <section className="bg-ink">
         <div className="container">
           <div className="text-center">
-            <p className="text-h6 mb-8 font-bold uppercase tracking-wide text-primary">
+            <p className="text-h6 mb-5 font-bold uppercase tracking-wide text-primary">
               V-Pharma
             </p>
             <h2 className="mb-15 text-white">
