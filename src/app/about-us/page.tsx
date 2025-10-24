@@ -107,7 +107,7 @@ const FounderSection = ({
       }
       intervalRef.current = setInterval(() => {
         handleNext(); // Tự động chuyển sang slide tiếp theo
-      }, 3000); // 3 giây
+      }, 2000); // 3 giây
     }
   };
 
@@ -288,8 +288,8 @@ export default function AboutUsPage() {
               <p className="mb-5 text-h6 font-bold uppercase tracking-wide text-primary">
                 {aboutUsData.eyebrow}
               </p>
-              <h1 className="text-black mb-15">{aboutUsData.title}</h1>
-              <p className="mx-auto max-w-8xl text-h6">
+              <h1 >{aboutUsData.title}</h1>
+              <p className="mx-auto max-w-6xl text-h6">
                 {aboutUsData.description}
               </p>
             </div>

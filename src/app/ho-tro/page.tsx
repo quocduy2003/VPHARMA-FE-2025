@@ -221,7 +221,7 @@ export default function HoTro() {
       {/** Dashboard */}
       <section className="bg-gradient-to-b from-blue-100 to-white py-10 text-center">
         <div className="container ">
-          <h1 className="text-h1 font-bold text-black mt-10 mb-5">Liên Hệ Hỗ Trợ</h1>
+          <h1 className="mt-10">Liên Hệ Hỗ Trợ</h1>
           <p className="mx-auto text-h6 mb-15 max-w-3xl">
             Giải pháp toàn diện cho quản lý nhà thuốc, từ tồn kho đến bán hàng,
             với công nghệ hiện đại và dễ sử dụng.
