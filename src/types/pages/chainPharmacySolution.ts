@@ -1,4 +1,4 @@
-import { CtaButton, RichTextBlock, StrapiImage } from "@/types";
+import { CtaButton, RichTextBlock, CTASection, FAQSection } from "@/types";
 // ---------- Section Types ----------
 interface Content {
   title: string;
@@ -13,7 +13,7 @@ interface HeroSection {
   alt: string;
 }
 
-export interface ContentCard  {
+export interface ContentCard {
   title: string;
   descriptionBlocks: RichTextBlock[];
   image: string;
@@ -23,7 +23,7 @@ export interface ContentCard  {
 interface PharmacyChainChallengesSection {
   title: string;
   description: string;
-  challengeCards: ContentCard [];
+  challengeCards: ContentCard[];
 }
 
 interface FeatureBenefitsSection {
@@ -36,10 +36,10 @@ interface FeatureBenefitsSection {
 interface OperationsStandardizationSection {
   eyebrow: string;
   title: string;
-  contents: ContentCard [];
+  contents: ContentCard[];
   ctaButton: CtaButton;
 }
-interface CustomerExperienceSection{
+interface CustomerExperienceSection {
   eyebrow: string;
   title: string;
   cards: {
@@ -57,6 +57,27 @@ interface FeatureOverview {
   ctaButton: CtaButton;
 }
 
+interface FeatureCarousel {
+  eyebrow: string;
+  title: string;
+  description: string;
+  featureImages: {
+    alt: string;
+    url: string;
+  }[];
+}
+
+interface PharmaFeedback {
+  title: string;
+  description: string;
+  cards: {
+    name: string;
+    address: string;
+    alt: string;
+    image: string;
+  }[];
+}
+
 export interface ChainPharmacyData {
   heroSection: HeroSection;
   pharmacyChainChallengesSection: PharmacyChainChallengesSection;
@@ -64,6 +85,11 @@ export interface ChainPharmacyData {
   operationsStandardizationSection: OperationsStandardizationSection;
   customerExperienceSection: CustomerExperienceSection;
   featureOverview: FeatureOverview;
+  featureCarousel: FeatureCarousel;
+  operationsStandardizationBottomSection: OperationsStandardizationSection;
+  pharmaFeedback: PharmaFeedback;
+  ctaSection: CTASection;
+  faqSection: FAQSection;
 }
 
 // Types for other sections can be added here as needed
@@ -71,9 +97,9 @@ export interface ChallengeCardProp {
   challengeCard: ContentCard;
 }
 
-
 export interface FeatureCardProps {
   features: ContentCard[];
   direction?: "left" | "right";
+  theme?: "light" | "dark";
   animation?: boolean;
 }

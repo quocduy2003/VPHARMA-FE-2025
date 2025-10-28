@@ -6,7 +6,13 @@ import { Card } from "@/types";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 
 interface PharmacyCarouselProps {
-  cards: Card[];
+  cards: {
+    name: string;
+    address: string;
+    image: string;
+    quote?: string;
+    alt: string;
+  }[];
 }
 
 export default function PharmacyCarousel({ cards }: PharmacyCarouselProps) {
@@ -109,7 +115,7 @@ export default function PharmacyCarousel({ cards }: PharmacyCarouselProps) {
                     width={310}
                     height={110}
                     className="h-[110px] w-full object-contain"
-                  
+
                   />
                 </div>
               </div>

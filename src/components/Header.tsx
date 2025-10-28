@@ -20,7 +20,8 @@ export function Header() {
   return (
     <header className="fixed top-0 left-0 z-50 w-full border-b border-gray-200 bg-white backdrop-blur-md">
       <div className="mx-auto flex h-[72px] max-w-[1536px] items-center justify-between px-4">
-        {/* Logo */}
+
+        {/* Logo trái */}
         <Link href="/" className="flex items-center flex-shrink-0">
           <img
             src="/Vpharma-AMIT.png"
@@ -29,12 +30,11 @@ export function Header() {
           />
         </Link>
 
-        {/* Main Nav */}
+        {/* Nav + dropdown - hiện ở desktop */}
         <nav className="hidden lg:flex items-center gap-6 font-medium">
           {mainNavLinks.map((link) => {
             const pathToMatch = link.matchPath || link.href;
-            const isActive =
-              pathname !== "/" && pathname.startsWith(pathToMatch);
+            const isActive = pathname !== "/" && pathname.startsWith(pathToMatch);
 
             return (
               <Link
@@ -52,7 +52,7 @@ export function Header() {
             );
           })}
 
-          {/* Dropdown */}
+          {/* Dropdown Thêm */}
           <div className="group relative ">
             <button className="flex items-center gap-1 hover:text-primary">
               <span className="text-sub1 text-colordescription">Thêm</span>
@@ -76,7 +76,7 @@ export function Header() {
           </div>
         </nav>
 
-        {/* Auth Buttons */}
+        {/* Auth buttons - phải desktop */}
         <div className="hidden lg:flex items-center gap-2">
           <button className="rounded-full border border-primary px-4 py-1 text-sub2 font-bold text-primary hover:bg-blue-100 transition">
             Đăng nhập
@@ -86,7 +86,7 @@ export function Header() {
           </button>
         </div>
 
-        {/* Mobile Menu Icon */}
+        {/* Mobile menu icon - khi responsive */}
         <div className="lg:hidden">
           <button className="text-2xl text-primary">☰</button>
         </div>

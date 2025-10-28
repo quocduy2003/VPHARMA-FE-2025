@@ -64,3 +64,11 @@ export interface BlogData {
   mainBlog: BlogPost;
   featuredNews: BlogPost[];
 }
+
+
+// Type for Table of Contents item
+export interface TocItem {
+  id: string;
+  text: string;
+  level: number;
+}

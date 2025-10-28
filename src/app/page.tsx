@@ -9,21 +9,7 @@ import Link from "next/link";
 import { blogPosts } from "@/data/blogData";
 import { FiArrowRight } from "react-icons/fi";
 import FeatureCard from "@/components/ui/FeatureCard";
-
-type Feature = {
-  title: string;
-  desc: string;
-  icon?: string;
-};
-
-type Review = {
-  id: number;
-  name: string;
-  role: string;
-  avatar: string;
-  comment: string;
-  rating: number;
-};
+import { Button } from "@/components/ui/CTAButton";
 
 type Blog = {
   id: number;
@@ -34,36 +20,6 @@ type Blog = {
   desc: string;
 };
 
-// Dữ liệu động mẫu
-// const REVIEWS: Review[] = [
-//   {
-//     id: 1,
-//     name: "Chị Ngọc Anh",
-//     role: "Nhà thuốc số 2",
-//     avatar: "/avatar1.png",
-//     comment:
-//       "V-Pharma giúp tôi tối ưu hóa việc kiểm soát tồn kho và doanh thu hằng ngày rất hiệu quả.",
-//     rating: 5,
-//   },
-//   {
-//     id: 2,
-//     name: "Anh Minh Tâm",
-//     role: "Chuỗi thuốc Tâm An",
-//     avatar: "/avatar2.png",
-//     comment:
-//       "Từ khi áp dụng hệ thống, việc quản lý chi nhánh trở nên dễ dàng hơn rất nhiều.",
-//     rating: 5,
-//   },
-//   {
-//     id: 3,
-//     name: "Chị Hồng Nhung",
-//     role: "Nhà thuốc Nhung Phát",
-//     avatar: "/avatar3.png",
-//     comment:
-//       "Phần mềm thân thiện, đội ngũ hỗ trợ nhiệt tình, phản hồi nhanh chóng.",
-//     rating: 5,
-//   },
-// ];
 
 const BLOGS: Blog[] = [
   {
@@ -105,7 +61,7 @@ export default function HomePage() {
     featureSection,
   } = homePageData;
   console.log("homepage", homePageData);
-  
+
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const allCategories = [
     "Tất cả",
@@ -119,7 +75,7 @@ export default function HomePage() {
     activeCategory === "Tất cả"
       ? blogPosts
       : blogPosts.filter((post) => post.categories.includes(activeCategory))
-  ).slice(0, 3); 
+  ).slice(0, 3);
   return (
     <>
       <section
@@ -130,7 +86,9 @@ export default function HomePage() {
           <h6 className="capitalize text-primary mb-10">{homePageData.eyebrow}</h6>
           <h1 className="mx-auto max-w-5xl capitalize">{homePageData.title}</h1>
           <div className="flex items-center  justify-center ">
-            <button className="btn font-bold ">Đăng Ký dùng thử</button>
+            <Button size="md" className="mt-5" href={homePageData.ctaButton.link || undefined} >
+              {homePageData.ctaButton.title}
+            </Button>
           </div>
         </div>
       </section>
@@ -217,11 +175,11 @@ export default function HomePage() {
             </h2>
           </div>
           <div className="mt-10 space-y-16">
-          <FeatureCard
-            features={featureSection.featureCards}
-            direction="left"
-          />
-        </div>
+            <FeatureCard
+              features={featureSection.featureCards}
+              direction="left"
+            />
+          </div>
           {/* CTA Button ngoài grid */}
           <div className="mt-10 w-full flex justify-center">
             <a
@@ -254,11 +212,10 @@ export default function HomePage() {
                 <button
                   key={category}
                   onClick={() => setActiveCategory(category)}
-                  className={`rounded-full px-4 py-2 text-sub2 font-semibold border border-gray transition-colors ${
-                    activeCategory === category
+                  className={`rounded-full px-4 py-2 text-sub2 font-semibold border border-gray transition-colors ${activeCategory === category
                       ? "bg-primary  text-white shadow-md"
                       : "bg-white text-black hover:bg-slate-100"
-                  }`}
+                    }`}
                 >
                   {category}
                 </button>

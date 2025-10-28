@@ -53,6 +53,40 @@ const query = qs.stringify(
           contentCards: true,
         },
       },
+      featureCarousel: {
+        populate: {
+          featureImages: true,
+        },
+      },
+      operationsStandardizationBottom: {
+        populate: {
+          contents: {
+            populate: {
+              image: true,
+            },
+          },
+          ctaButton: true,
+        },
+      },
+      pharmaFeedback: {
+        populate: {
+          cards: {
+            populate: {
+              image: true,
+            },
+          },
+        },
+      },
+      ctaSection: {
+        populate: {
+          ctaButton: true,
+        },
+      },
+      faqSection: {
+        populate: {
+          questions: true,
+        },
+      },
     },
   },
   { encodeValuesOnly: true }

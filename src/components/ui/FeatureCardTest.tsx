@@ -26,7 +26,12 @@ const ICON_SIZE = 36; // px
 const NODE_GAP = 20; // px
 const NODE_HEIGHT = ICON_SIZE + NODE_GAP;
 
-export default function FeatureCardTest({ features, direction = "right", animation = false }: FeatureCardProps) {
+export default function FeatureCardTest({
+    features,
+    direction = "right",
+    theme = "light",
+    animation = false,
+}: FeatureCardProps) {
     const [activeIndex, setActiveIndex] = useState<number>(0);
     const [progress, setProgress] = useState<number>(0); // percent chạy của mỗi segment
     const [hasPlayed, setHasPlayed] = useState(false);
@@ -70,21 +75,45 @@ export default function FeatureCardTest({ features, direction = "right", animati
     }, [activeIndex, features.length, animation, hasPlayed]);
 
     const ICONS = [
-        <svg key="1" viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2">
+        <svg
+            key="1"
+            viewBox="0 0 24 24"
+            className="h-6 w-6"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+        >
             <rect x="5" y="5" width="14" height="14" rx="3" />
         </svg>,
-        <svg key="2" viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2">
+        <svg
+            key="2"
+            viewBox="0 0 24 24"
+            className="h-6 w-6"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+        >
             <circle cx="12" cy="12" r="7" />
         </svg>,
-        <svg key="3" viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2">
+        <svg
+            key="3"
+            viewBox="0 0 24 24"
+            className="h-6 w-6"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+        >
             <path d="M12 2L2 22h20L12 2z" />
-        </svg>
+        </svg>,
     ];
 
     return (
         <div ref={sectionRef} className={`grid items-center lg:grid-cols-2`}>
             {/* Cột hình ảnh */}
-            <div className={`${isLeft ? "lg:order-2" : "lg:order-1"} flex justify-center relative`}>
+            <div
+                className={`${isLeft ? "lg:order-2" : "lg:order-1"
+                    } flex justify-center relative`}
+            >
                 <div className="relative w-full max-w-[520px] h-64 rounded-2xl overflow-hidden shadow-lg">
                     {features.map((item, idx) => (
                         <Image
@@ -95,7 +124,10 @@ export default function FeatureCardTest({ features, direction = "right", animati
                             height={420}
                             className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
                                 w-[85%] h-auto rounded-xl object-cover transition-opacity duration-500
-                                ${activeIndex === idx ? "opacity-100 z-10" : "opacity-0 z-0"}`}
+                                ${activeIndex === idx
+                                    ? "opacity-100 z-10"
+                                    : "opacity-0 z-0"
+                                }`}
                         />
                     ))}
                 </div>
@@ -110,21 +142,23 @@ export default function FeatureCardTest({ features, direction = "right", animati
                             style={{ minHeight: NODE_HEIGHT }}
                         >
                             {/* Icon + timeline */}
-                            <div className="relative flex flex-col items-center mr-4" style={{ width: ICON_SIZE }}>
+                            <div
+                                className="relative flex flex-col items-center mr-4"
+                                style={{ width: ICON_SIZE }}
+                            >
                                 {/* Icon */}
                                 <span
-                                    className={`
-        flex items-center justify-center h-9 w-9 rounded-full border-2
-        transition-all duration-300
-        ${activeIndex === index
+                                    className={`flex items-center justify-center h-9 w-9 rounded-full border-2 transition-all duration-300 
+                                        ${activeIndex === index
                                             ? "bg-success text-white border-success shadow-lg"
-                                            : (activeIndex > index
-                                                ? "bg-gray-300 text-gray-400 border-gray-300"
-                                                : "bg-emerald-100 text-success border-emerald-300")}
-      `}
+                                            : theme === "dark"
+                                                ? "bg-[#0b7457] text-white/90 border-success/40"
+                                                : "bg-emerald-100 text-success/50 border-emerald-200"
+                                        }`}
                                 >
                                     {ICONS[index] || ICONS[0]}
                                 </span>
+
 
                                 {/* Timeline segment (nằm ngay dưới icon) */}
                                 {features.length > 1 && index < features.length - 1 && (
@@ -152,7 +186,7 @@ export default function FeatureCardTest({ features, direction = "right", animati
                                                 className="absolute left-0 top-0 w-full"
                                                 style={{
                                                     height: "100%",
-                                                    background: "#a3a3a3",
+                                                    background: "#e5e7eb3",
                                                 }}
                                             />
                                         )}
@@ -161,22 +195,35 @@ export default function FeatureCardTest({ features, direction = "right", animati
                             </div>
 
                             {/* Nội dung */}
-                            <div className="flex-1 pl-2">
+                            <div className="flex-1 pl-2 transition-all duration-300">
                                 <h3
-                                    className={`font-bold transition-colors duration-300 ${activeIndex === index ? "text-primary" : "text-black"
+                                    className={`font-bold transition-all duration-300 ${theme === "dark"
+                                        ? activeIndex === index
+                                            ? "text-white"
+                                            : "text-white/50" /* chữ mờ 50% ở dark mode */
+                                        : activeIndex === index
+                                            ? "text-primary"
+                                            : "text-black/60"
                                         }`}
                                 >
                                     {item.title}
                                 </h3>
-                                {/* <p
-                                    className={`text-sub2 leading-6 max-w-xl transition-colors duration-300 ${activeIndex === index ? "text-primary" : "text-colordescription"
-                                        }`}
-                                > */}
-                                    <RichTextRenderer content={item.descriptionBlocks} />
 
+                                <div
+                                    className={`mt-1 leading-relaxed text-[15px] transition-all duration-300
+                                            ${theme === "dark"
+                                            ? activeIndex === index
+                                                ? "text-gray-100"
+                                                : "text-gray-300/60" /* mờ hơn khi không active */
+                                            : activeIndex === index
+                                                ? "text-gray-700"
+                                                : "text-gray-500"
+                                        }`}
+                                >
+                                    <RichTextRenderer content={item.descriptionBlocks} />
+                                </div>
                             </div>
                         </li>
-
                     ))}
                 </ul>
             </div>

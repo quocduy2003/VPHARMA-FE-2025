@@ -17,7 +17,7 @@ export function AccordionItem({
   isOpen,
   onClick,
   buttonClassName = "white",
-  textColor = "text-ink",     // màu chữ mặc định
+  textColor = "text-black",     // màu chữ mặc định
 }: AccordionItemData & { isOpen: boolean; onClick: () => void }) {
   return (
 

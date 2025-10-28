@@ -61,9 +61,7 @@ export default function BlogHomePage() {
     fetchData();
   }, [activeCategory, currentPage, mainBlog]);
 
-  useEffect(() => {
-    console.log("Blog List Updatedaaaaaaaaaaaaaaaaaaaaaaaaa:", blogList);
-  }, [blogList]);
+
   // Điều khiển phân trang
   const handlePageChange = (pageNumber: number) => {
     if (pageNumber > 0 && pageNumber <= totalPages) {
