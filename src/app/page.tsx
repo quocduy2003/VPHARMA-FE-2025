@@ -34,36 +34,6 @@ type Blog = {
   desc: string;
 };
 
-// Dữ liệu động mẫu
-// const REVIEWS: Review[] = [
-//   {
-//     id: 1,
-//     name: "Chị Ngọc Anh",
-//     role: "Nhà thuốc số 2",
-//     avatar: "/avatar1.png",
-//     comment:
-//       "V-Pharma giúp tôi tối ưu hóa việc kiểm soát tồn kho và doanh thu hằng ngày rất hiệu quả.",
-//     rating: 5,
-//   },
-//   {
-//     id: 2,
-//     name: "Anh Minh Tâm",
-//     role: "Chuỗi thuốc Tâm An",
-//     avatar: "/avatar2.png",
-//     comment:
-//       "Từ khi áp dụng hệ thống, việc quản lý chi nhánh trở nên dễ dàng hơn rất nhiều.",
-//     rating: 5,
-//   },
-//   {
-//     id: 3,
-//     name: "Chị Hồng Nhung",
-//     role: "Nhà thuốc Nhung Phát",
-//     avatar: "/avatar3.png",
-//     comment:
-//       "Phần mềm thân thiện, đội ngũ hỗ trợ nhiệt tình, phản hồi nhanh chóng.",
-//     rating: 5,
-//   },
-// ];
 
 const BLOGS: Blog[] = [
   {
@@ -112,6 +82,8 @@ export default function HomePage() {
     "Kinh nghiệm kinh doanh",
     "Chuyển đổi số",
     "Quản lý kho",
+    "tin tức",
+    "Chuyển đổi số",
   ];
   const [activeCategory, setActiveCategory] = useState("Tất cả");
 
@@ -199,7 +171,7 @@ export default function HomePage() {
         <div className="mt-8 w-full text-center">
           <a
             href="/giai-phap/tong-quan"
-            className="group inline-flex items-center text-sub1 gap-2 rounded-full bg-primary px-5 py-3 font-bold text-white shadow-lg shadow-primary/30 transition hover:opacity-90"
+            className="mt-10 group inline-flex items-center text-sub2 rounded-full bg-primary px-5 py-3 font-bold text-white shadow-lg shadow-primary/30 transition hover:opacity-90"
           >
             Khám phá giải pháp
           </a>
@@ -207,7 +179,7 @@ export default function HomePage() {
       </section>
 
       <section className="bg-ink">
-        <div className="container">
+        <div className="container py-10">
           <div className="text-center">
             <p className="text-h6 mb-5 font-bold uppercase tracking-wide text-primary">
               V-Pharma
@@ -220,13 +192,14 @@ export default function HomePage() {
           <FeatureCard
             features={featureSection.featureCards}
             direction="left"
+            variant="dark"
           />
         </div>
           {/* CTA Button ngoài grid */}
           <div className="mt-10 w-full flex justify-center">
             <a
               href="/about-us"
-              className="group inline-flex items-center text-sub1 gap-2 rounded-full bg-white px-5 py-3 font-bold text-primary shadow-lg shadow-primary/30 transition hover:opacity-90"
+              className="mt-10 group inline-flex items-center text-sub1 rounded-full bg-white px-5 py-3 font-bold text-primary shadow-lg shadow-primary/30 transition hover:opacity-90"
             >
               Tìm hiểu về V-Pharma
             </a>
