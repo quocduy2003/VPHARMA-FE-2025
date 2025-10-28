@@ -18,16 +18,16 @@ export function SolutionsSubHeader() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-[72px] z-30 bg-ink text-white shadow-md">
-      <div className="container mx-auto flex items-center  px-4 py-4">
+    <header className="sticky top-[72px] z-30 bg-ink">
+      <div className="container mx-auto flex items-center py-3">
         <div className="flex items-center">
-          <p className="text-sub1 text-white font-semibold">
+          <p className="text-sub2 text-white font-bold">
             Phần mềm quản lý nhà thuốc
           </p>
           {/* Divider dọc */}
-          <span className="rounded-2xl mx-5  h-9 w-1 bg-white" />
+          <span className="rounded-2xl mx-3 h-8 w-1 bg-white" />
         </div>
-        <nav className="flex mx-3 items-center gap-6 text-sub2 flex-1">
+        <nav className="flex mx-3 items-center gap-6 font-bold text-sub2 flex-1">
           {subNavLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
@@ -35,8 +35,8 @@ export function SolutionsSubHeader() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "transition-colors mx-3 hover:text-white",
-                  isActive ? "font-bold text-white" : "text-white/70"
+                  "transition-colors mx-4 ",
+                  isActive ? "text-primary" : "text-white hover:text-blue-500"
                 )}
               >
                 {link.label}

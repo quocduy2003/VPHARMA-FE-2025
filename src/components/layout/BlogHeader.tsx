@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { FiHome, FiSearch, FiChevronDown } from "react-icons/fi";
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { FiHome, FiSearch, FiChevronDown, FiX } from "react-icons/fi";
 import { blogCategories } from "@/lib/api/blog";
 
 const cn = (...classes: string[]) => classes.filter(Boolean).join(" ");
@@ -11,53 +13,59 @@ const MAX_VISIBLE_CATEGORIES = 5;
 const visibleLinks = blogCategories.slice(0, MAX_VISIBLE_CATEGORIES);
 const dropdownLinks = blogCategories.slice(MAX_VISIBLE_CATEGORIES);
 
-const ebooksLink = { href: "/blog/ebook", label: "Ebooks" };
+const ebooksLink = { href: "/blog/ebooks", label: "Ebooks" };
 
 export function BlogHeader() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get("category");
-  console.log('categoryParam in header:', categoryParam);
+  console.log("categoryParam in header:", categoryParam);
   const activeCategory = categoryParam ?? "blog-home";
 
-  const isHomeActive = pathname.startsWith("/blog/blog-home") && !categoryParam;
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
+  const isHomeActive = pathname.startsWith("/blog/blog-home") && !categoryParam;
   const isLinkActive = (categorySlug: string) => activeCategory === categorySlug;
 
+  useEffect(() => {
+    if (isSearchOpen) {
+      setTimeout(() => {
+        searchInputRef.current?.focus();
+      }, 150);
+    }
+  }, [isSearchOpen]);
 
   return (
-    <header className="sticky top-[72px] z-30 bg-ink text-white shadow-md">
-      <div className="container mx-auto flex items-center justify-between py-4 px-4">
-        <div className="flex items-center gap-6">
-          {/* Nút Home */}
-          <Link href="/blog/blog-home" className="group flex items-center gap-2">
+    <header className="sticky top-[72px] z-30 bg-ink">
+      <div className="container mx-auto flex items-center justify-between py-3">
+        <div className="flex items-center">
+          <Link href="/blog/blog-home" className="group flex items-center ">
             <FiHome
               className={cn(
-                "h-8 w-8 p-1.5 transition-all duration-300",
-                "group-hover:text-white",
-                isHomeActive ? "text-white" : "text-white/70"
+                "h-8 w-8 transition-color duration-300",
+                isHomeActive ? "text-primary" : "text-white hover:text-blue-500"
               )}
             />
           </Link>
 
-          {/* Danh mục */}
-          <nav className="hidden items-center gap-5 text-sub2 font-medium md:flex">
+          <nav className="mx-4 hidden items-center gap-6 text-sub2 font-medium md:flex">
             {visibleLinks.map((link) => (
               <Link
                 key={link.id}
                 href={`/blog/blog-home?category=${link.slug}`}
                 className={cn(
-                  "transition-colors hover:text-white",
+                  "transition-colors mx-4",
                   isLinkActive(link.slug)
-                    ? "font-semibold text-white"
-                    : "text-white/70"
+                    ? "text-primary"
+                    : "text-white hover:text-blue-500"
                 )}
               >
                 {link.name}
               </Link>
             ))}
 
-            {/* Dropdown */}
+            {/* Dropdown (giữ nguyên) */}
             {dropdownLinks.length > 0 && (
               <div className="group relative">
                 <button className="flex items-center gap-1 text-white/70 transition-colors hover:text-white">
@@ -65,16 +73,16 @@ export function BlogHeader() {
                   <FiChevronDown className="text-base" />
                 </button>
                 <div className="absolute left-0 right-0 h-2 top-full" />
-                <div className="absolute left-0 top-full z-100 mt-2 hidden w-48 flex-col rounded-lg bg-white p-2 text-gray-800 shadow-lg group-hover:flex">
+                <div className="absolute left-0 top-full z-100 mt-2 hidden w-48 flex-col rounded-lg bg-white p-2 shadow-lg group-hover:flex">
                   {dropdownLinks.map((link) => (
                     <Link
                       key={link.id}
                       href={`/blog/blog-home?category=${link.slug}`}
                       className={cn(
-                        "rounded-md px-4 py-2 text-sm hover:bg-gray-100",
+                        "block w-full rounded-md px-4 py-2 text-sub2 font-medium transition-colors",
                         isLinkActive(link.slug)
-                          ? "font-semibold text-primary"
-                          : "text-gray-700"
+                          ? "text-primary"
+                          : "text-gray-800 hover:text-blue-500"
                       )}
                     >
                       {link.name}
@@ -84,15 +92,15 @@ export function BlogHeader() {
               </div>
             )}
 
-            {/* Ebooks */}
+            {/* Ebooks (giữ nguyên) */}
             <Link
               key={ebooksLink.label}
               href={ebooksLink.href}
               className={cn(
-                "transition-colors hover:text-white",
+                "transition-colors mx-4",
                 pathname === ebooksLink.href
-                  ? "font-semibold text-white"
-                  : "text-white/70"
+                  ? "text-primary"
+                  : "text-white hover:text-blue-500"
               )}
             >
               {ebooksLink.label}
@@ -100,20 +108,42 @@ export function BlogHeader() {
           </nav>
         </div>
 
-        {/* Ô tìm kiếm */}
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Bài viết..."
-            className="w-full rounded-full bg-white py-2 pl-4 pr-10 text-sm text-gray-800 focus:outline-none"
-          />
-          <button className="absolute inset-y-0 right-0 flex items-center justify-center rounded-full bg-blue-500 px-3">
-            <FiSearch className="h-5 w-5 text-white" />
+        <div className="flex items-center">
+          <AnimatePresence>
+            {isSearchOpen && (
+              <motion.input
+                ref={searchInputRef}
+                key="search-input"
+                type="text"
+                placeholder="Bài viết..."
+                initial={{ width: 0, opacity: 0, paddingLeft: 0, paddingRight: 0, marginRight: 0 }}
+                animate={{ width: "200px", opacity: 1, paddingLeft: "1rem", paddingRight: "1rem", marginRight: "0.5rem" }}
+                exit={{ width: 0, opacity: 0, paddingLeft: 0, paddingRight: 0, marginRight: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                // Kiểu dáng
+                className="rounded-full bg-white py-1 text-sm text-gray-800 focus:outline-none"
+              />
+            )}
+          </AnimatePresence>
+
+          {/* Nút bấm (Icon Search/Close) */}
+          <button
+            onClick={() => setIsSearchOpen(!isSearchOpen)} // Toggle
+            className="group flex items-center justify-center "
+            aria-label={isSearchOpen ? "Đóng tìm kiếm" : "Mở tìm kiếm"}
+          >
+            {isSearchOpen ? (
+              <FiX className="h-8 w-8 text-white/70 transition-colors group-hover:text-white"  />
+            ) : (
+              <FiSearch
+                className="h-8 w-8 text-white transition-colors group-hover:text-white"
+ 
+              />
+            )}
           </button>
         </div>
+
       </div>
     </header>
   );
 }
-
-

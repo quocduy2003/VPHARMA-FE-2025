@@ -88,15 +88,15 @@ export default function IndependentPharmacyPage() {
   return (
     <div>
       {/** Dashboard */}
-      <section className="bg-gradient-to-b from-blue-50 to-white py-20 text-center">
+      <section className="bg-blue-100 py-10 text-center">
         <div className="container mx-auto px-4 lg:px-80">
-          <h1 className="text-h1 font-bold text-ink">
+          <h1 className="mt-15">
             {heroSection.mainTitle}
           </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-h6">
+          <p className="mx-auto mb-10 max-w-2xl text-h6">
             {heroSection.mainDescription}
           </p>
-          <div className="mt-8 flex justify-center gap-4">
+          <div className="flex justify-center gap-4">
             {heroSection.ctaButtons.map((button, index) => (
               <Button
                 key={button.title}
@@ -120,11 +120,12 @@ export default function IndependentPharmacyPage() {
       </section>
 
       {/* 4 hero-section */}
-      <section className="container mx-auto grid grid-cols-1 gap-8 px-4 py-20 md:grid-cols-2 lg:grid-cols-4">
-        {featureSection.gridItems.map((item, index) => (
+      <section className="bg-gradient-to-b from-blue-100 to-white py-10">
+        <div className="container mx-auto grid grid-cols-1 gap-8 px-4  md:grid-cols-2 lg:grid-cols-4">
+          {featureSection.gridItems.map((item, index) => (
           <div
             key={index}
-            className="rounded-xl bg-white p-6 text-center shadow-lg"
+            className="group relative rounded-xl bg-white p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/40 "
           >
             <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
               <div className="h-6 w-6 rounded bg-primary"></div>
@@ -133,6 +134,8 @@ export default function IndependentPharmacyPage() {
             <p className="mt-2 text-sm text-sub1">{item.description}</p>
           </div>
         ))}
+        </div>
+        
       </section>
 
       {/* Features Section: Các Tính Năng Nổi Bật Của V-Pharma*/}
