@@ -30,7 +30,7 @@ export function Header() {
         </Link>
 
         {/* Main Nav */}
-        <nav className="hidden lg:flex items-center gap-6 text-sm font-medium text-sub2 text-black ">
+        <nav className="hidden lg:flex items-center gap-6 font-medium">
           {mainNavLinks.map((link) => {
             const pathToMatch = link.matchPath || link.href;
             const isActive =

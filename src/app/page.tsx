@@ -35,35 +35,35 @@ type Blog = {
 };
 
 // Dữ liệu động mẫu
-const REVIEWS: Review[] = [
-  {
-    id: 1,
-    name: "Chị Ngọc Anh",
-    role: "Nhà thuốc số 2",
-    avatar: "/avatar1.png",
-    comment:
-      "V-Pharma giúp tôi tối ưu hóa việc kiểm soát tồn kho và doanh thu hằng ngày rất hiệu quả.",
-    rating: 5,
-  },
-  {
-    id: 2,
-    name: "Anh Minh Tâm",
-    role: "Chuỗi thuốc Tâm An",
-    avatar: "/avatar2.png",
-    comment:
-      "Từ khi áp dụng hệ thống, việc quản lý chi nhánh trở nên dễ dàng hơn rất nhiều.",
-    rating: 5,
-  },
-  {
-    id: 3,
-    name: "Chị Hồng Nhung",
-    role: "Nhà thuốc Nhung Phát",
-    avatar: "/avatar3.png",
-    comment:
-      "Phần mềm thân thiện, đội ngũ hỗ trợ nhiệt tình, phản hồi nhanh chóng.",
-    rating: 5,
-  },
-];
+// const REVIEWS: Review[] = [
+//   {
+//     id: 1,
+//     name: "Chị Ngọc Anh",
+//     role: "Nhà thuốc số 2",
+//     avatar: "/avatar1.png",
+//     comment:
+//       "V-Pharma giúp tôi tối ưu hóa việc kiểm soát tồn kho và doanh thu hằng ngày rất hiệu quả.",
+//     rating: 5,
+//   },
+//   {
+//     id: 2,
+//     name: "Anh Minh Tâm",
+//     role: "Chuỗi thuốc Tâm An",
+//     avatar: "/avatar2.png",
+//     comment:
+//       "Từ khi áp dụng hệ thống, việc quản lý chi nhánh trở nên dễ dàng hơn rất nhiều.",
+//     rating: 5,
+//   },
+//   {
+//     id: 3,
+//     name: "Chị Hồng Nhung",
+//     role: "Nhà thuốc Nhung Phát",
+//     avatar: "/avatar3.png",
+//     comment:
+//       "Phần mềm thân thiện, đội ngũ hỗ trợ nhiệt tình, phản hồi nhanh chóng.",
+//     rating: 5,
+//   },
+// ];
 
 const BLOGS: Blog[] = [
   {
@@ -128,7 +128,7 @@ export default function HomePage() {
       >
         <div className="container h-full w-full flex items-center justify-center flex-col text-center">
           <h6 className="capitalize text-primary mb-10">{homePageData.eyebrow}</h6>
-          <h1 className="mx-auto max-w-5xl capitalize mb-10">{homePageData.title}</h1>
+          <h1 className="mx-auto max-w-5xl capitalize">{homePageData.title}</h1>
           <div className="flex items-center  justify-center ">
             <button className="btn font-bold ">Đăng Ký dùng thử</button>
           </div>
