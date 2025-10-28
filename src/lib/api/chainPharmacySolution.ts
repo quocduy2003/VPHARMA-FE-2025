@@ -37,6 +37,22 @@ const query = qs.stringify(
           ctaButton: true,
         },
       },
+      customerExperienceSection: {
+        populate: {
+          cards: {
+            populate: {
+              image: true,
+            },
+          },
+          ctaButton: true,
+        },
+      },
+      featureOverview: {
+        populate: {
+          ctaButton: true,
+          contentCards: true,
+        },
+      },
     },
   },
   { encodeValuesOnly: true }

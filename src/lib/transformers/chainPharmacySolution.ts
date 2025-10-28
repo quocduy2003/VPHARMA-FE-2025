@@ -9,6 +9,7 @@ export function transformChainPharmacyData(
   const pharmacyChainChallengesSection = data?.pharmacyChainChallengesSection;
   const featureBenefitsSection = data?.featureBenefitsSection;
   const operationsStandardizationSection = data?.operationsStandardization;
+  const customerExperienceSection = data?.customerExperienceSection;
   return {
     heroSection: {
       eyebrow: heroSection?.eyebrow || "V-Pharma Chain Pharmacy Solution",
@@ -55,6 +56,31 @@ export function transformChainPharmacyData(
         link: operationsStandardizationSection?.ctaButton?.link || null,
       }
     },
-
+    customerExperienceSection: {
+      eyebrow: customerExperienceSection.eyebrow || "Trải nghiệm khách hàng <<<<<<",
+      title: customerExperienceSection.title || "Nâng cao trải nghiệm khách hàng",
+      cards: customerExperienceSection.cards?.map((card: any) => ({
+        title: card?.title || "",
+        description: card?.description || "",
+        alt: card?.image?.alternativeText || "Customer Experience Card Image",
+        image: createImageUrl( card?.image.url),
+      })) || [],
+      ctaButton: {
+        title: customerExperienceSection.ctaButton?.title || "",
+        link: customerExperienceSection.ctaButton?.link || null,
+      }
+    },
+    featureOverview: {
+      eyebrow: data?.featureOverview?.eyebrow || "TỔNG QUAN TÍNH NĂNG",
+      title: data?.featureOverview?.title || "Tổng quan tính năng",
+      contentCards: data?.featureOverview?.contentCards?.map((content: any) => ({
+        title: content?.title || "",
+        description: content?.description || "",
+      })) || [],
+      ctaButton: {
+        title: data?.featureOverview?.ctaButton?.title || "",
+        link: data?.featureOverview?.ctaButton?.link || null,
+      }
+    },
   };
 }

@@ -39,12 +39,31 @@ interface OperationsStandardizationSection {
   contents: ContentCard [];
   ctaButton: CtaButton;
 }
+interface CustomerExperienceSection{
+  eyebrow: string;
+  title: string;
+  cards: {
+    title: string;
+    description: string;
+    image: string;
+    alt: string;
+  }[];
+  ctaButton: CtaButton;
+}
+interface FeatureOverview {
+  eyebrow: string;
+  title: string;
+  contentCards: Content[];
+  ctaButton: CtaButton;
+}
 
 export interface ChainPharmacyData {
   heroSection: HeroSection;
   pharmacyChainChallengesSection: PharmacyChainChallengesSection;
   featureBenefitsSection: FeatureBenefitsSection;
   operationsStandardizationSection: OperationsStandardizationSection;
+  customerExperienceSection: CustomerExperienceSection;
+  featureOverview: FeatureOverview;
 }
 
 // Types for other sections can be added here as needed

@@ -17,166 +17,8 @@ import { AccordionItem } from "@/components/ui/AccordionIteam";
 import FeatureCardTest from "@/components/ui/FeatureCardTest";
 
 //data section1
-const challengeCards = [
-  {
-    frontTitle: "Khó kiểm soát tài chính và giá bán",
-    backContent: {
-      title: "Khó kiểm soát tài chính và giá bán",
-      items: [
-        {
-          label: "Lỗ hổng giá bán không đồng đều:",
-          description:
-            "Mỗi chi nhánh tự định giá hoặc khuyến mại khác nhau dẫn đến tình trạng 'phá giá nội bộ'.",
-        },
-        {
-          label: "Thiếu dữ liệu phân tích:",
-          description:
-            "Không khán trong việc tổng hợp và đối chiếu báo cáo tài chính từ nhiều điểm bán.",
-        },
-        {
-          label: "Quản lý chi phí vận hành riêng lẻ:",
-          description:
-            "Các chi phí mặt bằng, nhân sự, điện nước ở mỗi chi nhánh được quản lý rời rạc, làm phức tạp việc kiểm soát ngân sách và xác định chi nhánh nào đang vận hành kém hiệu quả.",
-        },
-      ],
-    },
-  },
-  {
-    frontTitle: "Khó kiểm soát tài chính và giá bán",
-    backContent: {
-      title: "Khó kiểm soát tài chính và giá bán",
-      items: [
-        {
-          label: "Lỗ hổng giá bán không đồng đều:",
-          description:
-            "Mỗi chi nhánh tự định giá hoặc khuyến mại khác nhau dẫn đến tình trạng 'phá giá nội bộ'.",
-        },
-        {
-          label: "Thiếu dữ liệu phân tích:",
-          description:
-            "Không khán trong việc tổng hợp và đối chiếu báo cáo tài chính từ nhiều điểm bán.",
-        },
-        {
-          label: "Quản lý chi phí vận hành riêng lẻ:",
-          description:
-            "Các chi phí mặt bằng, nhân sự, điện nước ở mỗi chi nhánh được quản lý rời rạc, làm phức tạp việc kiểm soát ngân sách và xác định chi nhánh nào đang vận hành kém hiệu quả.",
-        },
-      ],
-    },
-  },
-  {
-    frontTitle: "Khó kiểm soát tài chính và giá bán",
-    backContent: {
-      title: "Khó kiểm soát tài chính và giá bán",
-      items: [
-        {
-          label: "Lỗ hổng giá bán không đồng đều:",
-          description:
-            "Mỗi chi nhánh tự định giá hoặc khuyến mại khác nhau dẫn đến tình trạng 'phá giá nội bộ'.",
-        },
-        {
-          label: "Thiếu dữ liệu phân tích:",
-          description:
-            "Không khán trong việc tổng hợp và đối chiếu báo cáo tài chính từ nhiều điểm bán.",
-        },
-        {
-          label: "Quản lý chi phí vận hành riêng lẻ:",
-          description:
-            "Các chi phí mặt bằng, nhân sự, điện nước ở mỗi chi nhánh được quản lý rời rạc.",
-        },
-      ],
-    },
-  },
-  {
-    frontTitle: "Khó kiểm soát tài chính và giá bán",
-    backContent: {
-      title: "Khó kiểm soát tài chính và giá bán",
-      items: [
-        {
-          label: "Lỗ hổng giá bán không đồng đều:",
-          description:
-            "Mỗi chi nhánh tự định giá hoặc khuyến mại khác nhau dẫn đến tình trạng 'phá giá nội bộ'.",
-        },
-        {
-          label: "Thiếu dữ liệu phân tích:",
-          description:
-            "Không khán trong việc tổng hợp và đối chiếu báo cáo tài chính từ nhiều điểm bán.",
-        },
-        {
-          label: "Quản lý chi phí vận hành riêng lẻ:",
-          description:
-            "Các chi phí mặt bằng, nhân sự, điện nước ở mỗi chi nhánh được quản lý rời rạc.",
-        },
-      ],
-    },
-  },
-  {
-    frontTitle: "Khó kiểm soát tài chính và giá bán",
-    backContent: {
-      title: "Khó kiểm soát tài chính và giá bán",
-      items: [
-        {
-          label: "Lỗ hổng giá bán không đồng đều:",
-          description:
-            "Mỗi chi nhánh tự định giá hoặc khuyến mại khác nhau dẫn đến tình trạng 'phá giá nội bộ'.",
-        },
-        {
-          label: "Thiếu dữ liệu phân tích:",
-          description:
-            "Không khán trong việc tổng hợp và đối chiếu báo cáo tài chính từ nhiều điểm bán.",
-        },
-        {
-          label: "Quản lý chi phí vận hành riêng lẻ:",
-          description:
-            "Các chi phí mặt bằng, nhân sự, điện nước ở mỗi chi nhánh được quản lý rời rạc.",
-        },
-      ],
-    },
-  },
-  {
-    frontTitle: "Khó kiểm soát tài chính và giá bán",
-    backContent: {
-      title: "Khó kiểm soát tài chính và giá bán",
-      items: [
-        {
-          label: "Lỗ hổng giá bán không đồng đều:",
-          description:
-            "Mỗi chi nhánh tự định giá hoặc khuyến mại khác nhau dẫn đến tình trạng 'phá giá nội bộ'.",
-        },
-        {
-          label: "Thiếu dữ liệu phân tích:",
-          description:
-            "Không khán trong việc tổng hợp và đối chiếu báo cáo tài chính từ nhiều điểm bán.",
-        },
-        {
-          label: "Quản lý chi phí vận hành riêng lẻ:",
-          description:
-            "Các chi phí mặt bằng, nhân sự, điện nước ở mỗi chi nhánh được quản lý rời rạc.",
-        },
-      ],
-    },
-  },
-];
 
-// Data section2
-const accordionItems = [
-  {
-    title: "Kho Tổng & Tồn kho Liên chi nhánh",
-    content:
-      "Xem tồn kho từng chi nhánh và tổng toàn bộ thống theo thời gian. Giúp quản lý vốn thực thời. Điều quản hiệu chuyển hàng liệu định thị trường hợp.",
-  },
-  {
-    title: "Luân chuyển & Tối ưu Hàng hóa",
-    content:
-      "Theo dõi vận chuyển hàng hóa giữa các chi nhánh một cách dễ dàng và minh bạch. Hệ thống tự động đề xuất tối ưu luân chuyển.",
-  },
-];
-interface AccordionItemProps {
-  title: string;
-  children: React.ReactNode;
-  isOpen: boolean;
-  onClick: () => void;
-}
+
 
 const maxCards = 6;
 // data section 4
@@ -353,8 +195,8 @@ function DashboardCarousel({
 export default function ChuoiNhaThuoc() {
   const [openAccordion, setOpenAccordion] = useState(0);
 
-  const { heroSection, pharmacyChainChallengesSection, featureBenefitsSection, operationsStandardizationSection } = chainPharmacyData;
-  console.log("operationsStandardizationSection", operationsStandardizationSection);
+  const { heroSection, pharmacyChainChallengesSection, featureBenefitsSection, operationsStandardizationSection, customerExperienceSection, featureOverview } = chainPharmacyData;
+  console.log("featureOverview", featureOverview);
 
   const [indexCustomer, setIndexCustomer] = useState(0);
   const cardsPerView = 3;
@@ -484,17 +326,17 @@ export default function ChuoiNhaThuoc() {
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-5xl text-center">
               <p className="mb-2 text-h6 font-bold uppercase tracking-wide text-primary">
-                {featureBenefitsSection.title}
+                {operationsStandardizationSection.eyebrow}
               </p>
               <h2 className="text-black">
-                {featureBenefitsSection.description}
+                {operationsStandardizationSection.title}
               </h2>
             </div>
-              <FeatureCardTest
-                features={operationsStandardizationSection.contents}
-                direction="left"
-                animation={true}
-              />
+            <FeatureCardTest
+              features={operationsStandardizationSection.contents}
+              direction="left"
+              animation={true}
+            />
           </div>
         </section>
       </FadeInOnScroll>
@@ -505,10 +347,10 @@ export default function ChuoiNhaThuoc() {
           <div className="container mx-auto px-4">
             <div className="mx-auto mb-12 max-w-5xl text-center">
               <p className="mb-2 text-h6 font-bold uppercase tracking-wide text-primary">
-                {operationsStandardizationSection.eyebrow}
+                {customerExperienceSection.eyebrow}
               </p>
               <h2 className="mb-4 text-black">
-                {operationsStandardizationSection.title}
+                {customerExperienceSection.title}
               </h2>
             </div>
 
@@ -521,7 +363,7 @@ export default function ChuoiNhaThuoc() {
                     transform: `translateX(-${indexCustomer * (100 / 3)}%)`,
                   }}
                 >
-                  {cards.map((card, idx) => (
+                  {customerExperienceSection.cards.map((card, idx) => (
                     <div
                       key={idx}
                       className="card-custom mx-4 min-w-[350px] max-w-[350px] flex-shrink-0 rounded-xl border border-gray-400 bg-white shadow-lg transition hover:shadow-xl"
@@ -532,7 +374,7 @@ export default function ChuoiNhaThuoc() {
                           {card.title}
                         </h3>
                         <p className="mb-4 text-sub2 text-black">
-                          {card.content}
+                          {card.description}
                         </p>
                         <div className="mt-2 rounded-lg py-6 px-4 flex flex-col items-center">
                           <Image
@@ -601,23 +443,29 @@ export default function ChuoiNhaThuoc() {
           <div className="container mx-auto px-4">
             <div className="mx-auto mb-12 max-w-5xl text-center">
               <p className="mb-2 text-h6 font-bold uppercase tracking-wide text-primary">
-                TĂNG TRẢI NGHIỆM KHÁCH HÀNG
+                {featureOverview.eyebrow}
               </p>
               <h2 className="mb-4 text-black">
-                Xây Dựng Hệ Thống Khách Hàng Thân Thiết
+                {featureOverview.title}
                 <br />
                 Chuyên Nghiệp
               </h2>
             </div>
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
-              {loyaltyCards.map((card) => (
+              {featureOverview.contentCards.map((card, index) => (
                 <div
-                  key={card.id}
+                  key={index}
                   className="group relative rounded-2xl p-8 text-left transition-all duration-300 cursor-pointer bg-white shadow-md hover:shadow-2xl hover:bg-ink"
                 >
                   <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-success/10 text-success transition-all duration-300 group-hover:bg-success group-hover:text-white">
-                    {card.icon}
+                    <Image
+                      src="/icon.svg"
+                      alt="chip icon"
+                      width={24}
+                      height={24}
+                      className="transition-all duration-300 group-hover:brightness-0 group-hover:invert"
+                    />
                   </div>
 
                   <h3 className="mb-3 text-black transition-colors duration-300 group-hover:text-white">
@@ -632,7 +480,7 @@ export default function ChuoiNhaThuoc() {
             </div>
             <div className="mt-12 text-center">
               <button className=" text-sub1 mt-8 rounded-full bg-primary px-8 py-3 font-bold text-white shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl">
-                Đăng ký dùng thử
+                {featureOverview.ctaButton.title}
               </button>
             </div>
           </div>
