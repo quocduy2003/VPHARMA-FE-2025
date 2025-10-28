@@ -20,7 +20,7 @@ export function transformChainPharmacyData(
         link: btn?.link || null,
       })) || [],
       alt: heroSection?.image?.alternativeText || "Hero Image",
-      image: createImageUrl( heroSection?.image.url),
+      image: createImageUrl( heroSection?.image?.url),
     },
     pharmacyChainChallengesSection: {
       title: pharmacyChainChallengesSection?.title || "Những thách thức mà chuỗi nhà thuốc đang đối mặt",
@@ -40,7 +40,7 @@ export function transformChainPharmacyData(
         description: content?.description || "",
       })) || [],
       alt: featureBenefitsSection?.image?.alternativeText || "Feature Benefits Image",
-      image: createImageUrl( featureBenefitsSection?.image.url),
+      image: createImageUrl( featureBenefitsSection?.image?.url),
     },
     operationsStandardizationSection: {
       eyebrow: operationsStandardizationSection?.eyebrow || "Tiêu chuẩn hóa vận hành",
@@ -49,7 +49,7 @@ export function transformChainPharmacyData(
         title: content?.title || "title",
         descriptionBlocks: content?.description  || [],
         alt: content?.image?.alternativeText || "Operation Standardization Image",
-        image: createImageUrl( content?.image.url),
+        image: createImageUrl( content?.image?.url),
       })) || [],
       ctaButton: {
         title: operationsStandardizationSection?.ctaButton?.title || "",
