@@ -221,7 +221,7 @@ export default function HoTro() {
       {/** Dashboard */}
       <section className="bg-gradient-to-b from-blue-100 to-white py-10 text-center">
         <div className="container ">
-          <h1 className="text-h1 font-bold text-black mt-10 mb-8">Liên Hệ Hỗ Trợ</h1>
+          <h1 className="mt-10">Liên Hệ Hỗ Trợ</h1>
           <p className="mx-auto text-h6 mb-15 max-w-3xl">
             Giải pháp toàn diện cho quản lý nhà thuốc, từ tồn kho đến bán hàng,
             với công nghệ hiện đại và dễ sử dụng.
@@ -235,8 +235,8 @@ export default function HoTro() {
           <div className="max-w-6xl mx-auto  grid grid-cols-1 md:grid-cols-2 gap-20">
             {/* Form Liên hệ */}
             <div>
-              <h2 className="text-black font-bold mb-8">Liên hệ với chúng tôi</h2>
-              <p className="mb-8 text-sub1">
+              <h2 className="text-black font-bold mb-5">Liên hệ với chúng tôi</h2>
+              <p className="mb-5 text-sub1">
                 Chúng tôi rất mong nhận được phản hồi từ bạn. Vui lòng điền vào mẫu này.
               </p>
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -482,8 +482,8 @@ export default function HoTro() {
 
             {/* Thông tin liên hệ + bản đồ */}
             <div>
-              <h2 className="text-black font-bold mb-8">Liên Hệ Trực Tiếp</h2>
-              <p className="mb-8 text-sub1">
+              <h2 className="text-black font-bold mb-5">Liên Hệ Trực Tiếp</h2>
+              <p className="mb-5 text-sub1">
                 Kết nối ngay với chúng tôi qua hotline, email, hoặc đến trực tiếp văn phòng tại địa chỉ bên dưới.
               </p>
 
@@ -589,7 +589,7 @@ export default function HoTro() {
       {/* --- SECTION PHẦN MỀM HỖ TRỢ  */}
       <section className="bg-white py-10">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-center mb-8">Phần Mềm Hỗ Trợ</h2>
+          <h2 className="text-center mb-5">Phần Mềm Hỗ Trợ</h2>
           <p className="text-center text-h6 text-colordescription max-w-3xl mx-auto mb-15">
             Để quá trình hỗ trợ diễn ra nhanh chóng, vui lòng cài đặt một trong
             các phần mềm dưới đây nếu được kỹ thuật viên yêu cầu.

@@ -41,7 +41,7 @@ export function Header() {
                 key={link.label}
                 href={link.href}
                 className={cn(
-                  "transition-all duration-200 px-3 py-1 rounded-full text-sub1",
+                  "transition-all duration-200 px-3 py-1 rounded-full text-sub1 text-colordescription",
                   isActive
                     ? "bg-blue-100 text-primary shadow-sm hover:bg-blue-100"
                     : "hover:text-primary"
@@ -55,20 +55,20 @@ export function Header() {
           {/* Dropdown */}
           <div className="group relative ">
             <button className="flex items-center gap-1 hover:text-primary">
-              <span className="text-sub1">Thêm</span>
+              <span className="text-sub1 text-colordescription">Thêm</span>
               <FiChevronDown className="text-base" />
             </button>
             <div className="absolute left-0 right-0 h-2 top-full" />
             <div className="absolute right-0 top-full z-10 mt-2 hidden w-48 flex-col rounded-lg bg-white p-2 shadow-lg group-hover:flex">
               <Link
                 href="/about-us"
-                className="rounded-md px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-primary"
+                className="text-sub1 rounded-md px-4 py-2 text-colordescription hover:bg-blue-50 hover:text-primary"
               >
                 Về V-Pharma
               </Link>
               <Link
                 href="/blog/blog-home"
-                className="rounded-md px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-primary"
+                className="text-sub1 rounded-md px-4 py-2 text-colordescription hover:bg-blue-50 hover:text-primary"
               >
                 Blog
               </Link>
@@ -78,10 +78,10 @@ export function Header() {
 
         {/* Auth Buttons */}
         <div className="hidden lg:flex items-center gap-2">
-          <button className="rounded-full border border-primary px-4 py-1 text-sub2 font-medium text-primary hover:bg-blue-100 transition">
+          <button className="rounded-full border border-primary px-4 py-1 text-sub2 font-bold text-primary hover:bg-blue-100 transition">
             Đăng nhập
           </button>
-          <button className="rounded-full bg-primary px-4 py-1 text-sub2 font-medium text-white hover:bg-primary/80 transition">
+          <button className="rounded-full border border-primary bg-primary px-4 py-1 text-sub2 font-bold text-white hover:bg-primary/70 transition">
             Đăng ký
           </button>
         </div>

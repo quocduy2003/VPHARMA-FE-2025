@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import FadeInOnScroll from "@/components/animations/FadeInOnScroll";
 import CTASection from "@/components/CTA";
@@ -13,22 +13,22 @@ const StorySection = ({
 }: {
   data: Extract<BlockItems, { __component: "about.story-section" }>;
 }) => (
-  <section className="bg-white py-20">
-    <div className="container mx-auto px-4">
+  <section className="bg-white py-10">
+    <div className="container ">
       <div className="rounded-2xl bg-ink p-8 text-white shadow-xl md:p-12 lg:p-16">
-        <div className="mb-12 text-center">
-          <p className="mb-4 text-h6 font-bold uppercase tracking-wide text-primary">
+        <div className=" text-center">
+          <p className="mb-5 text-h6 font-bold uppercase tracking-wide text-primary">
             {data.eyebrow}
           </p>
-          <h2 className="mb-8 text-white">{data.title}</h2>
-          <p className="mx-auto max-w-6xl text-h6 leading-relaxed text-white">
+          <h2 className="mb-5 text-white">{data.title}</h2>
+          <p className="mx-auto max-w-6xl text-h6 leading-relaxed text-white mb-10">
             {data.description}
           </p>
         </div>
         <div className="container grid gap-8 md:grid-cols-2 md:gap-12 lg:gap-16">
           {data.items.map((item, index) => (
             <div key={index} className="text-left">
-              <div className="relative mb-6">
+              <div className="relative mb-5">
                 <div className="absolute left-0 top-0 h-full w-1 bg-primary" />
                 <h3 className="pl-6 text-h4 font-bold text-primary">
                   {item.title}
@@ -51,19 +51,19 @@ const ValuesSection = ({
 }: {
   data: Extract<BlockItems, { __component: "about.values-section" }>;
 }) => (
-  <section className="bg-gradient-to-b from-white to-cyan-50 py-20">
+  <section className="bg-gradient-to-b from-white to-cyan-50 py-10">
     <div className="container mx-auto px-4">
       <div className="text-center">
-        <p className="mb-4 text-h6 font-bold uppercase tracking-wide text-primary">
+        <p className="mb-5 text-h6 font-bold uppercase tracking-wide text-primary">
           {data.eyebrow}
         </p>
-        <h2 className="mb-12 text-black">{data.title}</h2>
+        <h2 className="mb-15 text-black">{data.title}</h2>
       </div>
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-9 md:grid-cols-2 lg:grid-cols-3 px-4">
         {data.cards.map((card, index) => (
           <div
             key={index}
-            className="group cursor-pointer rounded-2xl border border-gray-200/80 bg-white p-8 text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/20"
+            className="group cursor-pointer rounded-2xl border border-black/20 bg-white p-8 text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/40"
           >
             <Image
               src={card.image}
@@ -81,7 +81,6 @@ const ValuesSection = ({
   </section>
 );
 
-// Hàm render cho phần "Đội ngũ"
 const FounderSection = ({
   data,
   currentIndex,
@@ -93,31 +92,51 @@ const FounderSection = ({
   handleNext: () => void;
   handlePrev: () => void;
 }) => {
-  // Nếu không có founders hoặc founders không phải là mảng => fallback rỗng
   const founders = Array.isArray(data?.founders) ? data.founders : [];
-
   const totalMembers = founders.length;
 
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // MỚI: Logic cho Autoplay
+  const startAutoplay = () => {
+    // Chỉ chạy nếu có nhiều hơn 1 thành viên
+    if (totalMembers > 1) {
+      // Xóa interval cũ (nếu có) trước khi tạo cái mới
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+      intervalRef.current = setInterval(() => {
+        handleNext(); // Tự động chuyển sang slide tiếp theo
+      }, 2000); // 3 giây
+    }
+  };
+
+  const stopAutoplay = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+  };
+
+  useEffect(() => {
+    startAutoplay();
+    return () => {
+      stopAutoplay();
+    };
+    // Thêm handleNext vào dependency array để đảm bảo nó luôn là hàm mới nhất
+    // (Quan trọng nếu hàm handleNext trong component cha không được bọc bằng useCallback)
+  }, [handleNext, totalMembers]); // Chạy lại nếu các hàm này thay đổi
+
+  // ... (phần code fallback khi không có founder giữ nguyên) ...
   if (totalMembers === 0) {
     return (
-      <section className="bg-gradient-to-b from-cyan-50 to-white py-20">
+      <section className="bg-gradient-to-b from-cyan-50 to-white py-10">
         <div className="container mx-auto px-4 text-center">
-          <p className="mb-4 text-h6 font-bold uppercase tracking-wide text-primary">
-            {data.eyebrow}
-          </p>
-          <h2 className="mb-4 text-black">{data.title}</h2>
-          <p className="mx-auto max-w-3xl text-h6">{data.description}</p>
-          <p className="text-sub1 text-gray-500">
-            Hiện chưa có thông tin thành viên sáng lập để hiển thị.
-          </p>
         </div>
       </section>
     );
   }
-
-  // Tính vị trí card
   const getCardPosition = (
-    index: number
+    index: number,
   ): "center" | "left" | "right" | "hidden" => {
     if (index === currentIndex) return "center";
     const prevIndex = (currentIndex - 1 + totalMembers) % totalMembers;
@@ -128,87 +147,94 @@ const FounderSection = ({
   };
 
   return (
-    <section className="h-screen bg-gradient-to-b from-cyan-50 to-white py-20 overflow-hidden">
-        <div className="container mx-auto px-4">
-          <div className="mb-20 text-center">
-            <p className="mb-4 text-h6 font-bold uppercase tracking-wide text-primary">
-              {data?.eyebrow || ""}
-            </p>
-            <h2 className="mb-4 text-black">{data?.title || ""}</h2>
-            <p className="mx-auto max-w-3xl text-h6">
-              {data?.description || ""}
-            </p>
-          </div>
+    <section className=" bg-gradient-to-b from-cyan-50 to-white py-10 overflow-hidden">
+      <div className="container">
+        {/* === 1. KHỐI HEADER (Giữ nguyên) === */}
+        <div className="text-center">
+          <p className="mb-5 text-h6 font-bold uppercase tracking-wide text-primary">
+            {data?.eyebrow || ""}
+          </p>
+          <h2 className="mb-5 text-black">{data?.title || ""}</h2>
+          <p className="mx-auto max-w-3xl text-h6 mb-15">
+            {data?.description || ""}
+          </p>
+        </div>
 
-          <div className="relative h-96">
-            <div className="relative flex h-full items-center justify-center">
-              {founders.map((founder, index) => {
-                const position = getCardPosition(index);
-                let classes = "transition-all duration-500 ease-in-out";
-                let infoClasses = "transition-opacity duration-300 delay-200";
+        <div
+          className="relative"
+          onMouseEnter={stopAutoplay}
+          onMouseLeave={startAutoplay}
+        >
+          {/* 2a. "Sân khấu" (Stage) */}
+          <div className="mb-10 relative flex h-120 items-center justify-center overflow-hidden">
+            {founders.map((founder, index) => {
+              const position = getCardPosition(index);
 
-                switch (position) {
-                  case "center":
-                    classes += " z-10 scale-[1.6]";
-                    infoClasses += " opacity-100";
-                    break;
-                  case "left":
-                    classes += " z-0 scale-90 -translate-x-[150%] opacity-60";
-                    infoClasses += " opacity-0";
-                    break;
-                  case "right":
-                    classes += " z-0 scale-90 translate-x-[150%] opacity-60";
-                    infoClasses += " opacity-0";
-                    break;
-                  default:
-                    classes += " z-0 scale-0 opacity-0";
-                    infoClasses += " opacity-0";
-                    break;
-                }
+              let classes = "transition-all duration-500 ease-in-out";
+              let infoClasses = "transition-opacity duration-300 delay-200";
 
-                return (
-                  <div
-                    key={index}
-                    className={`absolute flex w-64 flex-col items-center text-center ${classes}`}
-                  >
-                    <Image
-                      src={founder.photo || "/placeholder.jpg"}
-                      alt={founder.name || "Thành viên"}
-                      width={200}
-                      height={200}
-                      className="h-52 w-52 rounded-full object-cover shadow-lg"
-                    />
-                    <div className={infoClasses}>
-                      <h3 className="mt-6 text-h4 font-bold">
-                        {founder.name || "Không rõ tên"}
-                      </h3>
-                      <p className="mt-2 text-sub1 text-primary">
-                        {founder.role || ""}
-                      </p>
-                    </div>
+              switch (position) {
+                case "center":
+                  classes += " z-10 scale-[1.6]"; // Giữ nguyên scale 1.6 cho card
+                  // SỬA: Thêm scale-0.625 để "hủy" phóng to cho khối text
+                  infoClasses += " opacity-100 scale-[0.625]"; 
+                  break;
+                case "left":
+                  classes += " z-0 scale-90 -translate-x-[150%] opacity-60";
+                  infoClasses += " opacity-0";
+                  break;
+                case "right":
+                  classes += " z-0 scale-90 translate-x-[150%] opacity-60";
+                  infoClasses += " opacity-0";
+                  break;
+                default:
+                  classes += " z-0 scale-0 opacity-0";
+                  infoClasses += " opacity-0";
+                  break;
+              }
+
+              return (
+                <div
+                  key={index}
+                  className={`absolute flex w-64 flex-col items-center text-center ${classes}`}
+                >
+                  <Image
+                    src={founder.photo || "/placeholder.jpg"}
+                    alt={founder.name || "Thành viên"}
+                    width={200}
+                    height={200}
+                    className="h-52 w-52 rounded-full object-cover shadow-lg"
+                  />
+                  <div className={infoClasses}>
+                    <h3 className="mt-6 text-h4 font-bold">
+                      {founder.name || "Không rõ tên"}
+                    </h3>
+                    <p className="mt-2 text-sub1 text-primary">
+                      {founder.role || ""}
+                    </p>
                   </div>
-                );
-              })}
-            </div>
-
-            <div className="mt-15 flex justify-center gap-4">
-              <button
-                onClick={handlePrev}
-                className="rounded-full bg-blue-100 p-3 text-primary shadow-lg transition hover:bg-primary hover:text-white hover:scale-110"
-                aria-label="Thành viên trước"
-              >
-                <FiArrowLeft size={24} />
-              </button>
-              <button
-                onClick={handleNext}
-                className="rounded-full bg-blue-100 p-3 text-primary shadow-lg transition hover:bg-primary hover:text-white hover:scale-110"
-                aria-label="Thành viên kế tiếp"
-              >
-                <FiArrowRight size={24} />
-              </button>
-            </div>
+                </div>
+              );
+            })}
+          </div>
+          <div className=" flex justify-center gap-4">
+            <button
+              onClick={handlePrev}
+              className="rounded-full bg-blue-100 p-3 text-primary shadow-lg transition hover:bg-primary hover:text-white hover:scale-110"
+              aria-label="Thành viên trước"
+            >
+              <FiArrowLeft size={24} />
+            </button>
+            <button
+              onClick={handleNext}
+              className="rounded-full bg-blue-100 p-3 text-primary shadow-lg transition hover:bg-primary hover:text-white hover:scale-110"
+              aria-label="Thành viên kế tiếp"
+            >
+              <FiArrowRight size={24} />
+            </button>
           </div>
         </div>
+      </div>
     </section>
   );
 };
@@ -259,11 +285,11 @@ export default function AboutUsPage() {
         <FadeInOnScroll>
           <div className="h-screen flex items-center mt-5 mx-auto max-w-6xl text-center">
             <div className="container">
-              <p className="mb-4 text-h6 font-bold uppercase tracking-wide text-primary">
+              <p className="mb-5 text-h6 font-bold uppercase tracking-wide text-primary">
                 {aboutUsData.eyebrow}
               </p>
-              <h1 className="text-black">{aboutUsData.title}</h1>
-              <p className="mx-auto mt-4 max-w-8xl text-h6">
+              <h1 >{aboutUsData.title}</h1>
+              <p className="mx-auto max-w-6xl text-h6">
                 {aboutUsData.description}
               </p>
             </div>
