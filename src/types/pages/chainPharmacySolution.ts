@@ -56,5 +56,6 @@ export interface ChallengeCardProp {
 export interface FeatureCardProps {
   features: ContentCard[];
   direction?: "left" | "right";
+  variant?: "light" | "dark";
   animation?: boolean;
 }
