@@ -2,8 +2,7 @@ export interface BlogCategory {
   id: number;
   name: string;
   slug: string;
-}
-[];
+}[];
 
 export interface BlogCard {
   title: string;
@@ -14,7 +13,7 @@ export interface BlogCard {
   };
   category: BlogCategory;
   slug: string;
-  createdAt?: string;
+  createdAt: string;
 }
 
 export interface BlogPost {
@@ -55,7 +54,6 @@ export interface BlogResponse {
 
 export interface BlogCardData {
   posts: BlogCard;
-
 }
 
 export interface BlogData {

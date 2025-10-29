@@ -77,6 +77,7 @@ export async function getBlogPosts(
 export async function getBlogLastest(
   categorySlug?: string
 ): Promise<BlogCardData> {
+  console.log("Fetching latest blog for category:", categorySlug);
   const filters =
     categorySlug && categorySlug !== "home"
       ? {

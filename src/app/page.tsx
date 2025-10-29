@@ -2,80 +2,52 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { homePageData } from "@/lib/api/home";
 import ReviewCarousel from "@/components/ReviewCarousel";
 import Link from "next/link";
-import { blogPosts } from "@/data/blogData";
+
 import { FiArrowRight } from "react-icons/fi";
 import FeatureCard from "@/components/ui/FeatureCard";
 import { Button } from "@/components/ui/CTAButton";
-
-type Blog = {
-  id: number;
-  title: string;
-  date: string;
-  image: string;
-  category: string;
-  desc: string;
-};
+import { getBlogPosts } from "@/lib/api/blog";
+import { BlogCard } from "@/types";
+import {
+  transformBlogListData,
+} from "@/lib/transformers/blog";
 
 
-const BLOGS: Blog[] = [
-  {
-    id: 1,
-    title:
-      "Xây dựng quy trình chuẩn hóa cho các hoạt động bán lẻ sản phẩm chăm sóc sức khỏe",
-    date: "29/04/2023",
-    image: "/blog1.png",
-    category: "Kinh nghiệm kinh doanh",
-    desc: "Xây dựng quy trình chuẩn giúp các nhà thuốc vận hành đồng bộ, tiết kiệm chi phí và tối ưu doanh thu.",
-  },
-  {
-    id: 2,
-    title: "Chuyển đổi số trong ngành Dược – Xu hướng tất yếu của thời đại",
-    date: "30/04/2023",
-    image: "/blog2.png",
-    category: "Chuyển đổi số",
-    desc: "Ứng dụng công nghệ giúp quản lý chuỗi nhà thuốc hiệu quả và nâng cao trải nghiệm khách hàng.",
-  },
-  {
-    id: 3,
-    title: "Quản lý tồn kho tối ưu nhờ công nghệ thông minh",
-    date: "01/05/2023",
-    image: "/blog3.png",
-    category: "Quản lý bán hàng",
-    desc: "Giải pháp giúp các chủ nhà thuốc giảm thất thoát hàng tồn và tăng hiệu quả kinh doanh.",
-  },
-];
 export default function HomePage() {
-  const [selectedCategory, setSelectedCategory] = useState(
-    "Kinh nghiệm kinh doanh"
-  );
 
-  const filteredBlogs = BLOGS.filter((b) => b.category === selectedCategory);
   const {
     solutionSection,
     experienceSection,
     testimonialSection,
     featureSection,
+    blogSection,
   } = homePageData;
-  console.log("homepage", homePageData);
 
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const allCategories = [
-    "Tất cả",
-    "Kinh nghiệm kinh doanh",
-    "Chuyển đổi số",
-    "Quản lý kho",
-  ];
+
   const [activeCategory, setActiveCategory] = useState("Tất cả");
+  const [blogPosts, setBlogPosts] = useState<BlogCard[] | null>(null);
+  const currentPage = 0;
+  const pageSize = 3;
+  useEffect(() => {
+    async function fetchBlogPosts() {
+      try {
+        const categorySlug = activeCategory === "Tất cả" ? "home" : activeCategory.toLowerCase().replace(/\s/g, "-");
+        const response = await getBlogPosts(categorySlug, currentPage, pageSize);
+        console.log('response', response);
+        const transformedPosts = transformBlogListData(response);
+        setBlogPosts(transformedPosts);
+      } catch (error) {
+        console.error("Error fetching blog posts:", error);
+      }
+    }
 
-  const filteredPosts = (
-    activeCategory === "Tất cả"
-      ? blogPosts
-      : blogPosts.filter((post) => post.categories.includes(activeCategory))
-  ).slice(0, 3);
+    fetchBlogPosts();
+  }, [activeCategory]);
+
   return (
     <>
       <section
@@ -92,6 +64,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
 
       <section className="py-10">
         <div className="container bg-ink rounded-2xl p-10">
@@ -157,34 +130,117 @@ export default function HomePage() {
         <div className="mt-8 w-full text-center">
           <a
             href="/giai-phap/tong-quan"
-            className="group inline-flex items-center text-sub1 gap-2 rounded-full bg-primary px-5 py-3 font-bold text-white shadow-lg shadow-primary/30 transition hover:opacity-90"
+            className="mt-10 group inline-flex items-center text-sub2 rounded-full bg-primary px-5 py-3 font-bold text-white shadow-lg shadow-primary/30 transition hover:opacity-90"
           >
             Khám phá giải pháp
           </a>
         </div>
       </section>
 
-      <section className="bg-ink">
-        <div className="container">
+      <section className="relative overflow-hidden bg-ink">
+        <div className="container mx-auto">
+          {/* Eyebrow và title */}
           <div className="text-center">
             <p className="text-h6 mb-5 font-bold uppercase tracking-wide text-primary">
-              V-Pharma
+              {experienceSection.eyebrow}
             </p>
             <h2 className="mb-15 text-white">
-              Thiết Kế Riêng Biệt Cho Ngành Dược
+              {experienceSection.title}
             </h2>
           </div>
-          <div className="mt-10 space-y-16">
-            <FeatureCard
-              features={featureSection.featureCards}
-              direction="left"
-            />
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-12 xl:gap-20 items-start max-w-5xl mx-auto">
+            {/* Features bên trái */}
+            <div>
+              <ul className="space-y-8">
+                {experienceSection.contents.map((item, i) => (
+                  <li
+                    key={i}
+                    className="group flex items-start gap-4 rounded-xl p-5 transition-all duration-200
+      bg-ink hover:bg-white hover:shadow-xl
+      border border-transparent hover:border-sky-100
+      max-w-3xl mx-auto "
+                  >
+                    <span
+                      className="inline-flex size-10 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 ring-1 ring-emerald-200 
+          transition-all duration-200 group-hover:bg-emerald-200 group-hover:scale-105 aspect-square"
+                      aria-label="Feature icon"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        className="h-4 w-4 md:h-5 md:w-5"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        <path d="M12 6v12M6 12h12" />
+                      </svg>
+                    </span>
+                    <div>
+                      <h3 className="font-bold text-h6 text-white group-hover:text-black">
+                        {item.title}
+                      </h3>
+                      <p className="mt-1 text-sub2 leading-6 text-white group-hover:text-colordescription">
+                        {item.description}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+
+            </div>
+            {/* Chart bên phải */}
+
+
+
+
+            {/* Chỉnh lại cái này còn một ảnh */}
+
+
+
+
+
+            <div className="relative min-h-[340px] flex items-center justify-center">
+              {/* Nền lót phía sau (background block) */}
+              <div
+                className="absolute left-[55px] top-[55px] w-[300px] h-[230px] rounded-lg bg-white/30"
+                style={{ zIndex: 1 }}
+              ></div>
+              {/* Card lớn phía trên */}
+              <div
+                className="absolute left-[110px] top-[0px] bg-white rounded-xl shadow-lg w-[295px] p-5"
+                style={{ zIndex: 2 }}
+              >
+                {/* <div className="flex justify-between items-center mb-3">
+                  <span className="font-semibold text-gray-800">
+                    Total Balance
+                  </span>
+                  <span className="font-bold text-gray-900">$4,200</span>
+                </div>
+                <div className="font-medium text-green-500 mb-3">+14%</div> */}
+                <img
+                  src="/chart.png"
+                  alt="Total Balance Chart"
+                  className="w-full h-60 object-contain"
+                />
+              </div>
+              {/* Card nhỏ ở dưới trái */}
+              <div
+                className="absolute left-[0px] bottom-[0px] bg-gray-500 rounded-xl shadow-lg w-[195px] p-5"
+                style={{ zIndex: 3 }}
+              >
+                <img
+                  src="/chart.png"
+                  alt="Total Balance Mini Chart"
+                  className="w-full h-20 object-contain"
+                />
+              </div>
+            </div>
           </div>
           {/* CTA Button ngoài grid */}
           <div className="mt-10 w-full flex justify-center">
             <a
               href="/about-us"
-              className="group inline-flex items-center text-sub1 gap-2 rounded-full bg-white px-5 py-3 font-bold text-primary shadow-lg shadow-primary/30 transition hover:opacity-90"
+              className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-2.5 font-bold text-sky-700 border border-sky-200 shadow transition hover:bg-primary hover:text-white hover:border-transparent"
             >
               Tìm hiểu về V-Pharma
             </a>
@@ -201,79 +257,95 @@ export default function HomePage() {
           {/* Header (Centered) */}
           <div className="text-center">
             <h2 className="mb-15 text-black">
-              Cập Nhật Kiến Thức Cùng V-Pharma
+              {blogSection.title}
             </h2>
           </div>
 
           <div className="mt-8 flex flex-col items-center justify-between gap-4 md:flex-row">
-            {/* Tabs (Left-aligned) */}
+            {/* Tabs */}
             <div className="flex flex-wrap justify-center gap-6 md:justify-start">
-              {allCategories.map((category) => (
+              <button
+                key="all"
+                onClick={() => setActiveCategory("Tất cả")}
+                className={`rounded-full px-4 py-2 text-sub2 font-semibold border border-gray transition-colors ${activeCategory === "Tất cả"
+                  ? "bg-primary text-white shadow-md"
+                  : "bg-white text-black hover:bg-slate-100"
+                  }`}
+              >
+                Tất cả
+              </button>
+              {blogSection.blogCategories.map((category) => (
                 <button
-                  key={category}
-                  onClick={() => setActiveCategory(category)}
-                  className={`rounded-full px-4 py-2 text-sub2 font-semibold border border-gray transition-colors ${activeCategory === category
-                      ? "bg-primary  text-white shadow-md"
-                      : "bg-white text-black hover:bg-slate-100"
+                  key={category.slug}
+                  onClick={() => setActiveCategory(category.name)}
+                  className={`rounded-full px-4 py-2 text-sub2 font-semibold border border-gray transition-colors ${activeCategory === category.name
+                    ? "bg-primary text-white shadow-md"
+                    : "bg-white text-black hover:bg-slate-100"
                     }`}
                 >
-                  {category}
+                  {category.name}
                 </button>
               ))}
             </div>
 
-            {/* View All Link (Right-aligned) */}
+            {/* View All Link */}
             <Link
               href="/blog/blog-home"
               className="inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-sub2 font-bold text-primary transition-colors hover:bg-sky-100"
             >
-              Xem tất cả bài viết
+              {blogSection.ctaButton.title}
               <FiArrowRight className="h-5 w-5" />
             </Link>
           </div>
 
-          {/* Post Grid (No Change) */}
+          {/* Post Grid */}
           <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filteredPosts.map((post) => (
-              <article
-                key={post.title}
-                className="group flex flex-col overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
-              >
-                <Link
-                  href={`/blog/${post.categories.slug}/${post.slug}`}
-                  className="block overflow-hidden"
+            {blogPosts && blogPosts.length > 0 ? (
+              blogPosts.map((post, index) => (
+                <article
+                  key={index}
+                  className="group flex flex-col overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
                 >
-                  <Image
-                    src={post.imageTitle}
-                    alt={post.title}
-                    width={400}
-                    height={250}
-                    className="h-56 w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                  <div className="flex flex-1 flex-col p-5">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium text-primary">
-                        {post.categories[0]}
-                      </span>
-                      <span className="text-sm text-slate-500">·</span>
-                      <span className="text-sm text-colordescription ">
-                        {new Date(post.date).toLocaleDateString("vi-VN")}
-                      </span>
-                    </div>
+                  <Link
+                    href={`/blog/${post.category.slug}/${post.slug}`}
+                    className="block overflow-hidden"
+                  >
+                    <Image
+                      src={post.coverImage?.url || "/default-image.png"}
+                      alt={post.title}
+                      width={400}
+                      height={250}
+                      className="h-56 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                    <div className="flex flex-1 flex-col p-5">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-primary">
+                          {post.category.name}
+                        </span>
+                        <span className="text-sm text-slate-500">·</span>
+                        <span className="text-sm text-colordescription">
+                          {new Date(post.createdAt).toLocaleDateString("vi-VN")}
+                        </span>
+                      </div>
 
-                    <h3 className="mt-3 text-sub2 font-bold text-colordescription transition-colors group-hover:text-primary">
-                      {post.title}
-                    </h3>
-                    <p className="mt-2 line-clamp-2 flex-1 text-body2 text-colordescription">
-                      {post.description}
-                    </p>
-                  </div>
-                </Link>
-              </article>
-            ))}
+                      <h3 className="mt-3 text-sub2 font-bold text-colordescription transition-colors group-hover:text-primary">
+                        {post.title}
+                      </h3>
+                      <p className="mt-2 line-clamp-2 flex-1 text-body2 text-colordescription">
+                        {post.description}
+                      </p>
+                    </div>
+                  </Link>
+                </article>
+              ))
+            ) : (
+              <p>Không có bài viết nào.</p>
+            )}
           </div>
+
         </div>
       </section>
+
     </>
   );
 }

@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react"; // 1. Import thêm useEffect
 import Image from "next/image";
-import { Card } from "@/types";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 
 interface PharmacyCarouselProps {

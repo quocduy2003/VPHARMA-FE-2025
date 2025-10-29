@@ -188,7 +188,7 @@ export default function ChuoiNhaThuoc() {
               {heroSection.eyebrow}
             </p>
             <h1 className="mb-6">{heroSection.title}</h1>
-            <p className="mb-8 text-h6">{heroSection.description}</p>
+            <p className="mb-8 text-h6 text-black">{heroSection.description}</p>
             <div className="mt-8 flex gap-4 ">
               {heroSection.ctaButtons.map((button, index) => (
                 <Button

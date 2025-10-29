@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
-import { FeatureCardProps } from "@/types";
+import { ChainFeatureCardProps } from "@/types";
 import { RichTextRenderer } from "./RichTextRenderer";
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 function useInView(ref: React.RefObject<HTMLElement>, threshold = 0.2) {
     const [inView, setInView] = useState(false);
 
@@ -31,7 +31,7 @@ export default function FeatureCardTest({
     direction = "right",
     theme = "light",
     animation = false,
-}: FeatureCardProps) {
+}: ChainFeatureCardProps) {
     const [activeIndex, setActiveIndex] = useState<number>(0);
     const [progress, setProgress] = useState<number>(0); // percent chạy của mỗi segment
     const [hasPlayed, setHasPlayed] = useState(false);

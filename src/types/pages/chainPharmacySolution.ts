@@ -97,9 +97,10 @@ export interface ChallengeCardProp {
   challengeCard: ContentCard;
 }
 
-export interface FeatureCardProps {
+export interface ChainFeatureCardProps {
   features: ContentCard[];
   direction?: "left" | "right";
   theme?: "light" | "dark";
+  variant?: "light" | "dark";
   animation?: boolean;
 }

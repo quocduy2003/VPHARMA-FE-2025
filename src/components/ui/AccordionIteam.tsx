@@ -1,6 +1,6 @@
 
 import { FiMinus, FiPlus } from "react-icons/fi";
-import { motion, AnimatePresence } from "framer-motion";
+
 
 export type AccordionItemData = {
   id?: string;

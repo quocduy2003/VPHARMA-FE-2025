@@ -9,6 +9,7 @@ export function transformHomePageData(response: any): HomePageData {
   const featureSection = data?.featureSection;
   const experienceSection = data?.experienceSection;
   const testimonialSection = data?.testimonialSection;
+  const blogSection = data?.blogSection;
   return {
     eyebrow: data?.eyebrow || "Chuyển đổi số - Xu hướng tất yếu của ngành dược",
     title:
@@ -79,6 +80,17 @@ export function transformHomePageData(response: any): HomePageData {
             alt: testimonial.avatar?.alternativeText ?? "Avatar",
           },
         })) || [],
+    },
+    blogSection: {
+      title: blogSection?.title || "Cập nhật tin tức và kiến thức ngành dược",
+      ctaButton: {
+        title: blogSection?.ctaButton?.title || "Xem tất cả bài viết",
+        link: blogSection?.ctaButton?.link || "#",
+      },
+      blogCategories: blogSection?.blog_categories?.map((category: any) => ({
+        name: category?.name || "Danh mục",
+        slug: category?.slug || "danh-muc",
+      })) || [],  
     },
   };
 }

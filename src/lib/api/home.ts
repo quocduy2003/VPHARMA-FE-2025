@@ -3,7 +3,6 @@ import qs from "qs";
 import { HomePageData } from "@/types";
 import { transformHomePageData } from "@/lib/transformers/home";
 
-
 const query = qs.stringify(
   {
     populate: {
@@ -39,6 +38,14 @@ const query = qs.stringify(
             populate: {
               avatar: true,
             },
+          },
+        },
+      },
+      blogSection: {
+        populate: {
+          ctaButton: true,
+          blog_categories: {
+            populate: "*",
           },
         },
       },

@@ -16,17 +16,17 @@ import {
   transformBlogListData,
   transformBlogCardData,
 } from "@/lib/transformers/blog";
-import { BlogCardData } from "@/types";
+import { BlogCard, BlogCardData } from "@/types";
 
 export default function BlogHomePage() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get("category");
-  
+
   const activeCategory = categoryParam || "home";
 
   const [mainBlog, setMainBlog] = useState<BlogCardData | null>(null);
-  const [blogList, setBlogList] = useState<BlogCardData[]>([]);
+  const [blogList, setBlogList] = useState<BlogCard[]>([]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 6;
@@ -34,7 +34,7 @@ export default function BlogHomePage() {
 
   // Lấy bài viết chính (luôn là bài mới nhất của chủ đề)
   useEffect(() => {
-    const category = activeCategory === "home" ? undefined : activeCategory;
+    const category = activeCategory === "home" ? "home" : activeCategory;
     async function fetchLatestBlog() {
       const data = await getBlogLastest(category);
       const transformedData = transformBlogCardData(data);
@@ -45,7 +45,7 @@ export default function BlogHomePage() {
   }, [activeCategory]);
 
   useEffect(() => {
-    const category = activeCategory === "home" ? undefined : activeCategory;
+    const category = activeCategory === "home" ? "home" : activeCategory;
 
     async function fetchData() {
       const data = await getBlogPosts(category, currentPage, postsPerPage);
@@ -126,7 +126,7 @@ export default function BlogHomePage() {
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {blogList && blogList.length ? (
               blogList.map((post, index) => (
-                <BlogPostCard key={index} post={post.posts} />
+                <BlogPostCard key={index} post={post} />
               ))
             ) : (
               <p className="col-span-full mt-8 text-center text-gray-500">

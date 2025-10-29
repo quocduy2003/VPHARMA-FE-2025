@@ -157,8 +157,8 @@ export function transformChainPharmacyData(response: any): ChainPharmacyData {
         "Bắt đầu hành trình chuyển đổi số ngay hôm nay",
       description: data?.ctaSection?.description || "",
       ctaButton: {
-        title: data?.ctaSection?.ctaButton?.title || "Tìm hiểu thêm",
-        link: data?.ctaSection?.ctaButton?.link || "#",
+        title: ctaSection?.ctaButton?.title || "Tìm hiểu thêm",
+        link: ctaSection?.ctaButton?.link || "#",
       },
     },
     faqSection: {
