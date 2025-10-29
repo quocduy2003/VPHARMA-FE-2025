@@ -116,7 +116,7 @@
 
   p {
     line-height: 1.6;
-    color: var(--color-colordescription);
+    color: var(--color-black);
   }
 }
 /* Các lớp tiện ích tùy chỉnh cho component (nếu cần) */

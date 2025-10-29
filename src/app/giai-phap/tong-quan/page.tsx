@@ -2,15 +2,12 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import {
-  FiCheckCircle,
-} from "react-icons/fi";
+import { FiCheckCircle } from "react-icons/fi";
 import { independentPharmacyData } from "@/lib/api";
 import { Button } from "@/components/ui/CTAButton";
 import { RichTextRenderer } from "@/components/ui/RichTextRenderer";
 import { AccordionItem } from "@/components/ui/AccordionIteam";
 import ReviewCarousel from "@/components/ReviewCarousel";
-
 
 const DashboardCarousel = ({
   images,
@@ -26,9 +23,9 @@ const DashboardCarousel = ({
       setCurrentIndex((prevIndex) =>
         prevIndex === images.length - 1 ? 0 : prevIndex + 1
       );
-    }, 3000); // Thay đổi slide mỗi 3 giây
+    }, 2500);
 
-    return () => clearInterval(interval); // Dọn dẹp interval khi component unmount
+    return () => clearInterval(interval);
   }, [images.length]);
 
   return (
@@ -55,8 +52,9 @@ const DashboardCarousel = ({
             key={index}
             onClick={() => setCurrentIndex(index)}
             aria-label={`Go to slide ${index + 1}`}
-            className={`h-3 w-3 rounded-full transition-colors ${currentIndex === index ? "bg-primary" : "bg-white/50"
-              }`}
+            className={`h-3 w-3 rounded-full transition-colors ${
+              currentIndex === index ? "bg-primary" : "bg-white/50"
+            }`}
           />
         ))}
       </div>
@@ -64,11 +62,9 @@ const DashboardCarousel = ({
   );
 };
 
-
-
-
 export default function IndependentPharmacyPage() {
-  const { heroSection,
+  const {
+    heroSection,
     featureSection,
     featureBenefitsSection,
     featureShowcaseSection,
@@ -76,31 +72,30 @@ export default function IndependentPharmacyPage() {
     commitmentSection,
     testimonialSection,
     ctaSection,
-    faqSection
+    faqSection,
   } = independentPharmacyData;
-  const [activeTab, setActiveTab] = useState<number | null>(featureSection.tabs[0].id);
+  const [activeTab, setActiveTab] = useState<number | null>(
+    featureSection.tabs[0].id
+  );
   const current = featureSection.tabs.find((tab) => tab.id === activeTab);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [openAccordion, setOpenAccordion] = useState(0);
   console.log("Testimonial Section Data:", testimonialSection);
 
-
   return (
     <div>
       {/** Dashboard */}
       <section className="bg-blue-100 py-10 text-center">
-        <div className="container mx-auto px-4 lg:px-80">
-          <h1 className="mt-15">
-            {heroSection.mainTitle}
-          </h1>
-          <p className="mx-auto mb-10 max-w-2xl text-h6">
+        <div className="container mx-auto px-4 lg:px-90">
+          <h1 className="mt-15">{heroSection.mainTitle}</h1>
+          <p className="mx-auto mb-10 max-w-2xl text-colordescription text-h6">
             {heroSection.mainDescription}
           </p>
           <div className="flex justify-center gap-4">
             {heroSection.ctaButtons.map((button, index) => (
               <Button
                 key={button.title}
-                variant={index === 0 ? 'primary' : 'secondary'}
+                variant={index === 0 ? "primary" : "secondary"}
               >
                 {button.title}
               </Button>
@@ -121,29 +116,28 @@ export default function IndependentPharmacyPage() {
 
       {/* 4 hero-section */}
       <section className="bg-gradient-to-b from-blue-100 to-white py-10">
-        <div className="container mx-auto grid grid-cols-1 gap-8 px-4  md:grid-cols-2 lg:grid-cols-4">
+        <div className="container mx-auto grid grid-cols-1 gap-8 px-4 text-center md:grid-cols-2 lg:grid-cols-4">
           {featureSection.gridItems.map((item, index) => (
-          <div
-            key={index}
-            className="group relative rounded-xl bg-white p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/40 "
-          >
-            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-              <div className="h-6 w-6 rounded bg-primary"></div>
+            <div
+              key={index}
+              className="group relative rounded-xl bg-white p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/40 "
+            >
+              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+                <div className="h-6 w-6 rounded bg-primary"></div>
+              </div>
+              <h3 className="text-h6 font-bold text-ink">{item.title}</h3>
+              <p className="mt-2 text-sm text-sub1">{item.description}</p>
             </div>
-            <h3 className="text-h6 font-bold text-ink">{item.title}</h3>
-            <p className="mt-2 text-sm text-sub1">{item.description}</p>
-          </div>
-        ))}
+          ))}
         </div>
-        
       </section>
 
       {/* Features Section: Các Tính Năng Nổi Bật Của V-Pharma*/}
-      <section className="container mx-auto px-4 py-20">
-        <h2 className="text-center text-h3 font-bold text-ink">
+      <section className="container mx-auto py-10">
+        <h2 className="text-center font-bold text-black">
           {featureSection.title}
         </h2>
-        <p className="mx-auto mt-4 max-w-3xl text-center text-h6">
+        <p className="mx-auto max-w-3xl text-center text-colordescription text-h6">
           {featureSection.description}
         </p>
         <div className="mt-10 flex flex-wrap justify-center gap-6">
@@ -151,16 +145,17 @@ export default function IndependentPharmacyPage() {
             <button
               key={idx}
               onClick={() => setActiveTab(tab.id)}
-              className={`rounded-full text-body2 border px-5 py-2 text-sm font-medium transition-colors ${activeTab === tab.id
-                ? "bg-primary text-white"
-                : "border-primary bg-white text-text hover:bg-primary/10"
-                }`}
+              className={`rounded-full text-body2 border px-5 py-2 text-sm font-medium transition-colors ${
+                activeTab === tab.id
+                  ? "bg-primary text-white"
+                  : "border-primary bg-white text-text hover:bg-primary/10"
+              }`}
             >
               {tab.label}
             </button>
           ))}
         </div>
-        <div className="mt-12 grid grid-cols-1 items-center gap-12 md:grid-cols-2">
+        <div className="mt-12 grid grid-cols-1 gap-12 md:grid-cols-2">
           <div className="relative">
             {current?.image && (
               <Image
@@ -168,36 +163,36 @@ export default function IndependentPharmacyPage() {
                 alt={current.label || "Feature Dashboard"}
                 width={600}
                 height={400}
-                className="rounded-lg shadow-xl object-cover"
+                className="absolute inset-0 w-full h-full p-5 rounded-lg shadow-lg object-cover"
               />
             )}
           </div>
-          <div>
-            <h3 className="text-h5 font-bold text-ink">
-              {current?.label}
-            </h3>
-            <p className="text-body1  text-ink">
-              {current?.title}
-            </p>
-            <ul className="mt-8 text-body1 space-y-3">
-              {Array.isArray(current?.description) &&
-                current.description.map((block, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <FiCheckCircle className="mt-1 flex-shrink-0 text-success" />
-                    <RichTextRenderer content={[block]} />
-                  </li>
-                ))}
-            </ul>
+          <div className="relative">
+            <div className="p-5 rounded-lg shadow-lg h-full">
+              <h3 className="text-h5 font-bold text-ink">{current?.label}</h3>
+              <p className="text-body1  text-ink">{current?.title}</p>
+              <ul className="mt-8 text-body1 space-y-3">
+                {Array.isArray(current?.description) &&
+                  current.description.map((block, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <FiCheckCircle className="mt-1 flex-shrink-0 text-success" />
+                      <RichTextRenderer content={[block]} />
+                    </li>
+                  ))}
+              </ul>
+            </div>
           </div>
         </div>
       </section>
 
       {/* --- Section: An Tâm Và Vận Hành Hiệu Quả --- */}
-      <section className="bg-ink py-20 text-white">
+      <section className="bg-ink py-10 text-white">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-h3 font-bold">{featureBenefitsSection.title}</h2>
-            <p className="mt-4 text-h6 text-colordescription">
+            <h2 className="text-h3 font-bold">
+              {featureBenefitsSection.title}
+            </h2>
+            <p className="mt-4 text-h6 text-white">
               {featureBenefitsSection.description}
             </p>
           </div>
@@ -207,9 +202,15 @@ export default function IndependentPharmacyPage() {
             {featureBenefitsSection.contents.map((feature, index) => {
               const isEven = index % 2 === 1;
               return (
-                <div key={index} className={`grid grid-cols-1 items-center gap-12 md:grid-cols-2`}>
-                  <div className={`relative aspect-video rounded-lg bg-white/10 p-2 ${isEven ? "md:order-2" : "md:order-1"
-                    }`}>
+                <div
+                  key={index}
+                  className={`grid grid-cols-1 items-center gap-12 md:grid-cols-2`}
+                >
+                  <div
+                    className={`relative aspect-video rounded-lg bg-white/10 p-2 ${
+                      isEven ? "md:order-2" : "md:order-1"
+                    }`}
+                  >
                     <Image
                       src={feature.image.url}
                       alt={feature.alt}
@@ -221,7 +222,10 @@ export default function IndependentPharmacyPage() {
                     <h3 className="text-h5 font-semibold text-success">
                       {feature.title}
                     </h3>
-                    <RichTextRenderer content={feature.description} className="text-sub1 mt-4 line-clamp-3 text-white/80" />
+                    <RichTextRenderer
+                      content={feature.description}
+                      className="text-sub1 mt-4 line-clamp-3 text-white/80"
+                    />
                   </div>
                 </div>
               );
@@ -296,9 +300,13 @@ export default function IndependentPharmacyPage() {
           </button>
         </div>
         {/* -- THAY THẾ IMAGE TĨNH BẰNG CAROUSEL -- */}
-        {featureShowcaseSection.images && featureShowcaseSection.images.length > 0 && (
-          <DashboardCarousel images={featureShowcaseSection.images} alt={featureShowcaseSection.alt} />
-        )}
+        {featureShowcaseSection.images &&
+          featureShowcaseSection.images.length > 0 && (
+            <DashboardCarousel
+              images={featureShowcaseSection.images}
+              alt={featureShowcaseSection.alt}
+            />
+          )}
       </section>
 
       {/** section Giải Pháp Chuyên Biệt */}
@@ -321,9 +329,7 @@ export default function IndependentPharmacyPage() {
                 <h3 className="mt-6 text-h5 font-bold text-ink">
                   {card.title}
                 </h3>
-                <p className="mt-2 text-sub1">
-                  {card.description}
-                </p>
+                <p className="mt-2 text-sub1">{card.description}</p>
                 <a
                   href={card.ctaButton.link || "#"}
                   className="mt-4 inline-block font-semibold text-primary hover:underline"
@@ -390,9 +396,7 @@ export default function IndependentPharmacyPage() {
       {/* Final CTA Section */}
       <section className="container mx-auto px-4 py-20">
         <div className="rounded-2xl bg-ink p-12 text-center text-white">
-          <h2 className="text-h3 font-bold">
-            {ctaSection.title}
-          </h2>
+          <h2 className="text-h3 font-bold">{ctaSection.title}</h2>
           <p className="mx-auto text-h6 mt-4 max-w-1xl text-white/80">
             {ctaSection.description}
           </p>

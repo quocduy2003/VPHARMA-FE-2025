@@ -150,23 +150,17 @@ export default function FeatureCard({
 
   // Hàm xử lý khi NGƯỜI DÙNG RỜI CHUỘT khỏi danh sách
   const handleMouseLeaveList = () => {
-    stopAutoCycle(); // Dừng mọi timer hiện tại
-    // Bắt đầu đếm ngược 5s để chạy lại tự động
+    stopAutoCycle(); 
     resumeTimerRef.current = setTimeout(() => {
       startAutoCycle();
     }, 5000); // 5 giây
   };
-
-  // 4. Thêm useEffect để quản lý vòng đời component
   useEffect(() => {
-    // Bắt đầu tự động chạy khi component được tải
     startAutoCycle();
-
-    // Dọn dẹp (cleanup): Dừng tất cả timer khi component bị hủy
     return () => {
       stopAutoCycle();
     };
-  }, [features.length]); // Chạy lại nếu số lượng features thay đổi
+  }, [features.length]); 
 
   return (
     <div className={`grid items-center lg:grid-cols-2`}>
