@@ -2,7 +2,7 @@ export interface BlogCategory {
   id: number;
   name: string;
   slug: string;
-}[];
+}
 
 export interface BlogCard {
   title: string;
@@ -62,7 +62,6 @@ export interface BlogData {
   mainBlog: BlogPost;
   featuredNews: BlogPost[];
 }
-
 
 // Type for Table of Contents item
 export interface TocItem {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import {  useSearchParams } from 'next/navigation';
 import Link from "next/link";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { FeaturedNews } from "@/components/blog/FeaturedNews";
@@ -16,7 +16,7 @@ import {
 import { BlogCard, BlogCardData } from "@/types";
 
 export default function BlogHomePage() {
-  const pathname = usePathname();
+
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get("category");
 
@@ -97,7 +97,7 @@ export default function BlogHomePage() {
                   {mainBlog.posts.title}
                 </h2>
                 <div className="flex items-center gap-4 mb-5">
-                  <span className="rounded-md bg-blue-100 px-3 py-1 text-body2 font-bold uppercase text-primary">
+                  <span className="rounded-md bg-blue-100 px-3 py-1 text-body2 font-bold capitalize text-primary">
                     {mainBlog.posts.category.name}
                   </span>
                   <span className="text-body2 text-colordescription">

@@ -21,7 +21,7 @@ export function AccordionItem({
 }: AccordionItemData & { isOpen: boolean; onClick: () => void }) {
   return (
 
-    <div className="rounded-lg shadow-sm w-full mb-2">
+    <div className="rounded-lg shadow-sm w-full mb-5">
       <button
         className={`flex w-full items-center p-4 justify-between text-left font-semibold ${textColor} ${buttonClassName}`}
         onClick={onClick}

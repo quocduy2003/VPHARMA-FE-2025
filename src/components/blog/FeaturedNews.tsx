@@ -39,9 +39,9 @@ export function FeaturedNews({ posts }: { posts: BlogPost[] }) {
               <div className="flex items-start gap-3">
                 <Image
                   src={post.coverImage.url}
-                  alt={post.alt || "feature New"}
-                  width={250}
-                  height={68}
+                  alt={post.alt || post.title}
+                  width={60}
+                  height={60}
                   className="h-15 w-15 flex-shrink-0 rounded-md object-cover"
                 />
                 <p className="text-sub2 font-bold hover:text-primary line-clamp-2">

@@ -17,7 +17,7 @@ const StorySection = ({
     <div className="container ">
       <div className="rounded-2xl bg-ink p-8 text-white shadow-xl md:p-12 lg:p-16">
         <div className=" text-center">
-          <p className="mb-5 text-h6 font-bold uppercase tracking-wide text-primary">
+          <p className="mb-5 text-h6 font-bold capitalize tracking-wide text-primary">
             {data.eyebrow}
           </p>
           <h2 className="mb-5 text-white">{data.title}</h2>
@@ -54,7 +54,7 @@ const ValuesSection = ({
   <section className="bg-gradient-to-b from-white to-cyan-50 py-10">
     <div className="container mx-auto px-4">
       <div className="text-center">
-        <p className="mb-5 text-h6 font-bold uppercase tracking-wide text-primary">
+        <p className="mb-5 text-h6 font-bold capitalize tracking-wide text-primary">
           {data.eyebrow}
         </p>
         <h2 className="mb-15 text-black">{data.title}</h2>
@@ -122,11 +122,7 @@ const FounderSection = ({
     return () => {
       stopAutoplay();
     };
-    // Thêm handleNext vào dependency array để đảm bảo nó luôn là hàm mới nhất
-    // (Quan trọng nếu hàm handleNext trong component cha không được bọc bằng useCallback)
-  }, [handleNext, totalMembers]); // Chạy lại nếu các hàm này thay đổi
-
-  // ... (phần code fallback khi không có founder giữ nguyên) ...
+  }, [startAutoplay, handleNext, totalMembers]);
   if (totalMembers === 0) {
     return (
       <section className="bg-gradient-to-b from-cyan-50 to-white py-10">
@@ -151,7 +147,7 @@ const FounderSection = ({
       <div className="container">
         {/* === 1. KHỐI HEADER (Giữ nguyên) === */}
         <div className="text-center">
-          <p className="mb-5 text-h6 font-bold uppercase tracking-wide text-primary">
+          <p className="mb-5 text-h6 font-bold capitalize tracking-wide text-primary">
             {data?.eyebrow || ""}
           </p>
           <h2 className="mb-5 text-black">{data?.title || ""}</h2>
@@ -177,7 +173,7 @@ const FounderSection = ({
                 case "center":
                   classes += " z-10 scale-[1.6]"; // Giữ nguyên scale 1.6 cho card
                   // SỬA: Thêm scale-0.625 để "hủy" phóng to cho khối text
-                  infoClasses += " opacity-100 scale-[0.625]"; 
+                  infoClasses += " opacity-100 scale-[0.625]";
                   break;
                 case "left":
                   classes += " z-0 scale-90 -translate-x-[150%] opacity-60";
@@ -255,7 +251,6 @@ export default function AboutUsPage() {
     setCurrentMemberIndex((prev) => (prev - 1 + founderCount) % founderCount);
   console.log("About Us Blocks:", blocks);
 
-  // Take blocks as blocks[]
   const renderBlock = (block: BlockItems) => {
     switch (block.__component) {
       case "about.story-section":
@@ -285,7 +280,7 @@ export default function AboutUsPage() {
         <FadeInOnScroll>
           <div className="h-screen flex items-center mt-5 mx-auto max-w-6xl text-center">
             <div className="container">
-              <p className="mb-5 text-h6 font-bold uppercase tracking-wide text-primary">
+              <p className="mb-5 text-h6 font-bold capitalize tracking-wide text-primary">
                 {aboutUsData.eyebrow}
               </p>
               <h1 >{aboutUsData.title}</h1>

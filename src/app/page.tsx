@@ -136,8 +136,8 @@ export default function HomePage() {
                 <Image
                   src={card.image}
                   alt={card.alt}
-                  width={500}
-                  height={500}
+                  width={640} // hoặc width phù hợp
+                  height={420}
                   className="mx-auto my-4 h-70 w-auto object-cover rounded-xl"
                 />
 
@@ -163,7 +163,7 @@ export default function HomePage() {
 
       <section className="container py-10">
         <div className="text-center">
-          <p className="text-h6 mb-5 font-bold uppercase tracking-wide text-primary">
+          <p className="text-h6 mb-5 font-bold capitalize tracking-wide text-primary">
             {featureSection.title}
           </p>
           <h2 className="mb-15 text-black">{featureSection.description}</h2>
@@ -190,7 +190,7 @@ export default function HomePage() {
       <section className="relative overflow-hidden bg-ink">
         <div className="container mx-auto">
           <div className="text-center">
-            <p className="text-h6 mb-5 font-bold uppercase tracking-wide text-primary">
+            <p className="text-h6 mb-5 font-bold capitalize tracking-wide text-primary">
               {experienceSection.eyebrow}
             </p>
             <h2 className="mb-15 text-white">{experienceSection.title}</h2>
@@ -208,20 +208,18 @@ export default function HomePage() {
                     onMouseEnter={() => handleExperienceUserHover(i)}
                     className={`group flex items-start gap-5 rounded-xl p-5 transition-all duration-300
                       border max-w-3xl mx-auto
-                      ${
-                        activeExperienceIndex === i
-                          ? "bg-white shadow-xl opacity-100" // Trạng thái Active
-                          : "bg-ink border-transparent opacity-80 group-hover:bg-white group-hover:shadow-xl group-hover:border-sky-100 group-hover:opacity-100" // Trạng thái Inactive + Hover
+                      ${activeExperienceIndex === i
+                        ? "bg-white shadow-xl opacity-100" // Trạng thái Active
+                        : "bg-ink border-transparent opacity-80 group-hover:bg-white group-hover:shadow-xl group-hover:border-sky-100 group-hover:opacity-100" // Trạng thái Inactive + Hover
                       }`}
                   >
                     <span
                       className={`inline-flex h-10 w-10 flex-none items-center justify-center rounded-full
                 bg-emerald-100 text-success mr-1
                 transition-all duration-300
-                        ${
-                          activeExperienceIndex === i
-                            ? "bg-success text-white"
-                            : "group-hover:bg-success group-hover:text-white"
+                        ${activeExperienceIndex === i
+                          ? "bg-success text-white"
+                          : "group-hover:bg-success group-hover:text-white"
                         }`}
                       aria-label="Feature icon"
                     >
@@ -231,20 +229,18 @@ export default function HomePage() {
                       <h3
                         // MODIFIED: Cập nhật className cho title
                         className={`font-bold text-h6 transition-colors duration-200
-                          ${
-                            activeExperienceIndex === i
-                              ? "text-black" 
-                              : "text-white group-hover:text-black"
+                          ${activeExperienceIndex === i
+                            ? "text-black"
+                            : "text-white group-hover:text-black"
                           }`}
                       >
                         {item.title}
                       </h3>
                       <p
                         className={`mt-1 text-sub2 leading-6 transition-colors duration-200
-                          ${
-                            activeExperienceIndex === i
-                              ? "text-black" 
-                              : "text-white group-hover:text-black" 
+                          ${activeExperienceIndex === i
+                            ? "text-black"
+                            : "text-white group-hover:text-black"
                           }`}
                       >
                         {item.description}
@@ -256,7 +252,6 @@ export default function HomePage() {
             </div>
             <div className="relative min-h-[340px] flex items-center justify-center">
               <div className="relative w-[405px] h-[340px]">
-                
                 <div
                   className="absolute left-[55px] top-[55px] w-[300px] h-[230px] rounded-lg bg-white/30"
                   style={{ zIndex: 1 }}
@@ -267,11 +262,12 @@ export default function HomePage() {
                 >
                   <Image
                   
-                  width={500}
-                  height={500}
                     src="/chart.png"
                     alt="Total Balance Chart"
+                    width={500}   
+                    height={240}
                     className="w-full h-60 object-contain"
+
                   />
                 </div>
                 <div
@@ -279,11 +275,11 @@ export default function HomePage() {
                   style={{ zIndex: 3 }}
                 >
                   <Image
-                  
-                  width={500}
-                  height={500}
+                
                     src="/chart.png"
                     alt="Total Balance Mini Chart"
+                    width={500}      // chọn kích thước phù hợp với giao diện thực tế
+                    height={240}
                     className="w-full h-20 object-contain"
                   />
                 </div>
@@ -319,11 +315,10 @@ export default function HomePage() {
               <button
                 key="all"
                 onClick={() => setActiveCategory("Tất cả")}
-                className={`rounded-full px-4 py-2 text-sub2 font-semibold border border-gray transition-colors ${
-                  activeCategory === "Tất cả"
-                    ? "bg-primary text-white shadow-md"
-                    : "bg-white text-black hover:bg-slate-100"
-                }`}
+                className={`rounded-full px-4 py-2 text-sub2 font-semibold border border-gray transition-colors ${activeCategory === "Tất cả"
+                  ? "bg-primary text-white shadow-md"
+                  : "bg-white text-black hover:bg-slate-100"
+                  }`}
               >
                 Tất cả
               </button>
@@ -331,11 +326,10 @@ export default function HomePage() {
                 <button
                   key={category.slug}
                   onClick={() => setActiveCategory(category.name)}
-                  className={`rounded-full px-4 py-2 text-sub2 font-semibold border border-gray transition-colors ${
-                    activeCategory === category.name
-                      ? "bg-primary text-white shadow-md"
-                      : "bg-white text-black hover:bg-slate-100"
-                  }`}
+                  className={`rounded-full px-4 py-2 text-sub2 font-semibold border border-gray transition-colors ${activeCategory === category.name
+                    ? "bg-primary text-white shadow-md"
+                    : "bg-white text-black hover:bg-slate-100"
+                    }`}
                 >
                   {category.name}
                 </button>

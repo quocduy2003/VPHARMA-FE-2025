@@ -1,8 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import FadeInOnScroll from "@/components/animations/FadeInOnScroll";
 import PharmacyCarousel from "@/components/PharmacyCarousel";
 import CTASection from "@/components/CTA";
@@ -82,12 +81,11 @@ function ChallengeStackedCards({ challengeCards }: { challengeCards: Card[] }) {
                 }}
               >
                 <Image
-                
-                  width={200}
-                  height={200}
                   src={item.image}
                   className="w-20 h-20 rounded-full object-cover mb-5 mt-12"
                   alt={item.name}
+                  width={80}
+                  height={80}
                 />
                 <p className="font-bold text-2xl mb-5">{item.name}</p>
                 <p className="text-lg text-gray-500 mb-5">{item.address}</p>

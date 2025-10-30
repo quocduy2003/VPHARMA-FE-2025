@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 // 1. Import thêm useEffect và useRef
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { FeatureCardHomeProps } from "@/types";
 import { FiCheckCircle } from "react-icons/fi";
 
@@ -17,6 +17,7 @@ export default function FeatureCard({
   // 2. Thêm Refs để lưu trữ ID của các timers
   // intervalRef: Lưu timer tự động chuyển đổi 2 giây
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
   // resumeTimerRef: Lưu timer chờ 5 giây để bắt đầu lại
   const resumeTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -27,7 +28,7 @@ export default function FeatureCard({
   // --- 3. Thêm các hàm logic điều khiển ---
 
   // Hàm DỪNG tất cả các timer (cả 2s và 5s)
-  const stopAutoCycle = () => {
+  const stopAutoCycle = useCallback(() => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
@@ -36,16 +37,15 @@ export default function FeatureCard({
       clearTimeout(resumeTimerRef.current);
       resumeTimerRef.current = null;
     }
-  };
+  }, []);
 
   // Hàm BẮT ĐẦU timer tự động chuyển 2 giây
-  const startAutoCycle = () => {
-    stopAutoCycle(); // Luôn xóa timer cũ trước khi bắt đầu
+  const startAutoCycle = useCallback(() => {
+    stopAutoCycle();
     intervalRef.current = setInterval(() => {
-      // Tự động chuyển sang item tiếp theo
       setHoveredIndex((prevIndex) => (prevIndex + 1) % features.length);
-    }, 2000); // 2 giây
-  };
+    }, 2000);
+  }, [stopAutoCycle, features.length]);
 
   // Hàm xử lý khi NGƯỜI DÙNG HOVER vào một item
   const handleUserHover = (index: number) => {
@@ -55,17 +55,15 @@ export default function FeatureCard({
 
   // Hàm xử lý khi NGƯỜI DÙNG RỜI CHUỘT khỏi danh sách
   const handleMouseLeaveList = () => {
-    stopAutoCycle(); 
+    stopAutoCycle();
     resumeTimerRef.current = setTimeout(() => {
       startAutoCycle();
     }, 5000); // 5 giây
   };
   useEffect(() => {
     startAutoCycle();
-    return () => {
-      stopAutoCycle();
-    };
-  }, [features.length]); 
+    return () => stopAutoCycle();
+  }, [startAutoCycle, stopAutoCycle]);
 
   return (
     <div className={`grid items-center lg:grid-cols-2`}>
@@ -122,16 +120,16 @@ export default function FeatureCard({
               <div>
                 <h3
                   className={`font-bold mb-2 transition-colors duration-300 ${hoveredIndex === index
-                      ? "text-primary"
-                      : `${baseTitleColor} group-hover:text-primary`
+                    ? "text-primary"
+                    : `${baseTitleColor} group-hover:text-primary`
                     }`}
                 >
                   {item.title}
                 </h3>
                 <p
                   className={`text-sub2 leading-6 max-w-lg transition-colors duration-300 ${hoveredIndex === index
-                      ? "text-primary"
-                      : `${baseDescColor} group-hover:text-primary`
+                    ? "text-primary"
+                    : `${baseDescColor} group-hover:text-primary`
                     }`}
                 >
                   {item.description}
