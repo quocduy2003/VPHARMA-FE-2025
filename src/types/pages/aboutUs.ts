@@ -1,5 +1,4 @@
-import { Testimonial, CTASection } from "@/types";
-
+import {CTASection } from "@/types";
 interface SectionHeading {
   eyebrow: string;
   title: string;

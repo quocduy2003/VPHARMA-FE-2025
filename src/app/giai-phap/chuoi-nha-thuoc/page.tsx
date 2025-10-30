@@ -17,166 +17,8 @@ import { AccordionItem } from "@/components/ui/AccordionIteam";
 import FeatureCardTest from "@/components/ui/FeatureCardTest";
 
 //data section1
-const challengeCards = [
-  {
-    frontTitle: "Khó kiểm soát tài chính và giá bán",
-    backContent: {
-      title: "Khó kiểm soát tài chính và giá bán",
-      items: [
-        {
-          label: "Lỗ hổng giá bán không đồng đều:",
-          description:
-            "Mỗi chi nhánh tự định giá hoặc khuyến mại khác nhau dẫn đến tình trạng 'phá giá nội bộ'.",
-        },
-        {
-          label: "Thiếu dữ liệu phân tích:",
-          description:
-            "Không khán trong việc tổng hợp và đối chiếu báo cáo tài chính từ nhiều điểm bán.",
-        },
-        {
-          label: "Quản lý chi phí vận hành riêng lẻ:",
-          description:
-            "Các chi phí mặt bằng, nhân sự, điện nước ở mỗi chi nhánh được quản lý rời rạc, làm phức tạp việc kiểm soát ngân sách và xác định chi nhánh nào đang vận hành kém hiệu quả.",
-        },
-      ],
-    },
-  },
-  {
-    frontTitle: "Khó kiểm soát tài chính và giá bán",
-    backContent: {
-      title: "Khó kiểm soát tài chính và giá bán",
-      items: [
-        {
-          label: "Lỗ hổng giá bán không đồng đều:",
-          description:
-            "Mỗi chi nhánh tự định giá hoặc khuyến mại khác nhau dẫn đến tình trạng 'phá giá nội bộ'.",
-        },
-        {
-          label: "Thiếu dữ liệu phân tích:",
-          description:
-            "Không khán trong việc tổng hợp và đối chiếu báo cáo tài chính từ nhiều điểm bán.",
-        },
-        {
-          label: "Quản lý chi phí vận hành riêng lẻ:",
-          description:
-            "Các chi phí mặt bằng, nhân sự, điện nước ở mỗi chi nhánh được quản lý rời rạc, làm phức tạp việc kiểm soát ngân sách và xác định chi nhánh nào đang vận hành kém hiệu quả.",
-        },
-      ],
-    },
-  },
-  {
-    frontTitle: "Khó kiểm soát tài chính và giá bán",
-    backContent: {
-      title: "Khó kiểm soát tài chính và giá bán",
-      items: [
-        {
-          label: "Lỗ hổng giá bán không đồng đều:",
-          description:
-            "Mỗi chi nhánh tự định giá hoặc khuyến mại khác nhau dẫn đến tình trạng 'phá giá nội bộ'.",
-        },
-        {
-          label: "Thiếu dữ liệu phân tích:",
-          description:
-            "Không khán trong việc tổng hợp và đối chiếu báo cáo tài chính từ nhiều điểm bán.",
-        },
-        {
-          label: "Quản lý chi phí vận hành riêng lẻ:",
-          description:
-            "Các chi phí mặt bằng, nhân sự, điện nước ở mỗi chi nhánh được quản lý rời rạc.",
-        },
-      ],
-    },
-  },
-  {
-    frontTitle: "Khó kiểm soát tài chính và giá bán",
-    backContent: {
-      title: "Khó kiểm soát tài chính và giá bán",
-      items: [
-        {
-          label: "Lỗ hổng giá bán không đồng đều:",
-          description:
-            "Mỗi chi nhánh tự định giá hoặc khuyến mại khác nhau dẫn đến tình trạng 'phá giá nội bộ'.",
-        },
-        {
-          label: "Thiếu dữ liệu phân tích:",
-          description:
-            "Không khán trong việc tổng hợp và đối chiếu báo cáo tài chính từ nhiều điểm bán.",
-        },
-        {
-          label: "Quản lý chi phí vận hành riêng lẻ:",
-          description:
-            "Các chi phí mặt bằng, nhân sự, điện nước ở mỗi chi nhánh được quản lý rời rạc.",
-        },
-      ],
-    },
-  },
-  {
-    frontTitle: "Khó kiểm soát tài chính và giá bán",
-    backContent: {
-      title: "Khó kiểm soát tài chính và giá bán",
-      items: [
-        {
-          label: "Lỗ hổng giá bán không đồng đều:",
-          description:
-            "Mỗi chi nhánh tự định giá hoặc khuyến mại khác nhau dẫn đến tình trạng 'phá giá nội bộ'.",
-        },
-        {
-          label: "Thiếu dữ liệu phân tích:",
-          description:
-            "Không khán trong việc tổng hợp và đối chiếu báo cáo tài chính từ nhiều điểm bán.",
-        },
-        {
-          label: "Quản lý chi phí vận hành riêng lẻ:",
-          description:
-            "Các chi phí mặt bằng, nhân sự, điện nước ở mỗi chi nhánh được quản lý rời rạc.",
-        },
-      ],
-    },
-  },
-  {
-    frontTitle: "Khó kiểm soát tài chính và giá bán",
-    backContent: {
-      title: "Khó kiểm soát tài chính và giá bán",
-      items: [
-        {
-          label: "Lỗ hổng giá bán không đồng đều:",
-          description:
-            "Mỗi chi nhánh tự định giá hoặc khuyến mại khác nhau dẫn đến tình trạng 'phá giá nội bộ'.",
-        },
-        {
-          label: "Thiếu dữ liệu phân tích:",
-          description:
-            "Không khán trong việc tổng hợp và đối chiếu báo cáo tài chính từ nhiều điểm bán.",
-        },
-        {
-          label: "Quản lý chi phí vận hành riêng lẻ:",
-          description:
-            "Các chi phí mặt bằng, nhân sự, điện nước ở mỗi chi nhánh được quản lý rời rạc.",
-        },
-      ],
-    },
-  },
-];
 
-// Data section2
-const accordionItems = [
-  {
-    title: "Kho Tổng & Tồn kho Liên chi nhánh",
-    content:
-      "Xem tồn kho từng chi nhánh và tổng toàn bộ thống theo thời gian. Giúp quản lý vốn thực thời. Điều quản hiệu chuyển hàng liệu định thị trường hợp.",
-  },
-  {
-    title: "Luân chuyển & Tối ưu Hàng hóa",
-    content:
-      "Theo dõi vận chuyển hàng hóa giữa các chi nhánh một cách dễ dàng và minh bạch. Hệ thống tự động đề xuất tối ưu luân chuyển.",
-  },
-];
-interface AccordionItemProps {
-  title: string;
-  children: React.ReactNode;
-  isOpen: boolean;
-  onClick: () => void;
-}
+
 
 const maxCards = 6;
 // data section 4
@@ -221,65 +63,12 @@ const customerSystemCards = [
 const cards = customerSystemCards.slice(0, maxCards);
 
 //data section 5
-const loyaltyCards = [
-  {
-    id: 1,
-    title: "Hồ sơ khách hàng đúng chung toàn chuỗi",
-    description:
-      "Website bán hàng cho chuỗi cho phép khách hàng đặt thuốc online. Tự động kiểm tra tồn kho và phân đơn về chi nhánh gần nhất để tối ưu tốc độ giao hàng.",
-    icon: (
-      <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 20 20">
-        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-      </svg>
-    ),
-  },
-  {
-    id: 2,
-    title: "Hồ sơ khách hàng đúng chung toàn chuỗi",
-    description:
-      "Website bán hàng cho chuỗi cho phép khách hàng đặt thuốc online. Tự động kiểm tra tồn kho và phân đơn về chi nhánh gần nhất để tối ưu tốc độ giao hàng.",
-    icon: (
-      <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 20 20">
-        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-      </svg>
-    ),
-  },
-  {
-    id: 3,
-    title: "Hồ sơ khách hàng đúng chung toàn chuỗi",
-    description:
-      "Website bán hàng cho chuỗi cho phép khách hàng đặt thuốc online. Tự động kiểm tra tồn kho và phân đơn về chi nhánh gần nhất để tối ưu tốc độ giao hàng.",
-    icon: (
-      <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 20 20">
-        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-      </svg>
-    ),
-  },
-  {
-    id: 4,
-    title: "Hồ sơ khách hàng đúng chung toàn chuỗi",
-    description:
-      "Website bán hàng cho chuỗi cho phép khách hàng đặt thuốc online. Tự động kiểm tra tồn kho và phân đơn về chi nhánh gần nhất để tối ưu tốc độ giao hàng.",
-    icon: (
-      <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 20 20">
-        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-      </svg>
-    ),
-  },
-];
 
-const dashboardImages = [
-  { src: "/hero-dashboard.jpg", alt: "V-Pharma Dashboard Overview" },
-  { src: "/features-dashboard1.png", alt: "Sales Dashboard" },
-  { src: "/features-dashboard2.png", alt: "Inventory Dashboard" },
-  { src: "/features-dashboard3.jpg", alt: "Reports Dashboard" },
-  { src: "/features-dashboard5.jpg", alt: "Accounting Dashboard" },
-];
 
 function DashboardCarousel({
   images,
 }: {
-  images: { src: string; alt: string }[];
+  images: { url: string; alt: string }[];
 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -302,7 +91,7 @@ function DashboardCarousel({
         <div className="relative h-[180px] w-[280px] opacity-70 transition-all duration-500">
           <div className="relative h-[200px] w-[320px]">
             <Image
-              src={getImg(-1).src}
+              src={getImg(-1).url}
               alt={getImg(-1).alt}
               fill
               className="rounded-xl "
@@ -313,7 +102,7 @@ function DashboardCarousel({
         {/* Slide center */}
         <div className="relative h-[300px] w-[440px] transition-all duration-500">
           <Image
-            src={getImg(0).src}
+            src={getImg(0).url}
             alt={getImg(0).alt}
             fill
             className="rounded-2xl "
@@ -324,7 +113,7 @@ function DashboardCarousel({
         <div className="relative h-[180px] w-[280px] opacity-70 transition-all duration-500">
           <div className="relative h-[200px] w-[320px]">
             <Image
-              src={getImg(1).src}
+              src={getImg(1).url}
               alt={getImg(1).alt}
               fill
               className="rounded-xl "
@@ -352,9 +141,21 @@ function DashboardCarousel({
 // COMPONENT CHÍNH
 export default function ChuoiNhaThuoc() {
   const [openAccordion, setOpenAccordion] = useState(0);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  const { heroSection, pharmacyChainChallengesSection, featureBenefitsSection, operationsStandardizationSection } = chainPharmacyData;
-  console.log("operationsStandardizationSection", operationsStandardizationSection);
+  const { heroSection,
+    pharmacyChainChallengesSection,
+    featureBenefitsSection,
+    operationsStandardizationSection,
+    customerExperienceSection,
+    featureOverview,
+    featureCarousel,
+    operationsStandardizationBottomSection,
+    pharmaFeedback,
+    ctaSection,
+    faqSection
+  } = chainPharmacyData;
+  console.log("operationsStandardizationBottomSection", operationsStandardizationBottomSection);
 
   const [indexCustomer, setIndexCustomer] = useState(0);
   const cardsPerView = 3;
@@ -484,17 +285,17 @@ export default function ChuoiNhaThuoc() {
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-5xl text-center">
               <p className="mb-2 text-h6 font-bold uppercase tracking-wide text-primary">
-                {featureBenefitsSection.title}
+                {operationsStandardizationSection.eyebrow}
               </p>
               <h2 className="text-black">
-                {featureBenefitsSection.description}
+                {operationsStandardizationSection.title}
               </h2>
             </div>
-              <FeatureCardTest
-                features={operationsStandardizationSection.contents}
-                direction="left"
-                animation={true}
-              />
+            <FeatureCardTest
+              features={operationsStandardizationSection.contents}
+              direction="left"
+              animation={true}
+            />
           </div>
         </section>
       </FadeInOnScroll>
@@ -505,10 +306,10 @@ export default function ChuoiNhaThuoc() {
           <div className="container mx-auto px-4">
             <div className="mx-auto mb-12 max-w-5xl text-center">
               <p className="mb-2 text-h6 font-bold uppercase tracking-wide text-primary">
-                {operationsStandardizationSection.eyebrow}
+                {customerExperienceSection.eyebrow}
               </p>
               <h2 className="mb-4 text-black">
-                {operationsStandardizationSection.title}
+                {customerExperienceSection.title}
               </h2>
             </div>
 
@@ -521,7 +322,7 @@ export default function ChuoiNhaThuoc() {
                     transform: `translateX(-${indexCustomer * (100 / 3)}%)`,
                   }}
                 >
-                  {cards.map((card, idx) => (
+                  {customerExperienceSection.cards.map((card, idx) => (
                     <div
                       key={idx}
                       className="card-custom mx-4 min-w-[350px] max-w-[350px] flex-shrink-0 rounded-xl border border-gray-400 bg-white shadow-lg transition hover:shadow-xl"
@@ -532,7 +333,7 @@ export default function ChuoiNhaThuoc() {
                           {card.title}
                         </h3>
                         <p className="mb-4 text-sub2 text-black">
-                          {card.content}
+                          {card.description}
                         </p>
                         <div className="mt-2 rounded-lg py-6 px-4 flex flex-col items-center">
                           <Image
@@ -601,23 +402,29 @@ export default function ChuoiNhaThuoc() {
           <div className="container mx-auto px-4">
             <div className="mx-auto mb-12 max-w-5xl text-center">
               <p className="mb-2 text-h6 font-bold uppercase tracking-wide text-primary">
-                TĂNG TRẢI NGHIỆM KHÁCH HÀNG
+                {featureOverview.eyebrow}
               </p>
               <h2 className="mb-4 text-black">
-                Xây Dựng Hệ Thống Khách Hàng Thân Thiết
+                {featureOverview.title}
                 <br />
                 Chuyên Nghiệp
               </h2>
             </div>
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
-              {loyaltyCards.map((card) => (
+              {featureOverview.contentCards.map((card, index) => (
                 <div
-                  key={card.id}
+                  key={index}
                   className="group relative rounded-2xl p-8 text-left transition-all duration-300 cursor-pointer bg-white shadow-md hover:shadow-2xl hover:bg-ink"
                 >
                   <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-success/10 text-success transition-all duration-300 group-hover:bg-success group-hover:text-white">
-                    {card.icon}
+                    <Image
+                      src="/icon.svg"
+                      alt="chip icon"
+                      width={24}
+                      height={24}
+                      className="transition-all duration-300 group-hover:brightness-0 group-hover:invert"
+                    />
                   </div>
 
                   <h3 className="mb-3 text-black transition-colors duration-300 group-hover:text-white">
@@ -632,7 +439,7 @@ export default function ChuoiNhaThuoc() {
             </div>
             <div className="mt-12 text-center">
               <button className=" text-sub1 mt-8 rounded-full bg-primary px-8 py-3 font-bold text-white shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl">
-                Đăng ký dùng thử
+                {featureOverview.ctaButton.title}
               </button>
             </div>
           </div>
@@ -644,14 +451,13 @@ export default function ChuoiNhaThuoc() {
         <section className="py-20 text-center">
           <div className="container mx-auto">
             <p className="mb-2 text-h6 font-bold uppercase tracking-wide text-primary">
-              TĂNG TRẢI NGHIỆM KHÁCH HÀNG
+              {featureCarousel.eyebrow}
             </p>
-            <h2 className="text-black">Quyết Định Tối Ưu Với Trợ Lý AI</h2>
+            <h2 className="text-black">{featureCarousel.title}</h2>
             <p className="mx-auto mt-4 mb-20 max-w-2xl text-h6 ">
-              Ứng dụng công nghệ AI để biến dữ liệu khổng lồ thành thông tin
-              hành động, hỗ trợ các quyết định kinh doanh
+              {featureCarousel.description}
             </p>
-            <DashboardCarousel images={dashboardImages} />
+            <DashboardCarousel images={featureCarousel.featureImages} />
           </div>
         </section>
       </FadeInOnScroll>
@@ -662,167 +468,64 @@ export default function ChuoiNhaThuoc() {
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-5xl text-center">
               <p className="mb-2 text-h6 font-bold uppercase tracking-wide text-primary">
-                TĂNG TRẢI NGHIỆM KHÁCH HÀNG
+                {operationsStandardizationBottomSection.eyebrow}
               </p>
               <h2 className="text-white">
-                Chuẩn Hóa Vận Hành và Kiểm Soát
-                <br />
-                Giá Bán Toàn Chuỗi
+                {operationsStandardizationBottomSection.title}
               </h2>
             </div>
-            <div className="mt-12 grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-              <div className="relative">
-                {/* Main Image Container */}
-                <div className="relative z-10">
-                  <Image
-                    src="/people.jpg"
-                    alt="Quản lý giá bán"
-                    width={600}
-                    height={500}
-                    className="relative z-10 rounded-xl"
-                  />
-                  <div className="absolute bottom-8 left-8 rounded-xl bg-white p-6 shadow-2xl">
-                    <Image
-                      src="/hero-dashboard.jpg"
-                      alt="Quản lý giá bán"
-                      width={300}
-                      height={200}
-                      className="relative z-10 rounded-xl"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                {/* Feature List */}
-                <div className="space-y-6">
-                  {/* Feature 1 */}
-                  <div className="flex gap-4">
-                    {/* Icon */}
-                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-success/10">
-                      <svg
-                        className="h-6 w-6 text-success"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                    </div>
-
-                    {/* Content */}
-                    <div className="flex-1">
-                      <h3 className="mb-2 text-success">
-                        Quản lý Giá Bán Toàn Chuỗi
-                      </h3>
-                      <p className="text-sub2 leading-relaxed text-white">
-                        Chuẩn hóa danh mục thuốc & giá bán toàn chuỗi bằng cách
-                        sử dụng danh mục chung. Dễ dàng cập nhật giá từ 1 nơi
-                        trên toàn hệ thống. Dễ dàng cập nhật giá từ 1 nơi trên
-                        toàn hệ thống để tối ưu tốt nhất chi phí và điều kiểm
-                        toàn tất cả điểm bán.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Feature 2 */}
-                  <div className="flex gap-4">
-                    {/* Icon */}
-                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-success/10">
-                      <svg
-                        className="h-6 w-6 text-success"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                    </div>
-
-                    {/* Content */}
-                    <div className="flex-1">
-                      <h3 className="mb-2 text-white">
-                        Quản lý Danh mục & Dữ liệu
-                      </h3>
-                      <p className="text-sub2 leading-relaxed text-white">
-                        Chuẩn hóa danh mục thuốc & giá bán toàn chuỗi bằng cách
-                        sử dụng danh mục chung. Dễ dàng cập nhật giá từ 1 nơi
-                        trên toàn hệ thống. Dễ dàng cập nhật giá từ 1 nơi trên
-                        toàn hệ thống để tối ưu tốt nhất chi phí và điều kiểm
-                        toàn tất cả điểm bán.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Feature 3 */}
-                  <div className="flex gap-4">
-                    {/* Icon */}
-                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-success/10">
-                      <svg
-                        className="h-6 w-6 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                    </div>
-
-                    {/* Content */}
-                    <div className="flex-1">
-                      <h4 className="mb-2 text-white">
-                        Quản lý Danh mục & Dữ liệu
-                      </h4>
-                      <p className="text-sub2 leading-relaxed text-white">
-                        Chuẩn hóa danh mục thuốc & giá bán toàn chuỗi bằng cách
-                        sử dụng danh mục chung. Dễ dàng cập nhật giá từ 1 nơi
-                        trên toàn hệ thống. Dễ dàng cập nhật giá từ 1 nơi trên
-                        toàn hệ thống để tối ưu tốt nhất chi phí và điều kiểm
-                        toàn tất cả điểm bán.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* CTA Button */}
-                <button className=" text-sub1 mt-8 rounded-full bg-primary px-8 py-3 font-bold text-white shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl">
-                  Đăng ký dùng thử
-                </button>
-              </div>
-            </div>
+            <FeatureCardTest
+              features={operationsStandardizationBottomSection.contents}
+              direction="right"
+              animation={true}
+              theme="dark"
+            />
           </div>
         </section>
       </FadeInOnScroll>
 
       {/*SECTION 7: Pharmacy  Carousel*/}
-      {/* <FadeInOnScroll>
-        <PharmacyCarousel />
-      </FadeInOnScroll> */}
+
+      <FadeInOnScroll>
+        <section className="bg-white py-10">
+          <div className="container mx-auto px-4">
+            <div className="mx-auto mb-12 max-w-6xl text-center">
+              <p className="mb-2 text-h6 font-bold uppercase tracking-wide text-primary">
+                {pharmaFeedback.title}
+              </p>
+              <h2 className="mb-4 text-black">{pharmaFeedback.description}</h2>
+            </div>
+            <PharmacyCarousel cards={pharmaFeedback.cards} />
+          </div>
+        </section>
+      </FadeInOnScroll>
+
+
 
       {/* SECTION : CTA */}
-      {/* <FadeInOnScroll>
-        <CTASection />
-      </FadeInOnScroll> */}
+      <FadeInOnScroll>
+        <CTASection ctaSection={ctaSection} />
+      </FadeInOnScroll>
 
       {/* SECTION : FAQ*/}
-      {/* <FadeInOnScroll>
-        <FaqSection />
-      </FadeInOnScroll> */}
+      <FadeInOnScroll>
+        <section className="container mx-auto max-w-4xl px-4 py-20">
+          <h2 className="text-center text-h3 font-bold text-ink">
+            {faqSection.title}
+          </h2>
+          <div className="mt-10">
+            {faqSection.faqItems.map((item, index) => (
+              <AccordionItem
+                key={index}
+                title={item.question}
+                description={item.answer}
+                isOpen={openFaq === index}
+                onClick={() => setOpenFaq(openFaq === index ? null : index)}
+              />
+            ))}
+          </div>
+        </section>
+      </FadeInOnScroll>
     </div>
   );
 }

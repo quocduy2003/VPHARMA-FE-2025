@@ -1,97 +1,102 @@
-// app/page.tsx
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+// MODIFIED: Thêm useRef
+import { useState, useEffect, useRef } from "react";
 import { homePageData } from "@/lib/api/home";
 import ReviewCarousel from "@/components/ReviewCarousel";
 import Link from "next/link";
-import { blogPosts } from "@/data/blogData";
-import { FiArrowRight } from "react-icons/fi";
+
+import { FiArrowRight, FiCheckCircle } from "react-icons/fi";
 import FeatureCard from "@/components/ui/FeatureCard";
+import { Button } from "@/components/ui/CTAButton";
+import { getBlogPosts } from "@/lib/api/blog";
+import { BlogCard } from "@/types";
+import { transformBlogListData } from "@/lib/transformers/blog";
 
-type Feature = {
-  title: string;
-  desc: string;
-  icon?: string;
-};
-
-type Review = {
-  id: number;
-  name: string;
-  role: string;
-  avatar: string;
-  comment: string;
-  rating: number;
-};
-
-type Blog = {
-  id: number;
-  title: string;
-  date: string;
-  image: string;
-  category: string;
-  desc: string;
-};
-
-
-const BLOGS: Blog[] = [
-  {
-    id: 1,
-    title:
-      "Xây dựng quy trình chuẩn hóa cho các hoạt động bán lẻ sản phẩm chăm sóc sức khỏe",
-    date: "29/04/2023",
-    image: "/blog1.png",
-    category: "Kinh nghiệm kinh doanh",
-    desc: "Xây dựng quy trình chuẩn giúp các nhà thuốc vận hành đồng bộ, tiết kiệm chi phí và tối ưu doanh thu.",
-  },
-  {
-    id: 2,
-    title: "Chuyển đổi số trong ngành Dược – Xu hướng tất yếu của thời đại",
-    date: "30/04/2023",
-    image: "/blog2.png",
-    category: "Chuyển đổi số",
-    desc: "Ứng dụng công nghệ giúp quản lý chuỗi nhà thuốc hiệu quả và nâng cao trải nghiệm khách hàng.",
-  },
-  {
-    id: 3,
-    title: "Quản lý tồn kho tối ưu nhờ công nghệ thông minh",
-    date: "01/05/2023",
-    image: "/blog3.png",
-    category: "Quản lý bán hàng",
-    desc: "Giải pháp giúp các chủ nhà thuốc giảm thất thoát hàng tồn và tăng hiệu quả kinh doanh.",
-  },
-];
 export default function HomePage() {
-  const [selectedCategory, setSelectedCategory] = useState(
-    "Kinh nghiệm kinh doanh"
-  );
-
-  const filteredBlogs = BLOGS.filter((b) => b.category === selectedCategory);
   const {
     solutionSection,
     experienceSection,
     testimonialSection,
     featureSection,
+    blogSection,
   } = homePageData;
-  console.log("homepage", homePageData);
-  
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const allCategories = [
-    "Tất cả",
-    "Kinh nghiệm kinh doanh",
-    "Chuyển đổi số",
-    "Quản lý kho",
-    "tin tức",
-    "Chuyển đổi số",
-  ];
-  const [activeCategory, setActiveCategory] = useState("Tất cả");
 
-  const filteredPosts = (
-    activeCategory === "Tất cả"
-      ? blogPosts
-      : blogPosts.filter((post) => post.categories.includes(activeCategory))
-  ).slice(0, 3); 
+  const [activeCategory, setActiveCategory] = useState("Tất cả");
+  const [blogPosts, setBlogPosts] = useState<BlogCard[] | null>(null);
+  const currentPage = 0;
+  const pageSize = 3;
+  const [activeExperienceIndex, setActiveExperienceIndex] = useState<number>(0);
+  const experienceIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const experienceResumeTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const totalExperienceItems = experienceSection.contents.length;
+
+  const stopExperienceCycle = () => {
+    if (experienceIntervalRef.current) {
+      clearInterval(experienceIntervalRef.current);
+      experienceIntervalRef.current = null;
+    }
+    if (experienceResumeTimerRef.current) {
+      clearTimeout(experienceResumeTimerRef.current);
+      experienceResumeTimerRef.current = null;
+    }
+  };
+  const startExperienceCycle = () => {
+    stopExperienceCycle();
+    if (totalExperienceItems > 0) {
+      experienceIntervalRef.current = setInterval(() => {
+        setActiveExperienceIndex(
+          (prevIndex) => (prevIndex + 1) % totalExperienceItems
+        );
+      }, 2000);
+    }
+  };
+
+  // Hàm xử lý khi NGƯỜI DÙNG HOVER vào một item
+  const handleExperienceUserHover = (index: number) => {
+    stopExperienceCycle(); // Dừng tự động
+    setActiveExperienceIndex(index); // Đặt index theo hover của người dùng
+  };
+
+  // Hàm xử lý khi NGƯỜI DÙNG RỜI CHUỘT khỏi danh sách
+  const handleExperienceMouseLeaveList = () => {
+    stopExperienceCycle();
+    experienceResumeTimerRef.current = setTimeout(() => {
+      startExperienceCycle();
+    }, 5000); // 5 giây
+  };
+
+  useEffect(() => {
+    async function fetchBlogPosts() {
+      try {
+        const categorySlug =
+          activeCategory === "Tất cả"
+            ? "home"
+            : activeCategory.toLowerCase().replace(/\s/g, "-");
+        const response = await getBlogPosts(
+          categorySlug,
+          currentPage,
+          pageSize
+        );
+        console.log("response", response);
+        const transformedPosts = transformBlogListData(response);
+        setBlogPosts(transformedPosts);
+      } catch (error) {
+        console.error("Error fetching blog posts:", error);
+      }
+    }
+
+    fetchBlogPosts();
+  }, [activeCategory]);
+
+  useEffect(() => {
+    startExperienceCycle();
+    return () => {
+      stopExperienceCycle();
+    };
+  }, [totalExperienceItems]); // Chạy khi component mount hoặc số lượng item thay đổi
+
   return (
     <>
       <section
@@ -99,21 +104,23 @@ export default function HomePage() {
         className="h-screen max-h-[1100px] bg-gradient-to-b from-blue-100 to-white overflow-y-clip"
       >
         <div className="container h-full w-full flex items-center justify-center flex-col text-center">
-          <h6 className="capitalize text-primary mb-10">{homePageData.eyebrow}</h6>
+          <h6 className="capitalize text-primary mb-10">
+            {homePageData.eyebrow}
+          </h6>
           <h1 className="mx-auto max-w-5xl capitalize">{homePageData.title}</h1>
-          <div className="flex items-center  justify-center ">
-            <button className="btn font-bold ">Đăng Ký dùng thử</button>
+          <div className="flex items-center  justify-center ">
+            <Button size="md" href={homePageData.ctaButton.link || undefined}>
+              {homePageData.ctaButton.title}
+            </Button>
           </div>
         </div>
       </section>
 
-      <section className="py-10">
+      <section className="mx-auto py-10">
         <div className="container bg-ink rounded-2xl p-10">
           <div className="text-center ">
-            <h2 className=" text-white mb-5">
-              {solutionSection.title}
-            </h2>
-            <p className="mb-15 text-h6 mx-auto max-w-2xl text-white/80">
+            <h2 className=" text-white mb-5">{solutionSection.title}</h2>
+            <p className="mb-15 text-h6 mx-auto max-w-2xl text-white">
               {solutionSection.description}
             </p>
           </div>
@@ -129,13 +136,13 @@ export default function HomePage() {
                 <img
                   src={card.image}
                   alt={card.alt}
-                  className="mx-auto my-4 h-70 w-auto object-cover"
+                  className="mx-auto my-4 h-70 w-auto object-cover rounded-xl"
                 />
 
                 <div className="flex justify-center mt-5">
                   <Link
                     href={card.ctaButton.link || "#"}
-                    className="inline-flex items-center gap-2  px-4 py-2 text-sub1 font-bold text-primary"
+                    className="inline-flex items-center gap-2  px-4 py-2 text-sub1 font-bold text-primary"
                   >
                     {card.ctaButton.title}
                     <span className="text-sky-600">
@@ -168,38 +175,118 @@ export default function HomePage() {
         </div>
 
         {/* CTA */}
-        <div className="mt-8 w-full text-center">
+        <div className="mt-15 w-full text-center">
           <a
             href="/giai-phap/tong-quan"
-            className="mt-10 group inline-flex items-center text-sub2 rounded-full bg-primary px-5 py-3 font-bold text-white shadow-lg shadow-primary/30 transition hover:opacity-90"
+            className="group inline-flex items-center text-sub2 rounded-full bg-primary px-5 py-3 font-bold text-white shadow-lg shadow-primary/30 transition hover:opacity-90"
           >
             Khám phá giải pháp
           </a>
         </div>
       </section>
 
-      <section className="bg-ink">
-        <div className="container py-10">
+      <section className="relative overflow-hidden bg-ink">
+        <div className="container mx-auto">
           <div className="text-center">
             <p className="text-h6 mb-5 font-bold uppercase tracking-wide text-primary">
-              V-Pharma
+              {experienceSection.eyebrow}
             </p>
-            <h2 className="mb-15 text-white">
-              Thiết Kế Riêng Biệt Cho Ngành Dược
-            </h2>
+            <h2 className="mb-15 text-white">{experienceSection.title}</h2>
           </div>
-          <div className="mt-10 space-y-16">
-          <FeatureCard
-            features={featureSection.featureCards}
-            direction="left"
-            variant="dark"
-          />
-        </div>
+          <div className={`grid items-center lg:grid-cols-2`}>
+            {/* Features bên trái */}
+            <div className="flex justify-center ml-5">
+              <ul
+                className="space-y-7"
+                onMouseLeave={handleExperienceMouseLeaveList}
+              >
+                {experienceSection.contents.map((item, i) => (
+                  <li
+                    key={i}
+                    onMouseEnter={() => handleExperienceUserHover(i)}
+                    className={`group flex items-start gap-5 rounded-xl p-5 transition-all duration-300
+                      border max-w-3xl mx-auto
+                      ${
+                        activeExperienceIndex === i
+                          ? "bg-white shadow-xl opacity-100" // Trạng thái Active
+                          : "bg-ink border-transparent opacity-80 group-hover:bg-white group-hover:shadow-xl group-hover:border-sky-100 group-hover:opacity-100" // Trạng thái Inactive + Hover
+                      }`}
+                  >
+                    <span
+                      className={`inline-flex h-10 w-10 flex-none items-center justify-center rounded-full
+                bg-emerald-100 text-success mr-1
+                transition-all duration-300
+                        ${
+                          activeExperienceIndex === i
+                            ? "bg-success text-white"
+                            : "group-hover:bg-success group-hover:text-white"
+                        }`}
+                      aria-label="Feature icon"
+                    >
+                      <FiCheckCircle className="h-7 w-7" />
+                    </span>
+                    <div>
+                      <h3
+                        // MODIFIED: Cập nhật className cho title
+                        className={`font-bold text-h6 transition-colors duration-200
+                          ${
+                            activeExperienceIndex === i
+                              ? "text-black" 
+                              : "text-white group-hover:text-black"
+                          }`}
+                      >
+                        {item.title}
+                      </h3>
+                      <p
+                        className={`mt-1 text-sub2 leading-6 transition-colors duration-200
+                          ${
+                            activeExperienceIndex === i
+                              ? "text-black" 
+                              : "text-white group-hover:text-black" 
+                          }`}
+                      >
+                        {item.description}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="relative min-h-[340px] flex items-center justify-center">
+              <div className="relative w-[405px] h-[340px]">
+                
+                <div
+                  className="absolute left-[55px] top-[55px] w-[300px] h-[230px] rounded-lg bg-white/30"
+                  style={{ zIndex: 1 }}
+                ></div>
+                <div
+                  className="absolute left-[110px] top-[0px] bg-white rounded-xl shadow-lg w-[295px] p-5"
+                  style={{ zIndex: 2 }}
+                >
+                  <img
+                    src="/chart.png"
+                    alt="Total Balance Chart"
+                    className="w-full h-60 object-contain"
+                  />
+                </div>
+                <div
+                  className="absolute left-[0px] bottom-[0px] bg-gray-500 rounded-xl shadow-lg w-[195px] p-5"
+                  style={{ zIndex: 3 }}
+                >
+                  <img
+                    src="/chart.png"
+                    alt="Total Balance Mini Chart"
+                    className="w-full h-20 object-contain"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
           {/* CTA Button ngoài grid */}
           <div className="mt-10 w-full flex justify-center">
             <a
               href="/about-us"
-              className="mt-10 group inline-flex items-center text-sub1 rounded-full bg-white px-5 py-3 font-bold text-primary shadow-lg shadow-primary/30 transition hover:opacity-90"
+              className="text-sub2 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-bold text-primary shadow transition hover:bg-primary hover:text-white hover:border-transparent"
             >
               Tìm hiểu về V-Pharma
             </a>
@@ -215,78 +302,91 @@ export default function HomePage() {
         <div className="container">
           {/* Header (Centered) */}
           <div className="text-center">
-            <h2 className="mb-15 text-black">
-              Cập Nhật Kiến Thức Cùng V-Pharma
-            </h2>
+            <h2 className="mb-15 text-black">{blogSection.title}</h2>
           </div>
 
           <div className="mt-8 flex flex-col items-center justify-between gap-4 md:flex-row">
-            {/* Tabs (Left-aligned) */}
+            {/* Tabs */}
             <div className="flex flex-wrap justify-center gap-6 md:justify-start">
-              {allCategories.map((category) => (
+              <button
+                key="all"
+                onClick={() => setActiveCategory("Tất cả")}
+                className={`rounded-full px-4 py-2 text-sub2 font-semibold border border-gray transition-colors ${
+                  activeCategory === "Tất cả"
+                    ? "bg-primary text-white shadow-md"
+                    : "bg-white text-black hover:bg-slate-100"
+                }`}
+              >
+                Tất cả
+              </button>
+              {blogSection.blogCategories.map((category) => (
                 <button
-                  key={category}
-                  onClick={() => setActiveCategory(category)}
+                  key={category.slug}
+                  onClick={() => setActiveCategory(category.name)}
                   className={`rounded-full px-4 py-2 text-sub2 font-semibold border border-gray transition-colors ${
-                    activeCategory === category
-                      ? "bg-primary  text-white shadow-md"
+                    activeCategory === category.name
+                      ? "bg-primary text-white shadow-md"
                       : "bg-white text-black hover:bg-slate-100"
                   }`}
                 >
-                  {category}
+                  {category.name}
                 </button>
               ))}
             </div>
 
-            {/* View All Link (Right-aligned) */}
+            {/* View All Link */}
             <Link
               href="/blog/blog-home"
               className="inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-sub2 font-bold text-primary transition-colors hover:bg-sky-100"
             >
-              Xem tất cả bài viết
+              {blogSection.ctaButton.title}
               <FiArrowRight className="h-5 w-5" />
             </Link>
           </div>
 
-          {/* Post Grid (No Change) */}
+          {/* Post Grid */}
           <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filteredPosts.map((post) => (
-              <article
-                key={post.title}
-                className="group flex flex-col overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
-              >
-                <Link
-                  href={`/blog/${post.categories.slug}/${post.slug}`}
-                  className="block overflow-hidden"
+            {blogPosts && blogPosts.length > 0 ? (
+              blogPosts.map((post, index) => (
+                <article
+                  key={index}
+                  className="group flex flex-col overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
                 >
-                  <Image
-                    src={post.imageTitle}
-                    alt={post.title}
-                    width={400}
-                    height={250}
-                    className="h-56 w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                  <div className="flex flex-1 flex-col p-5">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium text-primary">
-                        {post.categories[0]}
-                      </span>
-                      <span className="text-sm text-slate-500">·</span>
-                      <span className="text-sm text-colordescription ">
-                        {new Date(post.date).toLocaleDateString("vi-VN")}
-                      </span>
-                    </div>
+                  <Link
+                    href={`/blog/${post.category.slug}/${post.slug}`}
+                    className="block overflow-hidden"
+                  >
+                    <Image
+                      src={post.coverImage?.url || "/default-image.png"}
+                      alt={post.title}
+                      width={400}
+                      height={250}
+                      className="h-56 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                    <div className="flex flex-1 flex-col p-5">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-primary">
+                          {post.category.name}
+                        </span>
+                        <span className="text-sm text-slate-500">·</span>
+                        <span className="text-sm text-colordescription">
+                          {new Date(post.createdAt).toLocaleDateString("vi-VN")}
+                        </span>
+                      </div>
 
-                    <h3 className="mt-3 text-sub2 font-bold text-colordescription transition-colors group-hover:text-primary">
-                      {post.title}
-                    </h3>
-                    <p className="mt-2 line-clamp-2 flex-1 text-body2 text-colordescription">
-                      {post.description}
-                    </p>
-                  </div>
-                </Link>
-              </article>
-            ))}
+                      <h3 className="mt-3 text-sub2 font-bold text-colordescription transition-colors group-hover:text-primary">
+                        {post.title}
+                      </h3>
+                      <p className="mt-2 line-clamp-2 flex-1 text-body2 text-colordescription">
+                        {post.description}
+                      </p>
+                    </div>
+                  </Link>
+                </article>
+              ))
+            ) : (
+              <p>Không có bài viết nào.</p>
+            )}
           </div>
         </div>
       </section>

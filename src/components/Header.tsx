@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FiChevronDown, FiMenu, FiX } from "react-icons/fi";
+import Image from "next/image";
 
 const cn = (...classes: string[]) => classes.filter(Boolean).join(" ");
 
@@ -33,10 +34,12 @@ export function Header() {
           className="flex items-center flex-shrink-0"
           onClick={() => setIsMobileMenuOpen(false)} 
         >
-          <img
+          <Image
             src="/Vpharma-AMIT.png"
             alt="Logo VPharma"
             className="h-10 w-auto"
+            width={200}
+            height={150}
           />
         </Link>
 
@@ -44,8 +47,7 @@ export function Header() {
         <nav className="hidden min-[1280px]:flex items-center gap-4 font-medium">
           {mainNavLinks.map((link) => {
             const pathToMatch = link.matchPath || link.href;
-            const isActive =
-              pathname !== "/" && pathname.startsWith(pathToMatch);
+            const isActive = pathname !== "/" && pathname.startsWith(pathToMatch);
 
             return (
               <Link
@@ -63,7 +65,7 @@ export function Header() {
             );
           })}
 
-          {/* Desktop Dropdown */}
+          {/* Dropdown Thêm */}
           <div className="group relative ">
             <button className="flex items-center gap-1 hover:text-primary shad">
               <span className="text-sub2 text-black">Thêm</span>

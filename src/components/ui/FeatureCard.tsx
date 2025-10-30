@@ -1,111 +1,16 @@
-// "use client";
-
-// import Image from "next/image";
-// import { useState } from "react";
-// import { FeatureCardProps } from "@/types";
-// import { FiCheckCircle } from "react-icons/fi";
-
-// export default function FeatureCard({
-//   features,
-//   direction = "right",
-//   variant = "light",
-// }: FeatureCardProps) {
-//   const [hoveredIndex, setHoveredIndex] = useState<number>(0);
-//   const isLeft = direction === "left";
-
-//   const baseTitleColor = variant === "dark" ? "text-white" : "text-black";
-//   const baseDescColor =
-//     variant === "dark" ? "text-white" : "text-colordescription";
-
-//   return (
-//     <div className={`grid items-center lg:grid-cols-2`}>
-//       <div
-//         className={`${
-//           isLeft ? "lg:order-2" : "lg:order-1"
-//         } flex justify-center relative`}
-//       >
-//         <div className="relative w-full max-w-[720px] h-84 rounded-2xl overflow-hidden shadow-lg">
-//           {features.map((item, index) => (
-//             <Image
-//               key={index}
-//               src={item.image}
-//               alt={item.title}
-//               width={640}
-//               height={420}
-//               className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
-//                   w-[85%] h-auto rounded-xl object-cover transition-opacity duration-500
-//                   ${
-//                     hoveredIndex === index ? "opacity-100 z-10" : "opacity-0 z-0"
-//                   }`}
-//             />
-//           ))}
-//         </div>
-//       </div>
-
-//       {/* Cột mô tả */}
-//       <div className={`${isLeft ? "lg:order-1" : "lg:order-2"} flex justify-center ml-5`}>
-//         <ul className="space-y-7">
-//           {features.map((item, index) => (
-//             <li
-//               key={index}
-//               className={`flex gap-5 group cursor-pointer transition-all duration-300 ${
-//                 hoveredIndex === index ? "opacity-100" : "opacity-80"
-//               }`}
-//               onMouseEnter={() => setHoveredIndex(index)}
-//             >
-//               <span
-//                 className={`inline-flex h-9 w-9 flex-none items-center justify-center rounded-full
-//                 bg-emerald-100 text-success ring-1 ring-inset ring-emerald-200
-//                 transition-all duration-300
-//                 ${
-//                   hoveredIndex === index
-//                     ? "bg-success text-white ring-emerald-500"
-//                     : "group-hover:bg-success group-hover:text-white "
-//                 }`}
-//               >
-//                 <FiCheckCircle className="h-6 w-6" strokeWidth={2} />
-//               </span>
-//               <div>
-//                 <h3
-//                   className={`font-bold mb-2 transition-colors duration-300 ${
-//                     hoveredIndex === index
-//                       ? "text-primary"
-//                       : `${baseTitleColor} group-hover:text-primary`
-//                   }`}
-//                 >
-//                   {item.title}
-//                 </h3>
-//                 <p
-//                   className={`text-sub2 leading-6 max-w-lg transition-colors duration-300 ${
-//                     hoveredIndex === index
-//                       ? "text-primary"
-//                       : `${baseDescColor} group-hover:text-primary`
-//                   }`}
-//                 >
-//                   {item.description}
-//                 </p>
-//               </div>
-//             </li>
-//           ))}
-//         </ul>
-//       </div>
-//     </div>
-//   );
-// }
-
 "use client";
 
 import Image from "next/image";
 // 1. Import thêm useEffect và useRef
 import { useState, useEffect, useRef } from "react";
-import { FeatureCardProps } from "@/types";
+import { FeatureCardHomeProps } from "@/types";
 import { FiCheckCircle } from "react-icons/fi";
 
 export default function FeatureCard({
   features,
   direction = "right",
   variant = "light",
-}: FeatureCardProps) {
+}: FeatureCardHomeProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number>(0);
   const isLeft = direction === "left";
 
@@ -166,9 +71,8 @@ export default function FeatureCard({
     <div className={`grid items-center lg:grid-cols-2`}>
       {/* Cột hình ảnh (Không đổi) */}
       <div
-        className={`${
-          isLeft ? "lg:order-2" : "lg:order-1"
-        } flex justify-center relative`}
+        className={`${isLeft ? "lg:order-2" : "lg:order-1"
+          } flex justify-center relative`}
       >
         <div className="relative w-full max-w-[720px] h-84 rounded-2xl overflow-hidden shadow-lg">
           {features.map((item, index) => (
@@ -180,11 +84,10 @@ export default function FeatureCard({
               height={420}
               className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
                       w-[85%] h-auto rounded-xl object-cover transition-opacity duration-500
-                      ${
-                        hoveredIndex === index
-                          ? "opacity-100 z-10"
-                          : "opacity-0 z-0"
-                      }`}
+                      ${hoveredIndex === index
+                  ? "opacity-100 z-10"
+                  : "opacity-0 z-0"
+                }`}
             />
           ))}
         </div>
@@ -192,18 +95,16 @@ export default function FeatureCard({
 
       {/* Cột mô tả */}
       <div
-        className={`${
-          isLeft ? "lg:order-1" : "lg:order-2"
-        } flex justify-center ml-5`}
+        className={`${isLeft ? "lg:order-1" : "lg:order-2"
+          } flex justify-center ml-5`}
       >
         {/* 5. Thêm onMouseLeave vào thẻ <ul> */}
         <ul className="space-y-7" onMouseLeave={handleMouseLeaveList}>
           {features.map((item, index) => (
             <li
               key={index}
-              className={`flex gap-5 group cursor-pointer transition-all duration-300 ${
-                hoveredIndex === index ? "opacity-100" : "opacity-80"
-              }`}
+              className={`flex gap-5 group cursor-pointer transition-all duration-300 ${hoveredIndex === index ? "opacity-100" : "opacity-80"
+                }`}
               // 6. Cập nhật onMouseEnter để gọi hàm handleUserHover
               onMouseEnter={() => handleUserHover(index)}
             >
@@ -211,30 +112,27 @@ export default function FeatureCard({
                 className={`inline-flex h-10 w-10 flex-none items-center justify-center rounded-full
                 bg-emerald-100 text-success mr-1
                 transition-all duration-300
-                ${
-                  hoveredIndex === index
+                ${hoveredIndex === index
                     ? "bg-success text-white"
                     : "group-hover:bg-success group-hover:text-white "
-                }`}
+                  }`}
               >
                 <FiCheckCircle className="h-7 w-7" strokeWidth={2} />
               </span>
               <div>
                 <h3
-                  className={`font-bold mb-2 transition-colors duration-300 ${
-                    hoveredIndex === index
+                  className={`font-bold mb-2 transition-colors duration-300 ${hoveredIndex === index
                       ? "text-primary"
                       : `${baseTitleColor} group-hover:text-primary`
-                  }`}
+                    }`}
                 >
                   {item.title}
                 </h3>
                 <p
-                  className={`text-sub2 leading-6 max-w-lg transition-colors duration-300 ${
-                    hoveredIndex === index
+                  className={`text-sub2 leading-6 max-w-lg transition-colors duration-300 ${hoveredIndex === index
                       ? "text-primary"
                       : `${baseDescColor} group-hover:text-primary`
-                  }`}
+                    }`}
                 >
                   {item.description}
                 </p>
