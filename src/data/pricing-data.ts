@@ -34,7 +34,7 @@ export const plans = [
     billingCycle: "VNĐ/ năm",
     trialNote: "1 Trải nghiệm 1 năm",
     audienceNote: "Áp dụng cho nhà thuốc nhỏ",
-    isFeatured: true,
+    // isFeatured: true,
   },
   {
     id: "tieu_chuan" as PlanId,

@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "vpharma-strapi.onrender.com",
+        hostname: "**",
         port: "",
         pathname: "/uploads/**",
       },

@@ -1,7 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { FiMenu, FiX } from "react-icons/fi";
 
 const cn = (...classes: string[]) => classes.filter(Boolean).join(" ");
 
@@ -16,18 +18,20 @@ const subNavLinks = [
 
 export function SolutionsSubHeader() {
   const pathname = usePathname();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-[72px] z-30 bg-ink">
-      <div className="container mx-auto flex items-center py-3">
-        <div className="flex items-center">
-          <p className="text-sub2 text-white font-bold">
+    <header className="sticky top-[64px] z-30 bg-ink">
+      <div className="container mx-auto flex items-center gap-6 py-3">
+        <div className="flex items-center gap-6">
+          <p className="text-sub1 text-white font-bold">
             Phần mềm quản lý nhà thuốc
           </p>
-          {/* Divider dọc */}
-          <span className="rounded-2xl mx-3 h-8 w-1 bg-white" />
+          <span className="hidden lg:block rounded-2xl h-8 w-0.5 bg-blue-100" />
         </div>
-        <nav className="flex mx-3 items-center gap-6 font-bold text-sub2 flex-1">
+
+        {/* Desktop Nav */}
+        <nav className="hidden lg:flex items-center gap-6 text-sub2 flex-1">
           {subNavLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
@@ -35,8 +39,10 @@ export function SolutionsSubHeader() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "transition-colors mx-4 ",
-                  isActive ? "text-primary" : "text-white hover:text-blue-500"
+                  "transition-colors",
+                  isActive
+                    ? "text-white font-bold "
+                    : "text-blue-100 hover:text-white"
                 )}
               >
                 {link.label}
@@ -44,7 +50,44 @@ export function SolutionsSubHeader() {
             );
           })}
         </nav>
+
+        {/* Mobile Menu Icon Button */}
+        <div className="lg:hidden ml-auto">
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="text-2xl text-white"
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? <FiX /> : <FiMenu />}
+          </button>
+        </div>
       </div>
+
+      {/* Mobile Menu Dropdown */}
+      {isMobileMenuOpen && (
+        <nav className="lg:hidden bg-ink border-t border-blue-100/20">
+          <div className="container mx-auto flex flex-col py-1 text-center">
+            {subNavLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={cn(
+                    "transition-colors py-2 text-sub2",
+                    isActive
+                      ? "text-white font-bold"
+                      : "text-blue-100 hover:text-white"
+                  )}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </div>
+        </nav>
+      )}
     </header>
   );
 }
