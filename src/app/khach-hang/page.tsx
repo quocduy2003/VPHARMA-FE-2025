@@ -1,8 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import FadeInOnScroll from "@/components/animations/FadeInOnScroll";
 import PharmacyCarousel from "@/components/PharmacyCarousel";
 import CTASection from "@/components/CTA";

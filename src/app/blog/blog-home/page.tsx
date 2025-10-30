@@ -19,7 +19,7 @@ import {
 import { BlogCard, BlogCardData } from "@/types";
 
 export default function BlogHomePage() {
-  const pathname = usePathname();
+
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get("category");
 

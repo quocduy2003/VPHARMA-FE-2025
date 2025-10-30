@@ -1,14 +1,10 @@
 
 "use client";
 
-import Image from "next/image";
-import { useState, useEffect } from "react";
 import { FiCheck } from "react-icons/fi";
 import {
   plans,
   featureCategories,
-  type Feature,
-  type FeatureCategory,
   type FeatureValue, // Đảm bảo đã export type FeatureValue từ data file
 } from "@/data/pricing-data";
 

@@ -100,7 +100,7 @@ import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { FeatureCardHomeProps } from "@/types";
 import { FiCheckCircle } from "react-icons/fi";
-import { RichTextRenderer } from "./RichTextRenderer";
+
 
 export default function FeatureCard({
   features,

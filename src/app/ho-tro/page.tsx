@@ -16,8 +16,6 @@ import {
   FiMail,
   FiChevronDown, // Sẽ dùng cho Listbox
   FiCheck,
-  FiPlus,
-  FiMinus,
   FiX,
 } from "react-icons/fi";
 import FaqSection, { type Faq } from "@/components/Faq";
