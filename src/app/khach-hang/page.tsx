@@ -126,9 +126,10 @@ function BlogSection({ slug }: { slug: string }) {
             >
               <div className="relative w-full h-44 sm:h-48 md:h-56 xl:h-64 rounded-t-xl overflow-hidden">
                 <Image
+                  width={500}
+                  height={500}
                   src={blog.coverImage.url}
                   alt={blog.title || "Blog Image"}
-                  fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover"
                 />

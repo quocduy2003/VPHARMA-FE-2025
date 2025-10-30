@@ -94,6 +94,7 @@ export default function IndependentPharmacyPage() {
           <div className="flex justify-center gap-4">
             {heroSection.ctaButtons.map((button, index) => (
               <Button
+                size="md"
                 key={button.title}
                 variant={index === 0 ? "primary" : "secondary"}
               >
@@ -115,7 +116,7 @@ export default function IndependentPharmacyPage() {
       </section>
 
       {/* 4 hero-section */}
-      <section className="bg-gradient-to-b from-blue-100 to-white py-10">
+      <section className="bg-gradient-to-b from-blue-100 to-white py-15">
         <div className="container mx-auto grid grid-cols-1 gap-8 px-4 text-center md:grid-cols-2 lg:grid-cols-4">
           {featureSection.gridItems.map((item, index) => (
             <div
@@ -133,7 +134,7 @@ export default function IndependentPharmacyPage() {
       </section>
 
       {/* Features Section: Các Tính Năng Nổi Bật Của V-Pharma*/}
-      <section className="container mx-auto py-10">
+      <section className="container mx-auto py-15">
         <h2 className="text-center mb-5 font-bold text-black">
           {featureSection.title}
         </h2>
@@ -184,9 +185,9 @@ export default function IndependentPharmacyPage() {
               </ul>
               <a
                 href="/about-us"
-                className="text-body2 inline-flex items-center gap-2 rounded-full bg-primary px-3 py-2 font-bold text-white shadow transition hover:bg-primary hover:text-white hover:border-transparent"
+                className="text-sub2 mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-3 py-3 font-bold text-white shadow transition hover:bg-primary hover:text-white hover:border-transparent"
               >
-                Tìm hiểu về V-Pharma
+                Đăng ký dùng thử
               </a>
             </div>
           </div>
@@ -195,11 +196,9 @@ export default function IndependentPharmacyPage() {
 
       {/* --- Section: An Tâm Và Vận Hành Hiệu Quả --- */}
       <section className=" bg-ink text-white">
-        <div className="container py-10 mx-auto">
+        <div className="container py-15 mx-auto">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className=" mb-5 font-bold">
-              {featureBenefitsSection.title}
-            </h2>
+            <h2 className=" mb-5 font-bold">{featureBenefitsSection.title}</h2>
             <p className="text-h6 mb-15 text-white">
               {featureBenefitsSection.description}
             </p>
@@ -237,7 +236,7 @@ export default function IndependentPharmacyPage() {
               );
             })}
           </div>
-          <div className="flex items-center mt-10 justify-center ">
+          <div className="flex items-center mt-15 justify-center ">
             <Button
               size="md"
               href={featureBenefitsSection.ctaButton.link || undefined}
@@ -249,20 +248,18 @@ export default function IndependentPharmacyPage() {
       </section>
 
       {/** section Công nghệ AI - Trợ lý Kinh doanh 24/7 */}
-      <section className="container mx-auto px-4 py-10 text-center">
-        <h2 className="text-black mb-5">
-          {featureShowcaseSection.title}
-        </h2>
+      <section className="container mx-auto px-4 py-20 text-center">
+        <h2 className="text-black mb-5">{featureShowcaseSection.title}</h2>
         <p className="mx-auto mb-10 max-w-2xl text-h6 text-colordescription">
           {featureShowcaseSection.description}
         </p>
         <div className="flex items-center mb-15 justify-center">
           <Button
-              size="md"
-              href={featureShowcaseSection.ctaButton.link || undefined}
-            >
-              {featureShowcaseSection.ctaButton.title}
-            </Button>
+            size="md"
+            href={featureShowcaseSection.ctaButton.link || undefined}
+          >
+            {featureShowcaseSection.ctaButton.title}
+          </Button>
         </div>
         {featureShowcaseSection.images &&
           featureShowcaseSection.images.length > 0 && (
@@ -274,16 +271,14 @@ export default function IndependentPharmacyPage() {
       </section>
 
       <section className="bg-gray-50 ">
-        <div className="container mx-auto px-4 py-10">
+        <div className="container mx-auto py-20">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="mb-5 text-black">
-              {solutionSection.title}
-            </h2>
+            <h2 className="mb-5 text-black">{solutionSection.title}</h2>
             <p className="text-h6 text-colordescription mb-15">
               {solutionSection.description}
             </p>
           </div>
-          <div className=" px-20 grid grid-cols-1 gap-10 md:grid-cols-2">
+          <div className=" px-40 grid grid-cols-1  md:grid-cols-2">
             {solutionSection.solutionCard?.map((card, index) => (
               <div
                 key={index}
@@ -295,32 +290,30 @@ export default function IndependentPharmacyPage() {
                 <p className="text-h6 mb-4 mx-auto max-w-lg">
                   {card.description}
                 </p>
+                
+                <Image
+                  src={card.image?.url || "/features-dashboard1.png"}
+                  alt={card.image?.alt || card.title}
+                  width={450}
+                  height={450}
+                  className="mx-auto"
+                />
                 <a
                   href={card.ctaButton.link || "#"}
-                  className="mb-4 inline-flex items-center gap-2 text-sub1 font-bold text-primary hover:underline"
+                  className="mt-5 inline-flex items-center gap-2 text-sub1 font-bold text-primary hover:underline"
                 >
                   {card.ctaButton.title}
                   <FiArrowRight className="h-5 w-5" />
                 </a>
-                <Image
-                  src={card.image?.url || "/features-dashboard1.png"}
-                  alt={card.image?.alt || card.title}
-                  width={250}
-                  height={250}
-                  className="mx-auto"
-                />
               </div>
             ))}
           </div>
         </div>
       </section>
 
-    
-      <section className="container mx-auto px-4 py-20">
+      <section className="container mx-auto py-20">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-black mb-5">
-            {commitmentSection.title}
-          </h2>
+          <h2 className="text-black mb-5">{commitmentSection.title}</h2>
           <p className="mx-auto mb-15 max-w-3xl text-center text-h6 text-colordescription">
             {commitmentSection.description}
           </p>
@@ -339,8 +332,7 @@ export default function IndependentPharmacyPage() {
 
           {/* Khung Accordion bên phải */}
           <div className="relative w-full max-w-[800px] mx-auto h-full">
-            {/* Nội dung Accordion cố định container, scroll khi dài */}
-            <div className="absolute inset-0 overflow-hidden flex flex-col items-center justify-start space-y-3 p-2">
+            <div className="absolute inset-0  overflow-hidden flex flex-col items-center justify-center space-y-3 p-2">
               {commitmentSection.contents.map((item, index) => (
                 <AccordionItem
                   key={index}
@@ -360,21 +352,21 @@ export default function IndependentPharmacyPage() {
 
       <ReviewCarousel sectionData={testimonialSection} />
       {/* Final CTA Section */}
-      <section className="container mx-auto px-4 py-20">
-        <div className="rounded-2xl bg-ink p-12 text-center text-white">
-          <h2 className="text-h3 font-bold">{ctaSection.title}</h2>
-          <p className="mx-auto text-h6 mt-4 max-w-1xl text-white/80">
-            {ctaSection.description}
-          </p>
-          <button className="mt-8 rounded-full bg-primary px-6 py-3 font-semibold text-white hover:opacity-90">
-            {ctaSection.ctaButton.title}
-          </button>
-        </div>
+      <section className=" container mx-auto py-10 text-center">
+          <div className="rounded-2xl bg-ink p-5">
+            <h2 className="mt-10 font-bold text-white mb-5">{ctaSection.title}</h2>
+            <p className="mx-auto text-h6 max-w-4xl text-white">
+              {ctaSection.description}
+            </p>
+            <button className="mt-12 mb-10 rounded-full bg-primary px-6 py-3 font-semibold text-white hover:opacity-90">
+              {ctaSection.ctaButton.title}
+            </button>
+          </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="container mx-auto max-w-4xl px-4 py-20">
-        <h2 className="text-center text-h3 font-bold text-ink">
+      <section className="container mx-auto max-w-4xl px-4 py-10">
+        <h2 className="text-center text-h3 font-bold text-black">
           {faqSection.title}
         </h2>
         <div className="mt-10">

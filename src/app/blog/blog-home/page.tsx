@@ -8,11 +8,7 @@ import { FeaturedNews } from "@/components/blog/FeaturedNews";
 import { BlogPostCard } from "@/components/blog/BlogCard";
 import Image from "next/image";
 
-import {
-  blogData,
-  getBlogPosts,
-  getBlogLastest,
-} from "@/lib/api";
+import { blogData, getBlogPosts, getBlogLastest } from "@/lib/api";
 import {
   transformBlogListData,
   transformBlogCardData,
@@ -55,13 +51,13 @@ export default function BlogHomePage() {
       const transformedList = transformBlogListData(data);
       setBlogList(transformedList);
 
-      const totalItems = data.meta.pagination.total - (currentPage === 1 ? 1 : 0);
+      const totalItems =
+        data.meta.pagination.total - (currentPage === 1 ? 1 : 0);
       setTotalPages(Math.ceil(totalItems / postsPerPage));
     }
 
     fetchData();
   }, [activeCategory, currentPage, mainBlog]);
-
 
   // Điều khiển phân trang
   const handlePageChange = (pageNumber: number) => {
@@ -77,7 +73,9 @@ export default function BlogHomePage() {
         {/* Header */}
         <div className="mb-10 text-center">
           <h1 className="text-black">{blogData.title}</h1>
-          <p className="mt-5 mx-auto max-w-3xl text-h6">{blogData.description}</p>
+          <p className="mt-5 mx-auto max-w-3xl text-h6">
+            {blogData.description}
+          </p>
         </div>
 
         {/* Bài viết chính + Sidebar */}
@@ -89,32 +87,38 @@ export default function BlogHomePage() {
                 className="group block"
               >
                 <Image
+                  width={250}
+                  height={68}
                   src={mainBlog.posts.coverImage.url}
                   alt={mainBlog.posts.title}
-                  width={800}
-                  height={500}
                   className="mb-4 h-auto w-full rounded-lg object-cover lg:h-[500px]"
                 />
                 <h2 className="mb-5 text-h4 text-black group-hover:text-primary line-clamp-2">
                   {mainBlog.posts.title}
                 </h2>
                 <div className="flex items-center gap-4 mb-5">
-                  <span className="rounded-md bg-blue-100 px-3 py-1 text-body2 font-bold uppercase text-primary">
+                  <span className="rounded-md bg-blue-100 px-3 py-1 text-body2 font-bold capitalize text-primary">
                     {mainBlog.posts.category.name}
                   </span>
                   <span className="text-body2 text-colordescription">
-                    {new Date(mainBlog.posts.createdAt || "").toLocaleDateString("vi-VN", {
+                    {new Date(
+                      mainBlog.posts.createdAt || ""
+                    ).toLocaleDateString("vi-VN", {
                       day: "2-digit",
                       month: "2-digit",
                       year: "numeric",
                     })}
                   </span>
                 </div>
-                <p className="text-sub1 line-clamp-3">{mainBlog.posts.description}</p>
+                <p className="text-sub1 line-clamp-3">
+                  {mainBlog.posts.description}
+                </p>
               </Link>
             ) : (
               <div className="flex h-full items-center justify-center rounded-lg bg-gray-100">
-                <p className="text-gray-500">Không có bài viết nào để hiển thị.</p>
+                <p className="text-gray-500">
+                  Không có bài viết nào để hiển thị.
+                </p>
               </div>
             )}
           </div>
@@ -153,10 +157,11 @@ export default function BlogHomePage() {
                 <button
                   key={index + 1}
                   onClick={() => handlePageChange(index + 1)}
-                  className={`flex h-9 w-9 items-center justify-center rounded-full border text-sub1 transition ${currentPage === index + 1
-                    ? "border-primary text-primary"
-                    : "border-gray-200 text-gray-500 hover:border-primary hover:text-primary"
-                    }`}
+                  className={`flex h-9 w-9 items-center justify-center rounded-full border text-sub1 transition ${
+                    currentPage === index + 1
+                      ? "border-primary text-primary"
+                      : "border-gray-200 text-gray-500 hover:border-primary hover:text-primary"
+                  }`}
                 >
                   {index + 1}
                 </button>

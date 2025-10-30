@@ -20,7 +20,7 @@ export function BlogPostCard({ post }: { post: BlogCard }) {
         />
       </div>
       <div className="p-2">
-        <p className="mb-2 text-body2 font-semibold uppercase text-primary">
+        <p className="mb-2 text-body2 font-semibold capitalize text-primary">
           {post.category.name}
           <span className="ml-4 text-body2 font-normal text-colordescription">
             {post.createdAt

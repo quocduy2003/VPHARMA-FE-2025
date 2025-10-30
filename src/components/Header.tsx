@@ -87,11 +87,11 @@ export function Header() {
         </nav>
         {/* Desktop Auth Buttons */}
         <div className="hidden min-[1280px]:flex items-center gap-2">
-          <button className="rounded-full border border-primary px-4 py-1 text-body2 font-bold text-primary hover:bg-blue-100 transition">
+          <button className="rounded-full border border-primary px-4 py-2 text-body2 font-bold text-primary hover:bg-blue-100 transition">
             Đăng nhập
           </button>
-          <button className="rounded-full border border-primary bg-primary px-4 py-1 text-body2 font-bold text-white hover:bg-primary/70 transition">
-            Đăng ký
+          <button className="rounded-full border border-primary bg-primary px-4 py-2 text-body2 font-bold text-white hover:bg-primary/70 transition">
+            Đăng ký dùng thử
           </button>
         </div>
 
