@@ -2,37 +2,32 @@
 "use client";
 
 import { FiCheck } from "react-icons/fi";
-import {
-  plans,
-  featureCategories,
-  type FeatureValue, // Đảm bảo đã export type FeatureValue từ data file
-} from "@/data/pricing-data";
+// import {
+//   plans,
+//   featureCategories,
+//   type FeatureValue,
+// } from "@/data/pricing-data";
+import { pricingPageData } from "@/lib/api/pricing";
+import type { Feature } from "@/types";
 
 // 1. CẬP NHẬT: "Coming soon" thành text thường (giống ảnh mới)
-const renderFeatureValue = (value: FeatureValue) => {
-  // Case 1: boolean (true) -> Dấu check
+const renderFeatureValue = (value: any) => {
+
+  // Nếu không có value → xử lý theo trạng thái isActive (true / false)
   if (value === true) {
     return <FiCheck className="mx-auto text-xl text-green-500" />;
   }
 
-  // Case 2: boolean (false) hoặc null -> Dấu gạch
-  if (value === false || value === null) {
+  if (value === false) {
     return <span className="text-gray-400">-</span>;
   }
-
-  // Case 3: "coming_soon" -> Đổi thành text thường
-  if (value === "coming_soon") {
-    return "Coming soon";
+  if (value !== undefined && value !== null && value !== "") {
+    return value;
   }
-
-  // Case 4: "unlimited"
-  if (value === "unlimited") {
-    return "Unlimited";
-  }
-
-  // Case 5: Mặc định (string hoặc number)
-  return value;
+  // Nếu tất cả đều null / rỗng → trả dấu gạch
+  return <span className="text-gray-400">-</span>;
 };
+
 
 import FaqSection, { type Faq } from "@/components/Faq";
 const hoTroFaqData: Faq[] = [
@@ -72,10 +67,31 @@ const finalCtaData: CTASectionType = {
 };
 
 export default function PricePage() {
+  const { pricingPlans, featureCategories } = pricingPageData
+  const plans = pricingPlans;
+
   // Hằng số để đảm bảo chiều cao các hàng đồng bộ
   const HEADER_ROW_HEIGHT = "h-[220px]";
   const CATEGORY_ROW_HEIGHT = "h-[57px]";
   const FEATURE_ROW_HEIGHT = "h-[57px]";
+  // Lấy giá trị hiển thị đúng ưu tiên value nếu có, ngược lại dựa theo trạng thái
+  
+  const getFeatureDisplayValue = (feature: Feature, planId: number) => {
+    const planValue = feature.PlanValues?.[planId];
+    if (!planValue) return null;
+
+    // Nếu có value (string hay number), trả value
+    if (planValue.value !== undefined && planValue.value !== null && planValue.value !== "") {
+      return planValue.value;
+    }
+    console.log("planValue", planValue, typeof planValue.isActive);
+    // Nếu không có value -> xét theo trạng thái
+    if (planValue.isActive === true) return true;
+    if (planValue.isActive === false) return false;
+
+    return null;
+  };
+
 
   return (
     <div>
@@ -179,7 +195,7 @@ export default function PricePage() {
                           key={feature.id}
                           className={`${FEATURE_ROW_HEIGHT} p-4 text-center text-sm text-ink border-t border-gray-200`}
                         >
-                          {renderFeatureValue(feature.values[plan.id])}
+                          {renderFeatureValue(getFeatureDisplayValue(feature, plan.id))}
                         </div>
                       ))}
                     </div>

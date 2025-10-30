@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import FadeInOnScroll from "@/components/animations/FadeInOnScroll";
 import CTASection from "@/components/CTA";
@@ -98,33 +98,26 @@ const FounderSection = ({
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // MỚI: Logic cho Autoplay
-  const startAutoplay = () => {
-    // Chỉ chạy nếu có nhiều hơn 1 thành viên
+  const startAutoplay = useCallback(() => {
     if (totalMembers > 1) {
-      // Xóa interval cũ (nếu có) trước khi tạo cái mới
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
+      if (intervalRef.current) clearInterval(intervalRef.current);
       intervalRef.current = setInterval(() => {
-        handleNext(); // Tự động chuyển sang slide tiếp theo
-      }, 2000); // 3 giây
+        handleNext();
+      }, 3000);
     }
-  };
+  }, [handleNext, totalMembers]);
 
-  const stopAutoplay = () => {
+  const stopAutoplay = useCallback(() => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
     }
-  };
-
+  }, []);
   useEffect(() => {
     startAutoplay();
     return () => {
       stopAutoplay();
     };
-    // Thêm handleNext vào dependency array để đảm bảo nó luôn là hàm mới nhất
-    // (Quan trọng nếu hàm handleNext trong component cha không được bọc bằng useCallback)
-  }, [startAutoplay, handleNext, totalMembers]); // Chạy lại nếu các hàm này thay đổi
+  }, [startAutoplay]); // Chạy lại nếu các hàm này thay đổi
 
   // ... (phần code fallback khi không có founder giữ nguyên) ...
   if (totalMembers === 0) {

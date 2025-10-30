@@ -15,3 +15,6 @@ export * from "./home";
 
 // Blog Page Types
 export * from "./blog";
+
+// pricing Page Types
+export * from "./pricing";
