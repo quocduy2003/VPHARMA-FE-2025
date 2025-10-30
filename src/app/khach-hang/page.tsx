@@ -82,6 +82,9 @@ function ChallengeStackedCards({ challengeCards }: { challengeCards: Card[] }) {
                 }}
               >
                 <Image
+                
+                  width={200}
+                  height={200}
                   src={item.image}
                   className="w-20 h-20 rounded-full object-cover mb-5 mt-12"
                   alt={item.name}
@@ -125,9 +128,10 @@ function BlogSection({ slug }: { slug: string }) {
             >
               <div className="relative w-full h-44 sm:h-48 md:h-56 xl:h-64 rounded-t-xl overflow-hidden">
                 <Image
+                  width={500}
+                  height={500}
                   src={blog.coverImage.url}
                   alt={blog.title || "Blog Image"}
-                  fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover"
                 />

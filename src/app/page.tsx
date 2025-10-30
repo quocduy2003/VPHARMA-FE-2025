@@ -136,6 +136,8 @@ export default function HomePage() {
                 <Image
                   src={card.image}
                   alt={card.alt}
+                  width={500}
+                  height={500}
                   className="mx-auto my-4 h-70 w-auto object-cover rounded-xl"
                 />
 
@@ -264,6 +266,9 @@ export default function HomePage() {
                   style={{ zIndex: 2 }}
                 >
                   <Image
+                  
+                  width={500}
+                  height={500}
                     src="/chart.png"
                     alt="Total Balance Chart"
                     className="w-full h-60 object-contain"
@@ -274,6 +279,9 @@ export default function HomePage() {
                   style={{ zIndex: 3 }}
                 >
                   <Image
+                  
+                  width={500}
+                  height={500}
                     src="/chart.png"
                     alt="Total Balance Mini Chart"
                     className="w-full h-20 object-contain"

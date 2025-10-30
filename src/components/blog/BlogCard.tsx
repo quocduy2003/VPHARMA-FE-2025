@@ -12,8 +12,10 @@ export function BlogPostCard({ post }: { post: BlogCard }) {
     >
       <div className="overflow-hidden rounded-lg">
         <Image
+        width={250} 
+  height={68}
           src={post.coverImage.url}
-          alt={post.alt}
+          alt={post.alt || "Blog Card"}
           className="h-48  w-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
       </div>
