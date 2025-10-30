@@ -11,88 +11,7 @@ import { transformBlogPostData } from "@/lib/transformers/blog";
 import { normalizeHeadings } from "@/lib/utils/normalizeHeadings";
 import { generateTableOfContents } from "@/lib/utils/generateTOC";
 import { TocItem } from "@/types";
-
-
-
-// function TableOfContents({ sections }: { sections: ContentSection[] }) {
-//   const slug = useParams().slug as string;
-//   const [activeId, setActiveId] = useState<string>("");
-//   const activeItemRef = useRef<HTMLLIElement | null>(null);
-
-//   useEffect(() => {
-//     const SCROLL_OFFSET = 150;
-//     const handleScroll = () => {
-//       let currentId = "";
-//       for (let i = sections.length - 1; i >= 0; i--) {
-//         const element = document.getElementById(sections[i].id);
-//         if (element && element.getBoundingClientRect().top <= SCROLL_OFFSET) {
-//           currentId = sections[i].id;
-//           break;
-//         }
-//       }
-//       setActiveId(currentId);
-//     };
-//     window.addEventListener("scroll", handleScroll);
-//     return () => window.removeEventListener("scroll", handleScroll);
-//   }, [sections]);
-
-//   useEffect(() => {
-//     if (activeItemRef.current) {
-//       activeItemRef.current.scrollIntoView({
-//         behavior: "smooth",
-//         block: "nearest",
-//       });
-//     }
-//   }, [activeId]);
-
-//   const scrollToId = (id: string) => {
-//     const element = document.getElementById(id);
-//     setActiveId(id);
-//     if (element) {
-//       const offsetPosition =
-//         element.getBoundingClientRect().top + window.pageYOffset - 140;
-//       window.scrollTo({ top: offsetPosition, behavior: "smooth" });
-//     }
-//   };
-
-//   let level1Counter = 0;
-//   let level2Counter = 0;
-
-//   return (
-//     <div className="rounded-lg border p-4">
-//       <h3 className="text-sub1 font-bold mb-3 flex items-center gap-2">
-//         <FiList /> Nội dung chính
-//       </h3>
-//       <ul className="space-y-2 max-h-[400px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-//         {sections.map((section) => {
-//           let displayTitle = "";
-//           if (section.level === 1) {
-//             level1Counter++;
-//             level2Counter = 0;
-//             displayTitle = `${level1Counter}. ${section.title}`;
-//           } else {
-//             level2Counter++;
-//             displayTitle = `${level1Counter}.${level2Counter}. ${section.title}`;
-//           }
-//           const isActive = activeId === section.id;
-
-//           return (
-//             <li
-//               ref={isActive ? activeItemRef : null}
-//               key={section.id}
-//               onClick={() => scrollToId(section.id)}
-//               className={`line-clamp-1 cursor-pointer transition-colors hover:text-primary ${
-//                 section.level === 2 ? "pl-4 text-body2" : "text-sub2 font-medium"
-//               } ${isActive ? "text-primary font-bold" : "text-gray-600"}`}
-//             >
-//               {displayTitle}
-//             </li>
-//           );
-//         })}
-//       </ul>
-//     </div>
-    // const [toc, setToc] = useState<TOCItem[]>([]);
-// }
+import Image from "next/image";
 
 export default function BlogDetailPage() {
     const params = useParams();
@@ -152,7 +71,7 @@ export default function BlogDetailPage() {
                                 : ""}
                         </p>
                         <p className="text-body2 mb-6">{blog.description}</p>
-                        <img
+                        <Image
                             src={blog.coverImage?.url}
                             alt={blog.alt || blog.title}
                             className="w-full rounded-lg object-cover"

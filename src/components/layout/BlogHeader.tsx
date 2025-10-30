@@ -37,7 +37,7 @@ export function BlogHeader() {
   }, [isSearchOpen]);
 
   return (
-    <header className="sticky top-[72px] z-30 bg-ink">
+    <header className="sticky top-[70px] z-30 bg-ink">
       <div className="container mx-auto flex items-center justify-between py-3">
         <div className="flex items-center">
           <Link href="/blog/blog-home" className="group flex items-center ">

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FiChevronDown, FiMenu, FiX } from "react-icons/fi";
+import Image from "next/image";
 
 const cn = (...classes: string[]) => classes.filter(Boolean).join(" ");
 
@@ -31,12 +32,14 @@ export function Header() {
         <Link
           href="/"
           className="flex items-center flex-shrink-0"
-          onClick={() => setIsMobileMenuOpen(false)}
+          onClick={() => setIsMobileMenuOpen(false)} 
         >
-          <img
+          <Image
             src="/Vpharma-AMIT.png"
             alt="Logo VPharma"
             className="h-10 w-auto"
+            width={200}
+            height={150}
           />
         </Link>
 
