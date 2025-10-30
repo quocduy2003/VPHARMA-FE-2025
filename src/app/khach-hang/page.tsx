@@ -80,10 +80,12 @@ function ChallengeStackedCards({ challengeCards }: { challengeCards: Card[] }) {
                   pointerEvents: isActive ? "auto" : "none",
                 }}
               >
-                <img
+                <Image
                   src={item.image}
                   className="w-20 h-20 rounded-full object-cover mb-5 mt-12"
                   alt={item.name}
+                  width={80}
+                  height={80}
                 />
                 <p className="font-bold text-2xl mb-5">{item.name}</p>
                 <p className="text-lg text-gray-500 mb-5">{item.address}</p>

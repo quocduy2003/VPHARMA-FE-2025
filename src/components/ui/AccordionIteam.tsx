@@ -35,7 +35,7 @@ export function AccordionItem({
       </button>
       {isOpen && (
         <div className={`overflow-hidden transition-all duration-300 ${isOpen ? "max-h-[500px]" : "max-h-0"
-          } p-4 text-sm text-body2 ${textColor}`}>
+          } p-4 text-sm text-sub2 ${textColor}`}>
           {description}
         </div>
       )}

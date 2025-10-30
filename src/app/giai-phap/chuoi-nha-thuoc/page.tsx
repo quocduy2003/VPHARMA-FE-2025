@@ -2,12 +2,10 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useState, useEffect } from "react";
-import { FiPlus, FiMinus } from "react-icons/fi";
 import FadeInOnScroll from "@/components/animations/FadeInOnScroll";
 import FlipCard from "@/components/animations/FlipCard";
-import FaqSection from "@/components/Faq";
+
 
 import PharmacyCarousel from "@/components/PharmacyCarousel";
 import { chainPharmacyData } from "@/lib/api";
@@ -170,13 +168,7 @@ export default function ChuoiNhaThuoc() {
       prev === totalSlidesCustomer - cardsPerView ? 0 : prev + 1
     );
   }
-  const getVisibleCardsCustomer = () => {
-    const arr = [];
-    for (let i = 0; i < cardsPerView; i++) {
-      arr.push(cards[(indexCustomer + i) % totalSlidesCustomer]);
-    }
-    return arr;
-  };
+
 
   return (
     <div className="bg-white py-10">

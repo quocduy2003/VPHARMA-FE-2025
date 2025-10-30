@@ -1,24 +1,20 @@
-// app/page.tsx
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect } from "react";
+// MODIFIED: Thêm useRef
+import { useState, useEffect, useRef } from "react";
 import { homePageData } from "@/lib/api/home";
 import ReviewCarousel from "@/components/ReviewCarousel";
 import Link from "next/link";
 
-import { FiArrowRight } from "react-icons/fi";
+import { FiArrowRight, FiCheckCircle } from "react-icons/fi";
 import FeatureCard from "@/components/ui/FeatureCard";
 import { Button } from "@/components/ui/CTAButton";
 import { getBlogPosts } from "@/lib/api/blog";
 import { BlogCard } from "@/types";
-import {
-  transformBlogListData,
-} from "@/lib/transformers/blog";
-
+import { transformBlogListData } from "@/lib/transformers/blog";
 
 export default function HomePage() {
-
   const {
     solutionSection,
     experienceSection,
@@ -27,17 +23,63 @@ export default function HomePage() {
     blogSection,
   } = homePageData;
 
-
   const [activeCategory, setActiveCategory] = useState("Tất cả");
   const [blogPosts, setBlogPosts] = useState<BlogCard[] | null>(null);
   const currentPage = 0;
   const pageSize = 3;
+  const [activeExperienceIndex, setActiveExperienceIndex] = useState<number>(0);
+  const experienceIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const experienceResumeTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const totalExperienceItems = experienceSection.contents.length;
+
+  const stopExperienceCycle = () => {
+    if (experienceIntervalRef.current) {
+      clearInterval(experienceIntervalRef.current);
+      experienceIntervalRef.current = null;
+    }
+    if (experienceResumeTimerRef.current) {
+      clearTimeout(experienceResumeTimerRef.current);
+      experienceResumeTimerRef.current = null;
+    }
+  };
+  const startExperienceCycle = () => {
+    stopExperienceCycle();
+    if (totalExperienceItems > 0) {
+      experienceIntervalRef.current = setInterval(() => {
+        setActiveExperienceIndex(
+          (prevIndex) => (prevIndex + 1) % totalExperienceItems
+        );
+      }, 2000);
+    }
+  };
+
+  // Hàm xử lý khi NGƯỜI DÙNG HOVER vào một item
+  const handleExperienceUserHover = (index: number) => {
+    stopExperienceCycle(); // Dừng tự động
+    setActiveExperienceIndex(index); // Đặt index theo hover của người dùng
+  };
+
+  // Hàm xử lý khi NGƯỜI DÙNG RỜI CHUỘT khỏi danh sách
+  const handleExperienceMouseLeaveList = () => {
+    stopExperienceCycle();
+    experienceResumeTimerRef.current = setTimeout(() => {
+      startExperienceCycle();
+    }, 5000); // 5 giây
+  };
+
   useEffect(() => {
     async function fetchBlogPosts() {
       try {
-        const categorySlug = activeCategory === "Tất cả" ? "home" : activeCategory.toLowerCase().replace(/\s/g, "-");
-        const response = await getBlogPosts(categorySlug, currentPage, pageSize);
-        console.log('response', response);
+        const categorySlug =
+          activeCategory === "Tất cả"
+            ? "home"
+            : activeCategory.toLowerCase().replace(/\s/g, "-");
+        const response = await getBlogPosts(
+          categorySlug,
+          currentPage,
+          pageSize
+        );
+        console.log("response", response);
         const transformedPosts = transformBlogListData(response);
         setBlogPosts(transformedPosts);
       } catch (error) {
@@ -48,6 +90,13 @@ export default function HomePage() {
     fetchBlogPosts();
   }, [activeCategory]);
 
+  useEffect(() => {
+    startExperienceCycle();
+    return () => {
+      stopExperienceCycle();
+    };
+  }, [totalExperienceItems]); // Chạy khi component mount hoặc số lượng item thay đổi
+
   return (
     <>
       <section
@@ -55,24 +104,23 @@ export default function HomePage() {
         className="h-screen max-h-[1100px] bg-gradient-to-b from-blue-100 to-white overflow-y-clip"
       >
         <div className="container h-full w-full flex items-center justify-center flex-col text-center">
-          <h6 className="capitalize text-primary mb-10">{homePageData.eyebrow}</h6>
+          <h6 className="capitalize text-primary mb-10">
+            {homePageData.eyebrow}
+          </h6>
           <h1 className="mx-auto max-w-5xl capitalize">{homePageData.title}</h1>
-          <div className="flex items-center  justify-center ">
-            <Button size="md" className="mt-5" href={homePageData.ctaButton.link || undefined} >
+          <div className="flex items-center  justify-center ">
+            <Button size="md" href={homePageData.ctaButton.link || undefined}>
               {homePageData.ctaButton.title}
             </Button>
           </div>
         </div>
       </section>
 
-
-      <section className="py-10">
+      <section className="mx-auto py-10">
         <div className="container bg-ink rounded-2xl p-10">
           <div className="text-center ">
-            <h2 className=" text-white mb-5">
-              {solutionSection.title}
-            </h2>
-            <p className="mb-15 text-h6 mx-auto max-w-2xl text-white/80">
+            <h2 className=" text-white mb-5">{solutionSection.title}</h2>
+            <p className="mb-15 text-h6 mx-auto max-w-2xl text-white">
               {solutionSection.description}
             </p>
           </div>
@@ -85,16 +133,18 @@ export default function HomePage() {
               >
                 <h3 className="text-center mt-2 text-black">{card.title}</h3>
 
-                <img
+                <Image
                   src={card.image}
                   alt={card.alt}
-                  className="mx-auto my-4 h-70 w-auto object-cover"
+                  width={640} // hoặc width phù hợp
+                  height={420}
+                  className="mx-auto my-4 h-70 w-auto object-cover rounded-xl"
                 />
 
                 <div className="flex justify-center mt-5">
                   <Link
                     href={card.ctaButton.link || "#"}
-                    className="inline-flex items-center gap-2  px-4 py-2 text-sub1 font-bold text-primary"
+                    className="inline-flex items-center gap-2  px-4 py-2 text-sub1 font-bold text-primary"
                   >
                     {card.ctaButton.title}
                     <span className="text-sky-600">
@@ -127,10 +177,10 @@ export default function HomePage() {
         </div>
 
         {/* CTA */}
-        <div className="mt-8 w-full text-center">
+        <div className="mt-15 w-full text-center">
           <a
             href="/giai-phap/tong-quan"
-            className="mt-10 group inline-flex items-center text-sub2 rounded-full bg-primary px-5 py-3 font-bold text-white shadow-lg shadow-primary/30 transition hover:opacity-90"
+            className="group inline-flex items-center text-sub2 rounded-full bg-primary px-5 py-3 font-bold text-white shadow-lg shadow-primary/30 transition hover:opacity-90"
           >
             Khám phá giải pháp
           </a>
@@ -139,100 +189,99 @@ export default function HomePage() {
 
       <section className="relative overflow-hidden bg-ink">
         <div className="container mx-auto">
-          {/* Eyebrow và title */}
           <div className="text-center">
             <p className="text-h6 mb-5 font-bold uppercase tracking-wide text-primary">
               {experienceSection.eyebrow}
             </p>
-            <h2 className="mb-15 text-white">
-              {experienceSection.title}
-            </h2>
+            <h2 className="mb-15 text-white">{experienceSection.title}</h2>
           </div>
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-12 xl:gap-20 items-start max-w-5xl mx-auto">
+          <div className={`grid items-center lg:grid-cols-2`}>
             {/* Features bên trái */}
-            <div>
-              <ul className="space-y-8">
+            <div className="flex justify-center ml-5">
+              <ul
+                className="space-y-7"
+                onMouseLeave={handleExperienceMouseLeaveList}
+              >
                 {experienceSection.contents.map((item, i) => (
                   <li
                     key={i}
-                    className="group flex items-start gap-4 rounded-xl p-5 transition-all duration-200
-      bg-ink hover:bg-white hover:shadow-xl
-      border border-transparent hover:border-sky-100
-      max-w-3xl mx-auto "
+                    onMouseEnter={() => handleExperienceUserHover(i)}
+                    className={`group flex items-start gap-5 rounded-xl p-5 transition-all duration-300
+                      border max-w-3xl mx-auto
+                      ${activeExperienceIndex === i
+                        ? "bg-white shadow-xl opacity-100" // Trạng thái Active
+                        : "bg-ink border-transparent opacity-80 group-hover:bg-white group-hover:shadow-xl group-hover:border-sky-100 group-hover:opacity-100" // Trạng thái Inactive + Hover
+                      }`}
                   >
                     <span
-                      className="inline-flex size-10 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 ring-1 ring-emerald-200 
-          transition-all duration-200 group-hover:bg-emerald-200 group-hover:scale-105 aspect-square"
+                      className={`inline-flex h-10 w-10 flex-none items-center justify-center rounded-full
+                bg-emerald-100 text-success mr-1
+                transition-all duration-300
+                        ${activeExperienceIndex === i
+                          ? "bg-success text-white"
+                          : "group-hover:bg-success group-hover:text-white"
+                        }`}
                       aria-label="Feature icon"
                     >
-                      <svg
-                        viewBox="0 0 24 24"
-                        className="h-4 w-4 md:h-5 md:w-5"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      >
-                        <path d="M12 6v12M6 12h12" />
-                      </svg>
+                      <FiCheckCircle className="h-7 w-7" />
                     </span>
                     <div>
-                      <h3 className="font-bold text-h6 text-white group-hover:text-black">
+                      <h3
+                        // MODIFIED: Cập nhật className cho title
+                        className={`font-bold text-h6 transition-colors duration-200
+                          ${activeExperienceIndex === i
+                            ? "text-black"
+                            : "text-white group-hover:text-black"
+                          }`}
+                      >
                         {item.title}
                       </h3>
-                      <p className="mt-1 text-sub2 leading-6 text-white group-hover:text-colordescription">
+                      <p
+                        className={`mt-1 text-sub2 leading-6 transition-colors duration-200
+                          ${activeExperienceIndex === i
+                            ? "text-black"
+                            : "text-white group-hover:text-black"
+                          }`}
+                      >
                         {item.description}
                       </p>
                     </div>
                   </li>
                 ))}
               </ul>
-
             </div>
-            {/* Chart bên phải */}
-
-
-
-
-            {/* Chỉnh lại cái này còn một ảnh */}
-
-
-
-
-
             <div className="relative min-h-[340px] flex items-center justify-center">
-              {/* Nền lót phía sau (background block) */}
-              <div
-                className="absolute left-[55px] top-[55px] w-[300px] h-[230px] rounded-lg bg-white/30"
-                style={{ zIndex: 1 }}
-              ></div>
-              {/* Card lớn phía trên */}
-              <div
-                className="absolute left-[110px] top-[0px] bg-white rounded-xl shadow-lg w-[295px] p-5"
-                style={{ zIndex: 2 }}
-              >
-                {/* <div className="flex justify-between items-center mb-3">
-                  <span className="font-semibold text-gray-800">
-                    Total Balance
-                  </span>
-                  <span className="font-bold text-gray-900">$4,200</span>
+              <div className="relative w-[405px] h-[340px]">
+
+                <div
+                  className="absolute left-[55px] top-[55px] w-[300px] h-[230px] rounded-lg bg-white/30"
+                  style={{ zIndex: 1 }}
+                ></div>
+                <div
+                  className="absolute left-[110px] top-[0px] bg-white rounded-xl shadow-lg w-[295px] p-5"
+                  style={{ zIndex: 2 }}
+                >
+                  <Image
+                    src="/chart.png"
+                    alt="Total Balance Chart"
+                    width={500}      // chọn kích thước phù hợp với giao diện thực tế
+                    height={240}
+                    className="w-full h-60 object-contain"
+
+                  />
                 </div>
-                <div className="font-medium text-green-500 mb-3">+14%</div> */}
-                <img
-                  src="/chart.png"
-                  alt="Total Balance Chart"
-                  className="w-full h-60 object-contain"
-                />
-              </div>
-              {/* Card nhỏ ở dưới trái */}
-              <div
-                className="absolute left-[0px] bottom-[0px] bg-gray-500 rounded-xl shadow-lg w-[195px] p-5"
-                style={{ zIndex: 3 }}
-              >
-                <img
-                  src="/chart.png"
-                  alt="Total Balance Mini Chart"
-                  className="w-full h-20 object-contain"
-                />
+                <div
+                  className="absolute left-[0px] bottom-[0px] bg-gray-500 rounded-xl shadow-lg w-[195px] p-5"
+                  style={{ zIndex: 3 }}
+                >
+                  <Image
+                    src="/chart.png"
+                    alt="Total Balance Mini Chart"
+                    width={500}      // chọn kích thước phù hợp với giao diện thực tế
+                    height={240}
+                    className="w-full h-20 object-contain"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -240,7 +289,7 @@ export default function HomePage() {
           <div className="mt-10 w-full flex justify-center">
             <a
               href="/about-us"
-              className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-2.5 font-bold text-sky-700 border border-sky-200 shadow transition hover:bg-primary hover:text-white hover:border-transparent"
+              className="text-sub2 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-bold text-primary shadow transition hover:bg-primary hover:text-white hover:border-transparent"
             >
               Tìm hiểu về V-Pharma
             </a>
@@ -256,9 +305,7 @@ export default function HomePage() {
         <div className="container">
           {/* Header (Centered) */}
           <div className="text-center">
-            <h2 className="mb-15 text-black">
-              {blogSection.title}
-            </h2>
+            <h2 className="mb-15 text-black">{blogSection.title}</h2>
           </div>
 
           <div className="mt-8 flex flex-col items-center justify-between gap-4 md:flex-row">
@@ -342,10 +389,8 @@ export default function HomePage() {
               <p>Không có bài viết nào.</p>
             )}
           </div>
-
         </div>
       </section>
-
     </>
   );
 }

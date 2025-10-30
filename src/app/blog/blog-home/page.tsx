@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { usePathname, useSearchParams } from 'next/navigation';
+import {  useSearchParams } from 'next/navigation';
 import Link from "next/link";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { FeaturedNews } from "@/components/blog/FeaturedNews";
 import { BlogPostCard } from "@/components/blog/BlogCard";
+import Image from "next/image";
 
 import {
   blogData,
@@ -87,9 +88,11 @@ export default function BlogHomePage() {
                 href={`/blog/${mainBlog.posts.category.slug}/${mainBlog.posts.slug}`}
                 className="group block"
               >
-                <img
+                <Image
                   src={mainBlog.posts.coverImage.url}
                   alt={mainBlog.posts.title}
+                  width={800}
+                  height={500}
                   className="mb-4 h-auto w-full rounded-lg object-cover lg:h-[500px]"
                 />
                 <h2 className="mb-5 text-h4 text-black group-hover:text-primary line-clamp-2">

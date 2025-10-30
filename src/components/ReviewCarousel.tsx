@@ -50,7 +50,7 @@ export default function ReviewCarousel({ sectionData }: Props) {
   return (
     <section className="py-10 bg-gray-50">
       <div className="container text-center">
-        <p className=" text-h6 mb-8 font-bold uppercase tracking-wide text-primary">
+        <p className=" text-h6 mb-5 font-bold uppercase tracking-wide text-primary">
           Reviews
         </p>
         <h2 className="text-h2 font-bold text-black mb-15">

@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { RichTextBlock } from "@/types";
 import { ChallengeCardProp } from "@/types"
 import { RichTextRenderer } from "@/components/ui/RichTextRenderer";
 

@@ -124,7 +124,7 @@ const FounderSection = ({
     };
     // Thêm handleNext vào dependency array để đảm bảo nó luôn là hàm mới nhất
     // (Quan trọng nếu hàm handleNext trong component cha không được bọc bằng useCallback)
-  }, [handleNext, totalMembers]); // Chạy lại nếu các hàm này thay đổi
+  }, [startAutoplay, handleNext, totalMembers]); // Chạy lại nếu các hàm này thay đổi
 
   // ... (phần code fallback khi không có founder giữ nguyên) ...
   if (totalMembers === 0) {
@@ -177,7 +177,7 @@ const FounderSection = ({
                 case "center":
                   classes += " z-10 scale-[1.6]"; // Giữ nguyên scale 1.6 cho card
                   // SỬA: Thêm scale-0.625 để "hủy" phóng to cho khối text
-                  infoClasses += " opacity-100 scale-[0.625]"; 
+                  infoClasses += " opacity-100 scale-[0.625]";
                   break;
                 case "left":
                   classes += " z-0 scale-90 -translate-x-[150%] opacity-60";
