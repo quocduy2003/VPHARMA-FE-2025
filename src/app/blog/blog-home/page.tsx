@@ -6,6 +6,7 @@ import Link from "next/link";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { FeaturedNews } from "@/components/blog/FeaturedNews";
 import { BlogPostCard } from "@/components/blog/BlogCard";
+import Image from "next/image";
 
 import {
   blogData,
@@ -87,7 +88,7 @@ export default function BlogHomePage() {
                 href={`/blog/${mainBlog.posts.category.slug}/${mainBlog.posts.slug}`}
                 className="group block"
               >
-                <img
+                <Image
                   src={mainBlog.posts.coverImage.url}
                   alt={mainBlog.posts.title}
                   className="mb-4 h-auto w-full rounded-lg object-cover lg:h-[500px]"

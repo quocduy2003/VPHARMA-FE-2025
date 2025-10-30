@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { BlogPost } from "@/types";
+import Image from "next/image";
 
 const styles = `
 @keyframes scroll-up {
@@ -36,7 +37,7 @@ export function FeaturedNews({ posts }: { posts: BlogPost[] }) {
               className="mb-3 mt-5 block border-b border-blue-500 pb-3 last:mb-0 last:border-b-0"
             >
               <div className="flex items-start gap-3">
-                <img
+                <Image
                   src={post.coverImage.url}
                   alt={post.alt}
                   className="h-15 w-15 flex-shrink-0 rounded-md object-cover"

@@ -74,7 +74,7 @@ export function SolutionsSubHeader() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)} 
+                  onClick={() => setIsMobileMenuOpen(false)}
                   className={cn(
                     "transition-colors py-2 text-sub2",
                     isActive

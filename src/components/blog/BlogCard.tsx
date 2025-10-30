@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BlogCard } from "@/types";
+import Image from "next/image";
 
 
 export function BlogPostCard({ post }: { post: BlogCard }) {
@@ -10,7 +11,7 @@ export function BlogPostCard({ post }: { post: BlogCard }) {
       className="group block"
     >
       <div className="overflow-hidden rounded-lg">
-        <img
+        <Image
           src={post.coverImage.url}
           alt={post.alt}
           className="h-48  w-full object-cover transition-transform duration-300 group-hover:scale-105"

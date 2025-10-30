@@ -133,7 +133,7 @@ export default function HomePage() {
               >
                 <h3 className="text-center mt-2 text-black">{card.title}</h3>
 
-                <img
+                <Image
                   src={card.image}
                   alt={card.alt}
                   className="mx-auto my-4 h-70 w-auto object-cover rounded-xl"
@@ -263,7 +263,7 @@ export default function HomePage() {
                   className="absolute left-[110px] top-[0px] bg-white rounded-xl shadow-lg w-[295px] p-5"
                   style={{ zIndex: 2 }}
                 >
-                  <img
+                  <Image
                     src="/chart.png"
                     alt="Total Balance Chart"
                     className="w-full h-60 object-contain"
@@ -273,7 +273,7 @@ export default function HomePage() {
                   className="absolute left-[0px] bottom-[0px] bg-gray-500 rounded-xl shadow-lg w-[195px] p-5"
                   style={{ zIndex: 3 }}
                 >
-                  <img
+                  <Image
                     src="/chart.png"
                     alt="Total Balance Mini Chart"
                     className="w-full h-20 object-contain"

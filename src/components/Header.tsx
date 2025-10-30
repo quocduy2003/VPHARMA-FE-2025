@@ -85,7 +85,6 @@ export function Header() {
             </div>
           </div>
         </nav>
-
         {/* Desktop Auth Buttons */}
         <div className="hidden min-[1280px]:flex items-center gap-2">
           <button className="rounded-full border border-primary px-4 py-1 text-body2 font-bold text-primary hover:bg-blue-100 transition">
@@ -138,7 +137,7 @@ export function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)} 
+                onClick={() => setIsMobileMenuOpen(false)}
                 className="transition-colors py-2 text-sub2 text-colordescription hover:text-primary "
               >
                 {link.label}
