@@ -3,16 +3,20 @@ const API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
 export async function fetchAPI(endpoint: string) {
   try {
     console.log(`Fetching API: ${API_URL}/${endpoint}`);
-    const response = await fetch(`${API_URL}/${endpoint}`);
+    const response = await fetch(`${API_URL}/${endpoint}`, {
+      next: { revalidate: 3600 } // Cache for 1 hour during build
+    });
     if (!response.ok) {
-      throw new Error(`Failed to fetch: ${endpoint}`);
+      console.error(`API request failed: ${endpoint} - Status: ${response.status}`);
+      // Return empty data structure instead of throwing
+      return { data: null };
     }
     return await response.json();
   } catch (error: any) {
     //Trả lỗi chi tiết
-
     console.error("Error fetching API:", error.message);
-    throw error;
+    // Return empty data structure instead of throwing
+    return { data: null };
   }
 }
 

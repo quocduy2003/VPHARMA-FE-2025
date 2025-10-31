@@ -6,7 +6,12 @@ import { createImageUrl } from "@/lib/utils/imageUtils";
 export function transformIndependentPharmacyData(
   response: any,
 ): IndependentPharmacyData {
-  const { data } = response;
+  const { data } = response || {};
+
+  // Ensure data exists
+  if (!data) {
+    console.error("No data received from API for independent pharmacy solution");
+  }
 
   const heroSection = data?.heroSection?.hero;
   const featureSection = data?.featureSection;

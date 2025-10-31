@@ -27,9 +27,11 @@ export default function ReviewCarousel({ sectionData }: Props) {
   const repeat = 2;
 
   // Lấy tối đa 16 testimonial
-  const bestTestimonials = sectionData.testimonials.slice(0, 16);
+  const bestTestimonials = sectionData?.testimonials?.slice(0, 16) || [];
 
   useEffect(() => {
+    if (bestTestimonials.length === 0) return;
+
     const track = trackRef.current;
     let animationFrame: number;
     let pos = 0;
@@ -45,7 +47,12 @@ export default function ReviewCarousel({ sectionData }: Props) {
     };
     animationFrame = requestAnimationFrame(move);
     return () => cancelAnimationFrame(animationFrame);
-  }, [repeat]);
+  }, [repeat, bestTestimonials.length]);
+
+  // Null check after hooks
+  if (!sectionData || !sectionData.testimonials || sectionData.testimonials.length === 0) {
+    return null;
+  }
 
   return (
     <section className="py-10 bg-gray-50">

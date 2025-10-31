@@ -8,13 +8,13 @@ import { StrapiImage } from "@/types/common";
 const API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
 
 export const createImageUrl = (
-  relativeUrl: string | null | StrapiImage
+  relativeUrl: string | null | StrapiImage | undefined
 ): string => {
   if (!relativeUrl) return "/placeholder.png";
 
   // Nếu relativeUrl là object kiểu StrapiImage
   const imageUrl =
-    typeof relativeUrl === "string" ? relativeUrl : relativeUrl.url;
+    typeof relativeUrl === "string" ? relativeUrl : relativeUrl?.url;
 
   if (!imageUrl) return "/placeholder.png";
 

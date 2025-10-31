@@ -182,7 +182,7 @@
 //               {heroSection.description}
 //             </p>
 //             <div className="flex gap-4 ">
-//               {heroSection.ctaButtons.map((button, index) => (
+//               {heroSection?.ctaButtons?.map((button, index) => (
 //                 <Button
 //                   key={index}
 //                   variant={index === 0 ? "primary" : "secondary"}
@@ -485,11 +485,11 @@
 //           <div className="container mx-auto py-15">
 //             <div className="mx-auto mb-12 max-w-6xl text-center">
 //               <p className="mb-2 text-h6 font-bold capitalize tracking-wide text-primary">
-//                 {pharmaFeedback.title.toLowerCase()}
+//                 {pharmaFeedback?.title?.toLowerCase() || "Phản hồi từ khách hàng"}
 //               </p>
-//               <h2 className="mb-4 text-black">{pharmaFeedback.description}</h2>
+//               <h2 className="mb-4 text-black">{pharmaFeedback?.description || ""}</h2>
 //             </div>
-//             <PharmacyCarousel cards={pharmaFeedback.cards} />
+//             <PharmacyCarousel cards={pharmaFeedback?.cards || []} />
 //           </div>
 //         </section>
 //       </FadeInOnScroll>
@@ -549,16 +549,26 @@ function DashboardCarousel({
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
+    if (!images || images.length === 0) return;
+
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
     }, 3500);
     return () => clearInterval(interval);
-  }, [images.length]);
+  }, [images, images.length]);
 
   const getImg = (offset: number) => {
+    if (!images || images.length === 0) {
+      return { url: '/placeholder.png', alt: 'Placeholder' };
+    }
     const idx = (currentIndex + offset + images.length) % images.length;
-    return images[idx];
+    return images[idx] || { url: '/placeholder.png', alt: 'Placeholder' };
   };
+
+  // Return null after hooks if no images
+  if (!images || images.length === 0) {
+    return null;
+  }
 
   return (
     <div className="flex flex-col items-center">
@@ -643,7 +653,7 @@ export default function ChuoiNhaThuoc() {
   const autoplayDelayCustomer = 2500; // 2.5 giây theo yêu cầu
 
   // Lấy đúng data cho Section 4
-  const originalCustomerCards = customerExperienceSection.cards;
+  const originalCustomerCards = customerExperienceSection?.cards || [];
 
   // Nhân bản cards
   const clonedCardsStartCustomer = originalCustomerCards.slice(
@@ -754,14 +764,14 @@ export default function ChuoiNhaThuoc() {
         <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
           <div>
             <p className="text-h6 mb-2 font-bold tracking-wide text-primary capitalize">
-              {heroSection.eyebrow.toLowerCase()}
+              {heroSection?.eyebrow?.toLowerCase() || "Giải pháp chuỗi nhà thuốc"}
             </p>
-            <h1>{heroSection.title}</h1>
+            <h1>{heroSection?.title || "Giải pháp chuỗi nhà thuốc"}</h1>
             <p className="mb-10 text-colordescription text-h6">
-              {heroSection.description}
+              {heroSection?.description || ""}
             </p>
             <div className="flex gap-4 ">
-              {heroSection.ctaButtons.map((button, index) => (
+              {heroSection?.ctaButtons?.map((button, index) => (
                 <Button
                   key={index}
                   variant={index === 0 ? "primary" : "secondary"}
@@ -857,14 +867,14 @@ export default function ChuoiNhaThuoc() {
           <div className="container mx-auto py-15">
             <div className="mx-auto max-w-5xl text-center">
               <p className="mb-2 text-h6 font-bold capitalize tracking-wide text-primary">
-                {operationsStandardizationSection.eyebrow}
+                {operationsStandardizationSection?.eyebrow || "Tiêu chuẩn hóa vận hành"}
               </p>
               <h2 className="text-black mb-15">
-                {operationsStandardizationSection.title}
+                {operationsStandardizationSection?.title || ""}
               </h2>
             </div>
             <FeatureCardTest
-              features={operationsStandardizationSection.contents}
+              features={operationsStandardizationSection?.contents || []}
               direction="left"
               animation={true}
             />
@@ -879,10 +889,10 @@ export default function ChuoiNhaThuoc() {
             {/* Tiêu đề (giữ nguyên) */}
             <div className="mx-auto mb-12 max-w-5xl text-center">
               <p className="mb-5 text-h6 font-bold  tracking-wide text-primary capitalize">
-                {customerExperienceSection.eyebrow.toLowerCase()}
+                {customerExperienceSection?.eyebrow?.toLowerCase() || "Trải nghiệm khách hàng"}
               </p>
               <h2 className="mb-15 text-black">
-                {customerExperienceSection.title}
+                {customerExperienceSection?.title || ""}
               </h2>
             </div>
 
@@ -970,10 +980,10 @@ export default function ChuoiNhaThuoc() {
           <div className="container mx-auto py-15">
             <div className=" mb-12  text-center">
               <p className="mb-2 text-h6 font-bold capitalize tracking-wide text-primary">
-                {featureOverview.eyebrow.toLowerCase()}
+                {featureOverview?.eyebrow?.toLowerCase() || "Tổng quan tính năng"}
               </p>
               <h2 className="mb-4 mx-auto max-w-6xl text-black">
-                {featureOverview.title}
+                {featureOverview?.title || ""}
               </h2>
             </div>
 
@@ -1020,13 +1030,13 @@ export default function ChuoiNhaThuoc() {
         <section className="py-15 text-center">
           <div className="container mx-auto">
             <p className="mb-5 text-h6 font-bold capitalize tracking-wide text-primary">
-              {featureCarousel.eyebrow.toLowerCase()}
+              {featureCarousel?.eyebrow?.toLowerCase() || "Tính năng nổi bật"}
             </p>
-            <h2 className="text-black mb-5">{featureCarousel.title}</h2>
+            <h2 className="text-black mb-5">{featureCarousel?.title || ""}</h2>
             <p className="mx-auto mb-15 max-w-2xl text-h6 ">
-              {featureCarousel.description}
+              {featureCarousel?.description || ""}
             </p>
-            <DashboardCarousel images={featureCarousel.featureImages} />
+            <DashboardCarousel images={featureCarousel?.featureImages || []} />
           </div>
         </section>
       </FadeInOnScroll>
@@ -1038,10 +1048,10 @@ export default function ChuoiNhaThuoc() {
           <div className="container mx-auto py-15">
             <div className=" text-center mb-15">
               <p className="mb-5 text-h6 font-bold capitalize tracking-wide text-primary">
-                {operationsStandardizationBottomSection.eyebrow.toLowerCase()}
+                {operationsStandardizationBottomSection?.eyebrow?.toLowerCase() || "Tiêu chuẩn hóa vận hành"}
               </p>
               <h2 className="mx-auto max-w-4xl text-white">
-                {operationsStandardizationBottomSection.title}
+                {operationsStandardizationBottomSection?.title || ""}
               </h2>
             </div>
             <FeatureCardTest
@@ -1060,11 +1070,11 @@ export default function ChuoiNhaThuoc() {
           <div className="container mx-auto py-15">
             <div className="mx-auto mb-12 max-w-6xl text-center">
               <p className="mb-2 text-h6 font-bold capitalize tracking-wide text-primary">
-                {pharmaFeedback.title.toLowerCase()}
+                {pharmaFeedback?.title?.toLowerCase() || "Phản hồi từ khách hàng"}
               </p>
-              <h2 className="mb-4 text-black">{pharmaFeedback.description}</h2>
+              <h2 className="mb-4 text-black">{pharmaFeedback?.description || ""}</h2>
             </div>
-            <PharmacyCarousel cards={pharmaFeedback.cards} />
+            <PharmacyCarousel cards={pharmaFeedback?.cards || []} />
           </div>
         </section>
       </FadeInOnScroll>
