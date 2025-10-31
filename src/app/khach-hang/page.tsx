@@ -104,7 +104,7 @@ function BlogSection({ slug }: { slug: string }) {
   const [page, setPage] = useState(1);
   const [blogs, setBlogs] = useState<CustBlogPost[]>([]);
   const [pageCount, setPageCount] = useState(1);
-  const pageSize = 4;
+  const pageSize = 6;
 
   useEffect(() => {
     async function fetchData() {
@@ -134,14 +134,14 @@ function BlogSection({ slug }: { slug: string }) {
                   className="object-cover"
                 />
               </div>
-              <div className="p-5 text-center">
-                <h3 className="font-semibold text-lg mb-5 line-clamp-2 text-gray-800">
+              <div className="pb-2 px-4 ">
+                <h3 className="font-bold text-body2 mb-3 line-clamp-2 ">
                   {blog.title}
                 </h3>
-                <button className="text-primary text-sub1 font-bold flex items-center justify-center gap-1 hover:gap-2 transition-all">
+                <button className="text-primary text-body2 font-bold flex items-center justify-center gap-1 hover:gap-2 transition-all">
                   Đọc thêm{" "}
                   <span>
-                    <FiArrowRight className="h-5 w-5" />
+                    <FiArrowRight className="h-3 w-3" />
                   </span>
                 </button>
               </div>
@@ -191,7 +191,7 @@ export default function KhachHang() {
 
       <section className="">
         <FadeInOnScroll>
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto ">
             <h2 className="mb-5 text-center text-black">
               {challengeSection.title}
             </h2>
@@ -219,7 +219,7 @@ export default function KhachHang() {
 
       <FadeInOnScroll>
         <section className="bg-white">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto py-15">
             <div className="text-center mb-12">
               <h2 className="mb-4 text-black">{custBlogSection.title}</h2>
               <p className="text-h6 mx-auto max-w-3xl">

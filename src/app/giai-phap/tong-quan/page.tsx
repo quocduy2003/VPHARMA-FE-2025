@@ -86,7 +86,7 @@ export default function IndependentPharmacyPage() {
     <div>
       {/** Dashboard */}
       <section className="bg-blue-100 py-10 text-center">
-        <div className="container mx-auto px-4 lg:px-90">
+        <div className="container mx-auto ">
           <h1 className="mt-10">{heroSection.mainTitle}</h1>
           <p className="mx-auto mb-10 max-w-2xl text-colordescription text-h6">
             {heroSection.mainDescription}
@@ -146,10 +146,10 @@ export default function IndependentPharmacyPage() {
             <button
               key={idx}
               onClick={() => setActiveTab(tab.id)}
-              className={`rounded-full border px-5 py-2 text-sub2 font-medium transition-colors ${
+              className={`rounded-full px-6 py-3 text-sub2 font-medium transition-colors ${
                 activeTab === tab.id
                   ? "bg-primary text-white"
-                  : "border-primary bg-white text-black hover:bg-primary/10"
+                  : "ring ring-primary  bg-white text-black hover:bg-primary/10"
               }`}
             >
               {tab.label}
@@ -183,12 +183,13 @@ export default function IndependentPharmacyPage() {
                     </li>
                   ))}
               </ul>
-              <a
-                href="/about-us"
-                className="text-sub2 mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-3 py-3 font-bold text-white shadow transition hover:bg-primary hover:text-white hover:border-transparent"
-              >
-                Đăng ký dùng thử
-              </a>
+              <Button
+              size="md"
+              href="/dang-ky"
+              className="hover:shadow-primary/40 hover:shadow-lg "
+            >
+              Đăng Ký dùng thử
+            </Button>
             </div>
           </div>
         </div>
@@ -278,7 +279,7 @@ export default function IndependentPharmacyPage() {
               {solutionSection.description}
             </p>
           </div>
-          <div className=" px-40 grid grid-cols-1  md:grid-cols-2">
+          <div className=" px-40 grid grid-cols-1 gap-5  md:grid-cols-2">
             {solutionSection.solutionCard?.map((card, index) => (
               <div
                 key={index}
@@ -355,13 +356,17 @@ export default function IndependentPharmacyPage() {
       <section className=" container mx-auto py-10 text-center">
           <div className="rounded-2xl bg-ink p-5">
             <h2 className="mt-10 font-bold text-white mb-5">{ctaSection.title}</h2>
-            <p className="mx-auto text-h6 max-w-4xl text-white">
+            <p className="mx-auto mb-5 text-h6 max-w-4xl text-white">
               {ctaSection.description}
             </p>
-            <button className="mt-12 mb-10 rounded-full bg-primary px-6 py-3 font-semibold text-white hover:opacity-90">
-              {ctaSection.ctaButton.title}
-            </button>
-          </div>
+            <Button
+            size="md"
+            href={ctaSection.ctaButton.link || undefined}
+            className="mb-10"
+          >
+            {ctaSection.ctaButton.title}
+          </Button>
+        </div>
       </section>
 
       {/* FAQ Section */}

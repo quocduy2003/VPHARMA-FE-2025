@@ -41,7 +41,7 @@ export function transformChainPharmacyData(response: any): ChainPharmacyData {
           title: card?.title || "title",
           descriptionBlocks: card?.description || [],
           alt: card?.image?.alternativeText || "Challenge Card Image",
-          image: createImageUrl(card?.image.url),
+          image: createImageUrl(card?.image?.url),
         })) || [],
     },
     featureBenefitsSection: {
@@ -79,19 +79,19 @@ export function transformChainPharmacyData(response: any): ChainPharmacyData {
     },
     customerExperienceSection: {
       eyebrow:
-        customerExperienceSection.eyebrow || "Trải nghiệm khách hàng <<<<<<",
+        customerExperienceSection?.eyebrow || "Trải nghiệm khách hàng <<<<<<",
       title:
-        customerExperienceSection.title || "Nâng cao trải nghiệm khách hàng",
+        customerExperienceSection?.title || "Nâng cao trải nghiệm khách hàng",
       cards:
-        customerExperienceSection.cards?.map((card: any) => ({
+        customerExperienceSection?.cards?.map((card: any) => ({
           title: card?.title || "",
           description: card?.description || "",
           alt: card?.image?.alternativeText || "Customer Experience Card Image",
-          image: createImageUrl(card?.image.url),
+          image: createImageUrl(card?.image?.url),
         })) || [],
       ctaButton: {
-        title: customerExperienceSection.ctaButton?.title || "",
-        link: customerExperienceSection.ctaButton?.link || null,
+        title: customerExperienceSection?.ctaButton?.title || "",
+        link: customerExperienceSection?.ctaButton?.link || null,
       },
     },
     featureOverview: {
@@ -114,7 +114,7 @@ export function transformChainPharmacyData(response: any): ChainPharmacyData {
       featureImages:
         featureCarousel?.featureImages?.map((featureImage: any) => ({
           alt: featureImage?.alternativeText || "Feature Carousel Image",
-          url: createImageUrl(featureImage?.url),
+          url: createImageUrl(featureImage?.url || featureImage?.image?.url),
         })) || [],
     },
     operationsStandardizationBottomSection: {

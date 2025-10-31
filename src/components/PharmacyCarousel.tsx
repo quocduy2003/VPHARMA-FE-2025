@@ -17,7 +17,7 @@ interface PharmacyCarouselProps {
 
 export default function PharmacyCarousel({ cards }: PharmacyCarouselProps) {
   const cardsPerView = 4;
-  const cardWidth = 350;
+  const cardWidth = 300;
   const cardGap = 32; 
   const step = cardWidth + cardGap;
   const transitionDuration = 700;
@@ -119,13 +119,12 @@ export default function PharmacyCarousel({ cards }: PharmacyCarouselProps) {
       </button>
       {/* Carousel container */}
       <div
-        className="w-full max-w-6xl overflow-hidden"
-        // 5. Thêm sự kiện hover để tạm dừng/tiếp tục autoplay
+        className="w-full max-w-[1296px] overflow-hidden"
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
       >
         <div
-          className="flex"
+          className="flex gap-8"
           style={{
             width: `${displayCards.length * step}px`,
             transform: `translateX(-${currentIndex * step}px)`,
@@ -138,7 +137,7 @@ export default function PharmacyCarousel({ cards }: PharmacyCarouselProps) {
           {displayCards.map((card, idx) => (
             <div
               key={idx}
-              className="mx-4 min-w-[300px] max-w-[300px] flex-shrink-0 rounded-xl border border-gray-400 bg-white shadow-lg transition hover:shadow-xl"
+              className="min-w-[300px] max-w-[300px] flex-shrink-0 rounded-xl border border-gray-400 bg-white shadow-lg transition hover:shadow-xl"
               style={{ height: 350 }}
             >
               <div className="p-7">
@@ -149,8 +148,8 @@ export default function PharmacyCarousel({ cards }: PharmacyCarouselProps) {
                     src={card.image}
                     alt={card.alt}
                     width={310}
-                    height={110}
-                    className="h-[110px] w-full object-contain"
+                    height={210}
+                    className="h-[160px] w-[full] object-contain"
                   />
                 </div>
               </div>

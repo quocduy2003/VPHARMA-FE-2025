@@ -74,6 +74,7 @@ export default function HomePage() {
           activeCategory === "Tất cả"
             ? "home"
             : activeCategory.toLowerCase().replace(/\s/g, "-");
+        console.log("Fetching posts for category:", categorySlug);
         const response = await getBlogPosts(
           categorySlug,
           currentPage,
@@ -107,8 +108,8 @@ export default function HomePage() {
           <h6 className="capitalize text-primary mb-10">
             {homePageData.eyebrow}
           </h6>
-          <h1 className="mx-auto max-w-5xl capitalize">{homePageData.title}</h1>
-          <div className="flex items-center  justify-center ">
+          <h1 className="mx-auto max-w-6xl capitalize pb-10">{homePageData.title}</h1>
+          <div className="flex items-center justify-center ">
             <Button size="md" href={homePageData.ctaButton.link || undefined}>
               {homePageData.ctaButton.title}
             </Button>
@@ -117,10 +118,10 @@ export default function HomePage() {
       </section>
 
       <section className="mx-auto py-10">
-        <div className="container bg-ink rounded-2xl p-10">
+        <div className="container bg-ink rounded-2xl p-10 mb-5">
           <div className="text-center ">
-            <h2 className=" text-white mb-5">{solutionSection.title}</h2>
-            <p className="mb-15 text-h6 mx-auto max-w-2xl text-white">
+            <h2 className=" text-white ">{solutionSection.title}</h2>
+            <p className="text-h6 mx-auto max-w-2xl text-white">
               {solutionSection.description}
             </p>
           </div>
@@ -261,10 +262,10 @@ export default function HomePage() {
                   style={{ zIndex: 2 }}
                 >
                   <Image
-                  
+
                     src="/chart.png"
                     alt="Total Balance Chart"
-                    width={500}   
+                    width={500}
                     height={240}
                     className="w-full h-60 object-contain"
 
@@ -275,7 +276,7 @@ export default function HomePage() {
                   style={{ zIndex: 3 }}
                 >
                   <Image
-                
+
                     src="/chart.png"
                     alt="Total Balance Mini Chart"
                     width={500}      // chọn kích thước phù hợp với giao diện thực tế
@@ -325,8 +326,8 @@ export default function HomePage() {
               {blogSection.blogCategories.map((category) => (
                 <button
                   key={category.slug}
-                  onClick={() => setActiveCategory(category.name)}
-                  className={`rounded-full px-4 py-2 text-sub2 font-semibold border border-gray transition-colors ${activeCategory === category.name
+                  onClick={() => setActiveCategory(category.slug)}
+                  className={`rounded-full px-4 py-2 text-sub2 font-semibold border border-gray transition-colors ${activeCategory === category.slug
                     ? "bg-primary text-white shadow-md"
                     : "bg-white text-black hover:bg-slate-100"
                     }`}

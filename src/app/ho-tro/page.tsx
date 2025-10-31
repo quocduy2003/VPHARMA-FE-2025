@@ -587,7 +587,7 @@ export default function HoTro() {
       {/* --- SECTION PHẦN MỀM HỖ TRỢ  */}
       <section className="bg-white py-10">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-center mb-5">Phần Mềm Hỗ Trợ</h2>
+          <h2 className="text-center text-black mb-5">Phần Mềm Hỗ Trợ</h2>
           <p className="text-center text-h6 text-colordescription max-w-3xl mx-auto mb-15">
             Để quá trình hỗ trợ diễn ra nhanh chóng, vui lòng cài đặt một trong
             các phần mềm dưới đây nếu được kỹ thuật viên yêu cầu.
