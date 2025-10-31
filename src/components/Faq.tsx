@@ -27,7 +27,7 @@ function FaqItem({
         className="flex w-full items-center justify-between text-left text-lg font-medium text-text"
         onClick={onClick}
       >
-        <span className="text-sub1 font-bold text-black">{item.question}</span>
+        <h3 className="text-body3 font-bold text-black">{item.question}</h3>
         {isOpen ? (
           <FiMinus className="text-white bg-primary rounded text-h6" />
         ) : (
@@ -35,9 +35,7 @@ function FaqItem({
         )}
       </button>
       {isOpen && (
-        <div className="mt-4 text-sub2 text-colordescription text-body2">
-          <p>{item.answer}</p>
-        </div>
+          <p className=" max-w-4xl text-sub2">{item.answer}</p>
       )}
     </div>
   );
@@ -56,12 +54,11 @@ export default function FaqSection({ title, items }: FaqSectionProps) {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   return (
-    <section className="container mx-auto max-w-4xl px-4 py-20">
-      <h2 className="text-center text-black">
-        {/* 5. Dùng title từ prop */}
+    <section className="container mx-auto max-w-5xl px-4 py-10">
+      <h2 className="text-center text-black mb-15">
         {title}
       </h2>
-      <div className="mt-10">
+      <div>
         {/* 6. Dùng items từ prop */}
         {items.map((item, index) => (
           <FaqItem

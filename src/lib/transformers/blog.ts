@@ -2,9 +2,9 @@ import { createImageUrl } from "@/lib/utils/imageUtils";
 import {
   BlogData,
   BlogPost,
-  BlogResponse,
   BlogCategory,
   BlogCardData,
+  BlogCard,
 } from "@/types";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -39,30 +39,22 @@ export function transformBlogForHomePage(response: any): BlogData {
   };
 }
 
-export function transformBlogListData(response: any): BlogCardData[] {
+export function transformBlogListData(response: any): BlogCard[] {
   const { data } = response;
   return (
     data?.map((item: any) => ({
-      posts: {
-        title: item?.title,
-        description: item?.description,
-        alt: item?.alt,
-        coverImage: {
-          url: createImageUrl(
-            item?.coverImage?.url
-          ),
-        },
-        category: {
-          name:
-            item?.blog_category?.name ||
-            "Chưa có danh mục",
-          slug:
-            item?.blog_category?.slug ||
-            "uncategorized",
-        },
-        slug: item?.slug,
-        createdAt: item?.createdAt,
+      title: item?.title,
+      description: item?.description,
+      alt: item?.alt,
+      coverImage: {
+        url: createImageUrl(item?.coverImage?.url),
       },
+      category: {
+        name: item?.blog_category?.name || "Chưa có danh mục",
+        slug: item?.blog_category?.slug || "uncategorized",
+      },
+      slug: item?.slug,
+      createdAt: item?.createdAt,
     })) || []
   );
 }
@@ -107,7 +99,6 @@ export function transformBlogPostData(response: any): BlogPost {
     createdAt: post.createdAt,
     updatedAt: post.updatedAt,
     author: post.author,
-
   };
 }
 export function transformBlogCategories(response: any): BlogCategory[] {

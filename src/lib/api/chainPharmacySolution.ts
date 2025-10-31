@@ -14,7 +14,7 @@ const query = qs.stringify(
       },
       pharmacyChainChallengesSection: {
         populate: {
-            challengeCards: {
+          challengeCards: {
             populate: {
               image: true,
             },
@@ -27,11 +27,73 @@ const query = qs.stringify(
           contents: true,
         },
       },
+      operationsStandardization: {
+        populate: {
+          contents: {
+            populate: {
+              image: true,
+            },
+          },
+          ctaButton: true,
+        },
+      },
+      customerExperienceSection: {
+        populate: {
+          cards: {
+            populate: {
+              image: true,
+            },
+          },
+          ctaButton: true,
+        },
+      },
+      featureOverview: {
+        populate: {
+          ctaButton: true,
+          contentCards: true,
+        },
+      },
+      featureCarousel: {
+        populate: {
+          featureImages: true,
+        },
+      },
+      operationsStandardizationBottom: {
+        populate: {
+          contents: {
+            populate: {
+              image: true,
+            },
+          },
+          ctaButton: true,
+        },
+      },
+      pharmaFeedback: {
+        populate: {
+          cards: {
+            populate: {
+              image: true,
+            },
+          },
+        },
+      },
+      ctaSection: {
+        populate: {
+          ctaButton: true,
+        },
+      },
+      faqSection: {
+        populate: {
+          questions: true,
+        },
+      },
     },
   },
   { encodeValuesOnly: true }
 );
-async function getChainPharmacyData(queryPath: string): Promise<ChainPharmacyData> {
+async function getChainPharmacyData(
+  queryPath: string
+): Promise<ChainPharmacyData> {
   const endpoint = `chain-pharmacy-solution?${queryPath}`;
   const response = await fetchAPI(endpoint);
   return transformChainPharmacyData(response);

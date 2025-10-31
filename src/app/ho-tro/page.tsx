@@ -16,8 +16,6 @@ import {
   FiMail,
   FiChevronDown, // Sẽ dùng cho Listbox
   FiCheck,
-  FiPlus,
-  FiMinus,
   FiX,
 } from "react-icons/fi";
 import FaqSection, { type Faq } from "@/components/Faq";
@@ -70,6 +68,17 @@ const hoTroFaqData: Faq[] = [
     answer:
       "An toàn dữ liệu là ưu tiên hàng đầu của chúng tôi. Hệ thống sử dụng các biện pháp bảo mật tiên tiến và sao lưu dữ liệu thường xuyên.",
   },
+  {
+    question: "Tôi có cần cài đặt phần mềm phức tạp không?",
+    answer:
+      "Không, V-Pharma là giải pháp dựa trên nền tảng web, bạn có thể truy cập từ bất kỳ đâu mà không cần cài đặt phức tạp.",
+  },
+  {
+    question: "Dữ liệu của tôi có được bảo mật không?",
+    answer:
+      "An toàn dữ liệu là ưu tiên hàng đầu của chúng tôi. Hệ thống sử dụng các biện pháp bảo mật tiên tiến và sao lưu dữ liệu thường xuyên.",
+  },
+  
 ];
 
 // Dữ liệu cho Listbox "Chủ đề chính"
@@ -208,10 +217,10 @@ export default function HoTro() {
   return (
     <div>
       {/** Dashboard */}
-      <section className="bg-gradient-to-b from-blue-100 to-white py-20 text-center">
-        <div className="container mx-auto px-4 lg:px-80">
-          <h1 className="text-h1 font-bold text-black">Liên Hệ Hỗ Trợ</h1>
-          <p className="mx-auto mt-4 max-w-3x">
+      <section className="bg-gradient-to-b from-blue-100 to-white py-10 text-center">
+        <div className="container ">
+          <h1 className="mt-10">Liên Hệ Hỗ Trợ</h1>
+          <p className="mx-auto text-h6 mb-15 max-w-3xl">
             Giải pháp toàn diện cho quản lý nhà thuốc, từ tồn kho đến bán hàng,
             với công nghệ hiện đại và dễ sử dụng.
           </p>
@@ -220,20 +229,20 @@ export default function HoTro() {
 
       {/* Phần Form và Thông tin liên hệ */}
       <FadeInOnScroll>
-        <section className="bg-white pb-20">
-          <div className="max-w-5xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12">
+        <section className="bg-white pb-10">
+          <div className="max-w-6xl mx-auto  grid grid-cols-1 md:grid-cols-2 gap-20">
             {/* Form Liên hệ */}
             <div>
-              <h2 className="mb-3 text-2xl text-black font-semibold">Get In Touch</h2>
-              <p className="mb-7 text-gray-600">
-                {/* We'd love to hear from you. Please fill out this form. */}
+              <h2 className="text-black font-bold mb-5">Liên hệ với chúng tôi</h2>
+              <p className="mb-5 text-sub1">
+                Chúng tôi rất mong nhận được phản hồi từ bạn. Vui lòng điền vào mẫu này.
               </p>
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Họ và Tên */}
                 <div>
                   <label
                     htmlFor="fullName"
-                    className="block text-gray-500 font-bold text-body2 mb-2"
+                    className="block text-colordescription font-bold text-sub2 mb-2"
                   >
                     Họ và Tên
                   </label>
@@ -263,7 +272,7 @@ export default function HoTro() {
                 <div>
                   <label
                     htmlFor="phone"
-                    className="block text-gray-500 font-bold text-body2 mb-2"
+                    className="block text-colordescription font-bold text-sub2 mb-2"
                   >
                     Số điện thoại
                   </label>
@@ -282,7 +291,7 @@ export default function HoTro() {
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-gray-500 font-bold text-body2 mb-2"
+                    className="block text-colordescription font-bold text-sub2 mb-2"
                   >
                     Địa chỉ Email
                   </label>
@@ -311,8 +320,8 @@ export default function HoTro() {
                 {/* Chủ đề chính */}
                 <div>
                   <label
-                    htmlFor="subject" // Listbox không có id, nhưng label vẫn hữu ích
-                    className="block text-gray-500 font-bold text-body2 mb-2"
+                    htmlFor="subject"
+                    className="block text-colordescription font-bold text-sub2 mb-2"
                   >
                     Chủ đề chính
                   </label>
@@ -396,7 +405,7 @@ export default function HoTro() {
                 <div>
                   <label
                     htmlFor="description"
-                    className="block text-gray-500 font-bold text-body2 mb-2"
+                    className="block text-colordescription font-bold text-sub2 mb-2"
                   >
                     Mô tả chi tiết (không bắt buộc)
                   </label>
@@ -406,7 +415,7 @@ export default function HoTro() {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     // ĐỒNG BỘ STYLE: px-4 py-3
-                    className="w-full rounded-lg border-2 border-gray-300 px-4 py-3 text-base 
+                    className="w-full rounded-lg border-2 border-gray-300 px-4 py-3 text-base  text-sub2
                                outline-none resize-none focus:border-blue-500 transition-all min-h-[90px]"
                     placeholder="Nhà thuốc của tôi có 2 chi nhánh, đang cần quản lý tồn kho..."
                   />
@@ -444,11 +453,11 @@ export default function HoTro() {
                 )}
 
                 {/* Link Chính sách bảo mật */}
-                <p className="!mt-4 text-sm text-gray-600">
+                <p className="!mt-4 text-sub2 text-gray-600">
                   Chúng tôi cam kết bảo mật thông tin của bạn. Xem chi tiết tại{" "}
                   <Link
                     href="/chinh-sach-bao-mat" // Cập nhật đường dẫn nếu cần
-                    className="text-blue-500 hover:underline font-medium"
+                    className="text-primary hover:underline font-medium"
                   >
                     Chính sách Bảo mật
                   </Link>
@@ -458,7 +467,7 @@ export default function HoTro() {
                 {/* Submit button */}
                 <button
                   type="submit"
-                  className="w-full md:w-auto !mt-6 rounded-lg bg-blue-500 hover:bg-blue-600 px-8 py-3 font-semibold text-white transition-colors duration-200 flex items-center justify-center disabled:bg-blue-300"
+                  className="w-full md:w-auto !mt-6 rounded-full text-sub2 bg-primary hover:bg-blue-600 px-8 py-3 font-bold text-white transition-colors duration-200 flex items-center justify-center disabled:bg-blue-300"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
@@ -471,14 +480,13 @@ export default function HoTro() {
 
             {/* Thông tin liên hệ + bản đồ */}
             <div>
-              <h2 className="mb-3 text-2xl font-semibold">Liên Hệ Trực Tiếp</h2>
-              <p className="mb-7 text-gray-600">
-                Borem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-                vulputate libero et velit interdum, ac aliquet odio mattis.
+              <h2 className="text-black font-bold mb-5">Liên Hệ Trực Tiếp</h2>
+              <p className="mb-5 text-sub1">
+                Kết nối ngay với chúng tôi qua hotline, email, hoặc đến trực tiếp văn phòng tại địa chỉ bên dưới.
               </p>
 
               {/* Bản đồ */}
-              <div className="rounded-xl overflow-hidden mb-6 w-full h-[200px] shadow-md">
+              <div className="rounded-xl overflow-hidden mb-10 w-full h-[200px] shadow-md">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.117942159811!2d106.7447473758832!3d10.80239985878438!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175261b83fcf64b%3A0xb35a507b94ea8630!2zNyDEkMaw4budbmcgN2MsIEFuIFBow7osIFF14bqtbiAyLCBUaMOgbmggcGjhu5EgSOG7kyBDaMOtIE1pbmgsIFZp4buHdG5hbQ!5e0!3m2!1svi!2s!4v1695551234567!5m2!1svi!2s"
                   width="100%"
@@ -492,30 +500,30 @@ export default function HoTro() {
 
               {/* Contact info */}
               <ul className="space-y-4">
-                <li className="flex items-start">
+                <li className="flex items-start mb-10">
                   <FiPhone
-                    className="mr-4 mt-1 flex-shrink-0 text-blue-500"
-                    size={20}
+                    className="mr-4 mt-1 flex-shrink-0 text-success "
+                    size={27}
                   />
                   <div>
                     {/* Thêm tel: link */}
                     <a
                       href="tel:0911000038"
-                      className="font-medium hover:text-blue-500"
+                      className="font-medium hover:text-blue-500 text-sub1"
                     >
                       0911 000 038
                     </a>
                   </div>
                 </li>
-                <li className="flex items-start">
+                <li className="flex items-start mb-10">
                   <FiMail
-                    className="mr-4 mt-1 flex-shrink-0 text-blue-500"
-                    size={20}
+                    className="mr-4 mt-1 flex-shrink-0 text-success"
+                    size={27}
                   />
                   <div>
                     <a
                       href="mailto:contact@amitgroup.asia"
-                      className="hover:text-blue-500"
+                      className="hover:text-blue-500 text-sub1"
                     >
                       contact@amitgroup.asia
                     </a>
@@ -523,8 +531,8 @@ export default function HoTro() {
                 </li>
                 <li className="flex items-start">
                   <FiMapPin
-                    className="mr-4 mt-1 flex-shrink-0 text-blue-500"
-                    size={20}
+                    className="mr-4 mt-1 flex-shrink-0 text-success"
+                    size={27}
                   />
                   <div>
                     {/* Thêm link Google Maps */}
@@ -532,7 +540,7 @@ export default function HoTro() {
                       href="https://maps.app.goo.gl/xnSXqtouAAk2yewr7"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="hover:text-blue-500"
+                      className="hover:text-blue-500 text-sub1"
                     >
                       Số 7, Đường 7C, Khu đô thị An Phú An Khánh, Phường Bình
                       Trưng, Thành phố Hồ Chí Minh
@@ -547,25 +555,25 @@ export default function HoTro() {
                   href="https://facebook.com/amitgroup.vn"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-blue-500 transition-colors"
+                  className="text-success hover:text-blue-500 transition-colors "
                 >
-                  <FiFacebook size={22} />
+                  <FiFacebook size={27} />
                 </a>
                 <a
                   href="https://www.youtube.com/@AmitGROUPmkt"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-blue-500 transition-colors"
+                  className="text-success hover:text-blue-500 transition-colors"
                 >
-                  <FiYoutube size={22} />
+                  <FiYoutube size={27} />
                 </a>
                 <a
                   href="https://www.amitgroup.asia/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-blue-500 transition-colors"
+                  className="text-success hover:text-blue-500 transition-colors"
                 >
-                  <FiGlobe size={22} />
+                  <FiGlobe size={27} />
                 </a>
               </div>
             </div>
@@ -577,18 +585,18 @@ export default function HoTro() {
       <FaqSection title="Câu Hỏi Thường Gặp" items={hoTroFaqData} />
 
       {/* --- SECTION PHẦN MỀM HỖ TRỢ  */}
-      <section className="bg-gradient-to-t from-blue-100 to-white py-20">
-        <div className="max-w-5xl mx-auto px-4">
-          <h2 className="text-center mb-4">Phần Mềm Hỗ Trợ</h2>
-          <p className="text-center text-h6 text-colordescription max-w-3xl mx-auto mb-12">
+      <section className="bg-white py-10">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-center mb-5">Phần Mềm Hỗ Trợ</h2>
+          <p className="text-center text-h6 text-colordescription max-w-3xl mx-auto mb-15">
             Để quá trình hỗ trợ diễn ra nhanh chóng, vui lòng cài đặt một trong
             các phần mềm dưới đây nếu được kỹ thuật viên yêu cầu.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ">
             {supportSoftwareData.map((software) => (
               <div
                 key={software.name}
-                className="bg-white p-8 rounded-lg shadow-md text-center flex flex-col items-center"
+                className="bg-white p-8 rounded-lg border shadow-md text-center flex flex-col items-center"
               >
                 <div className="w-24 h-24 relative mb-6">
                   <Image
@@ -598,17 +606,17 @@ export default function HoTro() {
                     objectFit="contain"
                   />
                 </div>
-                <h3 className="text-sub1 font-bold text-black mb-2">
+                <h3 className="text-sub1 font-bold text-black mb-5">
                   {software.name}
                 </h3>
-                <p className="text-colordescription text-body2 mb-6 flex-grow">
+                <p className="text-sub2 mb-10 flex-grow">
                   {software.description}
                 </p>
                 <a
                   href={software.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-auto rounded-lg bg-blue-500 hover:bg-blue-600 px-8 py-3 font-semibold text-white transition-colors duration-200"
+                  className="mt-auto text-sub2 rounded-lg bg-primary hover:bg-blue-700 px-8 py-3 font-bold text-white transition-colors duration-200"
                 >
                   Tải về
                 </a>

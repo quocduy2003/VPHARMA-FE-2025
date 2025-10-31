@@ -25,7 +25,7 @@ export function transformCustomerData(response: any): CustomerData {
       title: challengeSection?.title || "",
       description: challengeSection?.description || "",
       cards:
-        challengeSection?.challengeCards?.map((card: Card) => ({
+        challengeSection?.cards?.map((card: Card) => ({
           ...card,
           image: createImageUrl(card.image || ""),
         })) || [],

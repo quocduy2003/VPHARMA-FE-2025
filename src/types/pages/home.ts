@@ -1,4 +1,4 @@
-import { CtaButton, Testimonial } from "@/types";
+import { CtaButton, Testimonial, BlogCategory } from "@/types";
 
 interface Hero {
   eyebrow: string;
@@ -51,6 +51,12 @@ interface TestimonialSection {
 export interface FeatureCardProps {
   features: FeatureCard[];
   direction?: "left" | "right";
+  animation?: boolean;
+}
+interface BlogSection{
+  title:string;
+  ctaButton:CtaButton;
+  blogCategories: BlogCategory[];
 }
 
 export interface HomePageData extends Hero {
@@ -58,4 +64,13 @@ export interface HomePageData extends Hero {
   featureSection: FeatureSection;
   experienceSection: ExperienceSection;
   testimonialSection: TestimonialSection;
+  blogSection: BlogSection;
+}
+
+
+// Types for other sections can be added here as needed
+export interface FeatureCardHomeProps {
+  features: FeatureCard[];
+  direction?: "left" | "right";
+  variant?: "light" | "dark";
 }

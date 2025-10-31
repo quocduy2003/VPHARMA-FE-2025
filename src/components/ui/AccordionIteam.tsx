@@ -1,6 +1,6 @@
 
 import { FiMinus, FiPlus } from "react-icons/fi";
-import { motion, AnimatePresence } from "framer-motion";
+
 
 export type AccordionItemData = {
   id?: string;
@@ -17,11 +17,11 @@ export function AccordionItem({
   isOpen,
   onClick,
   buttonClassName = "white",
-  textColor = "text-ink",     // màu chữ mặc định
+  textColor = "text-black",     // màu chữ mặc định
 }: AccordionItemData & { isOpen: boolean; onClick: () => void }) {
   return (
 
-    <div className="rounded-lg shadow-sm w-full mb-2">
+    <div className="rounded-lg shadow-sm w-full mb-5">
       <button
         className={`flex w-full items-center p-4 justify-between text-left font-semibold ${textColor} ${buttonClassName}`}
         onClick={onClick}
@@ -35,7 +35,7 @@ export function AccordionItem({
       </button>
       {isOpen && (
         <div className={`overflow-hidden transition-all duration-300 ${isOpen ? "max-h-[500px]" : "max-h-0"
-          } p-4 text-sm text-body2 ${textColor}`}>
+          } p-4 text-sm text-sub2 ${textColor}`}>
           {description}
         </div>
       )}

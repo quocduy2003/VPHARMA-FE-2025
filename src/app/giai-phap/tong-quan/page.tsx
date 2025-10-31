@@ -2,15 +2,12 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import {
-  FiCheckCircle,
-} from "react-icons/fi";
+import { FiArrowRight, FiCheckCircle } from "react-icons/fi";
 import { independentPharmacyData } from "@/lib/api";
 import { Button } from "@/components/ui/CTAButton";
 import { RichTextRenderer } from "@/components/ui/RichTextRenderer";
 import { AccordionItem } from "@/components/ui/AccordionIteam";
 import ReviewCarousel from "@/components/ReviewCarousel";
-
 
 const DashboardCarousel = ({
   images,
@@ -26,9 +23,9 @@ const DashboardCarousel = ({
       setCurrentIndex((prevIndex) =>
         prevIndex === images.length - 1 ? 0 : prevIndex + 1
       );
-    }, 3000); // Thay đổi slide mỗi 3 giây
+    }, 2500);
 
-    return () => clearInterval(interval); // Dọn dẹp interval khi component unmount
+    return () => clearInterval(interval);
   }, [images.length]);
 
   return (
@@ -55,8 +52,9 @@ const DashboardCarousel = ({
             key={index}
             onClick={() => setCurrentIndex(index)}
             aria-label={`Go to slide ${index + 1}`}
-            className={`h-3 w-3 rounded-full transition-colors ${currentIndex === index ? "bg-primary" : "bg-white/50"
-              }`}
+            className={`h-3 w-3 rounded-full transition-colors ${
+              currentIndex === index ? "bg-primary" : "bg-white/50"
+            }`}
           />
         ))}
       </div>
@@ -64,11 +62,9 @@ const DashboardCarousel = ({
   );
 };
 
-
-
-
 export default function IndependentPharmacyPage() {
-  const { heroSection,
+  const {
+    heroSection,
     featureSection,
     featureBenefitsSection,
     featureShowcaseSection,
@@ -76,31 +72,31 @@ export default function IndependentPharmacyPage() {
     commitmentSection,
     testimonialSection,
     ctaSection,
-    faqSection
+    faqSection,
   } = independentPharmacyData;
-  const [activeTab, setActiveTab] = useState<number | null>(featureSection.tabs[0].id);
+  const [activeTab, setActiveTab] = useState<number | null>(
+    featureSection.tabs[0].id
+  );
   const current = featureSection.tabs.find((tab) => tab.id === activeTab);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [openAccordion, setOpenAccordion] = useState(0);
   console.log("Testimonial Section Data:", testimonialSection);
 
-
   return (
     <div>
       {/** Dashboard */}
-      <section className="bg-gradient-to-b from-blue-50 to-white py-20 text-center">
-        <div className="container mx-auto px-4 lg:px-80">
-          <h1 className="text-h1 font-bold text-ink">
-            {heroSection.mainTitle}
-          </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-h6">
+      <section className="bg-blue-100 py-10 text-center">
+        <div className="container mx-auto px-4 lg:px-90">
+          <h1 className="mt-10">{heroSection.mainTitle}</h1>
+          <p className="mx-auto mb-10 max-w-2xl text-colordescription text-h6">
             {heroSection.mainDescription}
           </p>
-          <div className="mt-8 flex justify-center gap-4">
+          <div className="flex justify-center gap-4">
             {heroSection.ctaButtons.map((button, index) => (
               <Button
+                size="md"
                 key={button.title}
-                variant={index === 0 ? 'primary' : 'secondary'}
+                variant={index === 0 ? "primary" : "secondary"}
               >
                 {button.title}
               </Button>
@@ -120,44 +116,47 @@ export default function IndependentPharmacyPage() {
       </section>
 
       {/* 4 hero-section */}
-      <section className="container mx-auto grid grid-cols-1 gap-8 px-4 py-20 md:grid-cols-2 lg:grid-cols-4">
-        {featureSection.gridItems.map((item, index) => (
-          <div
-            key={index}
-            className="rounded-xl bg-white p-6 text-center shadow-lg"
-          >
-            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-              <div className="h-6 w-6 rounded bg-primary"></div>
+      <section className="bg-gradient-to-b from-blue-100 to-white py-15">
+        <div className="container mx-auto grid grid-cols-1 gap-8 px-4 text-center md:grid-cols-2 lg:grid-cols-4">
+          {featureSection.gridItems.map((item, index) => (
+            <div
+              key={index}
+              className="group relative rounded-xl bg-white p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/40 "
+            >
+              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+                <div className="h-6 w-6 rounded bg-primary"></div>
+              </div>
+              <h3 className="font-bold mb-3 text-black">{item.title}</h3>
+              <p className=" text-sub1">{item.description}</p>
             </div>
-            <h3 className="text-h6 font-bold text-ink">{item.title}</h3>
-            <p className="mt-2 text-sm text-sub1">{item.description}</p>
-          </div>
-        ))}
+          ))}
+        </div>
       </section>
 
       {/* Features Section: Các Tính Năng Nổi Bật Của V-Pharma*/}
-      <section className="container mx-auto px-4 py-20">
-        <h2 className="text-center text-h3 font-bold text-ink">
+      <section className="container mx-auto py-15">
+        <h2 className="text-center mb-5 font-bold text-black">
           {featureSection.title}
         </h2>
-        <p className="mx-auto mt-4 max-w-3xl text-center text-h6">
+        <p className="mx-auto max-w-3xl mb-10 text-center text-colordescription text-h6">
           {featureSection.description}
         </p>
-        <div className="mt-10 flex flex-wrap justify-center gap-6">
+        <div className="flex mx-auto max-w-3xl flex-wrap justify-center gap-6">
           {featureSection.tabs.map((tab, idx) => (
             <button
               key={idx}
               onClick={() => setActiveTab(tab.id)}
-              className={`rounded-full text-body2 border px-5 py-2 text-sm font-medium transition-colors ${activeTab === tab.id
-                ? "bg-primary text-white"
-                : "border-primary bg-white text-text hover:bg-primary/10"
-                }`}
+              className={`rounded-full border px-5 py-2 text-sub2 font-medium transition-colors ${
+                activeTab === tab.id
+                  ? "bg-primary text-white"
+                  : "border-primary bg-white text-black hover:bg-primary/10"
+              }`}
             >
               {tab.label}
             </button>
           ))}
         </div>
-        <div className="mt-12 grid grid-cols-1 items-center gap-12 md:grid-cols-2">
+        <div className="mt-12 grid grid-cols-1 gap-12 md:grid-cols-2">
           <div className="relative">
             {current?.image && (
               <Image
@@ -165,48 +164,58 @@ export default function IndependentPharmacyPage() {
                 alt={current.label || "Feature Dashboard"}
                 width={600}
                 height={400}
-                className="rounded-lg shadow-xl object-cover"
+                className="absolute inset-0 w-full h-full p-4 rounded-lg shadow-lg object-cover"
               />
             )}
           </div>
-          <div>
-            <h3 className="text-h5 font-bold text-ink">
-              {current?.label}
-            </h3>
-            <p className="text-body1  text-ink">
-              {current?.title}
-            </p>
-            <ul className="mt-8 text-body1 space-y-3">
-              {Array.isArray(current?.description) &&
-                current.description.map((block, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <FiCheckCircle className="mt-1 flex-shrink-0 text-success" />
-                    <RichTextRenderer content={[block]} />
-                  </li>
-                ))}
-            </ul>
+          <div className="relative">
+            <div className="p-5 rounded-lg shadow-lg h-full">
+              <h3 className="text-h6 mb-4 font-bold text-black">
+                {current?.label}
+              </h3>
+              <p className="text-sub2 mb-4">{current?.title}</p>
+              <ul className="text-sub2 space-y-3">
+                {Array.isArray(current?.description) &&
+                  current.description.map((block, index) => (
+                    <li key={index} className="flex items-start gap-2">
+                      <FiCheckCircle className="mt-1 flex-shrink-0 text-success" />
+                      <RichTextRenderer content={[block]} />
+                    </li>
+                  ))}
+              </ul>
+              <a
+                href="/about-us"
+                className="text-sub2 mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-3 py-3 font-bold text-white shadow transition hover:bg-primary hover:text-white hover:border-transparent"
+              >
+                Đăng ký dùng thử
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
       {/* --- Section: An Tâm Và Vận Hành Hiệu Quả --- */}
-      <section className="bg-ink py-20 text-white">
-        <div className="container mx-auto px-4">
+      <section className=" bg-ink text-white">
+        <div className="container py-15 mx-auto">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-h3 font-bold">{featureBenefitsSection.title}</h2>
-            <p className="mt-4 text-h6 text-colordescription">
+            <h2 className=" mb-5 font-bold">{featureBenefitsSection.title}</h2>
+            <p className="text-h6 mb-15 text-white">
               {featureBenefitsSection.description}
             </p>
           </div>
-
-          {/* Feature 1*/}
-          <div className="mt-16 space-y-20">
+          <div className="space-y-20">
             {featureBenefitsSection.contents.map((feature, index) => {
               const isEven = index % 2 === 1;
               return (
-                <div key={index} className={`grid grid-cols-1 items-center gap-12 md:grid-cols-2`}>
-                  <div className={`relative aspect-video rounded-lg bg-white/10 p-2 ${isEven ? "md:order-2" : "md:order-1"
-                    }`}>
+                <div
+                  key={index}
+                  className={`grid grid-cols-1 items-center gap-12 md:grid-cols-2`}
+                >
+                  <div
+                    className={`relative aspect-video rounded-lg bg-white/10 p-2 ${
+                      isEven ? "md:order-2" : "md:order-1"
+                    }`}
+                  >
                     <Image
                       src={feature.image.url}
                       alt={feature.alt}
@@ -215,143 +224,102 @@ export default function IndependentPharmacyPage() {
                     />
                   </div>
                   <div className={`${isEven ? "md:order-1" : "md:order-2"}`}>
-                    <h3 className="text-h5 font-semibold text-success">
+                    <h3 className="text-h6 font-bold text-white mb-2">
                       {feature.title}
                     </h3>
-                    <RichTextRenderer content={feature.description} className="text-sub1 mt-4 line-clamp-3 text-white/80" />
+                    <RichTextRenderer
+                      content={feature.description}
+                      className="text-sub2 line-clamp-4 text-white"
+                    />
                   </div>
                 </div>
               );
             })}
-
-            {/* Feature 3*/}
-            <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
-              <div className="relative aspect-video rounded-lg bg-white/10 p-2">
-                <Image
-                  src="/features-dashboard3.jpg"
-                  alt="Marketing Dashboards"
-                  layout="fill"
-                  objectFit="contain"
-                />
-              </div>
-              <div>
-                <h3 className="text-h5 font-semibold text-success">
-                  Chăm Sóc Khách Hàng Hiệu Quả
-                </h3>
-                <p className="text-sub1 mt-4 line-clamp-3 text-white/80">
-                  Quản lý hồ sơ khách hàng để tư vấn thuốc chính xác hơn, dựa
-                  trên dữ liệu đã ghi nhận trước đó. Nâng cao trải nghiệm khách
-                  hàng để họ luôn quay lại.
-                </p>
-              </div>
-            </div>
-
-            {/* Feature 4 */}
-            <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
-              <div className="md:order-last">
-                <div className="relative aspect-video rounded-lg bg-white/10 p-2">
-                  <Image
-                    src="/features-dashboard5.jpg"
-                    alt="Marketing Dashboards"
-                    layout="fill"
-                    objectFit="contain"
-                  />
-                </div>
-              </div>
-              <div>
-                <h3 className="text-h5 font-semibold text-success">
-                  Tăng Cạnh Tranh Và Mở Rộng
-                </h3>
-                <p className="text-sub1 mt-4 line-clamp-3 text-white/80">
-                  Dù là nhà thuốc độc lập, bạn vẫn cần tầm nhìn. Mọi dữ liệu đã
-                  được số hóa và chuẩn hóa, tạo nền tảng vững chắc để mở rộng
-                  quầy/chi nhánh khi bạn sẵn sàng.
-                </p>
-              </div>
-            </div>
           </div>
-
-          <div className="mt-20 text-center">
-            <button className="rounded-full bg-primary px-8 py-3 font-semibold text-white hover:opacity-90">
+          <div className="flex items-center mt-15 justify-center ">
+            <Button
+              size="md"
+              href={featureBenefitsSection.ctaButton.link || undefined}
+            >
               {featureBenefitsSection.ctaButton.title}
-            </button>
+            </Button>
           </div>
         </div>
       </section>
 
       {/** section Công nghệ AI - Trợ lý Kinh doanh 24/7 */}
       <section className="container mx-auto px-4 py-20 text-center">
-        <h2 className="text-h3 font-bold text-ink">
-          {featureShowcaseSection.title}
-        </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-h6 text-text/80">
+        <h2 className="text-black mb-5">{featureShowcaseSection.title}</h2>
+        <p className="mx-auto mb-10 max-w-2xl text-h6 text-colordescription">
           {featureShowcaseSection.description}
         </p>
-        <div className="mt-8">
-          <button className="rounded-full bg-primary px-6 py-3 font-semibold text-white hover:opacity-90">
+        <div className="flex items-center mb-15 justify-center">
+          <Button
+            size="md"
+            href={featureShowcaseSection.ctaButton.link || undefined}
+          >
             {featureShowcaseSection.ctaButton.title}
-          </button>
+          </Button>
         </div>
-        {/* -- THAY THẾ IMAGE TĨNH BẰNG CAROUSEL -- */}
-        {featureShowcaseSection.images && featureShowcaseSection.images.length > 0 && (
-          <DashboardCarousel images={featureShowcaseSection.images} alt={featureShowcaseSection.alt} />
-        )}
+        {featureShowcaseSection.images &&
+          featureShowcaseSection.images.length > 0 && (
+            <DashboardCarousel
+              images={featureShowcaseSection.images}
+              alt={featureShowcaseSection.alt}
+            />
+          )}
       </section>
 
-      {/** section Giải Pháp Chuyên Biệt */}
-      <section className=" py-20">
-        <div className="container mx-auto px-4">
+      <section className="bg-gray-50 ">
+        <div className="container mx-auto py-20">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-h3 font-bold text-ink">
-              {solutionSection.title}
-            </h2>
-            <p className="mt-4 text-h6 text-text/80">
+            <h2 className="mb-5 text-black">{solutionSection.title}</h2>
+            <p className="text-h6 text-colordescription mb-15">
               {solutionSection.description}
             </p>
           </div>
-          <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-2">
+          <div className=" px-40 grid grid-cols-1  md:grid-cols-2">
             {solutionSection.solutionCard?.map((card, index) => (
               <div
                 key={index}
-                className="rounded-xl bg-white p-8 text-center shadow-lg"
+                className="rounded-xl bg-white p-8 text-center shadow-lg max-w-lg mx-auto transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/40"
               >
-                <h3 className="mt-6 text-h5 font-bold text-ink">
+                <h3 className=" text-h4 font-bold text-black mb-4">
                   {card.title}
                 </h3>
-                <p className="mt-2 text-sub1">
+                <p className="text-h6 mb-4 mx-auto max-w-lg">
                   {card.description}
                 </p>
-                <a
-                  href={card.ctaButton.link || "#"}
-                  className="mt-4 inline-block font-semibold text-primary hover:underline"
-                >
-                  {card.ctaButton.title}
-                </a>
+                
                 <Image
                   src={card.image?.url || "/features-dashboard1.png"}
                   alt={card.image?.alt || card.title}
-                  width={250}
-                  height={250}
+                  width={450}
+                  height={450}
                   className="mx-auto"
                 />
+                <a
+                  href={card.ctaButton.link || "#"}
+                  className="mt-5 inline-flex items-center gap-2 text-sub1 font-bold text-primary hover:underline"
+                >
+                  {card.ctaButton.title}
+                  <FiArrowRight className="h-5 w-5" />
+                </a>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* --- Section: Cam Kết Đồng Hành Cùng Nhà Thuốc --- */}
-      <section className="container mx-auto px-4 py-20">
+      <section className="container mx-auto py-20">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-h3 font-bold text-ink">
-            {commitmentSection.title}
-          </h2>
-          <p className="mx-auto mt-4 max-w-3xl text-center text-h6">
+          <h2 className="text-black mb-5">{commitmentSection.title}</h2>
+          <p className="mx-auto mb-15 max-w-3xl text-center text-h6 text-colordescription">
             {commitmentSection.description}
           </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-12 h-[400px]">
+        <div className=" grid grid-cols-1 md:grid-cols-2 gap-12 h-[400px]">
           {/* Ảnh bên trái */}
           <div className="relative aspect-video rounded-lg bg-white p-2 shadow-xl">
             <Image
@@ -363,9 +331,8 @@ export default function IndependentPharmacyPage() {
           </div>
 
           {/* Khung Accordion bên phải */}
-          <div className="relative w-full max-w-[500px] mx-auto h-full">
-            {/* Nội dung Accordion cố định container, scroll khi dài */}
-            <div className="absolute inset-0 overflow-hidden flex flex-col items-center justify-start space-y-3 p-2">
+          <div className="relative w-full max-w-[800px] mx-auto h-full">
+            <div className="absolute inset-0  overflow-hidden flex flex-col items-center justify-center space-y-3 p-2">
               {commitmentSection.contents.map((item, index) => (
                 <AccordionItem
                   key={index}
@@ -385,23 +352,21 @@ export default function IndependentPharmacyPage() {
 
       <ReviewCarousel sectionData={testimonialSection} />
       {/* Final CTA Section */}
-      <section className="container mx-auto px-4 py-20">
-        <div className="rounded-2xl bg-ink p-12 text-center text-white">
-          <h2 className="text-h3 font-bold">
-            {ctaSection.title}
-          </h2>
-          <p className="mx-auto text-h6 mt-4 max-w-1xl text-white/80">
-            {ctaSection.description}
-          </p>
-          <button className="mt-8 rounded-full bg-primary px-6 py-3 font-semibold text-white hover:opacity-90">
-            {ctaSection.ctaButton.title}
-          </button>
-        </div>
+      <section className=" container mx-auto py-10 text-center">
+          <div className="rounded-2xl bg-ink p-5">
+            <h2 className="mt-10 font-bold text-white mb-5">{ctaSection.title}</h2>
+            <p className="mx-auto text-h6 max-w-4xl text-white">
+              {ctaSection.description}
+            </p>
+            <button className="mt-12 mb-10 rounded-full bg-primary px-6 py-3 font-semibold text-white hover:opacity-90">
+              {ctaSection.ctaButton.title}
+            </button>
+          </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="container mx-auto max-w-4xl px-4 py-20">
-        <h2 className="text-center text-h3 font-bold text-ink">
+      <section className="container mx-auto max-w-4xl px-4 py-10">
+        <h2 className="text-center text-h3 font-bold text-black">
           {faqSection.title}
         </h2>
         <div className="mt-10">

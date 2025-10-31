@@ -84,7 +84,7 @@ interface FAQItem {
   question: string;
   answer: string
 }
-interface FAQSection {
+export interface FAQSection {
   title: string;
   faqItems: FAQItem[];
 }

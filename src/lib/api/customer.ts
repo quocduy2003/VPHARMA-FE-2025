@@ -9,7 +9,7 @@ const query = qs.stringify(
     populate: {
       challengeSection: {
         populate: {
-          challengeCards: { populate: "*" },
+          cards: { populate: "*" },
         },
       },
       brandReviewSection: {

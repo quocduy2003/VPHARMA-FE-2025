@@ -3,7 +3,6 @@ export interface BlogCategory {
   name: string;
   slug: string;
 }
-[];
 
 export interface BlogCard {
   title: string;
@@ -14,7 +13,7 @@ export interface BlogCard {
   };
   category: BlogCategory;
   slug: string;
-  createdAt?: string;
+  createdAt: string;
 }
 
 export interface BlogPost {
@@ -55,7 +54,6 @@ export interface BlogResponse {
 
 export interface BlogCardData {
   posts: BlogCard;
-
 }
 
 export interface BlogData {
@@ -63,4 +61,11 @@ export interface BlogData {
   description: string;
   mainBlog: BlogPost;
   featuredNews: BlogPost[];
+}
+
+// Type for Table of Contents item
+export interface TocItem {
+  id: string;
+  text: string;
+  level: number;
 }

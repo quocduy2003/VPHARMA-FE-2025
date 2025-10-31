@@ -1,15 +1,18 @@
 
 import Link from 'next/link';
-import { FiFacebook, FiYoutube, FiInstagram, FiLinkedin, FiPhone, FiMapPin, FiMail, FiGlobe } from 'react-icons/fi';
+import { FiFacebook, FiYoutube, FiPhone, FiMapPin, FiMail, FiGlobe } from 'react-icons/fi';
+import Image from 'next/image';
+
 
 export function Footer() {
   return (
-    <footer className="bg-ink text-sm text-white">
+    <footer className="bg-ink text-sm text-white rounded-t-4xl">
       <div className="container mx-auto grid grid-cols-1 gap-12 px-4 md:grid-cols-6">
         {/* Cột 1: Thông tin công ty */}
         <div className="col-span-2">
           <Link href="/" className="flex items-center gap-2">
-            <img src="/Vpharma-AMIT.png" alt="V-Pharma Logo" className="h-17" />
+            <Image src="/Vpharma-AMIT.png" alt="V-Pharma Logo" width={200}    // chọn số tùy ý, ví dụ 120px
+              height={68} className="h-17" />
           </Link>
           <p className="mt-4 text-sub2 text-white/80">
             Giải pháp phần mềm giúp nhà thuốc tăng 30% doanh thu và đạt 99,9% độ chính xác trong 120 ngày — tối ưu hiệu quả, tập trung chăm sóc khách hàng.</p>

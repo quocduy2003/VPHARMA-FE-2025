@@ -1,12 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react"; // 1. Import thêm useEffect
+// 1. Import thêm useCallback
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
-import { Card } from "@/types";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 
 interface PharmacyCarouselProps {
-  cards: Card[];
+  cards: {
+    name: string;
+    address: string;
+    image: string;
+    quote?: string;
+    alt: string;
+  }[];
 }
 
 export default function PharmacyCarousel({ cards }: PharmacyCarouselProps) {
@@ -16,86 +22,123 @@ export default function PharmacyCarousel({ cards }: PharmacyCarouselProps) {
   const cardGap = 32; // 8 * 4px = 32px do dùng mx-4
   const step = cardWidth + cardGap;
   const transitionDuration = 700; // Lấy từ className 'duration-700'
+  const autoplayDelay = 2500; // 3 giây
 
-  // --- 2. Nhân bản cards để tạo hiệu ứng "cuộn tròn" ---
+  // --- Nhân bản cards ---
   const clonedCardsStart = cards.slice(0, cardsPerView);
   const clonedCardsEnd = cards.slice(-cardsPerView);
   const displayCards = [...clonedCardsEnd, ...cards, ...clonedCardsStart];
 
-  // --- 3. Cập nhật State ---
-  // Bắt đầu ở index = cardsPerView (tức là card "thật" đầu tiên)
+  // --- Cập nhật State ---
   const [currentIndex, setCurrentIndex] = useState(cardsPerView);
-  const [isJumping, setIsJumping] = useState(false); // State để quản lý việc "nhảy"
-  const [isAnimating, setIsAnimating] = useState(false); // Ngăn spam click
+  const [isJumping, setIsJumping] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+  // 2. Thêm state để tạm dừng khi hover
+  const [isHovering, setIsHovering] = useState(false);
 
-  // --- 4. Cập nhật Logic cuộn ---
-  const handlePrevPharmacy = () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-
-    const newIndex = currentIndex - 1;
-    setCurrentIndex(newIndex);
-
-    // Khi cuộn về card "nhân bản" đầu tiên
-    if (newIndex === cardsPerView - 1) {
-      setTimeout(() => {
-        setIsJumping(true); // Tắt animation
-        // Nhảy về card "thật" cuối cùng
-        setCurrentIndex(cardsPerView + cards.length - 1);
-      }, transitionDuration);
-    }
-
-    setTimeout(() => setIsAnimating(false), transitionDuration);
-  };
-
-  const handleNextPharmacy = () => {
+  // --- 3. Bọc logic cuộn bằng useCallback ---
+  const handleNextPharmacy = useCallback(() => {
     if (isAnimating) return;
     setIsAnimating(true);
 
     const newIndex = currentIndex + 1;
     setCurrentIndex(newIndex);
 
-    // Khi cuộn đến card "nhân bản" cuối cùng
     if (newIndex === cardsPerView + cards.length) {
       setTimeout(() => {
-        setIsJumping(true); // Tắt animation
-        // Nhảy về card "thật" đầu tiên
+        setIsJumping(true);
         setCurrentIndex(cardsPerView);
       }, transitionDuration);
     }
 
     setTimeout(() => setIsAnimating(false), transitionDuration);
-  };
+  }, [
+    isAnimating,
+    currentIndex,
+    cards.length,
+    cardsPerView,
+    transitionDuration,
+  ]);
 
-  // --- 5. Thêm useEffect để bật lại animation sau khi "nhảy" ---
+  const handlePrevPharmacy = useCallback(() => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+
+    const newIndex = currentIndex - 1;
+    setCurrentIndex(newIndex);
+
+    if (newIndex === cardsPerView - 1) {
+      setTimeout(() => {
+        setIsJumping(true);
+        setCurrentIndex(cardsPerView + cards.length - 1);
+      }, transitionDuration);
+    }
+
+    setTimeout(() => setIsAnimating(false), transitionDuration);
+  }, [
+    isAnimating,
+    currentIndex,
+    cards.length,
+    cardsPerView,
+    transitionDuration,
+  ]);
+
+  // --- useEffect để bật lại animation (giữ nguyên) ---
   useEffect(() => {
     if (isJumping) {
-      // Dùng requestAnimationFrame để đợi DOM cập nhật xong
       requestAnimationFrame(() => {
         setIsJumping(false);
       });
     }
   }, [isJumping]);
 
+  // --- 4. Thêm useEffect cho Autoplay ---
+  useEffect(() => {
+    // Chỉ chạy khi không hover và không đang chuyển động
+    if (isHovering || isAnimating) return;
+
+    // Tạo một interval
+    const timer = setInterval(() => {
+      handleNextPharmacy();
+    }, autoplayDelay); // Tự cuộn sau mỗi 3 giây
+
+    // Xóa interval khi component unmount hoặc khi state thay đổi
+    return () => {
+      clearInterval(timer);
+    };
+  }, [isHovering, isAnimating, handleNextPharmacy, autoplayDelay]);
+
   return (
     <div className="relative flex flex-col items-center justify-center">
+      <button
+        onClick={handlePrevPharmacy}
+        className="absolute left-0 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-blue-50 text-primary transition hover:bg-blue-100 text-3xl font-bold"
+        aria-label="Previous"
+        disabled={isAnimating}
+      >
+        <FiArrowLeft className="h-6 w-6" />
+      </button>
       {/* Carousel container */}
-      <div className="w-full max-w-6xl overflow-hidden">
+      <div
+        className="w-full max-w-6xl overflow-hidden"
+        // 5. Thêm sự kiện hover để tạm dừng/tiếp tục autoplay
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+      >
         <div
-          className="flex" // Bỏ 'transition-transform duration-700 ease-in-out'
+          className="flex"
           style={{
-            width: `${displayCards.length * step}px`, // 6. Dùng độ dài mảng mới
+            width: `${displayCards.length * step}px`,
             transform: `translateX(-${currentIndex * step}px)`,
-            // 7. Quản lý transition bằng state
             transition: isJumping
               ? "none"
               : `transform ${transitionDuration}ms ease-in-out`,
           }}
         >
-          {/* 8. Map qua mảng displayCards */}
+          {/* Map qua mảng displayCards (giữ nguyên) */}
           {displayCards.map((card, idx) => (
             <div
-              key={idx} // key={idx} vẫn ổn vì mảng này không thay đổi
+              key={idx}
               className="mx-4 min-w-[350px] max-w-[350px] flex-shrink-0 rounded-xl border border-gray-400 bg-white shadow-lg transition hover:shadow-xl"
               style={{ height: 350 }}
             >
@@ -109,7 +152,6 @@ export default function PharmacyCarousel({ cards }: PharmacyCarouselProps) {
                     width={310}
                     height={110}
                     className="h-[110px] w-full object-contain"
-                  
                   />
                 </div>
               </div>
@@ -117,26 +159,14 @@ export default function PharmacyCarousel({ cards }: PharmacyCarouselProps) {
           ))}
         </div>
       </div>
-
-      {/* Navigation buttons */}
-      <div className="relative mx-auto mt-10 w-30">
-        <button
-          onClick={handlePrevPharmacy}
-          className="absolute left-0 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-blue-50 text-primary transition hover:bg-blue-100 text-3xl font-bold"
-          aria-label="Previous"
-          disabled={isAnimating} // 9. Vô hiệu hóa khi đang cuộn
-        >
-          <FiArrowLeft className="h-6 w-6" />
-        </button>
-        <button
-          onClick={handleNextPharmacy}
-          className="absolute right-0 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-blue-50 text-primary transition hover:bg-blue-100 text-3xl font-bold"
-          aria-label="Next"
-          disabled={isAnimating} // 9. Vô hiệu hóa khi đang cuộn
-        >
-          <FiArrowRight className="h-6 w-6" />
-        </button>
-      </div>
+      <button
+        onClick={handleNextPharmacy}
+        className="absolute right-0 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-blue-50 text-primary transition hover:bg-blue-100 text-3xl font-bold"
+        aria-label="Next"
+        disabled={isAnimating}
+      >
+        <FiArrowRight className="h-6 w-6" />
+      </button>
     </div>
   );
 }

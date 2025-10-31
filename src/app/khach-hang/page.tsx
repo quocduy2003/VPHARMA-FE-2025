@@ -1,8 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import FadeInOnScroll from "@/components/animations/FadeInOnScroll";
 import PharmacyCarousel from "@/components/PharmacyCarousel";
 import CTASection from "@/components/CTA";
@@ -81,13 +80,15 @@ function ChallengeStackedCards({ challengeCards }: { challengeCards: Card[] }) {
                   pointerEvents: isActive ? "auto" : "none",
                 }}
               >
-                <img
+                <Image
                   src={item.image}
-                  className="w-20 h-20 rounded-full object-cover mb-6 mt-12"
+                  className="w-20 h-20 rounded-full object-cover mb-5 mt-12"
                   alt={item.name}
+                  width={80}
+                  height={80}
                 />
-                <div className="font-bold text-2xl mb-2">{item.name}</div>
-                <div className="text-lg text-gray-500 mb-4">{item.address}</div>
+                <p className="font-bold text-2xl mb-5">{item.name}</p>
+                <p className="text-lg text-gray-500 mb-5">{item.address}</p>
                 <div className="text-center text-lg text-gray-800 italic px-8">
                   {item.quote}
                 </div>
@@ -125,19 +126,20 @@ function BlogSection({ slug }: { slug: string }) {
             >
               <div className="relative w-full h-44 sm:h-48 md:h-56 xl:h-64 rounded-t-xl overflow-hidden">
                 <Image
+                  width={500}
+                  height={500}
                   src={blog.coverImage.url}
                   alt={blog.title || "Blog Image"}
-                  fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover"
                 />
               </div>
               <div className="p-5 text-center">
-                <h3 className="font-semibold text-lg mb-3 line-clamp-2 text-gray-800">
+                <h3 className="font-semibold text-lg mb-5 line-clamp-2 text-gray-800">
                   {blog.title}
                 </h3>
-                <button className="text-blue-600 font-bold flex items-center justify-center gap-1 hover:gap-2 transition-all">
-                  Đọc thêm <span>→</span>
+                <button className="text-primary text-sub1 font-bold flex items-center justify-center gap-1 hover:gap-2 transition-all">
+                  Đọc thêm <span><FiArrowRight className="h-5 w-5" /></span>
                 </button>
               </div>
             </div>
@@ -177,11 +179,11 @@ export default function KhachHang() {
     <>
       <section className="h-screen bg-gradient-to-b from-blue-100 to-white flex items-center justify-center">
         <div className="container max-w-6xl text-center">
-          <p className="mb-2 text-h6 font-bold uppercase tracking-wide text-primary">
+          <p className="mb-5 text-h6 font-bold uppercase tracking-wide text-primary">
             {customerData.eyebrow}
           </p>
-          <h1>{customerData.mainTitle}</h1>
-          <p className="mx-auto mt-10 max-w-3xl text-h6 ">
+          <h1 >{customerData.mainTitle}</h1>
+          <p className="mx-auto max-w-3xl text-h6 ">
             {customerData.mainDescription}
           </p>
         </div>
@@ -190,7 +192,7 @@ export default function KhachHang() {
       <section className="">
         <FadeInOnScroll>
           <div className="container mx-auto px-4">
-            <h2 className="mb-12 text-center text-black">
+            <h2 className="mb-5 text-center text-black">
               {challengeSection.title}
             </h2>
             <p className="text-h6 mx-auto max-w-3xl text-center">
@@ -202,7 +204,7 @@ export default function KhachHang() {
       </section>
 
       <FadeInOnScroll>
-        <section className="bg-white py-20">
+        <section className="bg-white py-10">
           <div className="container mx-auto px-4">
             <div className="mx-auto mb-12 max-w-6xl text-center">
               <p className="mb-2 text-h6 font-bold uppercase tracking-wide text-primary">

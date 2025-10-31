@@ -30,7 +30,7 @@
   --size-button-h: 44px;
 
   /* Typography Scale */
-  --text-h1: 60px;
+  --text-h1: 50px;
   --leading-h1: 72px;
 
   --text-h2: 40px;
@@ -75,12 +75,23 @@
   body {
     @apply font-[var(--font-roboto)] text-[var(--color-text)] bg-[var(--color-white)];
   }
+   html {
+    scroll-padding-top: 100px;
 
+    @media (min-width: theme("screens.md")) {
+      scroll-padding-top: 130px;
+    }
+
+    @media (min-width: theme("screens.lg")) {
+      scroll-padding-top: 150px;
+    }
+  }
   h1 {
     font-size: var(--text-h1);
-    line-height: 1.6;
+    line-height: 1.4;
     font-weight: 700;
     color:black;
+    margin-bottom: 30px;
   }
 
   h2 {
@@ -114,9 +125,17 @@
   }
 
   p {
-    color: var(--color-colordescription);
+    line-height: 1.6;
+    color: var(--color-black);
   }
 }
+
+.embla__slide {
+   flex-shrink: 0;
+  flex-grow: 0;
+  min-width: 0;
+ 
+ }
 /* Các lớp tiện ích tùy chỉnh cho component (nếu cần) */
 @layer components {
 
@@ -132,6 +151,7 @@
       padding-block: 3rem;
     }
   }
+  
   /* Base button */
   .btn {
     @apply  flex items-center justify-center gap-2 px-6 text-sm font-medium
