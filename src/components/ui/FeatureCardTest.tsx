@@ -110,30 +110,30 @@
 //   return (
 //     <div ref={sectionRef} className={`grid items-center lg:grid-cols-2`}>
 //       {/* Cột hình ảnh */}
-    //   <div
-    //     className={`${
-    //       isLeft ? "lg:order-2" : "lg:order-1"
-    //     } flex justify-center relative`}
-    //   >
-    //     <div className="relative w-full max-w-[650px] h-150 rounded-2xl overflow-hidden shadow-lg">
-    //       {features.map((item, idx) => (
-    //         <Image
-    //           key={idx}
-    //           src={item.image}
-    //           alt={item.title}
-    //           width={640}
-    //           height={420}
-    //           className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
-    //                             w-full h-full rounded-xl object-cover transition-opacity duration-500
-    //                             ${
-    //                               activeIndex === idx
-    //                                 ? "opacity-100 z-10"
-    //                                 : "opacity-0 z-0"
-    //                             }`}
-    //         />
-    //       ))}
-    //     </div>
-    //   </div>
+//   <div
+//     className={`${
+//       isLeft ? "lg:order-2" : "lg:order-1"
+//     } flex justify-center relative`}
+//   >
+//     <div className="relative w-full max-w-[650px] h-150 rounded-2xl overflow-hidden shadow-lg">
+//       {features.map((item, idx) => (
+//         <Image
+//           key={idx}
+//           src={item.image}
+//           alt={item.title}
+//           width={640}
+//           height={420}
+//           className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+//                             w-full h-full rounded-xl object-cover transition-opacity duration-500
+//                             ${
+//                               activeIndex === idx
+//                                 ? "opacity-100 z-10"
+//                                 : "opacity-0 z-0"
+//                             }`}
+//         />
+//       ))}
+//     </div>
+//   </div>
 //       {/* Cột mô tả + timeline từng đoạn */}
 //       <div className={`${isLeft ? "lg:order-1" : "lg:order-2"} relative flex`}>
 //         <ul className="relative flex flex-col ml-[36px]">
@@ -385,9 +385,8 @@ export default function FeatureCardTest({
   return (
     <div ref={sectionRef} className={`grid items-center lg:grid-cols-2`}>
       <div
-        className={`${
-          isLeft ? "lg:order-2" : "lg:order-1"
-        } flex justify-center relative`}
+        className={`${isLeft ? "lg:order-2" : "lg:order-1"
+          } flex justify-center relative`}
       >
         <div className="relative w-full max-w-[650px] h-150 rounded-2xl overflow-hidden shadow-lg">
           {features.map((item, idx) => (
@@ -399,11 +398,10 @@ export default function FeatureCardTest({
               height={420}
               className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
                                 w-full h-full rounded-xl object-cover transition-opacity duration-500
-                                ${
-                                  activeIndex === idx
-                                    ? "opacity-100 z-10"
-                                    : "opacity-0 z-0"
-                                }`}
+                                ${activeIndex === idx
+                  ? "opacity-100 z-10"
+                  : "opacity-0 z-0"
+                }`}
             />
           ))}
         </div>
@@ -431,13 +429,12 @@ export default function FeatureCardTest({
                 {/* Icon */}
                 <span
                   className={`flex items-center justify-center h-9 w-9 rounded-full border-2 transition-all duration-300 
-                                        ${
-                                          activeIndex === index
-                                            ? "bg-success text-white border-success shadow-lg"
-                                            : theme === "dark"
-                                            ? "bg-[#0b7457] text-white/90 border-success/40"
-                                            : "bg-emerald-100 text-success/50 border-emerald-200"
-                                        }`}
+                      ${activeIndex === index
+                      ? "bg-success text-white border-success shadow-lg"
+                      : theme === "dark"
+                        ? "bg-[#0b7457] text-white/90 border-success/40"
+                        : "bg-emerald-100 text-success/50 border-emerald-200"
+                    }`}
                 >
                   {ICONS[index] || ICONS[0]}
                 </span>
@@ -481,27 +478,25 @@ export default function FeatureCardTest({
               {/* Nội dung */}
               <div className="flex-1 pl-2 transition-all duration-300">
                 <h3
-                  className={`mb-4 font-bold text-h6 transition-all duration-300 ${
-                    theme === "dark"
-                      ? activeIndex === index
-                        ? "text-white"
-                        : "text-white/50"
-                      : activeIndex === index
+                  className={`mb-4 font-bold text-h6 transition-all duration-300 ${theme === "dark"
+                    ? activeIndex === index
+                      ? "text-white"
+                      : "text-white/50"
+                    : activeIndex === index
                       ? "text-primary"
                       : "text-black/60"
-                  }`}
+                    }`}
                 >
                   {item.title}
                 </h3>
                 <RichTextRenderer
                   content={item.descriptionBlocks}
                   className={`leading-relaxed text-sub2 transition-all duration-300
-                    ${
-                      theme === "dark"
-                        ? activeIndex === index
-                          ? "text-white"
-                          : "text-white/50"
-                        : activeIndex === index
+                    ${theme === "dark"
+                      ? activeIndex === index
+                        ? "text-white"
+                        : "text-white/50"
+                      : activeIndex === index
                         ? "text-gray-700"
                         : "text-gray-500"
                     }`}

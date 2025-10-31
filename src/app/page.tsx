@@ -74,6 +74,7 @@ export default function HomePage() {
           activeCategory === "Tất cả"
             ? "home"
             : activeCategory.toLowerCase().replace(/\s/g, "-");
+        console.log("Fetching posts for category:", categorySlug);
         const response = await getBlogPosts(
           categorySlug,
           currentPage,
@@ -261,10 +262,10 @@ export default function HomePage() {
                   style={{ zIndex: 2 }}
                 >
                   <Image
-                  
+
                     src="/chart.png"
                     alt="Total Balance Chart"
-                    width={500}   
+                    width={500}
                     height={240}
                     className="w-full h-60 object-contain"
 
@@ -275,7 +276,7 @@ export default function HomePage() {
                   style={{ zIndex: 3 }}
                 >
                   <Image
-                
+
                     src="/chart.png"
                     alt="Total Balance Mini Chart"
                     width={500}      // chọn kích thước phù hợp với giao diện thực tế
@@ -325,8 +326,8 @@ export default function HomePage() {
               {blogSection.blogCategories.map((category) => (
                 <button
                   key={category.slug}
-                  onClick={() => setActiveCategory(category.name)}
-                  className={`rounded-full px-4 py-2 text-sub2 font-semibold border border-gray transition-colors ${activeCategory === category.name
+                  onClick={() => setActiveCategory(category.slug)}
+                  className={`rounded-full px-4 py-2 text-sub2 font-semibold border border-gray transition-colors ${activeCategory === category.slug
                     ? "bg-primary text-white shadow-md"
                     : "bg-white text-black hover:bg-slate-100"
                     }`}
