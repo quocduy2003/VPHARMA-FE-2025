@@ -1,6 +1,7 @@
 
 import Link from 'next/link';
-import { FiFacebook, FiYoutube, FiPhone, FiMapPin, FiMail, FiGlobe } from 'react-icons/fi';
+import { FiYoutube, FiPhone, FiMapPin, FiMail, FiGlobe } from 'react-icons/fi';
+import { BiLogoFacebookCircle } from 'react-icons/bi';
 import Image from 'next/image';
 
 
@@ -17,11 +18,11 @@ export function Footer() {
           <p className="mt-4 text-sub2 text-white/80">
             Giải pháp phần mềm giúp nhà thuốc tăng 30% doanh thu và đạt 99,9% độ chính xác trong 120 ngày — tối ưu hiệu quả, tập trung chăm sóc khách hàng.</p>
           <div className="mt-6 flex gap-4">
-            <Link href="https://www.facebook.com/amitgroup.vn" target="_blank" aria-label="Facebook"><FiFacebook className="h-7 w-7 hover:text-primary" /></Link>
+            <Link href="https://www.facebook.com/amitgroup.vn" target="_blank" aria-label="Facebook"><BiLogoFacebookCircle className="h-7 w-7 hover:text-primary" /></Link>
             <Link href="https://www.youtube.com/@AmitGROUPmkt" target="_blank" aria-label="YouTube"><FiYoutube className="h-7 w-7 hover:text-primary" /></Link>
             <Link href="https://amitgroup.asia/" target="_blank" aria-label="Website"><FiGlobe className="h-7 w-7 hover:text-primary" /></Link>
           </div>
-          <ul className="mt-8 space-y-4 text-sub2 text-white/90">
+          <ul className="mt-8 space-y-4 text-sub2 text-white/80">
             <li className="flex items-start gap-3">
               <FiPhone className="mt-1 flex-shrink-0 text-success" />
               <span>(+84) 911 000 038</span>
@@ -32,7 +33,15 @@ export function Footer() {
             </li>
             <li className="flex items-start gap-3">
               <FiMapPin className="mt-1 flex-shrink-0 text-success" />
-              <span>Số 7, Đường 7C, KDT An Phú An Khánh, Phường Bình Trưng, TP. HCM</span>
+              <a
+                      href="https://maps.app.goo.gl/xnSXqtouAAk2yewr7"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-white"
+                    >
+                      Số 7, Đường 7C, Khu đô thị An Phú An Khánh, Phường Bình
+                      Trưng, Thành phố Hồ Chí Minh
+                    </a>
             </li>
           </ul>
         </div>

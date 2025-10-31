@@ -16,12 +16,11 @@ interface PharmacyCarouselProps {
 }
 
 export default function PharmacyCarousel({ cards }: PharmacyCarouselProps) {
-  // --- Các hằng số giữ nguyên ---
-  const cardsPerView = 3;
-  const cardWidth = 350; // px
-  const cardGap = 32; // 8 * 4px = 32px do dùng mx-4
+  const cardsPerView = 4;
+  const cardWidth = 350;
+  const cardGap = 32; 
   const step = cardWidth + cardGap;
-  const transitionDuration = 700; // Lấy từ className 'duration-700'
+  const transitionDuration = 700;
   const autoplayDelay = 2500; // 3 giây
 
   // --- Nhân bản cards ---
@@ -139,7 +138,7 @@ export default function PharmacyCarousel({ cards }: PharmacyCarouselProps) {
           {displayCards.map((card, idx) => (
             <div
               key={idx}
-              className="mx-4 min-w-[350px] max-w-[350px] flex-shrink-0 rounded-xl border border-gray-400 bg-white shadow-lg transition hover:shadow-xl"
+              className="mx-4 min-w-[300px] max-w-[300px] flex-shrink-0 rounded-xl border border-gray-400 bg-white shadow-lg transition hover:shadow-xl"
               style={{ height: 350 }}
             >
               <div className="p-7">

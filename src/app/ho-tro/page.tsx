@@ -8,16 +8,16 @@ import {
   FiLoader,
   FiXCircle,
   FiCheckCircle,
-  FiFacebook,
   FiYoutube,
   FiGlobe,
   FiPhone,
   FiMapPin,
   FiMail,
-  FiChevronDown, // Sẽ dùng cho Listbox
+  FiChevronDown, 
   FiCheck,
   FiX,
 } from "react-icons/fi";
+import { BiLogoFacebookCircle } from 'react-icons/bi';
 import FaqSection, { type Faq } from "@/components/Faq";
 import { Listbox, Transition } from "@headlessui/react";
 
@@ -557,7 +557,7 @@ export default function HoTro() {
                   rel="noopener noreferrer"
                   className="text-success hover:text-blue-500 transition-colors "
                 >
-                  <FiFacebook size={27} />
+                  <BiLogoFacebookCircle size={27} />
                 </a>
                 <a
                   href="https://www.youtube.com/@AmitGROUPmkt"

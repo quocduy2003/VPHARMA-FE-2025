@@ -139,7 +139,10 @@ function BlogSection({ slug }: { slug: string }) {
                   {blog.title}
                 </h3>
                 <button className="text-primary text-sub1 font-bold flex items-center justify-center gap-1 hover:gap-2 transition-all">
-                  Đọc thêm <span><FiArrowRight className="h-5 w-5" /></span>
+                  Đọc thêm{" "}
+                  <span>
+                    <FiArrowRight className="h-5 w-5" />
+                  </span>
                 </button>
               </div>
             </div>
@@ -154,9 +157,6 @@ function BlogSection({ slug }: { slug: string }) {
           >
             <FiArrowLeft className="h-6 w-6" />
           </button>
-          {/* <span>
-            {page}/{pageCount}
-          </span> */}
           <button
             className="z-10 flex h-12 w-12 items-center justify-center rounded-full bg-blue-50 text-primary transition hover:bg-blue-100 text-3xl font-bold"
             onClick={() => setPage((p) => Math.min(pageCount, p + 1))}
@@ -179,10 +179,10 @@ export default function KhachHang() {
     <>
       <section className="h-screen bg-gradient-to-b from-blue-100 to-white flex items-center justify-center">
         <div className="container max-w-6xl text-center">
-          <p className="mb-5 text-h6 font-bold uppercase tracking-wide text-primary">
-            {customerData.eyebrow}
+          <p className="mb-5 text-h6 font-bold capitalize tracking-wide text-primary">
+            {customerData.eyebrow.toLowerCase()}
           </p>
-          <h1 >{customerData.mainTitle}</h1>
+          <h1>{customerData.mainTitle}</h1>
           <p className="mx-auto max-w-3xl text-h6 ">
             {customerData.mainDescription}
           </p>
@@ -204,11 +204,11 @@ export default function KhachHang() {
       </section>
 
       <FadeInOnScroll>
-        <section className="bg-white py-10">
-          <div className="container mx-auto px-4">
+        <section className="bg-white ">
+          <div className="container mx-auto py-15">
             <div className="mx-auto mb-12 max-w-6xl text-center">
-              <p className="mb-2 text-h6 font-bold uppercase tracking-wide text-primary">
-                {brandReviewSection.eyebrow}
+              <p className="mb-2 text-h6 font-bold capitalize tracking-wide text-primary">
+                {brandReviewSection.eyebrow.toLowerCase()}
               </p>
               <h2 className="mb-4 text-black">{brandReviewSection.title}</h2>
             </div>

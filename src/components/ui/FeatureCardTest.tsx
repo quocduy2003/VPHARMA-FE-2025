@@ -239,6 +239,7 @@ import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { ChainFeatureCardProps } from "@/types";
 import { RichTextRenderer } from "./RichTextRenderer";
+import { FiArrowRight } from "react-icons/fi";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 function useInView(ref: React.RefObject<HTMLElement>, threshold = 0.2) {
   const [inView, setInView] = useState(false);
@@ -350,16 +351,7 @@ export default function FeatureCardTest({
   };
 
   const ICONS = [
-    <svg
-      key="1"
-      viewBox="0 0 24 24"
-      className="h-6 w-6"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-    >
-      <rect x="5" y="5" width="14" height="14" rx="3" />
-    </svg>,
+    <FiArrowRight  key="1" className="h-6 w-6" />,
     <svg
       key="2"
       viewBox="0 0 24 24"
