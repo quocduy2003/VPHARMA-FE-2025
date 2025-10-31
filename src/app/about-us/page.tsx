@@ -17,7 +17,7 @@ const StorySection = ({
     <div className="container ">
       <div className="rounded-2xl bg-ink p-8 text-white shadow-xl md:p-12 lg:p-16">
         <div className=" text-center">
-          <p className="mb-5 text-h6 font-bold uppercase tracking-wide text-primary">
+          <p className="mb-5 text-h6 font-bold capitalize tracking-wide text-primary">
             {data.eyebrow}
           </p>
           <h2 className="mb-5 text-white">{data.title}</h2>
@@ -54,7 +54,7 @@ const ValuesSection = ({
   <section className="bg-gradient-to-b from-white to-cyan-50 py-10">
     <div className="container mx-auto px-4">
       <div className="text-center">
-        <p className="mb-5 text-h6 font-bold uppercase tracking-wide text-primary">
+        <p className="mb-5 text-h6 font-bold capitalize tracking-wide text-primary">
           {data.eyebrow}
         </p>
         <h2 className="mb-15 text-black">{data.title}</h2>
@@ -144,7 +144,7 @@ const FounderSection = ({
       <div className="container">
         {/* === 1. KHỐI HEADER (Giữ nguyên) === */}
         <div className="text-center">
-          <p className="mb-5 text-h6 font-bold uppercase tracking-wide text-primary">
+          <p className="mb-5 text-h6 font-bold capitalize tracking-wide text-primary">
             {data?.eyebrow || ""}
           </p>
           <h2 className="mb-5 text-black">{data?.title || ""}</h2>
@@ -248,7 +248,6 @@ export default function AboutUsPage() {
     setCurrentMemberIndex((prev) => (prev - 1 + founderCount) % founderCount);
   console.log("About Us Blocks:", blocks);
 
-  // Take blocks as blocks[]
   const renderBlock = (block: BlockItems) => {
     switch (block.__component) {
       case "about.story-section":
@@ -278,7 +277,7 @@ export default function AboutUsPage() {
         <FadeInOnScroll>
           <div className="h-screen flex items-center mt-5 mx-auto max-w-6xl text-center">
             <div className="container">
-              <p className="mb-5 text-h6 font-bold uppercase tracking-wide text-primary">
+              <p className="mb-5 text-h6 font-bold capitalize tracking-wide text-primary">
                 {aboutUsData.eyebrow}
               </p>
               <h1 >{aboutUsData.title}</h1>

@@ -11,7 +11,7 @@ export function Footer() {
         {/* Cột 1: Thông tin công ty */}
         <div className="col-span-2">
           <Link href="/" className="flex items-center gap-2">
-            <Image src="/Vpharma-AMIT.png" alt="V-Pharma Logo" width={120}    // chọn số tùy ý, ví dụ 120px
+            <Image src="/Vpharma-AMIT.png" alt="V-Pharma Logo" width={200}    // chọn số tùy ý, ví dụ 120px
               height={68} className="h-17" />
           </Link>
           <p className="mt-4 text-sub2 text-white/80">

@@ -11,7 +11,8 @@ import { pricingPageData } from "@/lib/api/pricing";
 import type { Feature } from "@/types";
 
 // 1. CẬP NHẬT: "Coming soon" thành text thường (giống ảnh mới)
-const renderFeatureValue = (value: any) => {
+type FeatureDisplayValue = string | boolean | null | undefined | number;
+const renderFeatureValue = (value: FeatureDisplayValue) => {
 
   // Nếu không có value → xử lý theo trạng thái isActive (true / false)
   if (value === true) {
@@ -75,7 +76,7 @@ export default function PricePage() {
   const CATEGORY_ROW_HEIGHT = "h-[57px]";
   const FEATURE_ROW_HEIGHT = "h-[57px]";
   // Lấy giá trị hiển thị đúng ưu tiên value nếu có, ngược lại dựa theo trạng thái
-  
+
   const getFeatureDisplayValue = (feature: Feature, planId: number) => {
     const planValue = feature.PlanValues?.[planId];
     if (!planValue) return null;
