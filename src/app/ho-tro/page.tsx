@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState, Fragment } from "react";
 import FadeInOnScroll from "@/components/animations/FadeInOnScroll";
 import PhoneInputField from "@/components/ho-tro/PhoneInputField";
+import type { IconType } from "react-icons";
 import {
   FiLoader,
   FiXCircle,
@@ -29,29 +30,29 @@ import { AccordionItem } from "@/components/ui/AccordionIteam";
 import { contactData } from "@/lib/api/contact";
 
 // Dữ liệu cho phần mềm hỗ trợ 
-const supportSoftwareData = [
-  {
-    name: "TeamViewer",
-    description:
-      "Giải pháp điều khiển máy tính từ xa phổ biến, an toàn và bảo mật.",
-    link: "https://www.teamviewer.com/",
-    logo: "/logoTeamviewer.png",
-  },
-  {
-    name: "UltraViewer",
-    description:
-      "Phần mềm điều khiển từ xa được thiết kế gọn nhẹ và dễ sử dụng.",
-    link: "https://ultraviewer.net/",
-    logo: "/logoUltraview.png",
-  },
-  {
-    name: "AnyDesk",
-    description:
-      "Phần mềm truy cập từ xa nhanh, nhẹ và an toàn cho mọi nền tảng.",
-    link: "https://anydesk.com/",
-    logo: "/logoAnyDesk.png",
-  },
-];
+// const supportSoftwareData = [
+//   {
+//     name: "TeamViewer",
+//     description:
+//       "Giải pháp điều khiển máy tính từ xa phổ biến, an toàn và bảo mật.",
+//     link: "https://www.teamviewer.com/",
+//     logo: "/logoTeamviewer.png",
+//   },
+//   {
+//     name: "UltraViewer",
+//     description:
+//       "Phần mềm điều khiển từ xa được thiết kế gọn nhẹ và dễ sử dụng.",
+//     link: "https://ultraviewer.net/",
+//     logo: "/logoUltraview.png",
+//   },
+//   {
+//     name: "AnyDesk",
+//     description:
+//       "Phần mềm truy cập từ xa nhanh, nhẹ và an toàn cho mọi nền tảng.",
+//     link: "https://anydesk.com/",
+//     logo: "/logoAnyDesk.png",
+//   },
+// ];
 
 // dữ liệu FAQ
 // const hoTroFaqData: Faq[] = [
@@ -119,8 +120,8 @@ export default function HoTro() {
   const [formSuccess, setFormSuccess] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   //icon 
-  const socialIcons: Record<string, any> = {
-    facebook: FiFacebook,
+  const socialIcons: Record<string, IconType> = {
+    facebook: BiLogoFacebookCircle,
     youtube: FiYoutube,
     website: FiGlobe,
     instagram: FiInstagram,
@@ -615,8 +616,8 @@ export default function HoTro() {
                   <Image
                     src={software.icon}
                     alt={`Logo ${software.title}`}
-                    layout="fill"
-                    objectFit="contain"
+                    fill
+                    className="object-contain"
                   />
                 </div>
                 <h3 className="text-sub1 font-bold text-black mb-5">

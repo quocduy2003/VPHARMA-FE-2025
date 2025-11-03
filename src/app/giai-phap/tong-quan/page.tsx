@@ -78,7 +78,7 @@ export default function IndependentPharmacyPage() {
     featureSection.tabs[0].id
   );
   const current = featureSection.tabs.find((tab) => tab.id === activeTab);
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
+
   const [openAccordion, setOpenAccordion] = useState(0);
   console.log("Testimonial Section Data:", testimonialSection);
 

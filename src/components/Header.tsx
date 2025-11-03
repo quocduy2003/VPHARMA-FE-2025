@@ -32,7 +32,7 @@ export function Header() {
         <Link
           href="/"
           className="flex items-center flex-shrink-0"
-          onClick={() => setIsMobileMenuOpen(false)} 
+          onClick={() => setIsMobileMenuOpen(false)}
         >
           <Image
             src="/Vpharma-AMIT.png"
@@ -72,7 +72,7 @@ export function Header() {
               <FiChevronDown className="text-base" />
             </button>
             <div className="absolute left-0 right-0 h-2 top-full" />
-            <div className="absolute left-1/2 -translate-x-1/2 top-full z-10 hidden w-48 flex-col rounded-lg bg-white p-2 shadow-lg group-hover:flex">
+            <div className="absolute left-0 top-full mt-2 z-10 hidden w-48 flex-col rounded-lg bg-white p-2 shadow-lg group-hover:flex">
               {moreLinks.map((link) => (
                 <Link
                   key={link.href}

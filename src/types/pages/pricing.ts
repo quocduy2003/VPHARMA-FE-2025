@@ -1,3 +1,5 @@
+import { CTASection, FAQSection } from "@/types";
+
 interface PricingPlan {
   id: number;
   name: string;
@@ -26,6 +28,10 @@ interface FeatureCategory {
 }
 
 export interface PricingPageData {
+  title: string;
+  description: string;
   pricingPlans: PricingPlan[];
   featureCategories: FeatureCategory[];
+  faqSection: FAQSection;
+  ctaSection: CTASection;
 }

@@ -51,7 +51,7 @@ export default function FaqSection({ title, items }: FaqSectionProps) {
 
   return (
     <section className="container mx-auto max-w-5xl px-4 py-16">
-      <h2 className="text-center text-black font-semibold mb-12">
+      <h2 className="text-center text-black font-bold mb-12">
         {title}
       </h2>
 
