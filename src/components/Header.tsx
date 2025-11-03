@@ -68,11 +68,11 @@ export function Header() {
           {/* Dropdown Thêm */}
           <div className="group relative ">
             <button className="flex items-center gap-1 hover:text-primary shad">
-              <span className="text-sub2 text-black">Thêm</span>
+              <span className="text-sub2 px-3 text-black">Thêm</span>
               <FiChevronDown className="text-base" />
             </button>
             <div className="absolute left-0 right-0 h-2 top-full" />
-            <div className="absolute right-0 top-full z-10 hidden w-48 flex-col rounded-lg bg-white p-2 shadow-lg group-hover:flex">
+            <div className="absolute left-1/2 -translate-x-1/2 top-full z-10 hidden w-48 flex-col rounded-lg bg-white p-2 shadow-lg group-hover:flex">
               {moreLinks.map((link) => (
                 <Link
                   key={link.href}

@@ -16,12 +16,11 @@ interface PharmacyCarouselProps {
 }
 
 export default function PharmacyCarousel({ cards }: PharmacyCarouselProps) {
-  // --- Các hằng số giữ nguyên ---
-  const cardsPerView = 3;
-  const cardWidth = 350; // px
-  const cardGap = 32; // 8 * 4px = 32px do dùng mx-4
+  const cardsPerView = 4;
+  const cardWidth = 300;
+  const cardGap = 32;
   const step = cardWidth + cardGap;
-  const transitionDuration = 700; // Lấy từ className 'duration-700'
+  const transitionDuration = 700;
   const autoplayDelay = 2500; // 3 giây
 
   // --- Nhân bản cards ---
@@ -120,13 +119,12 @@ export default function PharmacyCarousel({ cards }: PharmacyCarouselProps) {
       </button>
       {/* Carousel container */}
       <div
-        className="w-full max-w-6xl overflow-hidden"
-        // 5. Thêm sự kiện hover để tạm dừng/tiếp tục autoplay
+        className="w-full max-w-[1296px] overflow-hidden"
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
       >
         <div
-          className="flex"
+          className="flex gap-8"
           style={{
             width: `${displayCards.length * step}px`,
             transform: `translateX(-${currentIndex * step}px)`,
@@ -139,19 +137,18 @@ export default function PharmacyCarousel({ cards }: PharmacyCarouselProps) {
           {displayCards.map((card, idx) => (
             <div
               key={idx}
-              className="mx-4 min-w-[350px] max-w-[350px] flex-shrink-0 rounded-xl border border-gray-400 bg-white shadow-lg transition hover:shadow-xl"
-              style={{ height: 350 }}
+              className="min-w-[300px] max-w-[300px] flex-shrink-0 rounded-xl border border-gray-400 bg-white shadow-lg transition hover:shadow-xl min-h-[350px] max-h-[420px] overflow-auto"
             >
               <div className="p-7">
                 <h3 className="mb-2 text-black font-semibold">{card.name}</h3>
-                <p className="mb-4 text-sub1 text-black">{card.address}</p>
-                <div className="mt-3 flex flex-col items-center rounded-lg py-6 px-4">
+                <p className=" text-sub1 text-black">{card.address}</p>
+                <div className="flex flex-col items-center rounded-lg py-7 px-4">
                   <Image
                     src={card.image}
                     alt={card.alt}
                     width={310}
-                    height={110}
-                    className="h-[110px] w-full object-contain"
+                    height={210}
+                    className="h-[160px] w-[full] object-contain"
                   />
                 </div>
               </div>

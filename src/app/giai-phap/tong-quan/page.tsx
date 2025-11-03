@@ -141,7 +141,7 @@ export default function IndependentPharmacyPage() {
         <p className="mx-auto max-w-3xl mb-10 text-center text-colordescription text-h6">
           {featureSection.description}
         </p>
-        <div className="flex mx-auto max-w-3xl flex-wrap justify-center gap-6">
+        <div className="flex mx-auto max-w-3xl flex-wrap justify-center gap-6 ">
           {featureSection.tabs.map((tab, idx) => (
             <button
               key={idx}
@@ -182,12 +182,13 @@ export default function IndependentPharmacyPage() {
                     </li>
                   ))}
               </ul>
-              <a
-                href="/about-us"
-                className="text-sub2 mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-3 py-3 font-bold text-white shadow transition hover:bg-primary hover:text-white hover:border-transparent"
+              <Button
+                size="md"
+                href="/dang-ky"
+                className="hover:shadow-primary/40 hover:shadow-lg mt-4"
               >
                 Đăng ký dùng thử
-              </a>
+              </Button>
             </div>
           </div>
         </div>
@@ -276,7 +277,7 @@ export default function IndependentPharmacyPage() {
               {solutionSection.description}
             </p>
           </div>
-          <div className=" px-40 grid grid-cols-1  md:grid-cols-2">
+          <div className=" px-40 grid grid-cols-1 gap-5  md:grid-cols-2">
             {solutionSection.solutionCard?.map((card, index) => (
               <div
                 key={index}
@@ -298,7 +299,7 @@ export default function IndependentPharmacyPage() {
                 />
                 <a
                   href={card.ctaButton.link || "#"}
-                  className="mt-5 inline-flex items-center gap-2 text-sub1 font-bold text-primary hover:underline"
+                  className="mt-5 inline-flex items-center gap-2 px-4 py-2 text-sub1 font-bold text-primary"
                 >
                   {card.ctaButton.title}
                   <FiArrowRight className="h-5 w-5" />
