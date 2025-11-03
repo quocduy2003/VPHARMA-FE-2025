@@ -535,7 +535,7 @@ import CTASection from "@/components/CTA";
 import { Button } from "@/components/ui/CTAButton";
 import { AccordionItem } from "@/components/ui/AccordionIteam";
 import FeatureCardTest from "@/components/ui/FeatureCardTest";
-
+import FaqSection from "@/components/Faq";
 // --- DỮ LIỆU CŨ (Không dùng cho Section 4) ---
 
 
@@ -613,9 +613,8 @@ function DashboardCarousel({
         {images.map((_, idx) => (
           <button
             key={idx}
-            className={`h-3 w-7 rounded-full transition-all duration-200 ${
-              currentIndex === idx ? "bg-primary" : "bg-gray-200"
-            }`}
+            className={`h-3 w-7 rounded-full transition-all duration-200 ${currentIndex === idx ? "bg-primary" : "bg-gray-200"
+              }`}
             aria-label={`Go to slide ${idx + 1}`}
             onClick={() => setCurrentIndex(idx)}
           />
@@ -919,12 +918,10 @@ export default function ChuoiNhaThuoc() {
                   className="flex" // Bỏ transition-transform
                   style={{
                     // Style mới giống PharmacyCarousel
-                    width: `${
-                      displayCustomerCards.length * stepCustomer
-                    }px`,
-                    transform: `translateX(-${
-                      customerIndex * stepCustomer
-                    }px)`,
+                    width: `${displayCustomerCards.length * stepCustomer
+                      }px`,
+                    transform: `translateX(-${customerIndex * stepCustomer
+                      }px)`,
                     transition: isJumpingCustomer
                       ? "none"
                       : `transform ${transitionDurationCustomer}ms ease-in-out`,
@@ -1087,18 +1084,10 @@ export default function ChuoiNhaThuoc() {
       {/* SECTION : FAQ*/}
       <FadeInOnScroll>
         <section className="container mx-auto max-w-4xl px-4 py-20">
-          <h2 className="text-center text-black">{faqSection.title}</h2>
-          <div className="mt-10">
-            {faqSection.faqItems.map((item, index) => (
-              <AccordionItem
-                key={index}
-                title={item.question}
-                description={item.answer}
-                isOpen={openFaq === index}
-                onClick={() => setOpenFaq(openFaq === index ? null : index)}
-              />
-            ))}
-          </div>
+          <FaqSection
+            title={faqSection.title}
+            items={faqSection.faqItems}
+          />
         </section>
       </FadeInOnScroll>
     </div>

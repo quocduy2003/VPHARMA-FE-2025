@@ -7,6 +7,7 @@ import { independentPharmacyData } from "@/lib/api";
 import { Button } from "@/components/ui/CTAButton";
 import { RichTextRenderer } from "@/components/ui/RichTextRenderer";
 import { AccordionItem } from "@/components/ui/AccordionIteam";
+import FaqSection from "@/components/Faq";
 import ReviewCarousel from "@/components/ReviewCarousel";
 
 const DashboardCarousel = ({
@@ -52,9 +53,8 @@ const DashboardCarousel = ({
             key={index}
             onClick={() => setCurrentIndex(index)}
             aria-label={`Go to slide ${index + 1}`}
-            className={`h-3 w-3 rounded-full transition-colors ${
-              currentIndex === index ? "bg-primary" : "bg-white/50"
-            }`}
+            className={`h-3 w-3 rounded-full transition-colors ${currentIndex === index ? "bg-primary" : "bg-white/50"
+              }`}
           />
         ))}
       </div>
@@ -86,7 +86,7 @@ export default function IndependentPharmacyPage() {
     <div>
       {/** Dashboard */}
       <section className="bg-blue-100 py-10 text-center">
-        <div className="container mx-auto px-4 lg:px-90">
+        <div className="container mx-auto ">
           <h1 className="mt-10">{heroSection.mainTitle}</h1>
           <p className="mx-auto mb-10 max-w-2xl text-colordescription text-h6">
             {heroSection.mainDescription}
@@ -146,11 +146,10 @@ export default function IndependentPharmacyPage() {
             <button
               key={idx}
               onClick={() => setActiveTab(tab.id)}
-              className={`rounded-full border px-5 py-2 text-sub2 font-medium transition-colors ${
-                activeTab === tab.id
-                  ? "bg-primary text-white"
-                  : "border-primary bg-white text-black hover:bg-primary/10"
-              }`}
+              className={`rounded-full border px-5 py-2 text-sub2 font-medium transition-colors ${activeTab === tab.id
+                ? "bg-primary text-white"
+                : "border-primary bg-white text-black hover:bg-primary/10"
+                }`}
             >
               {tab.label}
             </button>
@@ -212,9 +211,8 @@ export default function IndependentPharmacyPage() {
                   className={`grid grid-cols-1 items-center gap-12 md:grid-cols-2`}
                 >
                   <div
-                    className={`relative aspect-video rounded-lg bg-white/10 p-2 ${
-                      isEven ? "md:order-2" : "md:order-1"
-                    }`}
+                    className={`relative aspect-video rounded-lg bg-white/10 p-2 ${isEven ? "md:order-2" : "md:order-1"
+                      }`}
                   >
                     <Image
                       src={feature.image.url}
@@ -290,7 +288,7 @@ export default function IndependentPharmacyPage() {
                 <p className="text-h6 mb-4 mx-auto max-w-lg">
                   {card.description}
                 </p>
-                
+
                 <Image
                   src={card.image?.url || "/features-dashboard1.png"}
                   alt={card.image?.alt || card.title}
@@ -353,33 +351,23 @@ export default function IndependentPharmacyPage() {
       <ReviewCarousel sectionData={testimonialSection} />
       {/* Final CTA Section */}
       <section className=" container mx-auto py-10 text-center">
-          <div className="rounded-2xl bg-ink p-5">
-            <h2 className="mt-10 font-bold text-white mb-5">{ctaSection.title}</h2>
-            <p className="mx-auto text-h6 max-w-4xl text-white">
-              {ctaSection.description}
-            </p>
-            <button className="mt-12 mb-10 rounded-full bg-primary px-6 py-3 font-semibold text-white hover:opacity-90">
-              {ctaSection.ctaButton.title}
-            </button>
-          </div>
+        <div className="rounded-2xl bg-ink p-5">
+          <h2 className="mt-10 font-bold text-white mb-5">{ctaSection.title}</h2>
+          <p className="mx-auto text-h6 max-w-4xl text-white">
+            {ctaSection.description}
+          </p>
+          <button className="mt-12 mb-10 rounded-full bg-primary px-6 py-3 font-semibold text-white hover:opacity-90">
+            {ctaSection.ctaButton.title}
+          </button>
+        </div>
       </section>
 
       {/* FAQ Section */}
       <section className="container mx-auto max-w-4xl px-4 py-10">
-        <h2 className="text-center text-h3 font-bold text-black">
-          {faqSection.title}
-        </h2>
-        <div className="mt-10">
-          {faqSection.faqItems.map((item, index) => (
-            <AccordionItem
-              key={index}
-              title={item.question}
-              description={item.answer}
-              isOpen={openFaq === index}
-              onClick={() => setOpenFaq(openFaq === index ? null : index)}
-            />
-          ))}
-        </div>
+        <FaqSection
+          title={faqSection.title}
+          items={faqSection.faqItems}
+        />
       </section>
     </div>
   );

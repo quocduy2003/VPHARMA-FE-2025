@@ -1,4 +1,4 @@
-import { CtaButton, RichTextBlock, StrapiImage, CTASection, Testimonial } from "@/types";
+import { CtaButton, RichTextBlock, StrapiImage, CTASection, Testimonial, FAQSection } from "@/types";
 // ---------- Section Types ----------
 interface HeroSection {
   mainTitle: string;
@@ -80,14 +80,6 @@ interface CommitmentSection {
 
 
 
-interface FAQItem {
-  question: string;
-  answer: string
-}
-export interface FAQSection {
-  title: string;
-  faqItems: FAQItem[];
-}
 
 // ---------- Root ----------
 export interface IndependentPharmacyData {

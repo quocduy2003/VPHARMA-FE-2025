@@ -109,14 +109,19 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
         switch (block.type) {
           case 'heading':
             return renderHeading(block, index);
+
           case 'paragraph':
             return renderParagraph(block, index);
+
           case 'list':
             return renderList(block, index);
+
           case 'quote':
             return renderQuote(block, index);
+
           case 'code':
             return renderCode(block, index);
+
           default:
             return (
               <p key={index} className="text-red-500">
@@ -125,6 +130,7 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
             );
         }
       })}
+
     </div>
   );
 };

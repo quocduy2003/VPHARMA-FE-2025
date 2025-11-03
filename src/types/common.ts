@@ -1,4 +1,3 @@
-
 export interface StrapiResponse {
   data: unknown; // Sẽ được ghi đè bởi kiểu cụ thể
   meta: {
@@ -49,19 +48,22 @@ export interface RichTextNode {
   color?: string; // thêm để dễ custom màu chữ sau này
 }
 
+//FaqSection
+export interface Faq {
+  question: string;
+  answer: RichTextBlock[];
+}
+export interface FAQSection {
+  title: string;
+  faqItems: Faq[];
+}
+
 export interface RichTextLink {
   type: "link";
   url: string;
   children: RichTextChild[];
   newTab?: boolean;
 }
-
-export interface RichTextListItem {
-  type: "list-item";
-  children: RichTextChild[];
-}
-
-export type RichTextChild = RichTextNode | RichTextLink | RichTextListItem;
 
 export interface RichTextListItem {
   type: "list-item";
@@ -76,3 +78,5 @@ export interface RichTextBlock {
   format?: "ordered" | "unordered"; // list type
   alignment?: "left" | "center" | "right" | "justify"; // canh lề
 }
+
+export type RichTextChild = RichTextNode | RichTextLink | RichTextListItem;

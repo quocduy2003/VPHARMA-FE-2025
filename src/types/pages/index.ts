@@ -18,3 +18,6 @@ export * from "./blog";
 
 // pricing Page Types
 export * from "./pricing";
+
+// Contact Page Types
+export * from "./contact";
