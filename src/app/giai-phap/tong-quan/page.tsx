@@ -86,7 +86,7 @@ export default function IndependentPharmacyPage() {
     <div>
       {/** Dashboard */}
       <section className="bg-blue-100 py-10 text-center">
-        <div className="container mx-auto px-4 lg:px-90">
+        <div className="container mx-auto ">
           <h1 className="mt-10">{heroSection.mainTitle}</h1>
           <p className="mx-auto mb-10 max-w-2xl text-colordescription text-h6">
             {heroSection.mainDescription}
@@ -141,15 +141,15 @@ export default function IndependentPharmacyPage() {
         <p className="mx-auto max-w-3xl mb-10 text-center text-colordescription text-h6">
           {featureSection.description}
         </p>
-        <div className="flex mx-auto max-w-3xl flex-wrap justify-center gap-6">
+        <div className="flex mx-auto max-w-3xl flex-wrap justify-center gap-6 ">
           {featureSection.tabs.map((tab, idx) => (
             <button
               key={idx}
               onClick={() => setActiveTab(tab.id)}
-              className={`rounded-full border px-5 py-2 text-sub2 font-medium transition-colors ${
+              className={`rounded-full hover:-translate-y-1 px-6 py-3 text-sub2 font-medium transition-colors ${
                 activeTab === tab.id
                   ? "bg-primary text-white"
-                  : "border-primary bg-white text-black hover:bg-primary/10"
+                  : "ring ring-primary  bg-white text-black hover:bg-primary/10"
               }`}
             >
               {tab.label}
@@ -183,12 +183,13 @@ export default function IndependentPharmacyPage() {
                     </li>
                   ))}
               </ul>
-              <a
-                href="/about-us"
-                className="text-sub2 mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-3 py-3 font-bold text-white shadow transition hover:bg-primary hover:text-white hover:border-transparent"
-              >
-                Đăng ký dùng thử
-              </a>
+              <Button
+              size="md"
+              href="/dang-ky"
+              className="hover:shadow-primary/40 hover:shadow-lg mt-4"
+            >
+              Đăng ký dùng thử
+            </Button>
             </div>
           </div>
         </div>
@@ -278,7 +279,7 @@ export default function IndependentPharmacyPage() {
               {solutionSection.description}
             </p>
           </div>
-          <div className=" px-40 grid grid-cols-1  md:grid-cols-2">
+          <div className=" px-40 grid grid-cols-1 gap-5  md:grid-cols-2">
             {solutionSection.solutionCard?.map((card, index) => (
               <div
                 key={index}
@@ -300,7 +301,7 @@ export default function IndependentPharmacyPage() {
                 />
                 <a
                   href={card.ctaButton.link || "#"}
-                  className="mt-5 inline-flex items-center gap-2 text-sub1 font-bold text-primary hover:underline"
+                  className="mt-5 inline-flex items-center gap-2 px-4 py-2 text-sub1 font-bold text-primary"
                 >
                   {card.ctaButton.title}
                   <FiArrowRight className="h-5 w-5" />
@@ -352,21 +353,25 @@ export default function IndependentPharmacyPage() {
 
       <ReviewCarousel sectionData={testimonialSection} />
       {/* Final CTA Section */}
-      <section className=" container mx-auto py-10 text-center">
+      <section className=" container mx-auto py-10 pt-10 text-center">
           <div className="rounded-2xl bg-ink p-5">
-            <h2 className="mt-10 font-bold text-white mb-5">{ctaSection.title}</h2>
-            <p className="mx-auto text-h6 max-w-4xl text-white">
+            <h2 className="mt-10 font-bold text-white mb-8">{ctaSection.title}</h2>
+            <p className="mx-auto mb-8 text-h6 max-w-5xl text-white">
               {ctaSection.description}
             </p>
-            <button className="mt-12 mb-10 rounded-full bg-primary px-6 py-3 font-semibold text-white hover:opacity-90">
-              {ctaSection.ctaButton.title}
-            </button>
-          </div>
+            <Button
+            size="md"
+            href={ctaSection.ctaButton.link || undefined}
+            className="mb-10"
+          >
+            {ctaSection.ctaButton.title}
+          </Button>
+        </div>
       </section>
 
       {/* FAQ Section */}
       <section className="container mx-auto max-w-4xl px-4 py-10">
-        <h2 className="text-center text-h3 font-bold text-black">
+        <h2 className="text-center text-black">
           {faqSection.title}
         </h2>
         <div className="mt-10">

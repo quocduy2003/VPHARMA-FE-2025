@@ -2,19 +2,12 @@
 "use client";
 
 import { FiCheck } from "react-icons/fi";
-// import {
-//   plans,
-//   featureCategories,
-//   type FeatureValue,
-// } from "@/data/pricing-data";
 import { pricingPageData } from "@/lib/api/pricing";
 import type { Feature } from "@/types";
 
-// 1. CẬP NHẬT: "Coming soon" thành text thường (giống ảnh mới)
 type FeatureDisplayValue = string | boolean | null | undefined | number;
 const renderFeatureValue = (value: FeatureDisplayValue) => {
 
-  // Nếu không có value → xử lý theo trạng thái isActive (true / false)
   if (value === true) {
     return <FiCheck className="mx-auto text-xl text-green-500" />;
   }
@@ -25,7 +18,6 @@ const renderFeatureValue = (value: FeatureDisplayValue) => {
   if (value !== undefined && value !== null && value !== "") {
     return value;
   }
-  // Nếu tất cả đều null / rỗng → trả dấu gạch
   return <span className="text-gray-400">-</span>;
 };
 
@@ -71,11 +63,9 @@ export default function PricePage() {
   const { pricingPlans, featureCategories } = pricingPageData
   const plans = pricingPlans;
 
-  // Hằng số để đảm bảo chiều cao các hàng đồng bộ
   const HEADER_ROW_HEIGHT = "h-[220px]";
   const CATEGORY_ROW_HEIGHT = "h-[57px]";
   const FEATURE_ROW_HEIGHT = "h-[57px]";
-  // Lấy giá trị hiển thị đúng ưu tiên value nếu có, ngược lại dựa theo trạng thái
 
   const getFeatureDisplayValue = (feature: Feature, planId: number) => {
     const planValue = feature.PlanValues?.[planId];
@@ -96,9 +86,6 @@ export default function PricePage() {
 
   return (
     <div>
-      {/* CẬP NHẬT: Gộp 2 section thành 1.
-        Section này sẽ chứa cả Header (H1, P) và Bảng giá.
-      */}
       <section className="bg-gradient-to-b from-blue-100 to-white py-10 text-center ">
         {/* === PHẦN HEADER === */}
         <div className="container mx-auto px-4 lg:px-80">

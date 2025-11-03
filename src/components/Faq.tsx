@@ -27,7 +27,7 @@ function FaqItem({
         className="flex w-full items-center justify-between text-left text-lg font-medium text-text"
         onClick={onClick}
       >
-        <h3 className="text-body3 font-bold text-black">{item.question}</h3>
+        <h3 className="text-sub1 font-bold text-black mb-2">{item.question}</h3>
         {isOpen ? (
           <FiMinus className="text-white bg-primary rounded text-h6" />
         ) : (

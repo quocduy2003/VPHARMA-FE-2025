@@ -8,20 +8,21 @@ import {
   FiLoader,
   FiXCircle,
   FiCheckCircle,
-  FiFacebook,
   FiYoutube,
   FiGlobe,
   FiPhone,
   FiMapPin,
   FiMail,
-  FiChevronDown, // Sẽ dùng cho Listbox
+  FiChevronDown,
   FiCheck,
   FiX,
 } from "react-icons/fi";
-import FaqSection, { type Faq } from "@/components/Faq";
+import { BiLogoFacebookCircle } from "react-icons/bi";
 import { Listbox, Transition } from "@headlessui/react";
+import { AccordionItem } from "@/components/ui/AccordionIteam";
 
-// Dữ liệu cho phần mềm hỗ trợ 
+
+// Dữ liệu cho phần mềm hỗ trợ
 const supportSoftwareData = [
   {
     name: "TeamViewer",
@@ -35,51 +36,49 @@ const supportSoftwareData = [
     description:
       "Phần mềm điều khiển từ xa được thiết kế gọn nhẹ và dễ sử dụng.",
     link: "https://ultraviewer.net/",
-    logo: "/logoUltraview.png", 
+    logo: "/logoUltraview.png",
   },
   {
     name: "AnyDesk",
     description:
       "Phần mềm truy cập từ xa nhanh, nhẹ và an toàn cho mọi nền tảng.",
     link: "https://anydesk.com/",
-    logo: "/logoAnyDesk.png", 
+    logo: "/logoAnyDesk.png",
   },
 ];
 
-// dữ liệu FAQ
-const hoTroFaqData: Faq[] = [
-  {
-    question: "Phần mềm V-Pharma có dễ sử dụng không?",
-    answer:
-      "Tuyệt đối! V-Pharma được thiết kế với giao diện thân thiện, trực quan, phù hợp với cả những người không rành về công nghệ. Đội ngũ của chúng tôi sẽ đào tạo 1-1 cho đến khi bạn và nhân viên thành thạo.",
-  },
-  {
-    question: "Chi phí sử dụng phần mềm là bao nhiêu?",
-    answer:
-      "Chi phí rất hợp lý và linh hoạt theo quy mô của nhà thuốc. Vui lòng liên hệ để nhận báo giá chi tiết.",
-  },
-  {
-    question: "Tôi có cần cài đặt phần mềm phức tạp không?",
-    answer:
-      "Không, V-Pharma là giải pháp dựa trên nền tảng web, bạn có thể truy cập từ bất kỳ đâu mà không cần cài đặt phức tạp.",
-  },
-  {
-    question: "Dữ liệu của tôi có được bảo mật không?",
-    answer:
-      "An toàn dữ liệu là ưu tiên hàng đầu của chúng tôi. Hệ thống sử dụng các biện pháp bảo mật tiên tiến và sao lưu dữ liệu thường xuyên.",
-  },
-  {
-    question: "Tôi có cần cài đặt phần mềm phức tạp không?",
-    answer:
-      "Không, V-Pharma là giải pháp dựa trên nền tảng web, bạn có thể truy cập từ bất kỳ đâu mà không cần cài đặt phức tạp.",
-  },
-  {
-    question: "Dữ liệu của tôi có được bảo mật không?",
-    answer:
-      "An toàn dữ liệu là ưu tiên hàng đầu của chúng tôi. Hệ thống sử dụng các biện pháp bảo mật tiên tiến và sao lưu dữ liệu thường xuyên.",
-  },
-  
-];
+const faqSection = {
+  title: "Câu hỏi thường gặp về V-Pharma",
+  faqItems: [
+    {
+      question: "Phần mềm V-Pharma có dễ sử dụng không?",
+      answer:
+        "Tuyệt đối! V-Pharma được thiết kế với giao diện thân thiện, trực quan, phù hợp với cả những người không rành về công nghệ. Đội ngũ của chúng tôi sẽ đào tạo 1-1 cho đến khi bạn và nhân viên thành thạo.",
+    },
+    {
+      question: "Chi phí sử dụng phần mềm là bao nhiêu?",
+      answer:
+        "Chi phí rất hợp lý và linh hoạt theo quy mô của nhà thuốc. Vui lòng liên hệ để nhận báo giá chi tiết.",
+    },
+    {
+      question: "Tôi có cần cài đặt phần mềm phức tạp không?",
+      answer:
+        "Không, V-Pharma là giải pháp dựa trên nền tảng web, bạn có thể truy cập từ bất kỳ đâu mà không cần cài đặt phức tạp.",
+    },
+    {
+      question: "Dữ liệu của tôi có được bảo mật không?",
+      answer:
+        "An toàn dữ liệu là ưu tiên hàng đầu của chúng tôi. Hệ thống sử dụng các biện pháp bảo mật tiên tiến và sao lưu dữ liệu thường xuyên.",
+    },
+    {
+      question: "Nếu gặp sự cố, tôi liên hệ thế nào?",
+      answer:
+        "Bạn có thể liên hệ với chúng tôi qua hotline, email hoặc qua form liên hệ trên website để được hỗ trợ nhanh nhất.",
+    },
+  ],
+};
+
+
 
 // Dữ liệu cho Listbox "Chủ đề chính"
 const subjectOptions = [
@@ -89,6 +88,7 @@ const subjectOptions = [
 ];
 
 export default function HoTro() {
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [fullName, setFullName] = useState("");
   const [fullNameError, setFullNameError] = useState("");
 
@@ -233,9 +233,12 @@ export default function HoTro() {
           <div className="max-w-6xl mx-auto  grid grid-cols-1 md:grid-cols-2 gap-20">
             {/* Form Liên hệ */}
             <div>
-              <h2 className="text-black font-bold mb-5">Liên hệ với chúng tôi</h2>
+              <h2 className="text-black font-bold mb-5">
+                Liên hệ với chúng tôi
+              </h2>
               <p className="mb-5 text-sub1">
-                Chúng tôi rất mong nhận được phản hồi từ bạn. Vui lòng điền vào mẫu này.
+                Chúng tôi rất mong nhận được phản hồi từ bạn. Vui lòng điền vào
+                mẫu này.
               </p>
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Họ và Tên */}
@@ -280,7 +283,7 @@ export default function HoTro() {
                     value={phone}
                     onChange={(value) => {
                       setPhone(value);
-                      if (phoneError) setPhoneError(""); 
+                      if (phoneError) setPhoneError("");
                     }}
                     onBlur={() => validatePhone()}
                     error={phoneError}
@@ -482,7 +485,8 @@ export default function HoTro() {
             <div>
               <h2 className="text-black font-bold mb-5">Liên Hệ Trực Tiếp</h2>
               <p className="mb-5 text-sub1">
-                Kết nối ngay với chúng tôi qua hotline, email, hoặc đến trực tiếp văn phòng tại địa chỉ bên dưới.
+                Kết nối ngay với chúng tôi qua hotline, email, hoặc đến trực
+                tiếp văn phòng tại địa chỉ bên dưới.
               </p>
 
               {/* Bản đồ */}
@@ -557,7 +561,7 @@ export default function HoTro() {
                   rel="noopener noreferrer"
                   className="text-success hover:text-blue-500 transition-colors "
                 >
-                  <FiFacebook size={27} />
+                  <BiLogoFacebookCircle size={27} />
                 </a>
                 <a
                   href="https://www.youtube.com/@AmitGROUPmkt"
@@ -582,12 +586,25 @@ export default function HoTro() {
       </FadeInOnScroll>
 
       {/* --- SECTION FAQ --- */}
-      <FaqSection title="Câu Hỏi Thường Gặp" items={hoTroFaqData} />
+      <section className="container mx-auto max-w-4xl px-4 py-10">
+        <h2 className="text-center text-black">{faqSection.title}</h2>
+        <div className="mt-10">
+          {faqSection.faqItems.map((item, index) => (
+            <AccordionItem
+              key={index}
+              title={item.question}
+              description={item.answer}
+              isOpen={openFaq === index}
+              onClick={() => setOpenFaq(openFaq === index ? null : index)}
+            />
+          ))}
+        </div>
+      </section>
 
       {/* --- SECTION PHẦN MỀM HỖ TRỢ  */}
       <section className="bg-white py-10">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-center mb-5">Phần Mềm Hỗ Trợ</h2>
+          <h2 className="text-center text-black mb-5">Phần Mềm Hỗ Trợ</h2>
           <p className="text-center text-h6 text-colordescription max-w-3xl mx-auto mb-15">
             Để quá trình hỗ trợ diễn ra nhanh chóng, vui lòng cài đặt một trong
             các phần mềm dưới đây nếu được kỹ thuật viên yêu cầu.
