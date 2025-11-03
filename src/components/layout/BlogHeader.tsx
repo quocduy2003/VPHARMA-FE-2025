@@ -37,28 +37,28 @@ export function BlogHeader() {
   }, [isSearchOpen]);
 
   return (
-    <header className="sticky top-[70px] z-30 bg-ink">
+    <header className="sticky top-[64px] z-30 bg-ink">
       <div className="container mx-auto flex items-center justify-between py-3">
-        <div className="flex items-center">
-          <Link href="/blog/blog-home" className="group flex items-center ">
+        <div className="flex items-center  gap-6">
+          <Link href="/blog/blog-home" className="group  gap-6 flex items-center ">
             <FiHome
               className={cn(
-                "h-8 w-8 transition-color duration-300",
-                isHomeActive ? "text-primary" : "text-white hover:text-blue-500"
+                "h-8 w-8 transition-color  duration-300",
+                isHomeActive ? "text-primary font-bold" : " text-white hover:text-blue-500"
               )}
             />
           </Link>
 
-          <nav className="mx-4 hidden items-center gap-6 text-sub2 font-medium md:flex">
+          <nav className="hidden lg:flex items-center gap-6 text-sub2 flex-1">
             {visibleLinks.map((link) => (
               <Link
                 key={link.id}
                 href={`/blog/blog-home?category=${link.slug}`}
                 className={cn(
-                  "transition-colors mx-4",
+                  "transition-colors",
                   isLinkActive(link.slug)
-                    ? "text-primary"
-                    : "text-white hover:text-blue-500"
+                    ? "text-white font-bold"
+                    : "text-blue-100 hover:text-white"
                 )}
               >
                 {link.name}
@@ -97,10 +97,10 @@ export function BlogHeader() {
               key={ebooksLink.label}
               href={ebooksLink.href}
               className={cn(
-                "transition-colors mx-4",
+                "transition-colors ",
                 pathname === ebooksLink.href
-                  ? "text-primary"
-                  : "text-white hover:text-blue-500"
+                  ? "text-white font-bold"
+                    : "text-blue-100 hover:text-white"
               )}
             >
               {ebooksLink.label}

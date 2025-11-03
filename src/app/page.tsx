@@ -120,13 +120,13 @@ export default function HomePage() {
       <section className="mx-auto py-10">
         <div className="container bg-ink rounded-2xl p-10 mb-5">
           <div className="text-center ">
-            <h2 className=" text-white ">{solutionSection.title}</h2>
+            <h2 className=" text-white mb-5">{solutionSection.title}</h2>
             <p className="text-h6 mx-auto max-w-2xl text-white">
               {solutionSection.description}
             </p>
           </div>
 
-          <div className=" grid grid-cols-1 gap-10 md:grid-cols-3">
+          <div className=" grid grid-cols-1 mt-8 gap-10 md:grid-cols-3">
             {solutionSection.solutionCards.map((card, index) => (
               <article
                 key={index}
@@ -145,7 +145,7 @@ export default function HomePage() {
                 <div className="flex justify-center mt-5">
                   <Link
                     href={card.ctaButton.link || "#"}
-                    className="inline-flex items-center gap-2  px-4 py-2 text-sub1 font-bold text-primary"
+                    className="inline-flex items-center gap-2 px-4 py-2 text-sub1 font-bold text-primary"
                   >
                     {card.ctaButton.title}
                     <span className="text-sky-600">
@@ -154,7 +154,6 @@ export default function HomePage() {
                   </Link>
                 </div>
 
-                {/* Hiệu ứng glow bên dưới card */}
                 <div className="pointer-events-none absolute -inset-0.5 -z-10 rounded-2xl bg-gradient-to-b from-blue-100 to-transparent blur"></div>
               </article>
             ))}
@@ -288,7 +287,7 @@ export default function HomePage() {
             </div>
           </div>
           {/* CTA Button ngoài grid */}
-          <div className="mt-10 w-full flex justify-center">
+          <div className="mt-15 w-full flex justify-center">
             <a
               href="/about-us"
               className="text-sub2 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-bold text-primary shadow transition hover:bg-primary hover:text-white hover:border-transparent"
@@ -310,13 +309,12 @@ export default function HomePage() {
             <h2 className="mb-15 text-black">{blogSection.title}</h2>
           </div>
 
-          <div className="mt-8 flex flex-col items-center justify-between gap-4 md:flex-row">
-            {/* Tabs */}
+          <div className="mt-8 flex flex-col items-center justify-between gap-4 md:flex-row ">
             <div className="flex flex-wrap justify-center gap-6 md:justify-start">
               <button
                 key="all"
                 onClick={() => setActiveCategory("Tất cả")}
-                className={`rounded-full px-4 py-2 text-sub2 font-semibold border border-gray transition-colors ${activeCategory === "Tất cả"
+                className={`hover:-translate-y-1 rounded-full px-4 py-2 text-sub2 font-semibold border border-gray transition-colors ${activeCategory === "Tất cả"
                   ? "bg-primary text-white shadow-md"
                   : "bg-white text-black hover:bg-slate-100"
                   }`}
@@ -327,7 +325,7 @@ export default function HomePage() {
                 <button
                   key={category.slug}
                   onClick={() => setActiveCategory(category.slug)}
-                  className={`rounded-full px-4 py-2 text-sub2 font-semibold border border-gray transition-colors ${activeCategory === category.slug
+                  className={`hover:-translate-y-1  rounded-full px-4 py-2 text-sub2 font-semibold border border-gray transition-colors ${activeCategory === category.slug
                     ? "bg-primary text-white shadow-md"
                     : "bg-white text-black hover:bg-slate-100"
                     }`}
@@ -340,7 +338,7 @@ export default function HomePage() {
             {/* View All Link */}
             <Link
               href="/blog/blog-home"
-              className="inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-sub2 font-bold text-primary transition-colors hover:bg-sky-100"
+              className="inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-sub2 font-bold text-primary transition-colors hover:-translate-y-1"
             >
               {blogSection.ctaButton.title}
               <FiArrowRight className="h-5 w-5" />

@@ -1,9 +1,8 @@
 "use client";
 
 import Image from "next/image";
-// 1. IMPORT THÊM useCallback và icon
 import { useState, useEffect, useCallback } from "react";
-import { FiArrowLeft, FiArrowRight } from "react-icons/fi"; // Thêm icon
+import { FiArrowLeft, FiArrowRight, FiUsers, FiShoppingCart, FiDatabase, FiShield } from "react-icons/fi"; // Thêm icon
 import FadeInOnScroll from "@/components/animations/FadeInOnScroll";
 import FlipCard from "@/components/animations/FlipCard";
 
@@ -14,11 +13,7 @@ import { Button } from "@/components/ui/CTAButton";
 import { AccordionItem } from "@/components/ui/AccordionIteam";
 import FeatureCardTest from "@/components/ui/FeatureCardTest";
 
-// --- DỮ LIỆU CŨ (Không dùng cho Section 4) ---
 
-
-
-//data section 5
 function DashboardCarousel({
   images,
 }: {
@@ -152,7 +147,7 @@ export default function ChuoiNhaThuoc() {
   const [isJumpingCustomer, setIsJumpingCustomer] = useState(false);
   const [isAnimatingCustomer, setIsAnimatingCustomer] = useState(false);
   const [isHoveringCustomer, setIsHoveringCustomer] = useState(false);
-
+const icons = [FiUsers, FiShoppingCart, FiDatabase, FiShield];
   // Handlers mới cho Section 4 (dùng useCallback)
   const handleNextCustomer = useCallback(() => {
     if (isAnimatingCustomer) return;
@@ -236,7 +231,7 @@ export default function ChuoiNhaThuoc() {
   ]);
 
   return (
-    <div className="bg-white py-10">
+    <div className="bg-white pt-10">
       {/* SECTION: HERO*/}
       <section className="container mx-auto py-10 ">
         <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
@@ -286,7 +281,7 @@ export default function ChuoiNhaThuoc() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
               {pharmacyChainChallengesSection.challengeCards.map(
                 (card, index) => (
                   <FlipCard key={index} challengeCard={card} />
@@ -319,7 +314,7 @@ export default function ChuoiNhaThuoc() {
                 />
               </div>
               <div className="relative w-full max-w-[800px] mx-auto h-full">
-                <div className="absolute inset-0  overflow-hidden flex flex-col items-center justify-center space-y-3 p-2">
+                <div className="absolute inset-0 overflow-hidden flex flex-col items-center justify-center space-y-3 p-2">
                   {featureBenefitsSection.contents.map((item, index) => (
                     <AccordionItem
                       key={index}
@@ -360,7 +355,6 @@ export default function ChuoiNhaThuoc() {
         </section>
       </FadeInOnScroll>
 
-      {/* --- 3. JSX MỚI CHO SECTION 4 --- */}
       <FadeInOnScroll>
         <section className="bg-gradient-to-b from-white to-blue-100 ">
           <div className="container mx-auto py-15">
@@ -453,54 +447,52 @@ export default function ChuoiNhaThuoc() {
 
       {/* SECTION Xây Dựng Hệ Thống Khách Hàng 4 card có hover */}
       <section className="bg-gradient-to-b from-blue-100 to-white ">
-        <FadeInOnScroll>
-          <div className="container mx-auto py-15">
-            <div className=" mb-12  text-center">
-              <p className="mb-2 text-h6 font-bold capitalize tracking-wide text-primary">
-                {featureOverview?.eyebrow?.toLowerCase() || "Tổng quan tính năng"}
+  <FadeInOnScroll>
+    <div className="container mx-auto py-15">
+      <div className="mb-15 text-center">
+        <p className="mb-5 text-h6 font-bold capitalize tracking-wide text-primary">
+          {featureOverview?.eyebrow?.toLowerCase() || "Tổng quan tính năng"}
+        </p>
+        <h2 className="mx-auto max-w-6xl text-black">
+          {featureOverview?.title || ""}
+        </h2>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:gap-12">
+        {featureOverview.contentCards.map((card, index) => {
+          const Icon = icons[index % icons.length];
+          return (
+            <div
+              key={index}
+              className="group relative rounded-2xl p-8 text-left transition-all duration-300 cursor-pointer bg-white shadow-md hover:shadow-2xl hover:bg-ink"
+            >
+              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-success/10 text-success transition-all duration-300 group-hover:bg-success group-hover:text-white">
+                <Icon size={24} className="transition-all duration-300 group-hover:brightness-0 group-hover:invert" />
+              </div>
+
+              <h3 className="mb-3 text-black transition-colors duration-300 group-hover:text-white">
+                {card.title}
+              </h3>
+
+              <p className="text-sub1 transition-colors duration-300 group-hover:text-white">
+                {card.description}
               </p>
-              <h2 className="mb-4 mx-auto max-w-6xl text-black">
-                {featureOverview?.title || ""}
-              </h2>
             </div>
+          );
+        })}
+      </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:gap-12">
-              {featureOverview.contentCards.map((card, index) => (
-                <div
-                  key={index}
-                  className="group relative rounded-2xl p-8 text-left transition-all duration-300 cursor-pointer bg-white shadow-md hover:shadow-2xl hover:bg-ink"
-                >
-                  <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-success/10 text-success transition-all duration-300 group-hover:bg-success group-hover:text-white">
-                    <Image
-                      src="/icon.svg"
-                      alt="chip icon"
-                      width={24}
-                      height={24}
-                      className="transition-all duration-300 group-hover:brightness-0 group-hover:invert"
-                    />
-                  </div>
-
-                  <h3 className="mb-3 text-black transition-colors duration-300 group-hover:text-white">
-                    {card.title}
-                  </h3>
-
-                  <p className="text-sub1 transition-colors duration-300 group-hover:text-white">
-                    {card.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-            <div className="flex items-center mt-15 justify-center ">
-              <Button
-                size="md"
-                href={featureOverview.ctaButton.link || undefined}
-              >
-                {featureOverview.ctaButton.title}
-              </Button>
-            </div>
-          </div>
-        </FadeInOnScroll>
-      </section>
+      <div className="flex items-center mt-15 justify-center ">
+        <Button
+          size="md"
+          href={featureOverview.ctaButton.link || undefined}
+        >
+          {featureOverview.ctaButton.title}
+        </Button>
+      </div>
+    </div>
+  </FadeInOnScroll>
+</section>
 
       {/** section dashboard scrolling carousel */}
       <FadeInOnScroll>
@@ -545,11 +537,11 @@ export default function ChuoiNhaThuoc() {
       <FadeInOnScroll>
         <section className="bg-white ">
           <div className="container mx-auto py-15">
-            <div className="mx-auto mb-12 max-w-6xl text-center">
-              <p className="mb-2 text-h6 font-bold capitalize tracking-wide text-primary">
+            <div className="mx-auto mt-5 mb-15 max-w-6xl text-center">
+              <p className="mb-5 text-h6 font-bold capitalize tracking-wide text-primary">
                 {pharmaFeedback?.title?.toLowerCase() || "Phản hồi từ khách hàng"}
               </p>
-              <h2 className="mb-4 text-black">{pharmaFeedback?.description || ""}</h2>
+              <h2 className="text-black">{pharmaFeedback?.description || ""}</h2>
             </div>
             <PharmacyCarousel cards={pharmaFeedback?.cards || []} />
           </div>
@@ -563,7 +555,7 @@ export default function ChuoiNhaThuoc() {
 
       {/* SECTION : FAQ*/}
       <FadeInOnScroll>
-        <section className="container mx-auto max-w-4xl px-4 py-20">
+        <section className="container mx-auto max-w-4xl px-4 py-10">
           <h2 className="text-center text-black">{faqSection.title}</h2>
           <div className="mt-10">
             {faqSection.faqItems.map((item, index) => (

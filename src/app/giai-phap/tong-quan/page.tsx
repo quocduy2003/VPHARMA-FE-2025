@@ -141,12 +141,12 @@ export default function IndependentPharmacyPage() {
         <p className="mx-auto max-w-3xl mb-10 text-center text-colordescription text-h6">
           {featureSection.description}
         </p>
-        <div className="flex mx-auto max-w-3xl flex-wrap justify-center gap-6">
+        <div className="flex mx-auto max-w-3xl flex-wrap justify-center gap-6 ">
           {featureSection.tabs.map((tab, idx) => (
             <button
               key={idx}
               onClick={() => setActiveTab(tab.id)}
-              className={`rounded-full px-6 py-3 text-sub2 font-medium transition-colors ${
+              className={`rounded-full hover:-translate-y-1 px-6 py-3 text-sub2 font-medium transition-colors ${
                 activeTab === tab.id
                   ? "bg-primary text-white"
                   : "ring ring-primary  bg-white text-black hover:bg-primary/10"
@@ -186,9 +186,9 @@ export default function IndependentPharmacyPage() {
               <Button
               size="md"
               href="/dang-ky"
-              className="hover:shadow-primary/40 hover:shadow-lg "
+              className="hover:shadow-primary/40 hover:shadow-lg mt-4"
             >
-              Đăng Ký dùng thử
+              Đăng ký dùng thử
             </Button>
             </div>
           </div>
@@ -301,7 +301,7 @@ export default function IndependentPharmacyPage() {
                 />
                 <a
                   href={card.ctaButton.link || "#"}
-                  className="mt-5 inline-flex items-center gap-2 text-sub1 font-bold text-primary hover:underline"
+                  className="mt-5 inline-flex items-center gap-2 px-4 py-2 text-sub1 font-bold text-primary"
                 >
                   {card.ctaButton.title}
                   <FiArrowRight className="h-5 w-5" />
@@ -353,10 +353,10 @@ export default function IndependentPharmacyPage() {
 
       <ReviewCarousel sectionData={testimonialSection} />
       {/* Final CTA Section */}
-      <section className=" container mx-auto py-10 text-center">
+      <section className=" container mx-auto py-10 pt-10 text-center">
           <div className="rounded-2xl bg-ink p-5">
-            <h2 className="mt-10 font-bold text-white mb-5">{ctaSection.title}</h2>
-            <p className="mx-auto mb-5 text-h6 max-w-4xl text-white">
+            <h2 className="mt-10 font-bold text-white mb-8">{ctaSection.title}</h2>
+            <p className="mx-auto mb-8 text-h6 max-w-5xl text-white">
               {ctaSection.description}
             </p>
             <Button
@@ -371,7 +371,7 @@ export default function IndependentPharmacyPage() {
 
       {/* FAQ Section */}
       <section className="container mx-auto max-w-4xl px-4 py-10">
-        <h2 className="text-center text-h3 font-bold text-black">
+        <h2 className="text-center text-black">
           {faqSection.title}
         </h2>
         <div className="mt-10">

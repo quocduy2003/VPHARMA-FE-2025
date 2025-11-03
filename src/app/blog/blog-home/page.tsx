@@ -1,14 +1,19 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {  useSearchParams } from 'next/navigation';
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { FeaturedNews } from "@/components/blog/FeaturedNews";
 import { BlogPostCard } from "@/components/blog/BlogCard";
 import Image from "next/image";
 
-import { blogData, getBlogPosts, getBlogLastest } from "@/lib/api";
+import {
+  blogData,
+  getBlogPosts,
+  getBlogLastest,
+  blogCategories,
+} from "@/lib/api";
 import {
   transformBlogListData,
   transformBlogCardData,
@@ -16,7 +21,6 @@ import {
 import { BlogCard, BlogCardData } from "@/types";
 
 export default function BlogHomePage() {
-
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get("category");
 
@@ -28,6 +32,12 @@ export default function BlogHomePage() {
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 6;
   const [totalPages, setTotalPages] = useState(1);
+  
+  const activeCategoryObj = blogCategories.find(
+    (cat) => cat.slug === activeCategory
+  );
+  const title =
+    activeCategory === "home" ? "Blog" : activeCategoryObj?.name || "Blog";
 
   // Lấy bài viết chính (luôn là bài mới nhất của chủ đề)
   useEffect(() => {
@@ -59,7 +69,6 @@ export default function BlogHomePage() {
     fetchData();
   }, [activeCategory, currentPage, mainBlog]);
 
-  // Điều khiển phân trang
   const handlePageChange = (pageNumber: number) => {
     if (pageNumber > 0 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber);
@@ -68,12 +77,12 @@ export default function BlogHomePage() {
   };
 
   return (
-    <div className="bg-gray-50 py-20">
-      <div className="container mx-auto px-4">
+    <div className="bg-gray-50 py-10">
+      <div className="container mx-auto">
         {/* Header */}
         <div className="mb-10 text-center">
-          <h1 className="text-black">{blogData.title}</h1>
-          <p className="mt-5 mx-auto max-w-3xl text-h6">
+          <h1 className="text-black mb-5">{title}</h1>
+          <p className=" mx-auto max-w-3xl text-h6">
             {blogData.description}
           </p>
         </div>

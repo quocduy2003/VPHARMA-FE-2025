@@ -18,7 +18,7 @@ interface PharmacyCarouselProps {
 export default function PharmacyCarousel({ cards }: PharmacyCarouselProps) {
   const cardsPerView = 4;
   const cardWidth = 300;
-  const cardGap = 32; 
+  const cardGap = 32;
   const step = cardWidth + cardGap;
   const transitionDuration = 700;
   const autoplayDelay = 2500; // 3 giây
@@ -137,13 +137,12 @@ export default function PharmacyCarousel({ cards }: PharmacyCarouselProps) {
           {displayCards.map((card, idx) => (
             <div
               key={idx}
-              className="min-w-[300px] max-w-[300px] flex-shrink-0 rounded-xl border border-gray-400 bg-white shadow-lg transition hover:shadow-xl"
-              style={{ height: 350 }}
+              className="min-w-[300px] max-w-[300px] flex-shrink-0 rounded-xl border border-gray-400 bg-white shadow-lg transition hover:shadow-xl min-h-[350px] max-h-[420px] overflow-auto"
             >
               <div className="p-7">
                 <h3 className="mb-2 text-black font-semibold">{card.name}</h3>
-                <p className="mb-4 text-sub1 text-black">{card.address}</p>
-                <div className="mt-3 flex flex-col items-center rounded-lg py-6 px-4">
+                <p className=" text-sub1 text-black">{card.address}</p>
+                <div className="flex flex-col items-center rounded-lg py-7 px-4">
                   <Image
                     src={card.image}
                     alt={card.alt}
