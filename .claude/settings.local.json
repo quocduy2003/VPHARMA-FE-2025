@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(npm run build:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(rd /s /q .next)",
+      "Bash(npx next build)"
     ],
     "deny": [],
     "ask": []

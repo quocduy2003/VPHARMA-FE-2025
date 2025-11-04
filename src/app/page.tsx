@@ -96,7 +96,7 @@ export default function HomePage() {
     return () => {
       stopExperienceCycle();
     };
-  }, [totalExperienceItems]); // Chạy khi component mount hoặc số lượng item thay đổi
+  }, [startExperienceCycle, stopExperienceCycle, totalExperienceItems]); // Chạy khi component mount hoặc số lượng item thay đổi
 
   return (
     <>

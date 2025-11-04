@@ -69,17 +69,18 @@ export function transformHomePageData(response: any): HomePageData {
     testimonialSection: {
       eyebrow: testimonialSection?.eyebrow || "Khách hàng nói về chúng tôi",
       title: testimonialSection?.title || "Lời chứng thực từ khách hàng",
-      testimonials:
-        testimonialSection?.testimonials?.map((testimonial: any) => ({
-          id: testimonial.id,
-          authorName: testimonial.authorName ?? "",
-          authorLocation: testimonial.authorLocation ?? "",
-          quote: testimonial.quote ?? "",
-          avatar: {
-            url: createImageUrl(testimonial.avatar?.url),
-            alt: testimonial.avatar?.alternativeText ?? "Avatar",
-          },
-        })) || [],
+      testimonials: Array.isArray(testimonialSection?.testimonials)
+        ? testimonialSection.testimonials.map((testimonial: any) => ({
+            id: testimonial.id,
+            authorName: testimonial.authorName ?? "",
+            authorLocation: testimonial.authorLocation ?? "",
+            quote: testimonial.quote ?? "",
+            avatar: {
+              url: createImageUrl(testimonial.avatar?.url),
+              alt: testimonial.avatar?.alternativeText ?? "Avatar",
+            },
+          }))
+        : [],
     },
     blogSection: {
       title: blogSection?.title || "Cập nhật tin tức và kiến thức ngành dược",

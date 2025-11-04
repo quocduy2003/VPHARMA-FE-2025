@@ -20,27 +20,28 @@ function DashboardCarousel({
 }: {
   images: { url: string; alt: string }[];
 }) {
+  const safeImages = Array.isArray(images) ? images : [];
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    if (!images || images.length === 0) return;
+    if (safeImages.length === 0) return;
 
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+      setCurrentIndex((prev) => (prev === safeImages.length - 1 ? 0 : prev + 1));
     }, 3500);
     return () => clearInterval(interval);
-  }, [images, images.length]);
+  }, [safeImages.length]);
 
   const getImg = (offset: number) => {
-    if (!images || images.length === 0) {
+    if (safeImages.length === 0) {
       return { url: '/placeholder.png', alt: 'Placeholder' };
     }
-    const idx = (currentIndex + offset + images.length) % images.length;
-    return images[idx] || { url: '/placeholder.png', alt: 'Placeholder' };
+    const idx = (currentIndex + offset + safeImages.length) % safeImages.length;
+    return safeImages[idx] || { url: '/placeholder.png', alt: 'Placeholder' };
   };
 
   // Return null after hooks if no images
-  if (!images || images.length === 0) {
+  if (safeImages.length === 0) {
     return null;
   }
 
@@ -84,7 +85,7 @@ function DashboardCarousel({
 
       {/* Pagination dots */}
       <div className="mt-6 flex justify-center gap-2">
-        {images.map((_, idx) => (
+        {safeImages.map((_, idx) => (
           <button
             key={idx}
             className={`h-3 w-7 rounded-full transition-all duration-200 ${currentIndex === idx ? "bg-primary" : "bg-gray-200"
@@ -101,7 +102,6 @@ function DashboardCarousel({
 // COMPONENT CHÍNH
 export default function ChuoiNhaThuoc() {
   const [openAccordion, setOpenAccordion] = useState(0);
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const {
     heroSection,
@@ -126,7 +126,9 @@ export default function ChuoiNhaThuoc() {
   const autoplayDelayCustomer = 2500; // 2.5 giây theo yêu cầu
 
   // Lấy đúng data cho Section 4
-  const originalCustomerCards = customerExperienceSection?.cards || [];
+  const originalCustomerCards = Array.isArray(customerExperienceSection?.cards)
+    ? customerExperienceSection.cards
+    : [];
 
   // Nhân bản cards
   const clonedCardsStartCustomer = originalCustomerCards.slice(
@@ -244,7 +246,7 @@ const icons = [FiUsers, FiShoppingCart, FiDatabase, FiShield];
               {heroSection?.description || ""}
             </p>
             <div className="flex gap-4 ">
-              {heroSection?.ctaButtons?.map((button, index) => (
+              {Array.isArray(heroSection?.ctaButtons) && heroSection.ctaButtons.map((button, index) => (
                 <Button
                   key={index}
                   variant={index === 0 ? "primary" : "secondary"}
@@ -282,7 +284,7 @@ const icons = [FiUsers, FiShoppingCart, FiDatabase, FiShield];
             </div>
 
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {pharmacyChainChallengesSection.challengeCards.map(
+              {Array.isArray(pharmacyChainChallengesSection.challengeCards) && pharmacyChainChallengesSection.challengeCards.map(
                 (card, index) => (
                   <FlipCard key={index} challengeCard={card} />
                 )
@@ -315,7 +317,7 @@ const icons = [FiUsers, FiShoppingCart, FiDatabase, FiShield];
               </div>
               <div className="relative w-full max-w-[800px] mx-auto h-full">
                 <div className="absolute inset-0 overflow-hidden flex flex-col items-center justify-center space-y-3 p-2">
-                  {featureBenefitsSection.contents.map((item, index) => (
+                  {Array.isArray(featureBenefitsSection.contents) && featureBenefitsSection.contents.map((item, index) => (
                     <AccordionItem
                       key={index}
                       title={item.title}
@@ -459,7 +461,7 @@ const icons = [FiUsers, FiShoppingCart, FiDatabase, FiShield];
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:gap-12">
-        {featureOverview.contentCards.map((card, index) => {
+        {Array.isArray(featureOverview.contentCards) && featureOverview.contentCards.map((card, index) => {
           const Icon = icons[index % icons.length];
           return (
             <div

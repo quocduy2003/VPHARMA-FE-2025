@@ -27,7 +27,8 @@ export default function ReviewCarousel({ sectionData }: Props) {
   const repeat = 2;
 
   // Lấy tối đa 16 testimonial
-  const bestTestimonials = sectionData?.testimonials?.slice(0, 16) || [];
+  const testimonials = Array.isArray(sectionData?.testimonials) ? sectionData.testimonials : [];
+  const bestTestimonials = testimonials.slice(0, 16);
 
   useEffect(() => {
     if (bestTestimonials.length === 0) return;

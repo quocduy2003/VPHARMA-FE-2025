@@ -26,7 +26,6 @@ import FaqSection from "@/components/Faq";
 
 
 import CTASection from "@/components/CTA";
-import type { CTASection as CTASectionType } from "@/types";
 import React from "react";
 
 

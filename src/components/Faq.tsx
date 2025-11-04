@@ -48,6 +48,11 @@ function FaqItem({
 }
 export default function FaqSection({ title, items }: FaqSectionProps) {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const safeItems = Array.isArray(items) ? items : [];
+
+  if (safeItems.length === 0) {
+    return null;
+  }
 
   return (
     <section className="container mx-auto max-w-5xl px-4 py-16">
@@ -56,7 +61,7 @@ export default function FaqSection({ title, items }: FaqSectionProps) {
       </h2>
 
       <div>
-        {items.map((item, index) => (
+        {safeItems.map((item, index) => (
           <FaqItem
             key={index}
             item={item}

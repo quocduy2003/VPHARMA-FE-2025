@@ -117,7 +117,7 @@ const FounderSection = ({
     return () => {
       stopAutoplay();
     };
-  }, [startAutoplay]); // Chạy lại nếu các hàm này thay đổi
+  }, [startAutoplay, stopAutoplay]); // Chạy lại nếu các hàm này thay đổi
 
   // ... (phần code fallback khi không có founder giữ nguyên) ...
   if (totalMembers === 0) {

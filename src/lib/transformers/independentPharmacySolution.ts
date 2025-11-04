@@ -27,11 +27,12 @@ export function transformIndependentPharmacyData(
     heroSection: {
       mainTitle: heroSection?.title ?? "Tiêu đề mặc định",
       mainDescription: heroSection?.description ?? "",
-      ctaButtons:
-        heroSection?.ctaButtons?.map((btn: CtaButton) => ({
-          title: btn.title,
-          link: btn.link,
-        })) ?? [],
+      ctaButtons: Array.isArray(heroSection?.ctaButtons)
+        ? heroSection.ctaButtons.map((btn: CtaButton) => ({
+            title: btn.title,
+            link: btn.link,
+          }))
+        : [],
       image: {
         url: createImageUrl(heroSection?.image?.image?.url),
         alt: heroSection?.image?.alt ?? "",
@@ -41,36 +42,39 @@ export function transformIndependentPharmacyData(
     featureSection: {
       title: featureSection?.title ?? "Tính năng",
       description: featureSection?.description ?? "",
-      gridItems:
-        featureSection?.featureGrid?.map((item: any) => ({
-          title: item.title ?? "",
-          description: item.description ?? "",
-        })) ?? [],
-      tabs:
-        featureSection?.tabs?.map((tab: any) => ({
-          id: tab.id,
-          label: tab.label ?? "",
-          title: tab.title ?? "",
-          description: tab.description ?? "",
-          image: {
-            url: createImageUrl(tab.image?.image?.url ?? null),
-            alt: tab.image?.alt ?? "",
-            caption: tab.image?.caption ?? "",
-          },
-        })) ?? [],
+      gridItems: Array.isArray(featureSection?.featureGrid)
+        ? featureSection.featureGrid.map((item: any) => ({
+            title: item.title ?? "",
+            description: item.description ?? "",
+          }))
+        : [],
+      tabs: Array.isArray(featureSection?.tabs)
+        ? featureSection.tabs.map((tab: any) => ({
+            id: tab.id,
+            label: tab.label ?? "",
+            title: tab.title ?? "",
+            description: tab.description ?? "",
+            image: {
+              url: createImageUrl(tab.image?.image?.url ?? null),
+              alt: tab.image?.alt ?? "",
+              caption: tab.image?.caption ?? "",
+            },
+          }))
+        : [],
     },
     featureBenefitsSection: {
       title: benefitSection?.title ?? "Lợi ích",
       description: benefitSection?.description ?? "",
-      contents:
-        benefitSection?.contents?.map((item: any) => ({
-          title: item.title ?? "",
-          description: item.description ?? "",
-          alt: item.alt ?? "V-pharma Benefit Image",
-          image: {
-            url: createImageUrl(item.image?.url),
-          },
-        })) ?? [],
+      contents: Array.isArray(benefitSection?.contents)
+        ? benefitSection.contents.map((item: any) => ({
+            title: item.title ?? "",
+            description: item.description ?? "",
+            alt: item.alt ?? "V-pharma Benefit Image",
+            image: {
+              url: createImageUrl(item.image?.url),
+            },
+          }))
+        : [],
       ctaButton: {
         title: benefitSection?.ctaButton?.title ?? "Tìm hiểu thêm",
         link: benefitSection?.ctaButton?.link ?? "#",
@@ -84,30 +88,32 @@ export function transformIndependentPharmacyData(
         link: featureShowcaseSection?.ctaButton?.link ?? "#",
       },
       alt: featureShowcaseSection?.alt ?? "V-pharma Showcase Image",
-      images:
-        featureShowcaseSection?.images?.map((image: any) => ({
-          url: createImageUrl(image?.image?.url),
-          alt: image?.alt ?? "V-pharma Showcase Image",
-        })) ?? [],
+      images: Array.isArray(featureShowcaseSection?.images)
+        ? featureShowcaseSection.images.map((image: any) => ({
+            url: createImageUrl(image?.image?.url),
+            alt: image?.alt ?? "V-pharma Showcase Image",
+          }))
+        : [],
     },
     solutionSection: {
       title: solutionSection?.title ?? "Giải pháp",
       description:
         solutionSection?.description ??
         "Giải pháp của chúng tôi bao gồm các tính năng sau:",
-      solutionCard:
-        solutionSection?.independentSolutionCards?.map((card: any) => ({
-          title: card.title ?? "",
-          description: card.description ?? "",
-          alt: card.alt ?? "V-pharma Solution Image",
-          ctaButton: {
-            title: card.ctaButton?.title ?? "Tìm hiểu thêm",
-            link: card.ctaButton?.link ?? "#",
-          },
-          image: {
-            url: createImageUrl(card.image?.url),
-          },
-        })) ?? [],
+      solutionCard: Array.isArray(solutionSection?.independentSolutionCards)
+        ? solutionSection.independentSolutionCards.map((card: any) => ({
+            title: card.title ?? "",
+            description: card.description ?? "",
+            alt: card.alt ?? "V-pharma Solution Image",
+            ctaButton: {
+              title: card.ctaButton?.title ?? "Tìm hiểu thêm",
+              link: card.ctaButton?.link ?? "#",
+            },
+            image: {
+              url: createImageUrl(card.image?.url),
+            },
+          }))
+        : [],
     },
 
     commitmentSection: {
@@ -117,25 +123,27 @@ export function transformIndependentPharmacyData(
         url: createImageUrl(commitmentSection?.image?.url),
       },
       alt: commitmentSection?.alt ?? "",
-      contents:
-        commitmentSection?.contents?.map((item: any) => ({
-          title: item.title ?? "",
-          description: item.description ?? "",
-        })) ?? [],
+      contents: Array.isArray(commitmentSection?.contents)
+        ? commitmentSection.contents.map((item: any) => ({
+            title: item.title ?? "",
+            description: item.description ?? "",
+          }))
+        : [],
     },
     testimonialSection: {
       title: testimonialSection?.title ?? "Khách hàng nói về chúng tôi",
-      testimonials:
-        testimonialSection?.testimonials?.map((item: any) => ({
-          id: item.id,
-          authorName: item.authorName ?? "",
-          authorLocation: item.authorLocation ?? "",
-          quote: item.quote ?? "",
-          avatar: {
-            url: createImageUrl(item.avatar?.url),
-            alt: item.avatar?.alternativeText ?? "Avatar",
-          },
-        })) ?? [],
+      testimonials: Array.isArray(testimonialSection?.testimonials)
+        ? testimonialSection.testimonials.map((item: any) => ({
+            id: item.id,
+            authorName: item.authorName ?? "",
+            authorLocation: item.authorLocation ?? "",
+            quote: item.quote ?? "",
+            avatar: {
+              url: createImageUrl(item.avatar?.url),
+              alt: item.avatar?.alternativeText ?? "Avatar",
+            },
+          }))
+        : [],
     },
 
     ctaSection: {
@@ -149,11 +157,12 @@ export function transformIndependentPharmacyData(
 
     faqSection: {
       title: faqSection?.title ?? "Câu hỏi thường gặp",
-      faqItems:
-        faqSection?.questions?.map((item: any) => ({
-          question: item.question ?? "",
-          answer: item.answer ?? "",
-        })) ?? [],
+      faqItems: Array.isArray(faqSection?.questions)
+        ? faqSection.questions.map((item: any) => ({
+            question: item.question ?? "",
+            answer: item.answer ?? "",
+          }))
+        : [],
     },
   };
 }
