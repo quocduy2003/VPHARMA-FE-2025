@@ -25,7 +25,6 @@ import {
 import FaqSection from "@/components/Faq";
 import { BiLogoFacebookCircle } from "react-icons/bi";
 import { Listbox, Transition } from "@headlessui/react";
-import { AccordionItem } from "@/components/ui/AccordionIteam";
 
 import { contactData } from "@/lib/api/contact";
 
