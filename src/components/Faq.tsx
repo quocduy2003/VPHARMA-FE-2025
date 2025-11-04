@@ -24,7 +24,7 @@ function FaqItem({
         className="flex w-full items-center justify-between text-left hover:text-primary transition-colors"
         onClick={onClick}
       >
-        <span className="text-black text-[18px] font-semibold">{item.question}</span>
+        <span className="text-black text-sub1 font-semibold">{item.question}</span>
 
         {/* icon không nền, nhẹ, giống Google */}
         <span className="text-gray-700">
@@ -41,7 +41,7 @@ function FaqItem({
         className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-[500px] opacity-100 mt-4" : "max-h-0 opacity-0"
           }`}
       >
-        <RichTextRenderer content={item.answer} className="text-[16px] leading-relaxed text-colordescription max-w-3xl" />
+        <RichTextRenderer content={item.answer} className="text-body2 leading-relaxed text-colordescription pr-6 pb-1" />
       </div>
     </div>
   );
