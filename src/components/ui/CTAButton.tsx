@@ -8,7 +8,7 @@ import { ButtonHTMLAttributes, AnchorHTMLAttributes } from "react";
 // ----- Các kiểu dáng (variant) -----
 const buttonVariants = {
   primary: "bg-primary text-white hover:opacity-90",
-  secondary: "border border-primary bg-white text-primary hover:bg-primary/10",
+  secondary: "ring ring-primary bg-white text-primary hover:bg-primary/10",
   ghost: "text-primary hover:bg-primary/10",
   danger: "bg-red-500 text-white hover:bg-red-600",
 };

@@ -9,6 +9,7 @@ import { customerData, getBlogsByCategorySlug } from "@/lib/api";
 import { Card, CustBlogPost } from "@/types";
 import { transformCustomerBlogData } from "@/lib/transformers/customer";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
+import { Button } from "@/components/ui/CTAButton";
 
 function ChallengeStackedCards({ challengeCards }: { challengeCards: Card[] }) {
   const [active, setActive] = useState(0);
@@ -101,24 +102,21 @@ function ChallengeStackedCards({ challengeCards }: { challengeCards: Card[] }) {
 }
 
 function BlogSection({ slug }: { slug: string }) {
-  const [page, setPage] = useState(1);
   const [blogs, setBlogs] = useState<CustBlogPost[]>([]);
-  const [pageCount, setPageCount] = useState(1);
-  const pageSize = 4;
+  const pageSize = 6;
 
   useEffect(() => {
     async function fetchData() {
-      const response = await getBlogsByCategorySlug(slug, page, pageSize);
+      const response = await getBlogsByCategorySlug(slug, 1, pageSize);
       setBlogs(transformCustomerBlogData(response));
-      setPageCount(response.meta.pagination.pageCount);
     }
     fetchData();
-  }, [slug, page]);
+  }, [slug]);
 
   return (
     <section>
       <div className="mx-auto w-full px-4 sm:px-6 md:px-8 max-w-6xl overflow-x-clip">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-4 gap-y-8 justify-center">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 justify-center mb-10">
           {blogs.map((blog, index) => (
             <div
               key={index}
@@ -134,37 +132,24 @@ function BlogSection({ slug }: { slug: string }) {
                   className="object-cover"
                 />
               </div>
-              <div className="p-5 text-center">
-                <h3 className="font-semibold text-lg mb-5 line-clamp-2 text-gray-800">
+              <div className="pb-2 px-4 ">
+                <h3 className="font-bold text-body2 mb-3 line-clamp-2 ">
                   {blog.title}
                 </h3>
-                <button className="text-primary text-sub1 font-bold flex items-center justify-center gap-1 hover:gap-2 transition-all">
-                  Đọc thêm <span><FiArrowRight className="h-5 w-5" /></span>
+                <button className="text-primary text-body2 font-bold flex items-center justify-center gap-1 hover:gap-2 transition-all">
+                  Đọc thêm{" "}
+                  <span>
+                    <FiArrowRight className="h-3 w-3" />
+                  </span>
                 </button>
               </div>
             </div>
           ))}
         </div>
-        <div className="flex justify-center mx-auto items-center mt-6 gap-x-4">
-          <button
-            className="z-10 flex h-12 w-12 items-center justify-center rounded-full bg-blue-50 text-primary transition hover:bg-blue-100 text-3xl font-bold"
-            onClick={() => setPage((p) => Math.max(1, p - 1))}
-            disabled={page === 1}
-            aria-label="Previous page"
-          >
-            <FiArrowLeft className="h-6 w-6" />
-          </button>
-          {/* <span>
-            {page}/{pageCount}
-          </span> */}
-          <button
-            className="z-10 flex h-12 w-12 items-center justify-center rounded-full bg-blue-50 text-primary transition hover:bg-blue-100 text-3xl font-bold"
-            onClick={() => setPage((p) => Math.min(pageCount, p + 1))}
-            disabled={page === pageCount}
-            aria-label="Next page"
-          >
-            <FiArrowRight className="h-6 w-6" />
-          </button>
+        <div className="flex items-center justify-center ">
+          <Button size="md" href="/blog/blog-home">
+            Xem tất cả bài viết
+          </Button>
         </div>
       </div>
     </section>
@@ -179,10 +164,10 @@ export default function KhachHang() {
     <>
       <section className="h-screen bg-gradient-to-b from-blue-100 to-white flex items-center justify-center">
         <div className="container max-w-6xl text-center">
-          <p className="mb-5 text-h6 font-bold uppercase tracking-wide text-primary">
-            {customerData.eyebrow}
+          <p className="mb-5 text-h6 font-bold capitalize tracking-wide text-primary">
+            {customerData.eyebrow.toLowerCase()}
           </p>
-          <h1 >{customerData.mainTitle}</h1>
+          <h1>{customerData.mainTitle}</h1>
           <p className="mx-auto max-w-3xl text-h6 ">
             {customerData.mainDescription}
           </p>
@@ -191,7 +176,7 @@ export default function KhachHang() {
 
       <section className="">
         <FadeInOnScroll>
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto ">
             <h2 className="mb-5 text-center text-black">
               {challengeSection.title}
             </h2>
@@ -204,13 +189,13 @@ export default function KhachHang() {
       </section>
 
       <FadeInOnScroll>
-        <section className="bg-white py-10">
-          <div className="container mx-auto px-4">
-            <div className="mx-auto mb-12 max-w-6xl text-center">
-              <p className="mb-2 text-h6 font-bold uppercase tracking-wide text-primary">
-                {brandReviewSection.eyebrow}
+        <section className="bg-white ">
+          <div className="container mx-auto py-15">
+            <div className="mx-auto mb-15 max-w-6xl text-center">
+              <p className="mb-5 text-h6 font-bold capitalize tracking-wide text-primary">
+                {brandReviewSection.eyebrow.toLowerCase()}
               </p>
-              <h2 className="mb-4 text-black">{brandReviewSection.title}</h2>
+              <h2 className=" text-black">{brandReviewSection.title}</h2>
             </div>
             <PharmacyCarousel cards={brandReviewSection.reviewCards} />
           </div>
@@ -219,9 +204,9 @@ export default function KhachHang() {
 
       <FadeInOnScroll>
         <section className="bg-white">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="mb-4 text-black">{custBlogSection.title}</h2>
+          <div className="container mx-auto py-15">
+            <div className="text-center mb-10">
+              <h2 className="mb-5 text-black">{custBlogSection.title}</h2>
               <p className="text-h6 mx-auto max-w-3xl">
                 {custBlogSection.description}
               </p>

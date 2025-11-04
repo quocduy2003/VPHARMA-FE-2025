@@ -109,11 +109,3 @@ export const FeatureCarousel: React.FC<PropType> = ({ cards }) => {
     </div>
   );
 };
-
-// CSS quan trọng cho Embla, bạn có thể thêm vào globals.css
-// .embla__slide {
-//   flex-shrink: 0;
-//   flex-grow: 0;
-//   min-width: 0;
-//   /* Các class 'basis-' ở trên đã lo phần này */
-// }

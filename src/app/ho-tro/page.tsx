@@ -4,82 +4,90 @@ import Image from "next/image";
 import { useState, Fragment } from "react";
 import FadeInOnScroll from "@/components/animations/FadeInOnScroll";
 import PhoneInputField from "@/components/ho-tro/PhoneInputField";
+import type { IconType } from "react-icons";
 import {
   FiLoader,
   FiXCircle,
   FiCheckCircle,
-  FiFacebook,
   FiYoutube,
   FiGlobe,
+  FiInstagram,
+  FiLinkedin,
+  FiTwitter,
+  FiGithub,
   FiPhone,
   FiMapPin,
   FiMail,
-  FiChevronDown, // Sẽ dùng cho Listbox
+  FiChevronDown,
   FiCheck,
   FiX,
 } from "react-icons/fi";
-import FaqSection, { type Faq } from "@/components/Faq";
+import FaqSection from "@/components/Faq";
+import { BiLogoFacebookCircle } from "react-icons/bi";
 import { Listbox, Transition } from "@headlessui/react";
+import { AccordionItem } from "@/components/ui/AccordionIteam";
+
+import { contactData } from "@/lib/api/contact";
 
 // Dữ liệu cho phần mềm hỗ trợ 
-const supportSoftwareData = [
-  {
-    name: "TeamViewer",
-    description:
-      "Giải pháp điều khiển máy tính từ xa phổ biến, an toàn và bảo mật.",
-    link: "https://www.teamviewer.com/",
-    logo: "/logoTeamviewer.png",
-  },
-  {
-    name: "UltraViewer",
-    description:
-      "Phần mềm điều khiển từ xa được thiết kế gọn nhẹ và dễ sử dụng.",
-    link: "https://ultraviewer.net/",
-    logo: "/logoUltraview.png", 
-  },
-  {
-    name: "AnyDesk",
-    description:
-      "Phần mềm truy cập từ xa nhanh, nhẹ và an toàn cho mọi nền tảng.",
-    link: "https://anydesk.com/",
-    logo: "/logoAnyDesk.png", 
-  },
-];
+// const supportSoftwareData = [
+//   {
+//     name: "TeamViewer",
+//     description:
+//       "Giải pháp điều khiển máy tính từ xa phổ biến, an toàn và bảo mật.",
+//     link: "https://www.teamviewer.com/",
+//     logo: "/logoTeamviewer.png",
+//   },
+//   {
+//     name: "UltraViewer",
+//     description:
+//       "Phần mềm điều khiển từ xa được thiết kế gọn nhẹ và dễ sử dụng.",
+//     link: "https://ultraviewer.net/",
+//     logo: "/logoUltraview.png",
+//   },
+//   {
+//     name: "AnyDesk",
+//     description:
+//       "Phần mềm truy cập từ xa nhanh, nhẹ và an toàn cho mọi nền tảng.",
+//     link: "https://anydesk.com/",
+//     logo: "/logoAnyDesk.png",
+//   },
+// ];
 
 // dữ liệu FAQ
-const hoTroFaqData: Faq[] = [
-  {
-    question: "Phần mềm V-Pharma có dễ sử dụng không?",
-    answer:
-      "Tuyệt đối! V-Pharma được thiết kế với giao diện thân thiện, trực quan, phù hợp với cả những người không rành về công nghệ. Đội ngũ của chúng tôi sẽ đào tạo 1-1 cho đến khi bạn và nhân viên thành thạo.",
-  },
-  {
-    question: "Chi phí sử dụng phần mềm là bao nhiêu?",
-    answer:
-      "Chi phí rất hợp lý và linh hoạt theo quy mô của nhà thuốc. Vui lòng liên hệ để nhận báo giá chi tiết.",
-  },
-  {
-    question: "Tôi có cần cài đặt phần mềm phức tạp không?",
-    answer:
-      "Không, V-Pharma là giải pháp dựa trên nền tảng web, bạn có thể truy cập từ bất kỳ đâu mà không cần cài đặt phức tạp.",
-  },
-  {
-    question: "Dữ liệu của tôi có được bảo mật không?",
-    answer:
-      "An toàn dữ liệu là ưu tiên hàng đầu của chúng tôi. Hệ thống sử dụng các biện pháp bảo mật tiên tiến và sao lưu dữ liệu thường xuyên.",
-  },
-  {
-    question: "Tôi có cần cài đặt phần mềm phức tạp không?",
-    answer:
-      "Không, V-Pharma là giải pháp dựa trên nền tảng web, bạn có thể truy cập từ bất kỳ đâu mà không cần cài đặt phức tạp.",
-  },
-  {
-    question: "Dữ liệu của tôi có được bảo mật không?",
-    answer:
-      "An toàn dữ liệu là ưu tiên hàng đầu của chúng tôi. Hệ thống sử dụng các biện pháp bảo mật tiên tiến và sao lưu dữ liệu thường xuyên.",
-  },
-  
-];
+// const hoTroFaqData: Faq[] = [
+//   {
+//     question: "Phần mềm V-Pharma có dễ sử dụng không?",
+//     answer:
+//       "Tuyệt đối! V-Pharma được thiết kế với giao diện thân thiện, trực quan, phù hợp với cả những người không rành về công nghệ. Đội ngũ của chúng tôi sẽ đào tạo 1-1 cho đến khi bạn và nhân viên thành thạo.",
+//   },
+//   {
+//     question: "Chi phí sử dụng phần mềm là bao nhiêu?",
+//     answer:
+//       "Chi phí rất hợp lý và linh hoạt theo quy mô của nhà thuốc. Vui lòng liên hệ để nhận báo giá chi tiết.",
+//   },
+//   {
+//     question: "Tôi có cần cài đặt phần mềm phức tạp không?",
+//     answer:
+//       "Không, V-Pharma là giải pháp dựa trên nền tảng web, bạn có thể truy cập từ bất kỳ đâu mà không cần cài đặt phức tạp.",
+//   },
+//   {
+//     question: "Dữ liệu của tôi có được bảo mật không?",
+//     answer:
+//       "An toàn dữ liệu là ưu tiên hàng đầu của chúng tôi. Hệ thống sử dụng các biện pháp bảo mật tiên tiến và sao lưu dữ liệu thường xuyên.",
+//   },
+//   {
+//     question: "Tôi có cần cài đặt phần mềm phức tạp không?",
+//     answer:
+//       "Không, V-Pharma là giải pháp dựa trên nền tảng web, bạn có thể truy cập từ bất kỳ đâu mà không cần cài đặt phức tạp.",
+//   },
+//   {
+//     question: "Dữ liệu của tôi có được bảo mật không?",
+//     answer:
+//       "An toàn dữ liệu là ưu tiên hàng đầu của chúng tôi. Hệ thống sử dụng các biện pháp bảo mật tiên tiến và sao lưu dữ liệu thường xuyên.",
+//   },
+
+// ];
 
 // Dữ liệu cho Listbox "Chủ đề chính"
 const subjectOptions = [
@@ -89,6 +97,10 @@ const subjectOptions = [
 ];
 
 export default function HoTro() {
+
+  const { headline, contactForm, contactInformation, supportSoftware, faqSection } = contactData ?? {};
+  console.log("Contact Data:", contactData);
+
   const [fullName, setFullName] = useState("");
   const [fullNameError, setFullNameError] = useState("");
 
@@ -107,6 +119,19 @@ export default function HoTro() {
   const [formError, setFormError] = useState<string>("");
   const [formSuccess, setFormSuccess] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  //icon 
+  const socialIcons: Record<string, IconType> = {
+    facebook: BiLogoFacebookCircle,
+    youtube: FiYoutube,
+    website: FiGlobe,
+    instagram: FiInstagram,
+    linkedin: FiLinkedin,
+    twitter: FiTwitter,
+    github: FiGithub,
+    phone: FiPhone,
+    email: FiMail,
+    address: FiMapPin,
+  };
 
   // --- Logic Validation (onBlur) ---
 
@@ -219,10 +244,9 @@ export default function HoTro() {
       {/** Dashboard */}
       <section className="bg-gradient-to-b from-blue-100 to-white py-10 text-center">
         <div className="container ">
-          <h1 className="mt-10">Liên Hệ Hỗ Trợ</h1>
+          <h1 className="mt-10">{headline.title}</h1>
           <p className="mx-auto text-h6 mb-15 max-w-3xl">
-            Giải pháp toàn diện cho quản lý nhà thuốc, từ tồn kho đến bán hàng,
-            với công nghệ hiện đại và dễ sử dụng.
+            {headline.description}
           </p>
         </div>
       </section>
@@ -233,9 +257,9 @@ export default function HoTro() {
           <div className="max-w-6xl mx-auto  grid grid-cols-1 md:grid-cols-2 gap-20">
             {/* Form Liên hệ */}
             <div>
-              <h2 className="text-black font-bold mb-5">Liên hệ với chúng tôi</h2>
+              <h2 className="text-black font-bold mb-5">{contactForm?.title}</h2>
               <p className="mb-5 text-sub1">
-                Chúng tôi rất mong nhận được phản hồi từ bạn. Vui lòng điền vào mẫu này.
+                {contactForm?.description}
               </p>
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Họ và Tên */}
@@ -280,7 +304,7 @@ export default function HoTro() {
                     value={phone}
                     onChange={(value) => {
                       setPhone(value);
-                      if (phoneError) setPhoneError(""); 
+                      if (phoneError) setPhoneError("");
                     }}
                     onBlur={() => validatePhone()}
                     error={phoneError}
@@ -330,11 +354,10 @@ export default function HoTro() {
                       <Listbox.Button
                         className={`relative w-full cursor-default rounded-lg border-2 bg-white 
                                     px-4 py-3 text-left text-base text-sub2
-                                    ${
-                                      subjectError
-                                        ? "border-red-500"
-                                        : "border-gray-300"
-                                    }
+                                    ${subjectError
+                            ? "border-red-500"
+                            : "border-gray-300"
+                          }
                                     focus:outline-none focus:border-blue-500`}
                       >
                         <span className="text-sub2">{subject.name}</span>
@@ -361,10 +384,9 @@ export default function HoTro() {
                             <Listbox.Option
                               key={option.id}
                               className={({ active }) =>
-                                `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                  active
-                                    ? "bg-blue-100 text-primary" // Style khi hover
-                                    : "text-gray-900"
+                                `relative cursor-default select-none py-2 pl-10 pr-4 ${active
+                                  ? "bg-blue-100 text-primary" // Style khi hover
+                                  : "text-gray-900"
                                 }`
                               }
                               value={option}
@@ -372,9 +394,8 @@ export default function HoTro() {
                               {({ selected }) => (
                                 <>
                                   <span
-                                    className={`block truncate ${
-                                      selected ? "font-medium" : "font-normal"
-                                    }`}
+                                    className={`block truncate ${selected ? "font-medium" : "font-normal"
+                                      }`}
                                   >
                                     {option.name}
                                   </span>
@@ -480,9 +501,9 @@ export default function HoTro() {
 
             {/* Thông tin liên hệ + bản đồ */}
             <div>
-              <h2 className="text-black font-bold mb-5">Liên Hệ Trực Tiếp</h2>
+              <h2 className="text-black font-bold mb-5">{contactInformation.title}</h2>
               <p className="mb-5 text-sub1">
-                Kết nối ngay với chúng tôi qua hotline, email, hoặc đến trực tiếp văn phòng tại địa chỉ bên dưới.
+                {contactInformation.description}
               </p>
 
               {/* Bản đồ */}
@@ -508,10 +529,10 @@ export default function HoTro() {
                   <div>
                     {/* Thêm tel: link */}
                     <a
-                      href="tel:0911000038"
+                      href={`tel:${contactInformation?.phone}`}
                       className="font-medium hover:text-blue-500 text-sub1"
                     >
-                      0911 000 038
+                      {contactInformation?.phone.platform}
                     </a>
                   </div>
                 </li>
@@ -522,10 +543,10 @@ export default function HoTro() {
                   />
                   <div>
                     <a
-                      href="mailto:contact@amitgroup.asia"
+                      href={`mailto:${contactInformation?.email}`}
                       className="hover:text-blue-500 text-sub1"
                     >
-                      contact@amitgroup.asia
+                      {contactInformation?.email.platform}
                     </a>
                   </div>
                 </li>
@@ -537,13 +558,12 @@ export default function HoTro() {
                   <div>
                     {/* Thêm link Google Maps */}
                     <a
-                      href="https://maps.app.goo.gl/xnSXqtouAAk2yewr7"
+                      href={contactData.contactInformation?.address.url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="hover:text-blue-500 text-sub1"
                     >
-                      Số 7, Đường 7C, Khu đô thị An Phú An Khánh, Phường Bình
-                      Trưng, Thành phố Hồ Chí Minh
+                      {contactData.contactInformation?.address.platform}
                     </a>
                   </div>
                 </li>
@@ -551,30 +571,22 @@ export default function HoTro() {
 
               {/* Social links */}
               <div className="mt-8 flex space-x-4">
-                <a
-                  href="https://facebook.com/amitgroup.vn"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-success hover:text-blue-500 transition-colors "
-                >
-                  <FiFacebook size={27} />
-                </a>
-                <a
-                  href="https://www.youtube.com/@AmitGROUPmkt"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-success hover:text-blue-500 transition-colors"
-                >
-                  <FiYoutube size={27} />
-                </a>
-                <a
-                  href="https://www.amitgroup.asia/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-success hover:text-blue-500 transition-colors"
-                >
-                  <FiGlobe size={27} />
-                </a>
+                {contactInformation?.socials?.map((social, index) => {
+                  const Icon = socialIcons[social.platform?.toLowerCase()];
+                  return (
+                    Icon && (
+                      <a
+                        key={index}
+                        href={social.url ?? "#"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-success hover:text-blue-500 transition-colors"
+                      >
+                        <Icon size={27} />
+                      </a>
+                    )
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -582,43 +594,45 @@ export default function HoTro() {
       </FadeInOnScroll>
 
       {/* --- SECTION FAQ --- */}
-      <FaqSection title="Câu Hỏi Thường Gặp" items={hoTroFaqData} />
+      <FaqSection
+        title={faqSection.title}
+        items={faqSection.faqItems}
+      />
 
       {/* --- SECTION PHẦN MỀM HỖ TRỢ  */}
       <section className="bg-white py-10">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-center mb-5">Phần Mềm Hỗ Trợ</h2>
+          <h2 className="text-center mb-5 text-black">{supportSoftware.title}</h2>
           <p className="text-center text-h6 text-colordescription max-w-3xl mx-auto mb-15">
-            Để quá trình hỗ trợ diễn ra nhanh chóng, vui lòng cài đặt một trong
-            các phần mềm dưới đây nếu được kỹ thuật viên yêu cầu.
+            {supportSoftware.description}
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ">
-            {supportSoftwareData.map((software) => (
+            {supportSoftware.supportCards.map((software, index) => (
               <div
-                key={software.name}
+                key={index}
                 className="bg-white p-8 rounded-lg border shadow-md text-center flex flex-col items-center"
               >
                 <div className="w-24 h-24 relative mb-6">
                   <Image
-                    src={software.logo}
-                    alt={`Logo ${software.name}`}
-                    layout="fill"
-                    objectFit="contain"
+                    src={software.icon}
+                    alt={`Logo ${software.title}`}
+                    fill
+                    className="object-contain"
                   />
                 </div>
                 <h3 className="text-sub1 font-bold text-black mb-5">
-                  {software.name}
+                  {software.title}
                 </h3>
                 <p className="text-sub2 mb-10 flex-grow">
                   {software.description}
                 </p>
                 <a
-                  href={software.link}
+                  href={software.ctaButton.link ?? "#"}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-auto text-sub2 rounded-lg bg-primary hover:bg-blue-700 px-8 py-3 font-bold text-white transition-colors duration-200"
                 >
-                  Tải về
+                  {software.ctaButton.title}
                 </a>
               </div>
             ))}

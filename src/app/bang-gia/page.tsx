@@ -2,19 +2,12 @@
 "use client";
 
 import { FiCheck } from "react-icons/fi";
-// import {
-//   plans,
-//   featureCategories,
-//   type FeatureValue,
-// } from "@/data/pricing-data";
 import { pricingPageData } from "@/lib/api/pricing";
 import type { Feature } from "@/types";
 
-// 1. CẬP NHẬT: "Coming soon" thành text thường (giống ảnh mới)
 type FeatureDisplayValue = string | boolean | null | undefined | number;
 const renderFeatureValue = (value: FeatureDisplayValue) => {
 
-  // Nếu không có value → xử lý theo trạng thái isActive (true / false)
   if (value === true) {
     return <FiCheck className="mx-auto text-xl text-green-500" />;
   }
@@ -25,57 +18,25 @@ const renderFeatureValue = (value: FeatureDisplayValue) => {
   if (value !== undefined && value !== null && value !== "") {
     return value;
   }
-  // Nếu tất cả đều null / rỗng → trả dấu gạch
   return <span className="text-gray-400">-</span>;
 };
 
 
-import FaqSection, { type Faq } from "@/components/Faq";
-const hoTroFaqData: Faq[] = [
-  {
-    question: "Phần mềm V-Pharma có dễ sử dụng không?",
-    answer:
-      "Tuyệt đối! V-Pharma được thiết kế với giao diện thân thiện, trực quan, phù hợp với cả những người không rành về công nghệ. Đội ngũ của chúng tôi sẽ đào tạo 1-1 cho đến khi bạn và nhân viên thành thạo.",
-  },
-  {
-    question: "Chi phí sử dụng phần mềm là bao nhiêu?",
-    answer:
-      "Chi phí rất hợp lý và linh hoạt theo quy mô của nhà thuốc. Vui lòng liên hệ để nhận báo giá chi tiết.",
-  },
-  {
-    question: "Tôi có cần cài đặt phần mềm phức tạp không?",
-    answer:
-      "Không, V-Pharma là giải pháp dựa trên nền tảng web, bạn có thể truy cập từ bất kỳ đâu mà không cần cài đặt phức tạp.",
-  },
-  {
-    question: "Dữ liệu của tôi có được bảo mật không?",
-    answer:
-      "An toàn dữ liệu là ưu tiên hàng đầu của chúng tôi. Hệ thống sử dụng các biện pháp bảo mật tiên tiến và sao lưu dữ liệu thường xuyên.",
-  },
-];
+import FaqSection from "@/components/Faq";
+
 
 import CTASection from "@/components/CTA";
 import type { CTASection as CTASectionType } from "@/types";
 import React from "react";
-const finalCtaData: CTASectionType = {
-  title: "Sẵn Sàng Số Hóa Nhà Thuốc Của Bạn?",
-  description:
-    "Trải nghiệm đầy đủ các tính năng ưu việt của V-Pharma hoàn toàn miễn phí trong 15 ngày. Không cần thẻ tín dụng.",
-  ctaButton: {
-    title: "Trải nghiệm miễn phí",
-    link: "/dang-ky-dung-thu",
-  },
-};
+
 
 export default function PricePage() {
-  const { pricingPlans, featureCategories } = pricingPageData
+  const { pricingPlans, featureCategories, faqSection, ctaSection } = pricingPageData
   const plans = pricingPlans;
 
-  // Hằng số để đảm bảo chiều cao các hàng đồng bộ
-  const HEADER_ROW_HEIGHT = "h-[220px]";
+  const HEADER_ROW_HEIGHT = "h-[260px]";
   const CATEGORY_ROW_HEIGHT = "h-[57px]";
   const FEATURE_ROW_HEIGHT = "h-[57px]";
-  // Lấy giá trị hiển thị đúng ưu tiên value nếu có, ngược lại dựa theo trạng thái
 
   const getFeatureDisplayValue = (feature: Feature, planId: number) => {
     const planValue = feature.PlanValues?.[planId];
@@ -96,18 +57,14 @@ export default function PricePage() {
 
   return (
     <div>
-      {/* CẬP NHẬT: Gộp 2 section thành 1.
-        Section này sẽ chứa cả Header (H1, P) và Bảng giá.
-      */}
       <section className="bg-gradient-to-b from-blue-100 to-white py-10 text-center ">
         {/* === PHẦN HEADER === */}
         <div className="container mx-auto px-4 lg:px-80">
           <h1 className="mt-10 text-h1 font-bold text-ink">
-            Bảng giá V-Pharma
+            {pricingPageData.title}
           </h1>
           <p className="mx-auto mt-4 mb-10 max-w-2xl text-h6">
-            Giải pháp toàn diện cho quản lý nhà thuốc, từ tồn kho đến bán hàng,
-            với công nghệ hiện đại và dễ sử dụng.
+            {pricingPageData.description}
           </p>
         </div>
 
@@ -194,7 +151,7 @@ export default function PricePage() {
                       {category.features.map((feature) => (
                         <div
                           key={feature.id}
-                          className={`${FEATURE_ROW_HEIGHT} p-4 text-center text-sm text-ink border-t border-gray-200`}
+                          className={`${FEATURE_ROW_HEIGHT} mt-5 p-4 text-center text-sm text-ink border-t border-gray-200`}
                         >
                           {renderFeatureValue(getFeatureDisplayValue(feature, plan.id))}
                         </div>
@@ -210,10 +167,14 @@ export default function PricePage() {
       {/* === KẾT THÚC SECTION CHUNG === */}
 
       {/* FAQ Section */}
-      <FaqSection title="Câu Hỏi Thường Gặp" items={hoTroFaqData} />
+      {/* <FaqSection title="Câu Hỏi Thường Gặp" items={hoTroFaqData} /> */}
+      <FaqSection
+        title={faqSection.title}
+        items={faqSection.faqItems}
+      />
 
       {/* Final CTA Section */}
-      <CTASection ctaSection={finalCtaData} />
+      <CTASection ctaSection={ctaSection} />
     </div>
   );
 }

@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/CTAButton";
 import { RichTextRenderer } from "@/components/ui/RichTextRenderer";
 import { AccordionItem } from "@/components/ui/AccordionIteam";
 import ReviewCarousel from "@/components/ReviewCarousel";
-
+import FaqSection from "@/components/Faq";
 
 const DashboardCarousel = ({
   images,
@@ -401,20 +401,10 @@ export default function IndependentPharmacyPage() {
 
       {/* FAQ Section */}
       <section className="container mx-auto max-w-4xl px-4 py-20">
-        <h2 className="text-center text-h3 font-bold text-ink">
-          {faqSection.title}
-        </h2>
-        <div className="mt-10">
-          {faqSection.faqItems.map((item, index) => (
-            <AccordionItem
-              key={index}
-              title={item.question}
-              description={item.answer}
-              isOpen={openFaq === index}
-              onClick={() => setOpenFaq(openFaq === index ? null : index)}
-            />
-          ))}
-        </div>
+        <FaqSection
+          title={faqSection.title}
+          items={faqSection.faqItems}
+        />
       </section>
     </div>
   );

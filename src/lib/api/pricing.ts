@@ -24,6 +24,16 @@ async function fetchPricingData(): Promise<PricingPageData> {
             },
           },
         },
+        faqSection: {
+          populate: {
+            questions: true,
+          },
+        },
+        ctaSection: {
+          populate: {
+            ctaButton: true,
+          },
+        },
       },
     },
     { encodeValuesOnly: true }
