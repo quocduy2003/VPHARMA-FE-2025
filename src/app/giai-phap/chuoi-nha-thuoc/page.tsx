@@ -306,7 +306,7 @@ const icons = [FiUsers, FiShoppingCart, FiDatabase, FiShield];
                 {featureBenefitsSection.description}
               </p>
             </div>
-            <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2 h-[400px]">
+            <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2 ">
               <div className="relative aspect-video rounded-lg bg-white p-2 shadow-xl">
                 <Image
                   src={featureBenefitsSection.image}
@@ -315,8 +315,7 @@ const icons = [FiUsers, FiShoppingCart, FiDatabase, FiShield];
                   objectFit="contain"
                 />
               </div>
-              <div className="relative w-full max-w-[800px] mx-auto h-full">
-                <div className="absolute inset-0 overflow-hidden flex flex-col items-center justify-center space-y-3 p-2">
+              <div className="relative w-full max-w-[800px] mx-auto flex flex-col items-center justify-center">
                   {Array.isArray(featureBenefitsSection.contents) && featureBenefitsSection.contents.map((item, index) => (
                     <AccordionItem
                       key={index}
@@ -331,7 +330,6 @@ const icons = [FiUsers, FiShoppingCart, FiDatabase, FiShield];
                   ))}
                 </div>
               </div>
-            </div>
           </div>
         </FadeInOnScroll>
       </section>

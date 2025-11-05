@@ -244,7 +244,7 @@ export default function HoTro() {
       <section className="bg-gradient-to-b from-blue-100 to-white py-10 text-center">
         <div className="container ">
           <h1 className="mt-10">{headline.title}</h1>
-          <p className="mx-auto text-h6 mb-15 max-w-3xl">
+          <p className="mx-auto text-colordescription text-h6 mb-15 max-w-3xl">
             {headline.description}
           </p>
         </div>
@@ -257,7 +257,7 @@ export default function HoTro() {
             {/* Form Liên hệ */}
             <div>
               <h2 className="text-black font-bold mb-5">{contactForm?.title}</h2>
-              <p className="mb-5 text-sub1">
+              <p className="mb-5 text-sub1 text-colordescription">
                 {contactForm?.description}
               </p>
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -265,7 +265,7 @@ export default function HoTro() {
                 <div>
                   <label
                     htmlFor="fullName"
-                    className="block text-colordescription font-bold text-sub2 mb-2"
+                    className="block text-black font-bold text-sub2 mb-2"
                   >
                     Họ và Tên
                   </label>
@@ -295,7 +295,7 @@ export default function HoTro() {
                 <div>
                   <label
                     htmlFor="phone"
-                    className="block text-colordescription font-bold text-sub2 mb-2"
+                    className="block text-black font-bold text-sub2 mb-2"
                   >
                     Số điện thoại
                   </label>
@@ -314,7 +314,7 @@ export default function HoTro() {
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-colordescription font-bold text-sub2 mb-2"
+                    className="block text-black font-bold text-sub2 mb-2"
                   >
                     Địa chỉ Email
                   </label>
@@ -344,7 +344,7 @@ export default function HoTro() {
                 <div>
                   <label
                     htmlFor="subject"
-                    className="block text-colordescription font-bold text-sub2 mb-2"
+                    className="block text-black font-bold text-sub2 mb-2"
                   >
                     Chủ đề chính
                   </label>
@@ -425,7 +425,7 @@ export default function HoTro() {
                 <div>
                   <label
                     htmlFor="description"
-                    className="block text-colordescription font-bold text-sub2 mb-2"
+                    className="block text-black font-bold text-sub2 mb-2"
                   >
                     Mô tả chi tiết (không bắt buộc)
                   </label>
@@ -501,7 +501,7 @@ export default function HoTro() {
             {/* Thông tin liên hệ + bản đồ */}
             <div>
               <h2 className="text-black font-bold mb-5">{contactInformation.title}</h2>
-              <p className="mb-5 text-sub1">
+              <p className="mb-5 text-sub1 text-colordescription">
                 {contactInformation.description}
               </p>
 
@@ -529,7 +529,7 @@ export default function HoTro() {
                     {/* Thêm tel: link */}
                     <a
                       href={`tel:${contactInformation?.phone}`}
-                      className="font-medium hover:text-blue-500 text-sub1"
+                      className=" hover:text-blue-500 text-sub1"
                     >
                       {contactInformation?.phone.platform}
                     </a>
@@ -569,7 +569,7 @@ export default function HoTro() {
               </ul>
 
               {/* Social links */}
-              <div className="mt-8 flex space-x-4">
+              <div className="mt-10 flex space-x-4">
                 {contactInformation?.socials?.map((social, index) => {
                   const Icon = socialIcons[social.platform?.toLowerCase()];
                   return (

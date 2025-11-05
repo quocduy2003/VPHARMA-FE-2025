@@ -129,19 +129,19 @@ export default function FeatureCardTest({
   }
 
   return (
-    <div ref={sectionRef} className={`grid items-center lg:grid-cols-2 `} >
+    <div ref={sectionRef} className={`grid items-center gap-8 lg:grid-cols-2 `} >
       <div
         className={`${isLeft ? "lg:order-2" : "lg:order-1"
           } flex justify-center relative`}
       >
-        <div className="relative w-full max-w-[650px] h-150 rounded-2xl overflow-hidden shadow-lg">
+        <div className="relative w-full max-w-[600px] h-[550px] rounded-2xl overflow-hidden shadow-lg">
           {safeFeatures.map((item, idx) => (
             <Image
               key={idx}
               src={item.image}
               alt={item.title}
-              width={640}
-              height={420}
+              width={600}
+              height={550}
               className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
                                 w-full h-full rounded-xl object-cover transition-opacity duration-500
                                 ${activeIndex === idx
