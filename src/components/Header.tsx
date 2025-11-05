@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FiChevronDown, FiMenu, FiX } from "react-icons/fi";
 import Image from "next/image";
+import { Button } from "./ui/CTAButton";
 
 const cn = (...classes: string[]) => classes.filter(Boolean).join(" ");
 
@@ -47,7 +48,8 @@ export function Header() {
         <nav className="hidden min-[1280px]:flex items-center gap-4 font-medium">
           {mainNavLinks.map((link) => {
             const pathToMatch = link.matchPath || link.href;
-            const isActive = pathname !== "/" && pathname.startsWith(pathToMatch);
+            const isActive =
+              pathname !== "/" && pathname.startsWith(pathToMatch);
 
             return (
               <Link
@@ -87,12 +89,21 @@ export function Header() {
         </nav>
         {/* Desktop Auth Buttons */}
         <div className="hidden min-[1280px]:flex items-center gap-2">
-          <button className="rounded-full border border-primary px-4 py-2 text-body2 font-bold text-primary hover:bg-blue-100 transition">
+          <Button
+            size="ssm"
+            variant="secondary"
+            href="/dang-nhap"
+            className="hover:shadow-primary/40 hover:shadow-lg text-body2"
+          >
             Đăng nhập
-          </button>
-          <button className="rounded-full border border-primary bg-primary px-4 py-2 text-body2 font-bold text-white hover:bg-primary/70 transition">
+          </Button>
+          <Button
+            size="ssm"
+            href="/dang-ky"
+            className="hover:shadow-primary/40 hover:shadow-lg text-body2"
+          >
             Đăng ký dùng thử
-          </button>
+          </Button>
         </div>
 
         {/* Mobile Menu Icon Button */}
