@@ -1,4 +1,3 @@
-
 "use client";
 
 import { FiCheck } from "react-icons/fi";
@@ -56,7 +55,7 @@ export default function PricePage() {
 
   return (
     <div>
-      <section className="bg-gradient-to-b from-blue-100 to-white py-10 text-center ">
+      <section className="bg-gradient-to-b from-blue-100 to-white py-10 text-center">
         {/* === PHẦN HEADER === */}
         <div className="container mx-auto px-4 lg:px-80">
           <h1 className="mt-10 text-h1 font-bold text-ink">
@@ -68,23 +67,23 @@ export default function PricePage() {
         </div>
 
         {/* === PHẦN BẢNG GIÁ === */}
-        <div className="container mx-auto max-w-7xl ">
-          <div className="overflow-x-auto">
+        <div className="w-full overflow-x-auto">
+          <div className="container mx-auto max-w-7xl px-4">
             <div className="min-w-[1200px] grid grid-cols-5 gap-x-4">
               {/* === CỘT TÍNH NĂNG (CỘT 1) === */}
-              <div className="sticky left-0">
+              <div className="">
                 {/* Header trái */}
-                {/* CẬP NHẬT: Bỏ pt-6, thêm text-left */}
-                <div className={`${HEADER_ROW_HEIGHT} text-left`}>
-                  <h2 className="text-black">
-                    Thông Tin Về Các Gói
-                    <br />
-                    {/* CẬP NHẬT: Sửa 'text-primaty' -> 'text-primary' */}
-                    <span className="text-primary">V-Pharma</span>
-                  </h2>
-                  <button className="mt-6 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:opacity-90">
-                    Đăng ký dùng thử
-                  </button>
+                <div className={`${HEADER_ROW_HEIGHT} text-left pb-4`}>
+                  <div className="elative bg-gradient-to-b from-blue-100 to-white pb-4 ">
+                    <h2 className="text-black">
+                      Thông Tin Về Các Gói
+                      <br />
+                      <span className="text-primary">V-Pharma</span>
+                    </h2>
+                    <button className="mt-6 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:opacity-90">
+                      Đăng ký dùng thử
+                    </button>
+                  </div>
                 </div>
 
                 {/* Lặp qua các category và feature titles */}
@@ -119,44 +118,48 @@ export default function PricePage() {
                   key={plan.id}
                   className="w-full rounded-lg border border-gray-200 bg-white shadow-sm"
                 >
-                  {/* Header của Card */}
-                  <div className={`${HEADER_ROW_HEIGHT} p-6 text-center`}>
-                    <h3 className="text-xl font-bold text-ink">{plan.name}</h3>
-                    <div className="">
-                      <h2 className="text-sub2 font-bold text-primary">
-                        {plan.price}
-                        <span className="text-sm colordescription text-gray-500">
-                          {" "}
-                          {plan.billingCycle}
-                        </span>
-                      </h2>
-                    </div>
-                    <div className="text-xs text-gray-500 h-[30px]">
-                      <p>{plan.trialNote}</p>
-                      <p>{plan.audienceNote}</p>
+                  {/* Header của Card - Sticky */}
+                  <div className="sticky top-0 z-30 bg-white rounded-t-lg border-b border-gray-200 shadow-md">
+                    <div className={`${HEADER_ROW_HEIGHT} p-6 text-center flex flex-col justify-center`}>
+                      <h3 className="text-xl font-bold text-ink">{plan.name}</h3>
+                      <div className="">
+                        <h2 className="text-sub2 font-bold text-primary">
+                          {plan.price}
+                          <span className="text-sm colordescription text-gray-500">
+                            {" "}
+                            {plan.billingCycle}
+                          </span>
+                        </h2>
+                      </div>
+                      <div className="text-xs text-gray-500 h-[30px]">
+                        <p>{plan.trialNote}</p>
+                        <p>{plan.audienceNote}</p>
+                      </div>
                     </div>
                   </div>
 
                   {/* Body của Card (Lặp qua features) */}
-                  {featureCategories.map((category) => (
-                    <div key={category.title}>
-                      {/* Ô trống cho Category title */}
-                      <div
-                        className={`${CATEGORY_ROW_HEIGHT} p-4 border-gray-200`}
-                      >
-                        &nbsp;
-                      </div>
-                      {/* Lặp qua các feature values */}
-                      {category.features.map((feature) => (
+                  <div>
+                    {featureCategories.map((category) => (
+                      <div key={category.title}>
+                        {/* Ô trống cho Category title */}
                         <div
-                          key={feature.id}
-                          className={`${FEATURE_ROW_HEIGHT} mt-5 p-4 text-center text-sm text-ink border-t border-gray-200`}
+                          className={`${CATEGORY_ROW_HEIGHT} p-4 border-gray-200`}
                         >
-                          {renderFeatureValue(getFeatureDisplayValue(feature, plan.id))}
+                          &nbsp;
                         </div>
-                      ))}
-                    </div>
-                  ))}
+                        {/* Lặp qua các feature values */}
+                        {category.features.map((feature) => (
+                          <div
+                            key={feature.id}
+                            className={`${FEATURE_ROW_HEIGHT} p-4 text-center text-sm text-ink border-t border-gray-200`}
+                          >
+                            {renderFeatureValue(getFeatureDisplayValue(feature, plan.id))}
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>
@@ -166,7 +169,6 @@ export default function PricePage() {
       {/* === KẾT THÚC SECTION CHUNG === */}
 
       {/* FAQ Section */}
-      {/* <FaqSection title="Câu Hỏi Thường Gặp" items={hoTroFaqData} /> */}
       <FaqSection
         title={faqSection.title}
         items={faqSection.faqItems}

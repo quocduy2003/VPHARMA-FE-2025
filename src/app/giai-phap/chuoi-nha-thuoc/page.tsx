@@ -115,7 +115,7 @@ export default function ChuoiNhaThuoc() {
     pharmaFeedback,
     ctaSection,
     faqSection,
-  } = chainPharmacyData || {};
+  } = chainPharmacyData;
 
   // --- 2. LOGIC CHO SECTION 4 ---
   const cardsPerViewCustomer = 3;
