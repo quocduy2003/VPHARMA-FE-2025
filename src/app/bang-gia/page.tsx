@@ -151,7 +151,7 @@ export default function PricePage() {
                       {category.features.map((feature) => (
                         <div
                           key={feature.id}
-                          className={`${FEATURE_ROW_HEIGHT} mt-5 p-4 text-center text-sm text-ink border-t border-gray-200`}
+                          className={`${FEATURE_ROW_HEIGHT} p-4 text-center text-sm text-ink border-t border-gray-200`}
                         >
                           {renderFeatureValue(getFeatureDisplayValue(feature, plan.id))}
                         </div>
@@ -167,7 +167,6 @@ export default function PricePage() {
       {/* === KẾT THÚC SECTION CHUNG === */}
 
       {/* FAQ Section */}
-      {/* <FaqSection title="Câu Hỏi Thường Gặp" items={hoTroFaqData} /> */}
       <FaqSection
         title={faqSection.title}
         items={faqSection.faqItems}
