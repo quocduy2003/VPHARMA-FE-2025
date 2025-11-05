@@ -2,11 +2,11 @@
 
 import { FiCheck } from "react-icons/fi";
 import { pricingPageData } from "@/lib/api/pricing";
+import { Button } from "@/components/ui/CTAButton";
 import type { Feature } from "@/types";
 
 type FeatureDisplayValue = string | boolean | null | undefined | number;
 const renderFeatureValue = (value: FeatureDisplayValue) => {
-
   if (value === true) {
     return <FiCheck className="mx-auto text-xl text-green-500" />;
   }
@@ -20,19 +20,17 @@ const renderFeatureValue = (value: FeatureDisplayValue) => {
   return <span className="text-gray-400">-</span>;
 };
 
-
 import FaqSection from "@/components/Faq";
-
 
 import CTASection from "@/components/CTA";
 import React from "react";
 
-
 export default function PricePage() {
-  const { pricingPlans, featureCategories, faqSection, ctaSection } = pricingPageData
+  const { pricingPlans, featureCategories, faqSection, ctaSection } =
+    pricingPageData;
   const plans = pricingPlans;
 
-  const HEADER_ROW_HEIGHT = "h-[260px]";
+  const HEADER_ROW_HEIGHT = "h-[220px]";
   const CATEGORY_ROW_HEIGHT = "h-[57px]";
   const FEATURE_ROW_HEIGHT = "h-[57px]";
 
@@ -41,7 +39,11 @@ export default function PricePage() {
     if (!planValue) return null;
 
     // Nếu có value (string hay number), trả value
-    if (planValue.value !== undefined && planValue.value !== null && planValue.value !== "") {
+    if (
+      planValue.value !== undefined &&
+      planValue.value !== null &&
+      planValue.value !== ""
+    ) {
       return planValue.value;
     }
     console.log("planValue", planValue, typeof planValue.isActive);
@@ -51,7 +53,6 @@ export default function PricePage() {
 
     return null;
   };
-
 
   return (
     <div>
@@ -67,23 +68,24 @@ export default function PricePage() {
         </div>
 
         {/* === PHẦN BẢNG GIÁ === */}
-        <div className="w-full overflow-x-auto">
-          <div className="container mx-auto max-w-7xl px-4">
+        <div className="w-full ">
+          <div className="container mx-auto max-w-7xl px-4 ">
             <div className="min-w-[1200px] grid grid-cols-5 gap-x-4">
               {/* === CỘT TÍNH NĂNG (CỘT 1) === */}
-              <div className="">
+              <div className="sticky rounded-lg left-0 bg-gradient-to-b from-blue-100 to-white z-20">
                 {/* Header trái */}
-                <div className={`${HEADER_ROW_HEIGHT} text-left pb-4`}>
-                  <div className="elative bg-gradient-to-b from-blue-100 to-white pb-4 ">
-                    <h2 className="text-black">
-                      Thông Tin Về Các Gói
-                      <br />
-                      <span className="text-primary">V-Pharma</span>
-                    </h2>
-                    <button className="mt-6 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:opacity-90">
-                      Đăng ký dùng thử
-                    </button>
-                  </div>
+                <div className={`${HEADER_ROW_HEIGHT} flex flex-col items-center justify-center pb-5`}>
+                  <h2 className="text-black text-h5 mb-5 text-center">
+                    Thông Tin Về Các Gói
+                    <span className="mx-2 text-[28px] text-primary">V-Pharma</span>
+                  </h2>
+                  <Button
+                    size="md"
+                    href="/dang-ky"
+                    className="hover:shadow-primary/40 hover:shadow-lg "
+                  >
+                    Đăng ký dùng thử
+                  </Button>
                 </div>
 
                 {/* Lặp qua các category và feature titles */}
@@ -91,9 +93,9 @@ export default function PricePage() {
                   <div key={category.title}>
                     {/* Tiêu đề Cấp 1 */}
                     <div
-                      className={`${CATEGORY_ROW_HEIGHT} p-4 flex items-center border-gray-200`}
+                      className={`${CATEGORY_ROW_HEIGHT} p-5 flex items-center border-gray-200`}
                     >
-                      <h4 className="text-base font-bold text-ink">
+                      <h4 className="text-body2 font-bold text-ink">
                         {category.title}
                       </h4>
                     </div>
@@ -116,12 +118,16 @@ export default function PricePage() {
               {plans.map((plan) => (
                 <div
                   key={plan.id}
-                  className="w-full rounded-lg border border-gray-200 bg-white shadow-sm"
+                  className="w-full rounded-lg border border-gray-200 bg-white "
                 >
                   {/* Header của Card - Sticky */}
-                  <div className="sticky top-0 z-30 bg-white rounded-t-lg border-b border-gray-200 shadow-md">
-                    <div className={`${HEADER_ROW_HEIGHT} p-6 text-center flex flex-col justify-center`}>
-                      <h3 className="text-xl font-bold text-ink">{plan.name}</h3>
+                  <div className="sticky top-0 z-30 bg-white rounded-t-lg border-gray-200 ">
+                    <div
+                      className={`${HEADER_ROW_HEIGHT} p-6 text-center flex flex-col justify-center`}
+                    >
+                      <h3 className="text-xl font-bold text-ink">
+                        {plan.name}
+                      </h3>
                       <div className="">
                         <h2 className="text-sub2 font-bold text-primary">
                           {plan.price}
@@ -154,7 +160,9 @@ export default function PricePage() {
                             key={feature.id}
                             className={`${FEATURE_ROW_HEIGHT} p-4 text-center text-sm text-ink border-t border-gray-200`}
                           >
-                            {renderFeatureValue(getFeatureDisplayValue(feature, plan.id))}
+                            {renderFeatureValue(
+                              getFeatureDisplayValue(feature, plan.id)
+                            )}
                           </div>
                         ))}
                       </div>
@@ -169,10 +177,7 @@ export default function PricePage() {
       {/* === KẾT THÚC SECTION CHUNG === */}
 
       {/* FAQ Section */}
-      <FaqSection
-        title={faqSection.title}
-        items={faqSection.faqItems}
-      />
+      <FaqSection title={faqSection.title} items={faqSection.faqItems} />
 
       {/* Final CTA Section */}
       <CTASection ctaSection={ctaSection} />

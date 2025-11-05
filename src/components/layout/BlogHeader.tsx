@@ -39,17 +39,18 @@ export function BlogHeader() {
   return (
     <header className="sticky top-[64px] z-30 bg-ink">
       <div className="container mx-auto flex items-center justify-between py-3">
-        <div className="flex items-center  gap-6">
-          <Link href="/blog/blog-home" className="group  gap-6 flex items-center ">
+        <div className="flex items-center  gap-9">
+          <Link href="/blog/blog-home" className="group  gap-9 flex items-center ">
             <FiHome
               className={cn(
                 "h-8 w-8 transition-color  duration-300",
-                isHomeActive ? "text-primary font-bold" : " text-white hover:text-blue-500"
+                isHomeActive ?  "text-white font-bold "
+                    : "text-blue-100 hover:text-white"
               )}
             />
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-6 text-sub2 flex-1">
+          <nav className="hidden lg:flex items-center gap-9 text-sub2 flex-1">
             {visibleLinks.map((link) => (
               <Link
                 key={link.id}
@@ -57,7 +58,7 @@ export function BlogHeader() {
                 className={cn(
                   "transition-colors",
                   isLinkActive(link.slug)
-                    ? "text-white font-bold"
+                    ? "text-white font-bold "
                     : "text-blue-100 hover:text-white"
                 )}
               >

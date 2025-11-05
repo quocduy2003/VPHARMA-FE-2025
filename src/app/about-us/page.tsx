@@ -72,7 +72,7 @@ const ValuesSection = ({
               height={150}
               className="mx-auto mb-6 rounded-lg object-contain"
             />
-            <h3 className="mb-4 text-sub1 font-bold">{card.title}</h3>
+            <h3 className="mb-5 text-sub1 text-black font-bold">{card.title}</h3>
             <p className="text-sub2 max-w-xs mx-auto">{card.description}</p>
           </div>
         ))}
@@ -272,10 +272,9 @@ export default function AboutUsPage() {
 
   return (
     <div>
-      {/* Dashboard Section (Phần tĩnh) */}
-      <section className=" bg-gradient-to-b from-blue-100 to-white text-center">
+      <section className=" bg-gradient-to-b from-blue-100 to-white ">
         <FadeInOnScroll>
-          <div className="h-screen flex items-center mt-5 mx-auto max-w-6xl text-center">
+          <div className="h-screen flex items-center mx-auto max-w-6xl text-center">
             <div className="container">
               <p className="mb-5 text-h6 font-bold capitalize tracking-wide text-primary">
                 {aboutUsData.eyebrow}
