@@ -18,16 +18,21 @@ const DashboardCarousel = ({
   alt: string;
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const safeImages = Array.isArray(images) ? images : [];
 
   useEffect(() => {
+    if (safeImages.length === 0) return;
+
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) =>
-        prevIndex === images.length - 1 ? 0 : prevIndex + 1
+        prevIndex === safeImages.length - 1 ? 0 : prevIndex + 1
       );
     }, 2500);
 
     return () => clearInterval(interval);
-  }, [images.length]);
+  }, [safeImages.length]);
+
+  if (safeImages.length === 0) return null;
 
   return (
     <div className="relative mx-auto mt-12 max-w-4xl overflow-hidden rounded-lg shadow-2xl">
@@ -35,7 +40,7 @@ const DashboardCarousel = ({
         className="flex transition-transform duration-700 ease-in-out"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
-        {images.map((image, index) => (
+        {safeImages.map((image, index) => (
           <div key={index} className="relative h-[600px] w-full flex-shrink-0">
             <Image
               src={image.url}
@@ -48,13 +53,14 @@ const DashboardCarousel = ({
         ))}
       </div>
       <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 space-x-2">
-        {images.map((_, index) => (
+        {safeImages.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}
             aria-label={`Go to slide ${index + 1}`}
-            className={`h-3 w-3 rounded-full transition-colors ${currentIndex === index ? "bg-primary" : "bg-white/50"
-              }`}
+            className={`h-3 w-3 rounded-full transition-colors ${
+              currentIndex === index ? "bg-primary" : "bg-white/50"
+            }`}
           />
         ))}
       </div>
@@ -75,7 +81,7 @@ export default function IndependentPharmacyPage() {
     faqSection,
   } = independentPharmacyData;
   const [activeTab, setActiveTab] = useState<number | null>(
-    featureSection.tabs[0].id
+    featureSection.tabs[0]?.id || null
   );
   const current = featureSection.tabs.find((tab) => tab.id === activeTab);
 
@@ -92,15 +98,16 @@ export default function IndependentPharmacyPage() {
             {heroSection.mainDescription}
           </p>
           <div className="flex justify-center gap-4">
-            {heroSection.ctaButtons.map((button, index) => (
-              <Button
-                size="md"
-                key={button.title}
-                variant={index === 0 ? "primary" : "secondary"}
-              >
-                {button.title}
-              </Button>
-            ))}
+            {Array.isArray(heroSection.ctaButtons) &&
+              heroSection.ctaButtons.map((button, index) => (
+                <Button
+                  size="md"
+                  key={button.title}
+                  variant={index === 0 ? "primary" : "secondary"}
+                >
+                  {button.title}
+                </Button>
+              ))}
           </div>
           <div className="relative mx-auto mt-12 max-w-4xl">
             <Image
@@ -118,18 +125,19 @@ export default function IndependentPharmacyPage() {
       {/* 4 hero-section */}
       <section className="bg-gradient-to-b from-blue-100 to-white py-15">
         <div className="container mx-auto grid grid-cols-1 gap-8 px-4 text-center md:grid-cols-2 lg:grid-cols-4">
-          {featureSection.gridItems.map((item, index) => (
-            <div
-              key={index}
-              className="group relative rounded-xl bg-white p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/40 "
-            >
-              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                <div className="h-6 w-6 rounded bg-primary"></div>
+          {Array.isArray(featureSection.gridItems) &&
+            featureSection.gridItems.map((item, index) => (
+              <div
+                key={index}
+                className="group relative rounded-xl bg-white p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/40 "
+              >
+                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+                  <div className="h-6 w-6 rounded bg-primary"></div>
+                </div>
+                <h3 className="font-bold mb-3 text-black">{item.title}</h3>
+                <p className=" text-sub1">{item.description}</p>
               </div>
-              <h3 className="font-bold mb-3 text-black">{item.title}</h3>
-              <p className=" text-sub1">{item.description}</p>
-            </div>
-          ))}
+            ))}
         </div>
       </section>
 
@@ -142,18 +150,20 @@ export default function IndependentPharmacyPage() {
           {featureSection.description}
         </p>
         <div className="flex mx-auto max-w-3xl flex-wrap justify-center gap-6 ">
-          {featureSection.tabs.map((tab, idx) => (
-            <button
-              key={idx}
-              onClick={() => setActiveTab(tab.id)}
-              className={`rounded-full border px-5 py-2 text-sub2 font-medium transition-colors ${activeTab === tab.id
-                ? "bg-primary text-white"
-                : "border-primary bg-white text-black hover:bg-primary/10"
+          {Array.isArray(featureSection.tabs) &&
+            featureSection.tabs.map((tab, idx) => (
+              <button
+                key={idx}
+                onClick={() => setActiveTab(tab.id)}
+                className={`rounded-full border px-5 py-2 text-sub2 font-medium transition-colors ${
+                  activeTab === tab.id
+                    ? "bg-primary text-white"
+                    : "border-primary bg-white text-black hover:bg-primary/10"
                 }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+              >
+                {tab.label}
+              </button>
+            ))}
         </div>
         <div className="mt-12 grid grid-cols-1 gap-12 md:grid-cols-2">
           <div className="relative">
@@ -204,36 +214,38 @@ export default function IndependentPharmacyPage() {
             </p>
           </div>
           <div className="space-y-20">
-            {featureBenefitsSection.contents.map((feature, index) => {
-              const isEven = index % 2 === 1;
-              return (
-                <div
-                  key={index}
-                  className={`grid grid-cols-1 items-center gap-12 md:grid-cols-2`}
-                >
+            {Array.isArray(featureBenefitsSection.contents) &&
+              featureBenefitsSection.contents.map((feature, index) => {
+                const isEven = index % 2 === 1;
+                return (
                   <div
-                    className={`relative aspect-video rounded-lg bg-white/10 p-2 ${isEven ? "md:order-2" : "md:order-1"
-                      }`}
+                    key={index}
+                    className={`grid grid-cols-1 items-center gap-12 md:grid-cols-2`}
                   >
-                    <Image
-                      src={feature.image.url}
-                      alt={feature.alt}
-                      layout="fill"
-                      objectFit="contain"
-                    />
+                    <div
+                      className={`relative aspect-video rounded-lg bg-white/10 p-2 ${
+                        isEven ? "md:order-2" : "md:order-1"
+                      }`}
+                    >
+                      <Image
+                        src={feature.image.url}
+                        alt={feature.alt}
+                        layout="fill"
+                        objectFit="contain"
+                      />
+                    </div>
+                    <div className={`${isEven ? "md:order-1" : "md:order-2"}`}>
+                      <h3 className="text-h6 font-bold text-white mb-2">
+                        {feature.title}
+                      </h3>
+                      <RichTextRenderer
+                        content={feature.description}
+                        className="text-sub2 line-clamp-4 text-white"
+                      />
+                    </div>
                   </div>
-                  <div className={`${isEven ? "md:order-1" : "md:order-2"}`}>
-                    <h3 className="text-h6 font-bold text-white mb-2">
-                      {feature.title}
-                    </h3>
-                    <RichTextRenderer
-                      content={feature.description}
-                      className="text-sub2 line-clamp-4 text-white"
-                    />
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
           </div>
           <div className="flex items-center mt-15 justify-center ">
             <Button
@@ -269,8 +281,7 @@ export default function IndependentPharmacyPage() {
           )}
       </section>
 
-      <section className="bg-gray-50 ">
-        <div className="container mx-auto py-20">
+      <section className="container mx-auto py-20 ">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="mb-5 text-black">{solutionSection.title}</h2>
             <p className="text-h6 text-colordescription mb-15">
@@ -278,35 +289,35 @@ export default function IndependentPharmacyPage() {
             </p>
           </div>
           <div className=" px-40 grid grid-cols-1 gap-5  md:grid-cols-2">
-            {solutionSection.solutionCard?.map((card, index) => (
-              <div
-                key={index}
-                className="rounded-xl bg-white p-8 text-center shadow-lg max-w-lg mx-auto transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/40"
-              >
-                <h3 className=" text-h4 font-bold text-black mb-4">
-                  {card.title}
-                </h3>
-                <p className="text-h6 mb-4 mx-auto max-w-lg">
-                  {card.description}
-                </p>
-
-                <Image
-                  src={card.image?.url || "/features-dashboard1.png"}
-                  alt={card.image?.alt || card.title}
-                  width={450}
-                  height={450}
-                  className="mx-auto"
-                />
-                <a
-                  href={card.ctaButton.link || "#"}
-                  className="mt-5 inline-flex items-center gap-2 px-4 py-2 text-sub1 font-bold text-primary"
+            {Array.isArray(solutionSection.solutionCard) &&
+              solutionSection.solutionCard.map((card, index) => (
+                <div
+                  key={index}
+                  className="rounded-xl bg-white p-8 text-center shadow-lg max-w-lg mx-auto transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/40"
                 >
-                  {card.ctaButton.title}
-                  <FiArrowRight className="h-5 w-5" />
-                </a>
-              </div>
-            ))}
-          </div>
+                  <h3 className=" text-h4 font-bold text-black mb-4">
+                    {card.title}
+                  </h3>
+                  <p className="text-h6 mb-4 mx-auto max-w-lg">
+                    {card.description}
+                  </p>
+
+                  <Image
+                    src={card.image?.url || "/features-dashboard1.png"}
+                    alt={card.image?.alt || card.title}
+                    width={450}
+                    height={450}
+                    className="mx-auto"
+                  />
+                  <a
+                    href={card.ctaButton.link || "#"}
+                    className="mt-5 inline-flex items-center gap-2 px-4 py-2 text-sub1 font-bold text-primary"
+                  >
+                    {card.ctaButton.title}
+                    <FiArrowRight className="h-5 w-5" />
+                  </a>
+                </div>
+              ))}
         </div>
       </section>
 
@@ -318,7 +329,7 @@ export default function IndependentPharmacyPage() {
           </p>
         </div>
 
-        <div className=" grid grid-cols-1 md:grid-cols-2 gap-12 h-[400px]">
+        <div className=" grid grid-cols-1 md:grid-cols-2 gap-12 ">
           {/* Ảnh bên trái */}
           <div className="relative aspect-video rounded-lg bg-white p-2 shadow-xl">
             <Image
@@ -330,45 +341,44 @@ export default function IndependentPharmacyPage() {
           </div>
 
           {/* Khung Accordion bên phải */}
-          <div className="relative w-full max-w-[800px] mx-auto h-full">
-            <div className="absolute inset-0  overflow-hidden flex flex-col items-center justify-center space-y-3 p-2">
-              {commitmentSection.contents.map((item, index) => (
-                <AccordionItem
-                  key={index}
-                  title={item.title}
-                  description={item.description}
-                  isOpen={openAccordion === index}
-                  onClick={() =>
-                    setOpenAccordion(openAccordion === index ? -1 : index)
-                  }
-                  buttonClassName="bg-primary/9 w-full"
-                />
-              ))}
+          <div className="relative w-full max-w-[800px] mx-auto flex flex-col items-center justify-center">
+              {Array.isArray(commitmentSection.contents) &&
+                commitmentSection.contents.map((item, index) => (
+                  <AccordionItem
+                    key={index}
+                    title={item.title}
+                    description={item.description}
+                    isOpen={openAccordion === index}
+                    onClick={() =>
+                      setOpenAccordion(openAccordion === index ? -1 : index)
+                    }
+                    buttonClassName="bg-primary/9 w-full"
+                  />
+                ))}
             </div>
-          </div>
         </div>
       </section>
 
       <ReviewCarousel sectionData={testimonialSection} />
+
       {/* Final CTA Section */}
       <section className=" container mx-auto py-10 text-center">
         <div className="rounded-2xl bg-ink p-5">
-          <h2 className="mt-10 font-bold text-white mb-5">{ctaSection.title}</h2>
+          <h2 className="mt-10 font-bold text-white mb-5">
+            {ctaSection.title}
+          </h2>
           <p className="mx-auto text-h6 max-w-4xl text-white">
             {ctaSection.description}
           </p>
-          <button className="mt-12 mb-10 rounded-full bg-primary px-6 py-3 font-semibold text-white hover:opacity-90">
+          <Button size="md" href={ctaSection.ctaButton.link || undefined} className="mt-12 mb-10">
             {ctaSection.ctaButton.title}
-          </button>
+          </Button>
         </div>
       </section>
 
       {/* FAQ Section */}
       <section className="container mx-auto max-w-4xl px-4 py-10">
-        <FaqSection
-          title={faqSection.title}
-          items={faqSection.faqItems}
-        />
+        <FaqSection title={faqSection.title} items={faqSection.faqItems} />
       </section>
     </div>
   );

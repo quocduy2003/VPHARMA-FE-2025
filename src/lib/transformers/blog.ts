@@ -35,6 +35,7 @@ export function transformBlogForHomePage(response: any): BlogData {
           url: createImageUrl(post.coverImage.url),
           alt: post.title || "Blog Image",
         },
+        slug: post.slug,
       })) || [],
   };
 }

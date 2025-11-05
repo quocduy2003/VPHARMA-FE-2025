@@ -34,6 +34,7 @@ export default function FeatureCardTest({
   theme = "light",
   animation = false,
 }: ChainFeatureCardProps) {
+  const safeFeatures = Array.isArray(features) ? features : [];
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [progress, setProgress] = useState<number>(0);
   const [hasPlayed, setHasPlayed] = useState(false);
@@ -71,7 +72,7 @@ export default function FeatureCardTest({
       timerRef.current = setTimeout(() => {
         clearInterval(progressRef.current);
         setProgress(0);
-        setActiveIndex((prev) => (prev + 1) % features.length);
+        setActiveIndex((prev) => (prev + 1) % safeFeatures.length);
       }, DURATION);
     }
 
@@ -81,7 +82,7 @@ export default function FeatureCardTest({
       clearInterval(progressRef.current);
     };
     // Thêm isPaused vào dependency array
-  }, [activeIndex, features.length, animation, hasPlayed, isPaused]);
+  }, [activeIndex, safeFeatures.length, animation, hasPlayed, isPaused]);
 
   // Thêm effect dọn dẹp riêng cho resumeTimer khi unmount
   useEffect(() => {
@@ -122,20 +123,25 @@ export default function FeatureCardTest({
     <FiDatabase key="4" className="h-5 w-5" />,
   ];
 
+  // Return early if no features - AFTER all hooks
+  if (safeFeatures.length === 0) {
+    return null;
+  }
+
   return (
-    <div ref={sectionRef} className={`grid items-center lg:grid-cols-2 `} >
+    <div ref={sectionRef} className={`grid items-center gap-8 lg:grid-cols-2 `} >
       <div
         className={`${isLeft ? "lg:order-2" : "lg:order-1"
           } flex justify-center relative`}
       >
-        <div className="relative w-full max-w-[650px] h-150 rounded-2xl overflow-hidden shadow-lg">
-          {features.map((item, idx) => (
+        <div className="relative w-full max-w-[600px] h-[550px] rounded-2xl overflow-hidden shadow-lg">
+          {safeFeatures.map((item, idx) => (
             <Image
               key={idx}
               src={item.image}
               alt={item.title}
-              width={640}
-              height={420}
+              width={600}
+              height={550}
               className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
                                 w-full h-full rounded-xl object-cover transition-opacity duration-500
                                 ${activeIndex === idx
@@ -153,7 +159,7 @@ export default function FeatureCardTest({
           className="relative flex flex-col ml-[36px] "
           onMouseLeave={handleMouseLeave}
         >
-          {features.map((item, index) => (
+          {safeFeatures.map((item, index) => (
             <li
               key={index}
               className="relative flex "
@@ -180,7 +186,7 @@ export default function FeatureCardTest({
                 </span>
 
                 {/* Timeline segment (nằm ngay dưới icon) */}
-                {features.length > 1 && index < features.length - 1 && (
+                {safeFeatures.length > 1 && index < safeFeatures.length - 1 && (
                   <div
                     className="absolute left-1/2 top-[36px] -translate-x-1/2 z-0 h-full"
                     style={{

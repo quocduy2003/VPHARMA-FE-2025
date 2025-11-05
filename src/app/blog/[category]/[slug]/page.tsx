@@ -45,10 +45,10 @@ export default function BlogDetailPage() {
     }
 
     return (
-        <div className="bg-white py-20">
+        <div className="bg-white">
             <div className="container mx-auto px-4">
                 {/* Breadcrumb */}
-                <div className="text-body2 text-colordescription font-bold mb-4">
+                <div className="text-body2 text-colordescription font-bold mb-6">
                     <Link href="/blog/blog-home" className="hover:text-primary">
                         Blog
                     </Link>
@@ -59,7 +59,7 @@ export default function BlogDetailPage() {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-15">
                     {/* Main Content */}
                     <article className="lg:col-span-9">
-                        <h1 className="text-h2 font-bold text-black mb-3">{blog.title}</h1>
+                        <h1 className="text-h2 font-bold text-black mb-6">{blog.title}</h1>
                         <p className="text-body2 mb-6">
                             Ngày cập nhật:{" "}
                             {blog.createdAt

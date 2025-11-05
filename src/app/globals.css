@@ -188,8 +188,7 @@
   font-family: system-ui, sans-serif;
   line-height: 1.8;
   color: #1f2937; /* text-gray-800 */
-  max-width: 768px;
-  margin: 0 auto;
+
 }
 
 .rich-text h1,
@@ -293,5 +292,37 @@
 .rich-text li {
   margin-bottom: 0.5rem;
 }
+ @media (max-width: theme("screens.md")) {
+    .rich-text {
+      max-width: 100%;
+      padding-inline: 1rem;
+    }
+
+    .rich-text figure.image.image-style-align-right,
+    .rich-text figure.image.image-style-align-left {
+      float: none !important;
+      margin: 1rem auto !important;
+      display: block;
+      text-align: center;
+    }
+
+    .rich-text ul,
+    .rich-text ol {
+      margin-left: 1rem;
+      padding-left: 1rem;
+    }
+  }
+
+  @media (max-width: theme("screens.sm")) {
+    .rich-text h1,
+    .rich-text h2,
+    .rich-text h3 {
+      margin-block: 1.5rem 0.75rem;
+    }
+
+    .rich-text blockquote {
+      padding-left: 0.75rem;
+    }
+  }
 
 }

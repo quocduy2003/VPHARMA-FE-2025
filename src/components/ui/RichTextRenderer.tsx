@@ -43,7 +43,7 @@ const renderSingleChild = (child: RichTextChild, key: React.Key): React.ReactNod
 };
 
 const renderChildren = (children: RichTextChild[]): React.ReactNode =>
-  children.map((child, index) => renderSingleChild(child, index));
+  Array.isArray(children) ? children.map((child, index) => renderSingleChild(child, index)) : null;
 
 interface RichTextRendererProps {
   content: RichTextBlock[];
@@ -78,7 +78,7 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
 
     return (
       <ListTag key={index} className={`${listClassName} mb-4 pl-5 ${className}`}>
-        {block.children.map((listItem, i) => (
+        {Array.isArray(block.children) && block.children.map((listItem, i) => (
           <li key={i}>{renderChildren((listItem as RichTextListItem).children)}</li>
         ))}
       </ListTag>
@@ -99,13 +99,13 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
       key={index}
       className="bg-gray-900  text-sm p-4 rounded-md overflow-x-auto my-4"
     >
-      <code>{block.children.map((c) => (c as RichTextNode).text).join('')}</code>
+      <code>{Array.isArray(block.children) ? block.children.map((c) => (c as RichTextNode).text).join('') : ''}</code>
     </pre>
   );
 
   return (
     <div className={`max-w-none ${className}`}>
-      {content.map((block, index) => {
+      {Array.isArray(content) && content.map((block, index) => {
         switch (block.type) {
           case 'heading':
             return renderHeading(block, index);

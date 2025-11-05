@@ -20,16 +20,21 @@ const DashboardCarousel = ({
   alt: string;
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const safeImages = Array.isArray(images) ? images : [];
 
   useEffect(() => {
+    if (safeImages.length === 0) return;
+
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) =>
-        prevIndex === images.length - 1 ? 0 : prevIndex + 1
+        prevIndex === safeImages.length - 1 ? 0 : prevIndex + 1
       );
     }, 3000); // Thay đổi slide mỗi 3 giây
 
     return () => clearInterval(interval); // Dọn dẹp interval khi component unmount
-  }, [images.length]);
+  }, [safeImages.length]);
+
+  if (safeImages.length === 0) return null;
 
   return (
     <div className="relative mx-auto mt-12 max-w-4xl overflow-hidden rounded-lg shadow-2xl">
@@ -37,7 +42,7 @@ const DashboardCarousel = ({
         className="flex transition-transform duration-700 ease-in-out"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
-        {images.map((image, index) => (
+        {safeImages.map((image, index) => (
           <div key={index} className="relative h-[600px] w-full flex-shrink-0">
             <Image
               src={image.url}
@@ -50,7 +55,7 @@ const DashboardCarousel = ({
         ))}
       </div>
       <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 space-x-2">
-        {images.map((_, index) => (
+        {safeImages.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}
@@ -78,9 +83,8 @@ export default function IndependentPharmacyPage() {
     ctaSection,
     faqSection
   } = independentPharmacyData;
-  const [activeTab, setActiveTab] = useState<number | null>(featureSection.tabs[0].id);
+  const [activeTab, setActiveTab] = useState<number | null>(featureSection.tabs[0]?.id || null);
   const current = featureSection.tabs.find((tab) => tab.id === activeTab);
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [openAccordion, setOpenAccordion] = useState(0);
   console.log("Testimonial Section Data:", testimonialSection);
 
@@ -97,7 +101,7 @@ export default function IndependentPharmacyPage() {
             {heroSection.mainDescription}
           </p>
           <div className="mt-8 flex justify-center gap-4">
-            {heroSection.ctaButtons.map((button, index) => (
+            {Array.isArray(heroSection.ctaButtons) && heroSection.ctaButtons.map((button, index) => (
               <Button
                 key={button.title}
                 variant={index === 0 ? 'primary' : 'secondary'}
@@ -121,7 +125,7 @@ export default function IndependentPharmacyPage() {
 
       {/* 4 hero-section */}
       <section className="container mx-auto grid grid-cols-1 gap-8 px-4 py-20 md:grid-cols-2 lg:grid-cols-4">
-        {featureSection.gridItems.map((item, index) => (
+        {Array.isArray(featureSection.gridItems) && featureSection.gridItems.map((item, index) => (
           <div
             key={index}
             className="rounded-xl bg-white p-6 text-center shadow-lg"
@@ -144,7 +148,7 @@ export default function IndependentPharmacyPage() {
           {featureSection.description}
         </p>
         <div className="mt-10 flex flex-wrap justify-center gap-6">
-          {featureSection.tabs.map((tab, idx) => (
+          {Array.isArray(featureSection.tabs) && featureSection.tabs.map((tab, idx) => (
             <button
               key={idx}
               onClick={() => setActiveTab(tab.id)}
@@ -201,7 +205,7 @@ export default function IndependentPharmacyPage() {
 
           {/* Feature 1*/}
           <div className="mt-16 space-y-20">
-            {featureBenefitsSection.contents.map((feature, index) => {
+            {Array.isArray(featureBenefitsSection.contents) && featureBenefitsSection.contents.map((feature, index) => {
               const isEven = index % 2 === 1;
               return (
                 <div key={index} className={`grid grid-cols-1 items-center gap-12 md:grid-cols-2`}>
@@ -310,7 +314,7 @@ export default function IndependentPharmacyPage() {
             </p>
           </div>
           <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-2">
-            {solutionSection.solutionCard?.map((card, index) => (
+            {Array.isArray(solutionSection.solutionCard) && solutionSection.solutionCard.map((card, index) => (
               <div
                 key={index}
                 className="rounded-xl bg-white p-8 text-center shadow-lg"
@@ -366,7 +370,7 @@ export default function IndependentPharmacyPage() {
           <div className="relative w-full max-w-[500px] mx-auto h-full">
             {/* Nội dung Accordion cố định container, scroll khi dài */}
             <div className="absolute inset-0 overflow-hidden flex flex-col items-center justify-start space-y-4 p-2">
-              {commitmentSection.contents.map((item, index) => (
+              {Array.isArray(commitmentSection.contents) && commitmentSection.contents.map((item, index) => (
                 <AccordionItem
                   key={index}
                   title={item.title}

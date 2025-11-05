@@ -23,10 +23,13 @@ export default function PharmacyCarousel({ cards }: PharmacyCarouselProps) {
   const transitionDuration = 700;
   const autoplayDelay = 2500; // 3 giây
 
+  // --- Kiểm tra và khởi tạo cards ---
+  const safeCards = Array.isArray(cards) ? cards : [];
+
   // --- Nhân bản cards ---
-  const clonedCardsStart = cards.slice(0, cardsPerView);
-  const clonedCardsEnd = cards.slice(-cardsPerView);
-  const displayCards = [...clonedCardsEnd, ...cards, ...clonedCardsStart];
+  const clonedCardsStart = safeCards.slice(0, cardsPerView);
+  const clonedCardsEnd = safeCards.slice(-cardsPerView);
+  const displayCards = [...clonedCardsEnd, ...safeCards, ...clonedCardsStart];
 
   // --- Cập nhật State ---
   const [currentIndex, setCurrentIndex] = useState(cardsPerView);
@@ -43,7 +46,7 @@ export default function PharmacyCarousel({ cards }: PharmacyCarouselProps) {
     const newIndex = currentIndex + 1;
     setCurrentIndex(newIndex);
 
-    if (newIndex === cardsPerView + cards.length) {
+    if (newIndex === cardsPerView + safeCards.length) {
       setTimeout(() => {
         setIsJumping(true);
         setCurrentIndex(cardsPerView);
@@ -54,7 +57,7 @@ export default function PharmacyCarousel({ cards }: PharmacyCarouselProps) {
   }, [
     isAnimating,
     currentIndex,
-    cards.length,
+    safeCards.length,
     cardsPerView,
     transitionDuration,
   ]);
@@ -69,7 +72,7 @@ export default function PharmacyCarousel({ cards }: PharmacyCarouselProps) {
     if (newIndex === cardsPerView - 1) {
       setTimeout(() => {
         setIsJumping(true);
-        setCurrentIndex(cardsPerView + cards.length - 1);
+        setCurrentIndex(cardsPerView + safeCards.length - 1);
       }, transitionDuration);
     }
 
@@ -77,7 +80,7 @@ export default function PharmacyCarousel({ cards }: PharmacyCarouselProps) {
   }, [
     isAnimating,
     currentIndex,
-    cards.length,
+    safeCards.length,
     cardsPerView,
     transitionDuration,
   ]);
@@ -106,6 +109,11 @@ export default function PharmacyCarousel({ cards }: PharmacyCarouselProps) {
       clearInterval(timer);
     };
   }, [isHovering, isAnimating, handleNextPharmacy, autoplayDelay]);
+
+  // Return early if no cards - AFTER all hooks
+  if (safeCards.length === 0) {
+    return null;
+  }
 
   return (
     <div className="relative flex flex-col items-center justify-center">

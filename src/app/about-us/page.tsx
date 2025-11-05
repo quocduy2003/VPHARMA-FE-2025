@@ -72,7 +72,7 @@ const ValuesSection = ({
               height={150}
               className="mx-auto mb-6 rounded-lg object-contain"
             />
-            <h3 className="mb-4 text-sub1 font-bold">{card.title}</h3>
+            <h3 className="mb-5 text-sub1 text-black font-bold">{card.title}</h3>
             <p className="text-sub2 max-w-xs mx-auto">{card.description}</p>
           </div>
         ))}
@@ -117,7 +117,7 @@ const FounderSection = ({
     return () => {
       stopAutoplay();
     };
-  }, [startAutoplay]); // Chạy lại nếu các hàm này thay đổi
+  }, [startAutoplay, stopAutoplay]); // Chạy lại nếu các hàm này thay đổi
 
   // ... (phần code fallback khi không có founder giữ nguyên) ...
   if (totalMembers === 0) {

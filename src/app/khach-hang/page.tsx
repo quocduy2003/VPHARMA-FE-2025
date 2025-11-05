@@ -8,7 +8,7 @@ import CTASection from "@/components/CTA";
 import { customerData, getBlogsByCategorySlug } from "@/lib/api";
 import { Card, CustBlogPost } from "@/types";
 import { transformCustomerBlogData } from "@/lib/transformers/customer";
-import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
+import { FiArrowRight } from "react-icons/fi";
 import { Button } from "@/components/ui/CTAButton";
 
 function ChallengeStackedCards({ challengeCards }: { challengeCards: Card[] }) {
