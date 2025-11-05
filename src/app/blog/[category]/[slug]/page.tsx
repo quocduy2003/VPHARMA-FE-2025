@@ -48,13 +48,28 @@ export default function BlogDetailPage() {
         <div className="bg-white">
             <div className="container mx-auto px-4">
                 {/* Breadcrumb */}
-                <div className="text-body2 text-colordescription font-bold mb-6">
-                    <Link href="/blog/blog-home" className="hover:text-primary">
-                        Blog
-                    </Link>
-                    <span className="mx-2">&gt;</span>
-                    <span>{blog.title}</span>
+                <div className="container mx-auto px-4">
+                    {/* Breadcrumb */}
+                    <div className="text-body2 text-colordescription font-bold mb-6">
+                        <Link href="/blog/blog-home" className="hover:text-primary">
+                            Blog
+                        </Link>
+
+                        <span className="mx-2">&gt;</span>
+
+                        <Link
+                            href={`/blog/blog-home?category=${blog.blog_category.slug}`}
+                            className="hover:text-primary"
+                        >
+                            {blog.blog_category.name}
+                        </Link>
+
+                        <span className="mx-2">&gt;</span>
+
+                        <span>{blog.title}</span>
+                    </div>
                 </div>
+
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-15">
                     {/* Main Content */}
