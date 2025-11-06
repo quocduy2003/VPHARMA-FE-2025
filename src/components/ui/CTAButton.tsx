@@ -15,9 +15,10 @@ const buttonVariants = {
 
 // ----- Các kích thước -----
 const buttonSizes = {
+  ssm: "px-4 py-2 text-sub2 font-bold",
   sm: "px-4 py-2 text-sub1 font-bold",
   md: "px-6 py-3 text-sub2 font-bold",
-  lg: "px-8 py-4 text-lg font-bold",
+  lg: "px-6 py-3 text-body2 font-bold",
 };
 
 // ----- Props cho Button -----

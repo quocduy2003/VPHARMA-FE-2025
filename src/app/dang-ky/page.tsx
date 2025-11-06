@@ -1,6 +1,6 @@
 "use client";
 
-export default function ClinicWithPharmacyPage() {
+export default function Register() {
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center bg-white px-4">
       <h1 className="text-center text-3xl font-bold text-gray-800">
