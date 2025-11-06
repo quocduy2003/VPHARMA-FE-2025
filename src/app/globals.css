@@ -76,6 +76,7 @@
     @apply font-[var(--font-roboto)] text-[var(--color-text)] bg-[var(--color-white)];
   }
    html {
+    scroll-behavior: smooth;
     scroll-padding-top: 100px;
 
     @media (min-width: theme("screens.md")) {
@@ -183,6 +184,7 @@
 }
 
 @layer utilities {
+  
 /* ===== CKEditor Styles Fix ===== */
 .rich-text {
   font-family: system-ui, sans-serif;
@@ -197,6 +199,7 @@
   font-weight: 700;
   line-height: 1.4;
   margin: 2rem 0 1rem;
+
 }
 
 .rich-text h1 {

@@ -18,7 +18,48 @@ export default function BlogDetailPage() {
     const [blog, setBlog] = useState<BlogPost | null>(null);
     const [safeContent, setSafeContent] = useState<string>("");
     const [toc, setToc] = useState<TocItem[]>([]);
+    const [activeId, setActiveId] = useState<string>("");
+
     const { slug } = params;
+    const HEADER_OFFSET = 152; // hoặc để tuỳ chỉnh
+
+
+    useEffect(() => {
+        const handleScroll = () => {
+            let active = toc[0]?.id;
+
+            toc.forEach(({ id }) => {
+                const el = document.getElementById(id);
+                if (!el) return;
+
+                const rect = el.getBoundingClientRect();
+
+                // Nếu heading đã đi qua top (trừ header)
+                if (rect.top <= HEADER_OFFSET + 10) {
+                    active = id;
+                }
+            });
+
+            setActiveId(active);
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        handleScroll();
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [toc]);
+
+
+    const handleTocClick = (id: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+        const el = document.getElementById(id);
+        if (!el) return;
+
+        const y = el.offsetTop - HEADER_OFFSET;
+        console.log("Scrolling toaaaaaaaaaaaaaaaa:", y);
+        window.scrollTo({ top: y, behavior: "smooth" });
+    };
+
+
     useEffect(() => {
         const fetchData = async () => {
             const data = await getBlogPostBySlug(slug as string);
@@ -43,6 +84,7 @@ export default function BlogDetailPage() {
             </div>
         );
     }
+
 
     return (
         <div className="bg-white">
@@ -103,7 +145,7 @@ export default function BlogDetailPage() {
 
                     {/* Sidebar */}
                     <aside className="lg:col-span-3">
-                        <div className="sticky top-38 space-y-6 max-w-sm">
+                        <div className="sticky top-38 space-y-6 mb-4">
                             {/* Khối chia sẻ */}
                             <div className="rounded-lg border p-4">
                                 <h3 className="text-sub1 font-bold mb-3">Chia sẻ bài viết</h3>
@@ -126,14 +168,18 @@ export default function BlogDetailPage() {
                                     <h3 className="text-sub1 font-bold mb-3 flex items-center gap-2">
                                         <FiList /> Nội dung chính
                                     </h3>
-                                    <ul className="space-y-2 max-h-[400px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+                                    <ul className="space-y-2">
                                         {toc.map((item) => (
                                             <li
                                                 key={item.id}
-                                                className={`cursor-pointer transition-colors hover:text-primary ${item.level === 3 ? "pl-4 text-body2" : "text-sub2 font-medium"
-                                                    }`}
+                                                className={`cursor-pointer transition-colors 
+    ${activeId === item.id ? "text-primary font-bold" : "text-colordescription"}
+    ${item.level === 3 ? "pl-4 text-body2" : "text-sub2 font-medium"}
+  `}
                                             >
-                                                <a href={`#${item.id}`}>{item.text}</a>
+                                                <a onClick={handleTocClick(item.id)}>
+                                                    {item.text}
+                                                </a>
                                             </li>
                                         ))}
                                     </ul>
