@@ -209,7 +209,7 @@ export default function KhachHang() {
             </div>
             <BlogSection slug={custBlogSection.blog_category.slug} />
             <div className="flex items-center justify-center ">
-              <Button size="md" href="/blog/blog-home">
+              <Button size="md" href={`/blog/blog-home?category=${custBlogSection.blog_category.slug}`}>
                 {custBlogSection.buttonTitle}
               </Button>
             </div>

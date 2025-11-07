@@ -23,4 +23,7 @@ export * from "./pricing";
 export * from "./contact";
 
 // Header Types
-export * from "./Header";
+export * from "./header";
+
+// Footer Types
+export * from "./footer";

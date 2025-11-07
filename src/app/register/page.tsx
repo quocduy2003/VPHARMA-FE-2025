@@ -9,7 +9,7 @@ import {
   FiEyeOff,
   FiX,
 } from "react-icons/fi";
-import { Button } from "@/components/ui/CTAButton";
+
 
 export default function Register() {
   // --- State cho các trường input ---

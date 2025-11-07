@@ -28,67 +28,6 @@ import { Listbox, Transition } from "@headlessui/react";
 
 import { contactData } from "@/lib/api/contact";
 
-// Dữ liệu cho phần mềm hỗ trợ 
-// const supportSoftwareData = [
-//   {
-//     name: "TeamViewer",
-//     description:
-//       "Giải pháp điều khiển máy tính từ xa phổ biến, an toàn và bảo mật.",
-//     link: "https://www.teamviewer.com/",
-//     logo: "/logoTeamviewer.png",
-//   },
-//   {
-//     name: "UltraViewer",
-//     description:
-//       "Phần mềm điều khiển từ xa được thiết kế gọn nhẹ và dễ sử dụng.",
-//     link: "https://ultraviewer.net/",
-//     logo: "/logoUltraview.png",
-//   },
-//   {
-//     name: "AnyDesk",
-//     description:
-//       "Phần mềm truy cập từ xa nhanh, nhẹ và an toàn cho mọi nền tảng.",
-//     link: "https://anydesk.com/",
-//     logo: "/logoAnyDesk.png",
-//   },
-// ];
-
-// dữ liệu FAQ
-// const hoTroFaqData: Faq[] = [
-//   {
-//     question: "Phần mềm V-Pharma có dễ sử dụng không?",
-//     answer:
-//       "Tuyệt đối! V-Pharma được thiết kế với giao diện thân thiện, trực quan, phù hợp với cả những người không rành về công nghệ. Đội ngũ của chúng tôi sẽ đào tạo 1-1 cho đến khi bạn và nhân viên thành thạo.",
-//   },
-//   {
-//     question: "Chi phí sử dụng phần mềm là bao nhiêu?",
-//     answer:
-//       "Chi phí rất hợp lý và linh hoạt theo quy mô của nhà thuốc. Vui lòng liên hệ để nhận báo giá chi tiết.",
-//   },
-//   {
-//     question: "Tôi có cần cài đặt phần mềm phức tạp không?",
-//     answer:
-//       "Không, V-Pharma là giải pháp dựa trên nền tảng web, bạn có thể truy cập từ bất kỳ đâu mà không cần cài đặt phức tạp.",
-//   },
-//   {
-//     question: "Dữ liệu của tôi có được bảo mật không?",
-//     answer:
-//       "An toàn dữ liệu là ưu tiên hàng đầu của chúng tôi. Hệ thống sử dụng các biện pháp bảo mật tiên tiến và sao lưu dữ liệu thường xuyên.",
-//   },
-//   {
-//     question: "Tôi có cần cài đặt phần mềm phức tạp không?",
-//     answer:
-//       "Không, V-Pharma là giải pháp dựa trên nền tảng web, bạn có thể truy cập từ bất kỳ đâu mà không cần cài đặt phức tạp.",
-//   },
-//   {
-//     question: "Dữ liệu của tôi có được bảo mật không?",
-//     answer:
-//       "An toàn dữ liệu là ưu tiên hàng đầu của chúng tôi. Hệ thống sử dụng các biện pháp bảo mật tiên tiến và sao lưu dữ liệu thường xuyên.",
-//   },
-
-// ];
-
-// Dữ liệu cho Listbox "Chủ đề chính"
 const subjectOptions = [
   { id: "tuvan", name: "Tư vấn sản phẩm" },
   { id: "hotro", name: "Hỗ trợ kỹ thuật" },
@@ -127,9 +66,6 @@ export default function HoTro() {
     linkedin: FiLinkedin,
     twitter: FiTwitter,
     github: FiGithub,
-    phone: FiPhone,
-    email: FiMail,
-    address: FiMapPin,
   };
 
   // --- Logic Validation (onBlur) ---
@@ -574,7 +510,8 @@ export default function HoTro() {
                   const Icon = socialIcons[social.platform?.toLowerCase()];
                   return (
                     Icon && (
-                      <a
+                      <Link
+                        aria-label={social.platform}
                         key={index}
                         href={social.url ?? "#"}
                         target="_blank"
@@ -582,7 +519,7 @@ export default function HoTro() {
                         className="text-success hover:text-blue-500 transition-colors"
                       >
                         <Icon size={27} />
-                      </a>
+                      </Link>
                     )
                   );
                 })}

@@ -129,6 +129,7 @@ export function BlogHeader() {
 
           {/* Nút bấm (Icon Search/Close) */}
           <button
+            type="button"
             onClick={() => setIsSearchOpen(!isSearchOpen)} // Toggle
             className="group flex items-center justify-center "
             aria-label={isSearchOpen ? "Đóng tìm kiếm" : "Mở tìm kiếm"}

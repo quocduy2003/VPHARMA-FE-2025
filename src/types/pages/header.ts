@@ -19,3 +19,13 @@ export interface HeaderData {
   menus: HeaderMenuItem[];
   ctaButtons: CtaButton[];
 }
+
+
+export interface HeaderSolutionData {
+  title: string;
+  menus: {
+    id: number;
+    title: string;
+    link: string | null;
+  };
+}
