@@ -46,7 +46,8 @@ export function transformCustomerData(response: any): CustomerData {
       blog_category: {
         name: custBlogSection?.blog_category?.name || "Tin tức",
         slug: custBlogSection?.blog_category?.slug || "tin-tuc",
-      }
+      },
+      buttonTitle: custBlogSection?.buttonTitle || "Xem thêm",
     },
     ctaSection: {
       title:

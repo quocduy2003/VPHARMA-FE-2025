@@ -1,6 +1,6 @@
 import { BlogHeader } from "@/components/layout/BlogHeader";
 import React, { Suspense } from "react";
-import { LoadingSkeleton } from "@/components/animations/BlogLoading";
+
 export default function BlogLayout({
   children,
 }: {
@@ -8,11 +8,11 @@ export default function BlogLayout({
 }) {
   return (
     <div>
-      <Suspense fallback={<LoadingSkeleton />}>
+      <Suspense>
         <BlogHeader />
       </Suspense>
 
-      <Suspense fallback={<LoadingSkeleton />}>
+      <Suspense>
         {children}
       </Suspense>
     </div>

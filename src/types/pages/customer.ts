@@ -35,6 +35,7 @@ interface CustBlogSection {
   title: string;
   description: string;
   blog_category: blog_category;
+  buttonTitle: string;
 }
 
 export interface CustBlogPost {

@@ -146,11 +146,7 @@ function BlogSection({ slug }: { slug: string }) {
             </div>
           ))}
         </div>
-        <div className="flex items-center justify-center ">
-          <Button size="md" href="/blog/blog-home">
-            Xem tất cả bài viết
-          </Button>
-        </div>
+
       </div>
     </section>
   );
@@ -212,6 +208,11 @@ export default function KhachHang() {
               </p>
             </div>
             <BlogSection slug={custBlogSection.blog_category.slug} />
+            <div className="flex items-center justify-center ">
+              <Button size="md" href="/blog/blog-home">
+                {custBlogSection.buttonTitle}
+              </Button>
+            </div>
           </div>
         </section>
       </FadeInOnScroll>
