@@ -8,7 +8,7 @@ export function generateTableOfContents(content: string): TocItem[] {
   if (!content) return [];
 
   const headings: TocItem[] = [];
-  const regex = /<h([2-6])[^>]*id="([^"]+)"[^>]*>(.*?)<\/h\1>/g;
+  const regex = /<h([2-4])[^>]*id="([^"]+)"[^>]*>(.*?)<\/h\1>/g;
   let match;
 
   while ((match = regex.exec(content)) !== null) {

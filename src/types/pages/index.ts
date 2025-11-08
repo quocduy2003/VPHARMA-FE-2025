@@ -21,3 +21,9 @@ export * from "./pricing";
 
 // Contact Page Types
 export * from "./contact";
+
+// Header Types
+export * from "./header";
+
+// Footer Types
+export * from "./footer";
