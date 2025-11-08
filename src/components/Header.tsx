@@ -27,7 +27,6 @@ export function Header() {
   const checkIsActive = (link: { link?: string | null; title: string }, pathname: string) => {
     if (!link.link || link.link === "#") return false;
 
-    // Lấy phần "group" của link cha, ví dụ /giai-phap/tong-quan → /giai-phap
     const basePath = link.link.split("/").slice(0, 2).join("/");
     return pathname === link.link || pathname.startsWith(basePath + "/");
   };
