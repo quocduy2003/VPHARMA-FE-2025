@@ -1,3 +1,4 @@
+"use client";
 
 import Link from 'next/link';
 import { FiYoutube, FiPhone, FiMapPin, FiMail, FiGlobe, FiLinkedin, FiTwitter, FiInstagram } from 'react-icons/fi';
