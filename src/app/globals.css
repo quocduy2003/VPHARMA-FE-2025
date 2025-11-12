@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  /* Screen */
+ /* Screen */
   --breakpoint-sm: 30rem; /* 480px */
   --breakpoint-md: 48rem; /* 768px */
   --breakpoint-lg: 80rem; /* 1280px */
@@ -88,17 +88,25 @@
     }
   }
   h1 {
-    font-size: var(--text-h1);
+    font-size: var(--text-h3); /* Mobile/Tablet: 38px */
     line-height: 1.4;
     font-weight: 700;
     color: black;
     margin-bottom: 30px;
+  
+    @media (min-width: theme("screens.lg")) {
+      font-size: var(--text-h1); /* Desktop >= 1024px: 50px */
+    }
   }
 
   h2 {
-    font-size: var(--text-h2);
+    font-size: var(--text-h4); /* Mobile/Tablet: 30px */
     line-height: var(--leading-h2);
     font-weight: 700;
+
+    @media (min-width: theme("screens.lg")) {
+      font-size: var(--text-h2); /* Desktop >= 1024px: 40px */
+    }
   }
 
   h3 {
