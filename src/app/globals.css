@@ -240,8 +240,7 @@
     display: block;
     margin: auto;
     text-align: center;
-    width: 100%;
-    
+    max-width: 100%;
   }
 
   .rich-text figure.image.image-style-align-right {
@@ -261,11 +260,12 @@
     margin-top: 0.25rem;
   }
   /* ========== IMAGE RESIZE (CKEditor Resize) ========== */
-  .rich-text figure.image img[style*="width"] {
-    height: auto !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    display: block !important;
+  .rich-text figure.image img {
+    width: 100%; /* Ăn theo width của figure */
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    object-fit: cover;
   }
 
   .rich-text strong {
