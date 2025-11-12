@@ -3,27 +3,27 @@
 @theme {
   /* Screen */
   --breakpoint-sm: 30rem; /* 480px */
-  --breakpoint-md:48rem; /* 768px */
+  --breakpoint-md: 48rem; /* 768px */
   --breakpoint-lg: 80rem; /* 1280px */
   --breakpoint-xl: 87.5rem; /* 1400px */
   --breakpoint-2xl: 96rem; /* 1536px */
 
   /* Fonts */
-  --font-roboto: "Roboto", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-
+  --font-roboto: "Roboto", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Arial, sans-serif;
 
   /* Colors */
-  --color-primary: #007BFF;
-  --color-success: #00C853;
-  --color-gray: #BFBFBF;
-  --color-danger: #F0422E;
-  --color-ink: #16215B;
+  --color-primary: #007bff;
+  --color-success: #00c853;
+  --color-gray: #bfbfbf;
+  --color-danger: #f0422e;
+  --color-ink: #16215b;
   --color-colordescription: #111827;
   /* Navy đậm – dùng làm text đậm hoặc background */
   --color-text: #545454;
-  --color-white: #FFFFFF;
-  --color-button-disabled-bg: #DDDDDD;
-  --color-button-disabled-text: #9E9E9E;
+  --color-white: #ffffff;
+  --color-button-disabled-bg: #dddddd;
+  --color-button-disabled-text: #9e9e9e;
 
   /* Radius & Size */
   --radius-md: 8px;
@@ -75,7 +75,7 @@
   body {
     @apply font-[var(--font-roboto)] text-[var(--color-text)] bg-[var(--color-white)];
   }
-   html {
+  html {
     scroll-behavior: smooth;
     scroll-padding-top: 100px;
 
@@ -91,7 +91,7 @@
     font-size: var(--text-h1);
     line-height: 1.4;
     font-weight: 700;
-    color:black;
+    color: black;
     margin-bottom: 30px;
   }
 
@@ -132,15 +132,13 @@
 }
 
 .embla__slide {
-   flex-shrink: 0;
+  flex-shrink: 0;
   flex-grow: 0;
   min-width: 0;
- 
- }
+}
 /* Các lớp tiện ích tùy chỉnh cho component (nếu cần) */
 @layer components {
-
-  .container{
+  .container {
     margin-inline: auto;
     padding-inline: 1rem;
     padding-block: 2rem;
@@ -152,17 +150,17 @@
       padding-block: 3rem;
     }
   }
-  
+
   /* Base button */
   .btn {
-    @apply  flex items-center justify-center gap-2 px-6 text-sm font-medium
+    @apply flex items-center justify-center gap-2 px-6 text-sm font-medium
     text-white bg-primary font-roboto transition-colors duration-300
     rounded-full cursor-pointer select-none;
     height: var(--size-button-h);
   }
 
   /* Primary button */
- .btn-primary {
+  .btn-primary {
     @apply text-white bg-[var(--color-primary)] hover:brightness-95;
   }
 
@@ -184,118 +182,127 @@
 }
 
 @layer utilities {
-  
-/* ===== CKEditor Styles Fix ===== */
-.rich-text {
-  font-family: system-ui, sans-serif;
-  line-height: 1.8;
-  color: #1f2937; /* text-gray-800 */
+  /* ===== CKEditor Styles Fix ===== */
+  .rich-text {
+    font-family: system-ui, sans-serif;
+    line-height: 1.8;
+    color: #1f2937; /* text-gray-800 */
+  }
 
-}
+  .rich-text h1,
+  .rich-text h2,
+  .rich-text h3 {
+    font-weight: 700;
+    line-height: 1.4;
+    margin: 2rem 0 1rem;
+  }
 
-.rich-text h1,
-.rich-text h2,
-.rich-text h3 {
-  font-weight: 700;
-  line-height: 1.4;
-  margin: 2rem 0 1rem;
+  .rich-text h1 {
+    font-size: 2rem;
+  }
 
-}
+  .rich-text h2 {
+    font-size: 1.5rem;
+  }
 
-.rich-text h1 {
-  font-size: 2rem;
-}
+  .rich-text p {
+    margin-bottom: 1rem;
+    font-size: 1.05rem;
+  }
 
-.rich-text h2 {
-  font-size: 1.5rem;
-}
+  .rich-text ul,
+  .rich-text ol {
+    margin: 1rem 0 1.5rem 2rem;
+  }
 
-.rich-text p {
-  margin-bottom: 1rem;
-  font-size: 1.05rem;
-}
+  .rich-text li {
+    margin-bottom: 0.5rem;
+  }
 
-.rich-text ul,
-.rich-text ol {
-  margin: 1rem 0 1.5rem 2rem;
-}
+  .rich-text blockquote {
+    border-left: 4px solid #ccc;
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: #555;
+    background: #f9f9f9;
+  }
 
-.rich-text li {
-  margin-bottom: 0.5rem;
-}
+  .rich-text img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 1.5rem auto;
+    display: block;
+  }
 
-.rich-text blockquote {
-  border-left: 4px solid #ccc;
-  padding-left: 1rem;
-  margin: 1.5rem 0;
-  font-style: italic;
-  color: #555;
-  background: #f9f9f9;
-}
+  .rich-text figure.image {
+    display: block;
+    margin: auto;
+    text-align: center;
+    width: 100%;
+    
+  }
 
-.rich-text img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin: 1.5rem auto;
-}
+  .rich-text figure.image.image-style-align-right {
+    float: right;
+    margin: 0 0 1rem 1rem;
+  }
 
-.rich-text figure.image {
-  display: inline-block;
-  margin: 1rem auto;
-  text-align: center;
-}
+  .rich-text figure.image.image-style-align-left {
+    float: left;
+    margin: 0 1rem 1rem 0;
+  }
 
-.rich-text figure.image.image-style-align-right {
-  float: right;
-  margin: 0 0 1rem 1rem;
-}
+  /* Caption */
+  .rich-text figcaption {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin-top: 0.25rem;
+  }
+  /* ========== IMAGE RESIZE (CKEditor Resize) ========== */
+  .rich-text figure.image img[style*="width"] {
+    height: auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: block !important;
+  }
 
-.rich-text figure.image.image-style-align-left {
-  float: left;
-  margin: 0 1rem 1rem 0;
-}
+  .rich-text strong {
+    font-weight: 600;
+  }
 
-.rich-text figcaption {
-  font-size: 0.9rem;
-  color: #6b7280;
-  margin-top: 0.25rem;
-}
+  .rich-text em {
+    font-style: italic;
+  }
 
-.rich-text strong {
-  font-weight: 600;
-}
+  .rich-text a {
+    color: #2563eb;
+    text-decoration: underline;
+  }
 
-.rich-text em {
-  font-style: italic;
-}
+  .rich-text a:hover {
+    text-decoration: none;
+  }
+  .rich-text ul {
+    list-style-type: disc;
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+  }
 
-.rich-text a {
-  color: #2563eb;
-  text-decoration: underline;
-}
+  .rich-text ol {
+    list-style-type: decimal;
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+  }
 
-.rich-text a:hover {
-  text-decoration: none;
-}
-.rich-text ul {
-  list-style-type: disc;
-  margin-left: 1.5rem;
-  margin-bottom: 1rem;
-  padding-left: 1.5rem;
-}
-
-.rich-text ol {
-  list-style-type: decimal;
-  margin-left: 1.5rem;
-  margin-bottom: 1rem;
-  padding-left: 1.5rem;
-}
-
-.rich-text li {
-  margin-bottom: 0.5rem;
-}
- @media (max-width: theme("screens.md")) {
+  .rich-text li {
+    margin-bottom: 0.5rem;
+  }
+  /* Responsive Fixes */
+  @media (max-width: theme("screens.md")) {
     .rich-text {
       max-width: 100%;
       padding-inline: 1rem;
@@ -327,5 +334,4 @@
       padding-left: 0.75rem;
     }
   }
-
 }

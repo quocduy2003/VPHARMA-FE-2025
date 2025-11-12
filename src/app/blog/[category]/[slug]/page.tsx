@@ -81,7 +81,7 @@ export default function BlogDetailPage() {
     }, [slug]);
     if (isLoading) {
         return (
-            <div className="container mx-auto px-4 py-10">
+            <div className="container mx-auto">
                 {/* Skeleton content */}
                 <div className="animate-pulse space-y-6">
                     <div className="h-8 w-3/4 bg-gray-200 rounded"></div>
@@ -119,12 +119,12 @@ export default function BlogDetailPage() {
 
     return (
         <div className="bg-white">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto">
                 {/* Breadcrumb */}
-                <div className="mx-auto px-4">
+                <div className="mx-auto">
                     {/* Breadcrumb */}
-                    <div className="text-body2 text-colordescription font-bold mb-6">
-                        <Link href="/blog/blog-home" className="hover:text-primary">
+                    <div className="text-body2 text-colordescription mb-6">
+                        <Link href="/blog/blog-home" className="hover:text-primary font-semibold">
                             Blog
                         </Link>
 
@@ -132,14 +132,14 @@ export default function BlogDetailPage() {
 
                         <Link
                             href={`/blog/blog-home?category=${blog.blog_category.slug}`}
-                            className="hover:text-primary"
+                            className="hover:text-primary font-semibold"
                         >
                             {blog.blog_category.name}
                         </Link>
 
                         <span className="mx-2">&gt;</span>
 
-                        <span>{blog.title}</span>
+                        <span className="font-bold">{blog.title}</span>
                     </div>
                 </div>
 
