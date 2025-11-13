@@ -155,10 +155,10 @@ export default function IndependentPharmacyPage() {
               <button
                 key={idx}
                 onClick={() => setActiveTab(tab.id)}
-                className={`rounded-full border px-5 py-2 text-sub2 font-medium transition-colors ${
+                className={`rounded-full ring px-6 py-3 text-sub2 font-bold transition-colors ${
                   activeTab === tab.id
                     ? "bg-primary text-white"
-                    : "border-primary bg-white text-black hover:bg-primary/10"
+                    : "ring-primary bg-white text-black hover:bg-primary/10"
                 }`}
               >
                 {tab.label}
@@ -179,15 +179,13 @@ export default function IndependentPharmacyPage() {
           </div>
           <div className="relative">
             <div className="p-5 rounded-lg shadow-lg h-full">
-              <h3 className="text-h6 mb-4 font-bold text-black">
-                {current?.label}
-              </h3>
+              <h3 className="text-h6 mb-4 font-bold text-black">{current?.label}</h3>
               <p className="text-sub2 mb-4">{current?.title}</p>
               <ul className="text-sub2 space-y-3">
                 {Array.isArray(current?.description) &&
                   current.description.map((block, index) => (
-                    <li key={index} className="flex items-start gap-2">
-                      <FiCheckCircle className="mt-1 flex-shrink-0 text-success" />
+                    <li key={index} className="flex items-start gap-3">
+                      <FiCheckCircle className="mt-1.5 flex-shrink-0 text-success" />
                       <RichTextRenderer content={[block]} />
                     </li>
                   ))}

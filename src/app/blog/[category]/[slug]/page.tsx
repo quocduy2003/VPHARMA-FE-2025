@@ -118,35 +118,36 @@
 
 
 //     return (
-//         <div className="bg-white pt-10">
-//             <div className="container mx-auto px-4 ">
+//         <div className="bg-white pt-10 container">
+//             {/* Breadcrumb */}
+//             <div className="mx-auto pt-10 max-w-7xl">
 //                 {/* Breadcrumb */}
-//                 <div className="mx-auto">
-//                     {/* Breadcrumb */}
-//                     <div className="text-body2 text-colordescription font-bold mb-6">
-//                         <Link href="/blog/blog-home" className="hover:text-primary">
-//                             Blog
-//                         </Link>
+//                 <div className="text-body2 text-colordescription mb-6">
+//                     <Link href="/blog/blog-home" className="hover:text-primary font-semibold">
+//                         Blog
+//                     </Link>
 
-//                         <span className="mx-2">&gt;</span>
+//                     <span className="mx-2">&gt;</span>
 
-//                         <Link
-//                             href={`/blog/blog-home?category=${blog.blog_category.slug}`}
-//                             className="hover:text-primary"
-//                         >
-//                             {blog.blog_category.name}
-//                         </Link>
+//                     <Link
+//                         href={`/blog/blog-home?category=${blog.blog_category.slug}`}
+//                         className="hover:text-primary font-semibold"
+//                     >
+//                         {blog.blog_category.name}
+//                     </Link>
 
-//                         <span className="mx-2">&gt;</span>
+//                     <span className="mx-2">&gt;</span>
 
-//                         <span>{blog.title}</span>
-//                     </div>
+//                     <span className="font-bold">{blog.title}</span>
 //                 </div>
+//             </div>
+//             <div className=" mx-auto">
 
 
-//                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-15">
+
+//                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-8">
 //                     {/* Main Content */}
-//                     <article className="lg:col-span-9">
+//                     <article className="lg:col-span-7 col-span-2">
 //                         <h1 className="text-h2 font-bold text-black mb-6">{blog.title}</h1>
 //                         <p className="text-body2 mb-6">
 //                             Ngày cập nhật:{" "}
@@ -175,7 +176,7 @@
 //                     </article>
 
 //                     {/* Sidebar */}
-//                     <aside className="lg:col-span-3">
+//                     <aside className="lg:col-span-4">
 //                         <div className="sticky top-38 space-y-6 mb-4">
 //                             {/* Khối chia sẻ */}
 //                             <div className="rounded-lg border p-4">
@@ -204,9 +205,9 @@
 //                                             <li
 //                                                 key={item.id}
 //                                                 className={`cursor-pointer transition-colors 
-//     ${activeId === item.id ? "text-primary font-bold" : "text-colordescription"}
-//     ${item.level === 3 ? "pl-4 text-body2" : "text-sub2 font-medium"}
-//   `}
+//                                                             ${activeId === item.id ? "text-primary font-bold" : "text-colordescription"}
+//                                                             ${item.level === 3 ? "pl-4 text-body2" : "text-sub2 font-medium"}
+//                                                          `}
 //                                             >
 //                                                 <a onClick={handleTocClick(item.id)}>
 //                                                     {item.text}
@@ -224,7 +225,6 @@
 //         </div>
 //     );
 // }
-
 "use client";
 
 import Link from "next/link";
@@ -346,112 +346,101 @@ export default function BlogDetailPage() {
 
     return (
         <div className="bg-white pt-10">
-            {/* Thay đổi 1: Xóa 'px-4' để container này khớp với container của header 
-            */}
             <div className="container mx-auto">
-                {/* Breadcrumb */}
-                {/* Thay đổi 2: Xóa 'mx-auto' và thêm padding 'pl-[4.25rem] pr-8'
-                */}
-                <div className="pl-[4.25rem] pr-8">
+                <div className="md:px-8 lg:px-[4.25rem]">
                     {/* Breadcrumb */}
                     <div className="text-body2 text-colordescription font-bold mb-6">
                         <Link href="/blog/blog-home" className="hover:text-primary">
                             Blog
                         </Link>
-
                         <span className="mx-2">&gt;</span>
-
                         <Link
                             href={`/blog/blog-home?category=${blog.blog_category.slug}`}
                             className="hover:text-primary"
                         >
                             {blog.blog_category.name}
                         </Link>
-
                         <span className="mx-2">&gt;</span>
-
                         <span>{blog.title}</span>
                     </div>
                 </div>
+                <div className=" mx-auto">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-8 px-4 md:px-8 lg:px-[4.25rem]">
+                        {/* Main Content */}
+                        <article className="lg:col-span-9">
+                            <h1 className="text-h2 font-bold text-black mb-6">{blog.title}</h1>
+                            <p className="text-body2 mb-6">
+                                Ngày cập nhật:{" "}
+                                {blog.createdAt
+                                    ? new Date(blog.createdAt).toLocaleDateString("vi-VN", {
+                                        day: "2-digit",
+                                        month: "2-digit",
+                                        year: "numeric",
+                                    })
+                                    : ""}
+                            </p>
+                            <p className="text-body2 mb-6">{blog.description}</p>
+                            <Image
+                                src={blog.coverImage?.url}
+                                alt={blog.alt || blog.title}
+                                width={500}
+                                height={400}
+                                className="w-full rounded-lg object-cover"
+                            />
 
+                            {/* Render nội dung HTML trực tiếp */}
+                            <div
+                                className="rich-text"
+                                dangerouslySetInnerHTML={{ __html: safeContent }}
+                            />
+                        </article>
 
-                {/* Thay đổi 3: Thêm padding 'pl-[4.25rem] pr-8' vào grid
-                */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-15 pl-[4.25rem] pr-8">
-                    {/* Main Content */}
-                    <article className="lg:col-span-9">
-                        <h1 className="text-h2 font-bold text-black mb-6">{blog.title}</h1>
-                        <p className="text-body2 mb-6">
-                            Ngày cập nhật:{" "}
-                            {blog.createdAt
-                                ? new Date(blog.createdAt).toLocaleDateString("vi-VN", {
-                                    day: "2-digit",
-                                    month: "2-digit",
-                                    year: "numeric",
-                                })
-                                : ""}
-                        </p>
-                        <p className="text-body2 mb-6">{blog.description}</p>
-                        <Image
-                            src={blog.coverImage?.url}
-                            alt={blog.alt || blog.title}
-                            width={500}
-                            height={400}
-                            className="w-full rounded-lg object-cover"
-                        />
-
-                        {/* Render nội dung HTML trực tiếp */}
-                        <div
-                            className="rich-text"
-                            dangerouslySetInnerHTML={{ __html: safeContent }}
-                        />
-                    </article>
-
-                    {/* Sidebar */}
-                    <aside className="lg:col-span-3">
-                        <div className="sticky top-38 space-y-6 mb-4">
-                            {/* Khối chia sẻ */}
-                            <div className="rounded-lg border p-4">
-                                <h3 className="text-sub1 font-bold mb-3">Chia sẻ bài viết</h3>
-                                <div className="flex items-center gap-4">
-                                    <a href="#" className="text-blue-600 hover:opacity-80">
-                                        <FiFacebook size={24} />
-                                    </a>
-                                    <a href="#" className="text-blue-800 hover:opacity-80">
-                                        <FiLinkedin size={24} />
-                                    </a>
-                                    <a href="#" className="text-blue-500 hover:opacity-80">
-                                        <SiZalo size={24} />
-                                    </a>
-                                </div>
-                            </div>
-
-                            {/* Mục lục */}
-                            {toc.length > 0 && (
+                        {/* Sidebar */}
+                        <aside className="lg:col-span-3">
+                            <div className="sticky top-38 space-y-6 mb-4">
+                                {/* Khối chia sẻ */}
                                 <div className="rounded-lg border p-4">
-                                    <h3 className="text-sub1 font-bold mb-3 flex items-center gap-2">
-                                        <FiList /> Nội dung chính
-                                    </h3>
-                                    <ul className="space-y-2">
-                                        {toc.map((item) => (
-                                            <li
-                                                key={item.id}
-                                                className={`cursor-pointer transition-colors 
+                                    <h3 className="text-sub1 font-bold mb-3">Chia sẻ bài viết</h3>
+                                    <div className="flex items-center gap-4">
+                                        <a href="#" className="text-blue-600 hover:opacity-80">
+                                            <FiFacebook size={24} />
+                                        </a>
+                                        <a href="#" className="text-blue-800 hover:opacity-80">
+                                            <FiLinkedin size={24} />
+                                        </a>
+                                        <a href="#" className="text-blue-500 hover:opacity-80">
+                                            <SiZalo size={24} />
+                                        </a>
+                                    </div>
+                                </div>
+
+                                {/* Mục lục */}
+                                {toc.length > 0 && (
+                                    <div className="rounded-lg border p-4">
+                                        <h3 className="text-sub1 font-bold mb-3 flex items-center gap-2">
+                                            <FiList /> Nội dung chính
+                                        </h3>
+                                        <ul className="space-y-2">
+                                            {toc.map((item) => (
+                                                <li
+                                                    key={item.id}
+                                                    className={`cursor-pointer transition-colors 
     ${activeId === item.id ? "text-primary font-bold" : "text-colordescription"}
     ${item.level === 3 ? "pl-4 text-body2" : "text-sub2 font-medium"}
   `}
-                                            >
-                                                <a onClick={handleTocClick(item.id)}>
-                                                    {item.text}
-                                                </a>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            )}
-                        </div>
-                    </aside>
+                                                >
+                                                    <a onClick={handleTocClick(item.id)}>
+                                                        {item.text}
+                                                    </a>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
+                            </div>
+                        </aside>
 
+                    </div>
                 </div>
             </div>
         </div>

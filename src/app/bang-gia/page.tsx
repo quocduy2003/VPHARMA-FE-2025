@@ -86,7 +86,7 @@ export default function PricePage() {
           <div className="container mx-auto max-w-7xl px-4 ">
             <div className="min-w-[1200px] grid grid-cols-5 gap-x-4">
               {/* === CỘT TÍNH NĂNG (CỘT 1) === */}
-              <div className="sticky rounded-lg left-0  z-20">
+              <div className="sticky rounded-lg left-0 z-20">
                 {/* Header trái */}
                 <div
                   className={`${HEADER_ROW_HEIGHT} flex flex-col items-center justify-center `}
@@ -117,7 +117,7 @@ export default function PricePage() {
                     <div key={category.title}>
                       {/* Tiêu đề Cấp 1 */}
                       <div
-                        className={`min-h-[57px] p-4 flex items-center justify-between border-gray-200 ${
+                        className={`h-[57px] p-4 flex items-center justify-between border-gray-200 ${
                           isFirstCategory ? "" : "cursor-pointer"
                         }`}
                         onClick={
@@ -153,7 +153,7 @@ export default function PricePage() {
                         {category.features.map((feature) => (
                           <div
                             key={feature.id}
-                            className={`min-h-[57px] p-4 flex items-start relative`}
+                            className={`h-[57px] p-4 flex items-start relative`}
                           >
                             <div className="absolute top-0 left-4 right-4 h-[1px] bg-gray-200"></div>
                             <div className="text-sm text-colordescription text-left">
@@ -208,7 +208,7 @@ export default function PricePage() {
                         <div key={category.title}>
                           {/* Ô trống cho Category title */}
                           <div
-                            className={`min-h-[57px] p-4 border-gray-200 `}
+                            className={`h-[57px] p-4 border-gray-200 `}
                           >
                             &nbsp;
                           </div>
@@ -221,7 +221,7 @@ export default function PricePage() {
                             {category.features.map((feature) => (
                               <div
                                 key={feature.id}
-                                className={`min-h-[57px] p-4 text-center text-sm text-colordescription relative border-gray-200 flex items-start justify-center`}
+                                className={`h-[57px] p-4 text-center text-sm text-colordescription relative border-gray-200 flex items-start justify-center`}
                               >
                                 <div className="absolute top-0 left-4 right-4 h-[1px] bg-gray-200"></div>
                                 {renderFeatureValue(
