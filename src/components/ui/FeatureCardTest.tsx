@@ -38,11 +38,11 @@ export default function FeatureCardTest({
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [progress, setProgress] = useState<number>(0);
   const [hasPlayed, setHasPlayed] = useState(false);
-  const [isPaused, setIsPaused] = useState(false); // <-- THÊM MỚI
+  const [isPaused, setIsPaused] = useState(false); 
   const isLeft = direction === "left";
   const timerRef = useRef<any>(null);
   const progressRef = useRef<any>(null);
-  const resumeTimerRef = useRef<any>(null); // <-- THÊM MỚI
+  const resumeTimerRef = useRef<any>(null);
   const sectionRef = useRef<any>(null);
 
   const inView = useInView(sectionRef);
@@ -169,7 +169,7 @@ export default function FeatureCardTest({
             >
               {/* Icon + timeline */}
               <div
-                className="relative flex flex-col items-center mr-4"
+                className="relative flex flex-col items-center mr-5"
                 style={{ width: ICON_SIZE }}
               >
                 {/* Icon */}
