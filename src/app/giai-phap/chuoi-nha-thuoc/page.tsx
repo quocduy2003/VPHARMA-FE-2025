@@ -2,7 +2,14 @@
 
 import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
-import { FiArrowLeft, FiArrowRight, FiUsers, FiShoppingCart, FiDatabase, FiShield } from "react-icons/fi"; // Thêm icon
+import {
+  FiArrowLeft,
+  FiArrowRight,
+  FiUsers,
+  FiShoppingCart,
+  FiDatabase,
+  FiShield,
+} from "react-icons/fi"; // Thêm icon
 import FadeInOnScroll from "@/components/animations/FadeInOnScroll";
 import FlipCard from "@/components/animations/FlipCard";
 
@@ -27,17 +34,19 @@ function DashboardCarousel({
     if (safeImages.length === 0) return;
 
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev === safeImages.length - 1 ? 0 : prev + 1));
+      setCurrentIndex((prev) =>
+        prev === safeImages.length - 1 ? 0 : prev + 1
+      );
     }, 3500);
     return () => clearInterval(interval);
   }, [safeImages.length]);
 
   const getImg = (offset: number) => {
     if (safeImages.length === 0) {
-      return { url: '/placeholder.png', alt: 'Placeholder' };
+      return { url: "/placeholder.png", alt: "Placeholder" };
     }
     const idx = (currentIndex + offset + safeImages.length) % safeImages.length;
-    return safeImages[idx] || { url: '/placeholder.png', alt: 'Placeholder' };
+    return safeImages[idx] || { url: "/placeholder.png", alt: "Placeholder" };
   };
 
   // Return null after hooks if no images
@@ -88,8 +97,9 @@ function DashboardCarousel({
         {safeImages.map((_, idx) => (
           <button
             key={idx}
-            className={`h-3 w-7 rounded-full transition-all duration-200 ${currentIndex === idx ? "bg-primary" : "bg-gray-200"
-              }`}
+            className={`h-3 w-7 rounded-full transition-all duration-200 ${
+              currentIndex === idx ? "bg-primary" : "bg-gray-200"
+            }`}
             aria-label={`Go to slide ${idx + 1}`}
             onClick={() => setCurrentIndex(idx)}
           />
@@ -124,13 +134,9 @@ export default function ChuoiNhaThuoc() {
   const stepCustomer = cardWidthCustomer + cardGapCustomer;
   const transitionDurationCustomer = 700; // ms (từ duration-700)
   const autoplayDelayCustomer = 2500; // 2.5 giây theo yêu cầu
-
-  // Lấy đúng data cho Section 4
   const originalCustomerCards = Array.isArray(customerExperienceSection?.cards)
     ? customerExperienceSection.cards
     : [];
-
-  // Nhân bản cards
   const clonedCardsStartCustomer = originalCustomerCards.slice(
     0,
     cardsPerViewCustomer
@@ -149,7 +155,7 @@ export default function ChuoiNhaThuoc() {
   const [isJumpingCustomer, setIsJumpingCustomer] = useState(false);
   const [isAnimatingCustomer, setIsAnimatingCustomer] = useState(false);
   const [isHoveringCustomer, setIsHoveringCustomer] = useState(false);
-const icons = [FiUsers, FiShoppingCart, FiDatabase, FiShield];
+  const icons = [FiUsers, FiShoppingCart, FiDatabase, FiShield];
   // Handlers mới cho Section 4 (dùng useCallback)
   const handleNextCustomer = useCallback(() => {
     if (isAnimatingCustomer) return;
@@ -165,10 +171,7 @@ const icons = [FiUsers, FiShoppingCart, FiDatabase, FiShield];
       }, transitionDurationCustomer);
     }
 
-    setTimeout(
-      () => setIsAnimatingCustomer(false),
-      transitionDurationCustomer
-    );
+    setTimeout(() => setIsAnimatingCustomer(false), transitionDurationCustomer);
   }, [
     isAnimatingCustomer,
     customerIndex,
@@ -193,10 +196,7 @@ const icons = [FiUsers, FiShoppingCart, FiDatabase, FiShield];
       }, transitionDurationCustomer);
     }
 
-    setTimeout(
-      () => setIsAnimatingCustomer(false),
-      transitionDurationCustomer
-    );
+    setTimeout(() => setIsAnimatingCustomer(false), transitionDurationCustomer);
   }, [
     isAnimatingCustomer,
     customerIndex,
@@ -239,23 +239,25 @@ const icons = [FiUsers, FiShoppingCart, FiDatabase, FiShield];
         <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
           <div>
             <p className="text-h6 mb-2 font-bold tracking-wide text-primary capitalize">
-              {heroSection?.eyebrow?.toLowerCase() || "Giải pháp chuỗi nhà thuốc"}
+              {heroSection?.eyebrow?.toLowerCase() ||
+                "Giải pháp chuỗi nhà thuốc"}
             </p>
             <h1>{heroSection?.title || "Giải pháp chuỗi nhà thuốc"}</h1>
             <p className="mb-10 text-colordescription text-h6">
               {heroSection?.description || ""}
             </p>
             <div className="flex gap-4 ">
-              {Array.isArray(heroSection?.ctaButtons) && heroSection.ctaButtons.map((button, index) => (
-                <Button
-                  key={index}
-                  variant={index === 0 ? "primary" : "secondary"}
-                  size="md"
-                  href={button.link || "#"}
-                >
-                  {button.title}
-                </Button>
-              ))}
+              {Array.isArray(heroSection?.ctaButtons) &&
+                heroSection.ctaButtons.map((button, index) => (
+                  <Button
+                    key={index}
+                    variant={index === 0 ? "primary" : "secondary"}
+                    size="md"
+                    href={button.link || "#"}
+                  >
+                    {button.title}
+                  </Button>
+                ))}
             </div>
           </div>
           <div>
@@ -284,11 +286,10 @@ const icons = [FiUsers, FiShoppingCart, FiDatabase, FiShield];
             </div>
 
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {Array.isArray(pharmacyChainChallengesSection.challengeCards) && pharmacyChainChallengesSection.challengeCards.map(
-                (card, index) => (
-                  <FlipCard key={index} challengeCard={card} />
-                )
-              )}
+              {Array.isArray(pharmacyChainChallengesSection.challengeCards) &&
+                pharmacyChainChallengesSection.challengeCards.map(
+                  (card, index) => <FlipCard key={index} challengeCard={card} />
+                )}
             </div>
           </div>
         </section>
@@ -316,7 +317,8 @@ const icons = [FiUsers, FiShoppingCart, FiDatabase, FiShield];
                 />
               </div>
               <div className="relative w-full max-w-[800px] mx-auto flex flex-col items-center justify-center">
-                  {Array.isArray(featureBenefitsSection.contents) && featureBenefitsSection.contents.map((item, index) => (
+                {Array.isArray(featureBenefitsSection.contents) &&
+                  featureBenefitsSection.contents.map((item, index) => (
                     <AccordionItem
                       key={index}
                       title={item.title}
@@ -328,8 +330,8 @@ const icons = [FiUsers, FiShoppingCart, FiDatabase, FiShield];
                       buttonClassName="bg-primary/9 w-full"
                     />
                   ))}
-                </div>
               </div>
+            </div>
           </div>
         </FadeInOnScroll>
       </section>
@@ -340,7 +342,8 @@ const icons = [FiUsers, FiShoppingCart, FiDatabase, FiShield];
           <div className="container mx-auto py-15">
             <div className="mx-auto max-w-5xl text-center">
               <p className="mb-2 text-h6 font-bold capitalize tracking-wide text-primary">
-                {operationsStandardizationSection?.eyebrow || "Tiêu chuẩn hóa vận hành"}
+                {operationsStandardizationSection?.eyebrow ||
+                  "Tiêu chuẩn hóa vận hành"}
               </p>
               <h2 className="text-black mb-15">
                 {operationsStandardizationSection?.title || ""}
@@ -355,13 +358,15 @@ const icons = [FiUsers, FiShoppingCart, FiDatabase, FiShield];
         </section>
       </FadeInOnScroll>
 
+      {/* SECTION 4*/}
       <FadeInOnScroll>
         <section className="bg-gradient-to-b from-white to-blue-100 ">
           <div className="container mx-auto py-15">
             {/* Tiêu đề (giữ nguyên) */}
             <div className="mx-auto mb-12 max-w-5xl text-center">
               <p className="mb-5 text-h6 font-bold  tracking-wide text-primary capitalize">
-                {customerExperienceSection?.eyebrow?.toLowerCase() || "Trải nghiệm khách hàng"}
+                {customerExperienceSection?.eyebrow?.toLowerCase() ||
+                  "Trải nghiệm khách hàng"}
               </p>
               <h2 className="mb-15 text-black">
                 {customerExperienceSection?.title || ""}
@@ -390,12 +395,8 @@ const icons = [FiUsers, FiShoppingCart, FiDatabase, FiShield];
                 <div
                   className="flex" // Bỏ transition-transform
                   style={{
-                    width: `${
-                      displayCustomerCards.length * stepCustomer
-                    }px`,
-                    transform: `translateX(-${
-                      customerIndex * stepCustomer
-                    }px)`,
+                    width: `${displayCustomerCards.length * stepCustomer}px`,
+                    transform: `translateX(-${customerIndex * stepCustomer}px)`,
                     transition: isJumpingCustomer
                       ? "none"
                       : `transform ${transitionDurationCustomer}ms ease-in-out`,
@@ -407,7 +408,7 @@ const icons = [FiUsers, FiShoppingCart, FiDatabase, FiShield];
                       key={idx}
                       // Thêm mx-4 để tạo gap 32px
                       className="card-custom mx-4 min-w-[350px] max-w-[350px] flex-shrink-0 rounded-xl border border-gray-400 bg-white shadow-lg transition hover:shadow-xl"
-                      style={{ height: 400 }} 
+                      style={{ height: 400 }}
                     >
                       <div className="p-7">
                         <h3 className="mb-2 text-sub1 text-black">
@@ -445,56 +446,61 @@ const icons = [FiUsers, FiShoppingCart, FiDatabase, FiShield];
         </section>
       </FadeInOnScroll>
 
-      {/* SECTION Xây Dựng Hệ Thống Khách Hàng 4 card có hover */}
+      {/* SECTION 5 Xây Dựng Hệ Thống Khách Hàng 4 card có hover */}
       <section className="bg-gradient-to-b from-blue-100 to-white ">
-  <FadeInOnScroll>
-    <div className="container mx-auto py-15">
-      <div className="mb-15 text-center">
-        <p className="mb-5 text-h6 font-bold capitalize tracking-wide text-primary">
-          {featureOverview?.eyebrow?.toLowerCase() || "Tổng quan tính năng"}
-        </p>
-        <h2 className="mx-auto max-w-6xl text-black">
-          {featureOverview?.title || ""}
-        </h2>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:gap-12">
-        {Array.isArray(featureOverview.contentCards) && featureOverview.contentCards.map((card, index) => {
-          const Icon = icons[index % icons.length];
-          return (
-            <div
-              key={index}
-              className="group relative rounded-2xl p-8 text-left transition-all duration-300 cursor-pointer bg-white shadow-md hover:shadow-2xl hover:bg-ink"
-            >
-              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-success/10 text-success transition-all duration-300 group-hover:bg-success group-hover:text-white">
-                <Icon size={24} className="transition-all duration-300 group-hover:brightness-0 group-hover:invert" />
-              </div>
-
-              <h3 className="mb-3 text-black transition-colors duration-300 group-hover:text-white">
-                {card.title}
-              </h3>
-
-              <p className="text-sub1 transition-colors duration-300 group-hover:text-white">
-                {card.description}
+        <FadeInOnScroll>
+          <div className="container mx-auto py-15">
+            <div className="mb-15 text-center">
+              <p className="mb-5 text-h6 font-bold capitalize tracking-wide text-primary">
+                {featureOverview?.eyebrow?.toLowerCase() ||
+                  "Tổng quan tính năng"}
               </p>
+              <h2 className="mx-auto max-w-6xl text-black">
+                {featureOverview?.title || ""}
+              </h2>
             </div>
-          );
-        })}
-      </div>
 
-      <div className="flex items-center mt-15 justify-center ">
-        <Button
-          size="md"
-          href={featureOverview.ctaButton.link || undefined}
-        >
-          {featureOverview.ctaButton.title}
-        </Button>
-      </div>
-    </div>
-  </FadeInOnScroll>
-</section>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:gap-12">
+              {Array.isArray(featureOverview.contentCards) &&
+                featureOverview.contentCards.map((card, index) => {
+                  const Icon = icons[index % icons.length];
+                  return (
+                    <div
+                      key={index}
+                      className="group relative rounded-2xl p-8 text-left transition-all duration-300 cursor-pointer bg-white shadow-md hover:shadow-2xl hover:bg-ink"
+                    >
+                      <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-success/10 text-success transition-all duration-300 group-hover:bg-success group-hover:text-white">
+                        <Icon
+                          size={24}
+                          className="transition-all duration-300 group-hover:brightness-0 group-hover:invert"
+                        />
+                      </div>
 
-      {/** section dashboard scrolling carousel */}
+                      <h3 className="mb-4 text-black transition-colors duration-300 group-hover:text-white">
+                        {card.title}
+                      </h3>
+
+                      <p className="text-sub2 transition-colors duration-300 group-hover:text-white">
+                        {card.description}
+                      </p>
+                    </div>
+                  );
+                })}
+            </div>
+
+            <div className="flex items-center mt-15 justify-center ">
+              <Button
+                size="md"
+                href={featureOverview.ctaButton.link || undefined}
+              >
+                {featureOverview.ctaButton.title}
+              </Button>
+            </div>
+          </div>
+        </FadeInOnScroll>
+      </section>
+
+      {/* SECTION 6 dashboard scrolling carousel */}
       <FadeInOnScroll>
         <section className="py-15 text-center">
           <div className="container mx-auto">
@@ -510,14 +516,14 @@ const icons = [FiUsers, FiShoppingCart, FiDatabase, FiShield];
         </section>
       </FadeInOnScroll>
 
-      {/* SECTION : Chuẩn Hóa Vận Hành*/}
-
+      {/* SECTION 7: Chuẩn Hóa Vận Hành*/}
       <section className="bg-ink ">
         <FadeInOnScroll>
           <div className="container mx-auto py-15">
             <div className=" text-center mb-15">
               <p className="mb-5 text-h6 font-bold capitalize tracking-wide text-primary">
-                {operationsStandardizationBottomSection?.eyebrow?.toLowerCase() || "Tiêu chuẩn hóa vận hành"}
+                {operationsStandardizationBottomSection?.eyebrow?.toLowerCase() ||
+                  "Tiêu chuẩn hóa vận hành"}
               </p>
               <h2 className="mx-auto max-w-4xl text-white">
                 {operationsStandardizationBottomSection?.title || ""}
@@ -533,33 +539,33 @@ const icons = [FiUsers, FiShoppingCart, FiDatabase, FiShield];
         </FadeInOnScroll>
       </section>
 
-      {/*SECTION 7: Pharmacy  Carousel*/}
+      {/*SECTION 8: Pharmacy  Carousel*/}
       <FadeInOnScroll>
         <section className="bg-white ">
           <div className="container mx-auto py-15">
             <div className="mx-auto mt-5 mb-15 max-w-6xl text-center">
               <p className="mb-5 text-h6 font-bold capitalize tracking-wide text-primary">
-                {pharmaFeedback?.title?.toLowerCase() || "Phản hồi từ khách hàng"}
+                {pharmaFeedback?.title?.toLowerCase() ||
+                  "Phản hồi từ khách hàng"}
               </p>
-              <h2 className="text-black">{pharmaFeedback?.description || ""}</h2>
+              <h2 className="text-black">
+                {pharmaFeedback?.description || ""}
+              </h2>
             </div>
             <PharmacyCarousel cards={pharmaFeedback?.cards || []} />
           </div>
         </section>
       </FadeInOnScroll>
 
-      {/* SECTION : CTA */}
+      {/* SECTION 9 : CTA */}
       <FadeInOnScroll>
         <CTASection ctaSection={ctaSection} />
       </FadeInOnScroll>
 
-      {/* SECTION : FAQ*/}
+      {/* SECTION 10: FAQ */}
       <FadeInOnScroll>
-        <section className="container mx-auto max-w-4xl px-4 py-20">
-          <FaqSection
-            title={faqSection.title}
-            items={faqSection.faqItems}
-          />
+        <section className="py-10">
+          <FaqSection title={faqSection.title} items={faqSection.faqItems} />
         </section>
       </FadeInOnScroll>
     </div>
