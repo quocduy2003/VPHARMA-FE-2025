@@ -365,9 +365,9 @@ export default function BlogDetailPage() {
                     </div>
                 </div>
                 <div className=" mx-auto">
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-8 px-4 md:px-8 lg:px-[4.25rem]">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-8 lg:px-[4.25rem] ">
                         {/* Main Content */}
-                        <article className="lg:col-span-9">
+                        <article className="col-span-1 lg:col-span-8 ">
                             <h1 className="text-h2 font-bold text-black mb-6">{blog.title}</h1>
                             <p className="text-body2 mb-6">
                                 Ngày cập nhật:{" "}
@@ -385,18 +385,18 @@ export default function BlogDetailPage() {
                                 alt={blog.alt || blog.title}
                                 width={500}
                                 height={400}
-                                className="w-full rounded-lg object-cover"
+                                className="w-full max-h-[500px] rounded-lg object-cover"
                             />
 
                             {/* Render nội dung HTML trực tiếp */}
                             <div
-                                className="rich-text"
+                                className="rich-text overflow-auto"
                                 dangerouslySetInnerHTML={{ __html: safeContent }}
                             />
                         </article>
 
                         {/* Sidebar */}
-                        <aside className="lg:col-span-3">
+                        <aside className="col-span-1 lg:col-span-4 lg:col-start-9">
                             <div className="sticky top-38 space-y-6 mb-4">
                                 {/* Khối chia sẻ */}
                                 <div className="rounded-lg border p-4">
@@ -416,7 +416,7 @@ export default function BlogDetailPage() {
 
                                 {/* Mục lục */}
                                 {toc.length > 0 && (
-                                    <div className="rounded-lg border p-4">
+                                    <div className="rounded-lg border p-4 ">
                                         <h3 className="text-sub1 font-bold mb-3 flex items-center gap-2">
                                             <FiList /> Nội dung chính
                                         </h3>
