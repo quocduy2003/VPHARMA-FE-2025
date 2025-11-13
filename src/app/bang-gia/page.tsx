@@ -1,6 +1,6 @@
 "use client";
 
-import { FiCheck, FiChevronLeft, FiChevronDown } from "react-icons/fi"; // 1. IMPORT THÊM
+import { FiCheck, FiChevronDown } from "react-icons/fi"; // 1. IMPORT THÊM
 import { pricingPageData } from "@/lib/api/pricing";
 import { Button } from "@/components/ui/CTAButton";
 import type { Feature } from "@/types";
@@ -29,8 +29,8 @@ export default function PricePage() {
   const plans = pricingPlans;
 
   const HEADER_ROW_HEIGHT = "h-[220px]";
-  const CATEGORY_ROW_HEIGHT = "h-[57px]";
-  const FEATURE_ROW_HEIGHT = "h-[57px]";
+  // const CATEGORY_ROW_HEIGHT = "h-[57px]";
+  // const FEATURE_ROW_HEIGHT = "h-[57px]";
 
   // 2. THÊM STATE ĐỂ QUẢN LÝ VIỆC ĐÓNG/MỞ
   const [collapsedCategories, setCollapsedCategories] = useState<
@@ -107,41 +107,53 @@ export default function PricePage() {
                 </div>
 
                 {/* Lặp qua các category và feature titles */}
-                {featureCategories.map((category) => {
-                  // 4. KIỂM TRA TRẠNG THÁI
-                  const isCollapsed = !!collapsedCategories[category.title];
+                {featureCategories.map((category, index) => {
+                  const isFirstCategory = index === 0;
+                  const isCollapsed = isFirstCategory
+                    ? false
+                    : !!collapsedCategories[category.title];
 
                   return (
                     <div key={category.title}>
                       {/* Tiêu đề Cấp 1 */}
                       <div
-                        className={`${CATEGORY_ROW_HEIGHT} p-5 flex items-center justify-between border-gray-200 cursor-pointer`} // 4. THÊM justify-between VÀ cursor-pointer
-                        onClick={() => toggleCategory(category.title)} // 4. THÊM onClick
+                        className={`min-h-[57px] p-4 flex items-center justify-between border-gray-200 ${
+                          isFirstCategory ? "" : "cursor-pointer"
+                        }`}
+                        onClick={
+                          !isFirstCategory
+                            ? () => toggleCategory(category.title)
+                            : undefined
+                        }
                       >
                         <h4 className="text-body2 font-bold text-black text-left">
                           {category.title}
                         </h4>
-                        {/* 4. THÊM ICON */}
-                        <span className="text-ink">
-                          {isCollapsed ? (
-                            <FiChevronLeft className="text-xl" />
-                          ) : (
-                            <FiChevronDown className="text-xl" />
-                          )}
-                        </span>
+                        {/* 4. THÊM ICON (CHỈ KHI KHÔNG PHẢI MỤC ĐẦU) */}
+                        {!isFirstCategory && (
+                          <span className="text-ink">
+                            <FiChevronDown
+                              className={`
+                text-xl transition-transform duration-300 ease-in-out
+                ${isCollapsed ? "-rotate-90" : "rotate-0"}
+              `}
+                            />
+                          </span>
+                        )}{" "}
+                        {/* ĐÓNG ĐIỀU KIỆN */}
                       </div>
                       {/* Tiêu đề Cấp 2 */}
                       {/* 4. CHỈ HIỆN KHI KHÔNG BỊ THU GỌN */}
                       <div
                         className={`
-                          transition-all duration-650 ease-in-out overflow-hidden 
-                          ${isCollapsed ? "max-h-0" : "max-h-[1000px]"}
-                        `}
+                        transition-[max-height] duration-300 ease-in-out overflow-hidden 
+                        ${isCollapsed ? "max-h-0" : "max-h-[1000px]"}
+                      `}
                       >
                         {category.features.map((feature) => (
                           <div
                             key={feature.id}
-                            className={`${FEATURE_ROW_HEIGHT} p-4 flex items-start relative`}
+                            className={`min-h-[57px] p-4 flex items-start relative`}
                           >
                             <div className="absolute top-0 left-4 right-4 h-[1px] bg-gray-200"></div>
                             <div className="text-sm text-colordescription text-left">
@@ -188,30 +200,28 @@ export default function PricePage() {
 
                   {/* Body của Card (Lặp qua features) */}
                   <div>
-                    {featureCategories.map((category) => {
-                      // 5. KIỂM TRA TRẠNG THÁI (ĐỂ ĐỒNG BỘ)
-                      const isCollapsed = !!collapsedCategories[category.title];
+                    {featureCategories.map((category,index) => {
+                      const isFirstCategory = index === 0;
+                      const isCollapsed = isFirstCategory ? false : !!collapsedCategories[category.title];
 
                       return (
                         <div key={category.title}>
                           {/* Ô trống cho Category title */}
                           <div
-                            className={`${CATEGORY_ROW_HEIGHT} p-4 border-gray-200 `}
+                            className={`min-h-[57px] p-4 border-gray-200 `}
                           >
                             &nbsp;
                           </div>
-                          {/* Lặp qua các feature values */}
-                          {/* 5. CHỈ HIỆN KHI KHÔNG BỊ THU GỌN */}
                           <div
                             className={`
-                              transition-all duration-650 ease-in-out overflow-hidden 
+                              transition-[max-height] duration-300 ease-in-out overflow-hidden 
                               ${isCollapsed ? "max-h-0" : "max-h-[1000px]"}
                             `}
                           >
                             {category.features.map((feature) => (
                               <div
                                 key={feature.id}
-                                className={`${FEATURE_ROW_HEIGHT} p-4 text-center text-sm text-colordescription relative border-gray-200`}
+                                className={`min-h-[57px] p-4 text-center text-sm text-colordescription relative border-gray-200 flex items-start justify-center`}
                               >
                                 <div className="absolute top-0 left-4 right-4 h-[1px] bg-gray-200"></div>
                                 {renderFeatureValue(
