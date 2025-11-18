@@ -1,12 +1,12 @@
 "use client";
 
-import { FiCheck, FiChevronDown } from "react-icons/fi"; // 1. IMPORT THÊM
+import { FiCheck, FiChevronDown } from "react-icons/fi";
 import { pricingPageData } from "@/lib/api/pricing";
 import { Button } from "@/components/ui/CTAButton";
 import type { Feature } from "@/types";
 import FaqSection from "@/components/Faq";
 import CTASection from "@/components/CTA";
-import React, { useState } from "react"; // 1. IMPORT THÊM
+import React, { useState } from "react";
 
 type FeatureDisplayValue = string | boolean | null | undefined | number;
 const renderFeatureValue = (value: FeatureDisplayValue) => {
@@ -29,15 +29,13 @@ export default function PricePage() {
   const plans = pricingPlans;
 
   const HEADER_ROW_HEIGHT = "h-[220px]";
-  // const CATEGORY_ROW_HEIGHT = "h-[57px]";
-  // const FEATURE_ROW_HEIGHT = "h-[57px]";
 
-  // 2. THÊM STATE ĐỂ QUẢN LÝ VIỆC ĐÓNG/MỞ
+  //THÊM STATE ĐỂ QUẢN LÝ VIỆC ĐÓNG/MỞ
   const [collapsedCategories, setCollapsedCategories] = useState<
     Record<string, boolean>
   >({});
 
-  // 3. THÊM HÀM XỬ LÝ CLICK
+  // THÊM HÀM XỬ LÝ CLICK
   const toggleCategory = (categoryTitle: string) => {
     setCollapsedCategories((prev) => {
       const newCollapsed = { ...prev };
@@ -73,10 +71,10 @@ export default function PricePage() {
       <section className="bg-gradient-to-b from-blue-100 to-white py-10 text-center">
         {/* === PHẦN HEADER === */}
         <div className="container mx-auto px-4 lg:px-80">
-          <h1 className="mt-10 text-h1 font-bold text-black">
+          <h1 className="mt-10 ">
             {pricingPageData.title}
           </h1>
-          <p className="mx-auto mt-4 mb-10 max-w-3xl text-h6 text-colordescription">
+          <p className="mx-auto mt-4 mb-10 max-w-lg text-h6 text-colordescription md:max-w-xl lg:max-w-2xl xl:max-w-3xl">
             {pricingPageData.description}
           </p>
         </div>
@@ -129,7 +127,7 @@ export default function PricePage() {
                         <h4 className="text-body2 font-bold text-black text-left">
                           {category.title}
                         </h4>
-                        {/* 4. THÊM ICON (CHỈ KHI KHÔNG PHẢI MỤC ĐẦU) */}
+                        {/* THÊM ICON (CHỈ KHI KHÔNG PHẢI MỤC ĐẦU) */}
                         {!isFirstCategory && (
                           <span className="text-ink">
                             <FiChevronDown
@@ -143,7 +141,7 @@ export default function PricePage() {
                         {/* ĐÓNG ĐIỀU KIỆN */}
                       </div>
                       {/* Tiêu đề Cấp 2 */}
-                      {/* 4. CHỈ HIỆN KHI KHÔNG BỊ THU GỌN */}
+                      {/*CHỈ HIỆN KHI KHÔNG BỊ THU GỌN */}
                       <div
                         className={`
                         transition-[max-height] duration-300 ease-in-out overflow-hidden 
@@ -167,7 +165,7 @@ export default function PricePage() {
                 })}
               </div>
 
-              {/* === 4 CARDS GÓI (CỘT 2-5) === */}
+              {/* === CARDS GÓI (CỘT 2-5) === */}
               {plans.map((plan) => (
                 <div
                   key={plan.id}
@@ -240,7 +238,6 @@ export default function PricePage() {
           </div>
         </div>
       </section>
-      {/* === KẾT THÚC SECTION CHUNG === */}
 
       {/* FAQ Section */}
       <FaqSection title={faqSection.title} items={faqSection.faqItems} />

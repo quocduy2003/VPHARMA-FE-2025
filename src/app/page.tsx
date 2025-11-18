@@ -1,7 +1,4 @@
 "use client";
-
-// --- SẮP XẾP IMPORTS ---
-
 // React & Next.js Core
 import Image from "next/image";
 import Link from "next/link";
@@ -36,7 +33,6 @@ import { homePageData } from "@/lib/api/home";
 import { getBlogPosts } from "@/lib/api/blog";
 import { transformBlogListData } from "@/lib/transformers/blog";
 import { BlogCard } from "@/types";
-// --- KẾT THÚC SẮP XẾP IMPORTS ---
 
 export default function HomePage() {
   // --- 1. Data & Destructuring ---
@@ -48,7 +44,7 @@ export default function HomePage() {
     blogSection,
   } = homePageData;
 
-  // --- 2. State ---
+  // --- State ---
   const [activeCategory, setActiveCategory] = useState("Tất cả");
   const [blogPosts, setBlogPosts] = useState<BlogCard[] | null>(null);
   const [activeExperienceIndex, setActiveExperienceIndex] = useState<number>(0);
@@ -56,13 +52,13 @@ export default function HomePage() {
     { id: number; x: number; y: number; icon: React.ElementType }[]
   >([]);
 
-  // --- 3. Refs ---
+  // --- Refs ---
   const experienceIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const experienceResumeTimerRef = useRef<NodeJS.Timeout | null>(null);
   const heroRef = useRef<HTMLElement>(null);
   const trailIconRefs = useRef(0); // Dùng để tạo id duy nhất
 
-  // --- 4. Constants & Motion Values ---
+  // --- Constants & Motion Values ---
   const currentPage = 0;
   const pageSize = 3;
   const totalExperienceItems = experienceSection.contents.length;
@@ -96,7 +92,7 @@ export default function HomePage() {
     },
   };
 
-  // --- 5. Handlers (Functions) ---
+  // --- Handlers (Functions) ---
   const stopExperienceCycle = () => {
     if (experienceIntervalRef.current) {
       clearInterval(experienceIntervalRef.current);
@@ -131,10 +127,7 @@ export default function HomePage() {
     }, 5000); // 5 giây
   };
 
-  // --- 6. Effects (useEffect) ---
-
-  // --- ĐÃ XÓA useEffect BỊ TRÙNG LẶP Ở ĐÂY ---
-  // (useEffect (dòng 72-87) bị thừa vì logic đã có ở dưới)
+  // --- Effects (useEffect) ---
 
   // Effect: Fetch Blog Posts
   useEffect(() => {
@@ -214,7 +207,6 @@ export default function HomePage() {
     };
   }, []); // --- SỬA: Đổi [x, y] thành [] để fix lỗi duplicate key ---
 
-  // --- 7. JSX (Return) ---
   return (
     <>
       <section
@@ -434,7 +426,7 @@ export default function HomePage() {
           <p className="text-h6 mb-5 font-bold capitalize tracking-wide text-primary">
             {featureSection.title}
           </p>
-          <h2 className="mb-15 text-black hidden md:block ">
+          <h2 className="text-black hidden md:block ">
             {featureSection.description}
           </h2>
         </div>
@@ -463,7 +455,7 @@ export default function HomePage() {
             <p className="text-h6 mb-5 font-bold capitalize tracking-wide text-primary">
               {experienceSection.eyebrow}
             </p>
-            <h2 className="mb-15 text-white hidden md:block ">
+            <h2 className="text-white hidden md:block ">
               {experienceSection.title}
             </h2>
           </div>
@@ -578,7 +570,7 @@ export default function HomePage() {
       <section className="py-10 bg-white">
         <div className="container">
           <div className="text-center">
-            <h2 className="mb-15 text-black ">{blogSection.title}</h2>
+            <h2 className="text-black ">{blogSection.title}</h2>
           </div>
 
           <div className="mt-8 flex flex-col items-center justify-between gap-4 md:flex-row ">
