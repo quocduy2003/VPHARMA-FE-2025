@@ -425,8 +425,8 @@ export default function BlogDetailPage() {
                                                 <li
                                                     key={item.id}
                                                     className={`cursor-pointer transition-colors 
-                                                                ${activeId === item.id ? "text-primary font-bold" : "text-colordescription"}
-                                                                ${item.level === 3 ? "pl-4 text-body2" : "text-sub2 font-medium"}
+                                                                ${activeId === item.id ? "text-primary " : "text-colordescription"}
+                                                                ${item.level === 3 ? "pl-4 text-body2" : "text-sub2"}
                                                             `}
                                                 >
                                                     <a onClick={handleTocClick(item.id)}>

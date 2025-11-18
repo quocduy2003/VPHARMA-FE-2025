@@ -74,6 +74,7 @@
 @layer base {
   body {
     @apply font-[var(--font-roboto)] text-[var(--color-text)] bg-[var(--color-white)];
+    font-family: var(--font-roboto);
   }
   html {
     scroll-behavior: smooth;
@@ -248,7 +249,8 @@
       font-size: 16px;
     }
     .rich-text p,
-    .rich-text li {
+    .rich-text li,
+    .rich-text a {
       font-size: 1.125rem;
     }
   }
@@ -271,7 +273,8 @@
       font-size: 1.125rem;
     }
     .rich-text p,
-    .rich-text li {
+    .rich-text li,
+    .rich-text a {
       font-size: 1.125rem;
     }
   }
@@ -294,8 +297,9 @@
   }
 
   .rich-text img {
+    aspect-ratio: 16 / 9 !important;
     max-width: 100%;
-    height: auto;
+    height: auto !important;
     border-radius: 8px;
     margin-bottom: 1.5rem;
     display: block;
@@ -325,7 +329,6 @@
   }
   /* ========== IMAGE RESIZE (CKEditor Resize) ========== */
   .rich-text figure.image img {
-    aspect-ratio: 5 / 4;
     width: 100%; /* Ăn theo width của figure */
     height: auto;
     display: block;
@@ -343,7 +346,6 @@
 
   .rich-text a {
     color: #2563eb;
-    text-decoration: underline;
   }
 
   .rich-text a:hover {
@@ -404,27 +406,10 @@
   }*/
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Hiệu ứng lơ lửng và nảy nhẹ */
 @keyframes float-bounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px) scale(1);
   }
   25% {
@@ -440,7 +425,8 @@
 
 /* Hiệu ứng xoay và nhấp nháy kích thước nhẹ */
 @keyframes rotate-pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: rotate(0deg) scale(1);
   }
   30% {
@@ -453,7 +439,8 @@
 
 /* Hiệu ứng lắc lư và mờ dần */
 @keyframes sway-fade {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0px) rotate(0deg);
     opacity: 0.7;
   }
@@ -468,14 +455,32 @@
 }
 
 /* Áp dụng các animation với tốc độ khác nhau */
-.animate-float-bounce-slow { animation: float-bounce 8s ease-in-out infinite; }
-.animate-float-bounce-medium { animation: float-bounce 6s ease-in-out infinite; }
-.animate-float-bounce-fast { animation: float-bounce 4s ease-in-out infinite; }
+.animate-float-bounce-slow {
+  animation: float-bounce 8s ease-in-out infinite;
+}
+.animate-float-bounce-medium {
+  animation: float-bounce 6s ease-in-out infinite;
+}
+.animate-float-bounce-fast {
+  animation: float-bounce 4s ease-in-out infinite;
+}
 
-.animate-rotate-pulse-slow { animation: rotate-pulse 10s ease-in-out infinite; }
-.animate-rotate-pulse-medium { animation: rotate-pulse 7s ease-in-out infinite; }
-.animate-rotate-pulse-fast { animation: rotate-pulse 5s ease-in-out infinite; }
+.animate-rotate-pulse-slow {
+  animation: rotate-pulse 10s ease-in-out infinite;
+}
+.animate-rotate-pulse-medium {
+  animation: rotate-pulse 7s ease-in-out infinite;
+}
+.animate-rotate-pulse-fast {
+  animation: rotate-pulse 5s ease-in-out infinite;
+}
 
-.animate-sway-fade-slow { animation: sway-fade 9s ease-in-out infinite; }
-.animate-sway-fade-medium { animation: sway-fade 6s ease-in-out infinite; }
-.animate-sway-fade-fast { animation: sway-fade 4s ease-in-out infinite; }
+.animate-sway-fade-slow {
+  animation: sway-fade 9s ease-in-out infinite;
+}
+.animate-sway-fade-medium {
+  animation: sway-fade 6s ease-in-out infinite;
+}
+.animate-sway-fade-fast {
+  animation: sway-fade 4s ease-in-out infinite;
+}
