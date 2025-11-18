@@ -403,3 +403,79 @@
     }
   }*/
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Hiệu ứng lơ lửng và nảy nhẹ */
+@keyframes float-bounce {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  25% {
+    transform: translateY(-8px) scale(1.02);
+  }
+  50% {
+    transform: translateY(0px) scale(1);
+  }
+  75% {
+    transform: translateY(8px) scale(0.98);
+  }
+}
+
+/* Hiệu ứng xoay và nhấp nháy kích thước nhẹ */
+@keyframes rotate-pulse {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+  }
+  30% {
+    transform: rotate(15deg) scale(1.05);
+  }
+  60% {
+    transform: rotate(-15deg) scale(0.95);
+  }
+}
+
+/* Hiệu ứng lắc lư và mờ dần */
+@keyframes sway-fade {
+  0%, 100% {
+    transform: translateX(0px) rotate(0deg);
+    opacity: 0.7;
+  }
+  33% {
+    transform: translateX(10px) rotate(5deg);
+    opacity: 0.9;
+  }
+  66% {
+    transform: translateX(-10px) rotate(-5deg);
+    opacity: 0.5;
+  }
+}
+
+/* Áp dụng các animation với tốc độ khác nhau */
+.animate-float-bounce-slow { animation: float-bounce 8s ease-in-out infinite; }
+.animate-float-bounce-medium { animation: float-bounce 6s ease-in-out infinite; }
+.animate-float-bounce-fast { animation: float-bounce 4s ease-in-out infinite; }
+
+.animate-rotate-pulse-slow { animation: rotate-pulse 10s ease-in-out infinite; }
+.animate-rotate-pulse-medium { animation: rotate-pulse 7s ease-in-out infinite; }
+.animate-rotate-pulse-fast { animation: rotate-pulse 5s ease-in-out infinite; }
+
+.animate-sway-fade-slow { animation: sway-fade 9s ease-in-out infinite; }
+.animate-sway-fade-medium { animation: sway-fade 6s ease-in-out infinite; }
+.animate-sway-fade-fast { animation: sway-fade 4s ease-in-out infinite; }
