@@ -6,12 +6,8 @@ import Image from "next/image";
 
 const styles = `
 @keyframes scroll-up {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-50%);
-  }
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
 }
 .animate-scroll-up {
   animation: scroll-up 35s linear infinite;
@@ -19,13 +15,12 @@ const styles = `
 `;
 
 export function FeaturedNews({ posts }: { posts: BlogPost[] }) {
-  // Nhân đôi danh sách để tạo hiệu ứng lướt vô hạn
   const duplicatedPosts = [...posts, ...posts];
 
   return (
-    <div className="rounded-lg border border-blue-500 bg-blue-100 p-6 shadow-sm">
+    <div className="rounded-lg border border-gray-300 bg-white p-6 shadow-md">
       <style>{styles}</style>
-      <h3 className="mb-4 text-h6 font-bold text-gray-800">
+      <h3 className="mb-4 text-h6 font-bold text-gray-900 border-b-2 border-blue-500/40 pb-2">
         Tin tức nổi bật
       </h3>
       <div className="h-[640px] overflow-hidden">
@@ -34,7 +29,7 @@ export function FeaturedNews({ posts }: { posts: BlogPost[] }) {
             <Link
               href={`/blog/${post.slug}/${post.slug}`}
               key={`${post.title}-${index}`}
-              className="mb-3 mt-5 block border-b border-blue-500 pb-3 last:mb-0 last:border-b-0"
+              className="mb-4 mt-4 block border-b border-gray-200 pb-3 last:mb-0 last:border-b-0 transition hover:bg-gray-50"
             >
               <div className="flex items-start gap-3">
                 <Image
@@ -44,7 +39,7 @@ export function FeaturedNews({ posts }: { posts: BlogPost[] }) {
                   height={60}
                   className="h-15 w-15 flex-shrink-0 rounded-md object-cover"
                 />
-                <p className="text-sub2 font-bold hover:text-primary line-clamp-2">
+                <p className="text-sub2 font-semibold text-gray-800 hover:text-blue-600 line-clamp-2">
                   {post.title}
                 </p>
               </div>

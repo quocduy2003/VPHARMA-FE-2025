@@ -58,7 +58,7 @@ export default function ReviewCarousel({ sectionData }: Props) {
   return (
     <section className="py-10 bg-gray-50">
       <div className="container text-center">
-        <p className=" text-h6 mb-5 font-bold  tracking-wide text-primary">
+        <p className=" lg:text-h6 text-body2 md:text-body3 font-bold mb-5  tracking-wide text-primary">
           Reviews
         </p>
         <h2 className=" text-black">
@@ -75,10 +75,7 @@ export default function ReviewCarousel({ sectionData }: Props) {
               bestTestimonials.map((review, idx) => (
                 <div
                   key={`${rIdx}-${idx}`}
-                  // SỬA: Xóa max-w-[320px] và style inline
-                  // SỬA: Thêm class flex-basis responsive
                   className="flex flex-col rounded-lg bg-white p-6 text-left shadow-lg m-3 min-w-[300px] w-full flex-shrink-0 flex-[0_0_90%] sm:flex-[0_0_45%] md:flex-[0_0_30%] lg:flex-[0_0_22%]"
-                  // style={{ flex: "0 0 20%" }} // <--- XÓA DÒNG NÀY
                 >
                   {review.avatar?.url && (
                     <Image

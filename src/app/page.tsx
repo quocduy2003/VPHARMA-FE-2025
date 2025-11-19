@@ -340,15 +340,15 @@ export default function HomePage() {
 
         {/* Phần nội dung văn bản (z-index cao hơn) */}
         <div className="container h-full w-full flex items-center justify-center flex-col text-center relative z-20">
-          <motion.h6
-            className="capitalize text-primary mb-10"
+          <motion.p
+            className="capitalize lg:text-h6 text-body2 md:text-body3 font-bold text-primary mb-5"
             initial="hidden"
             animate="visible"
             variants={textVariants}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             {homePageData.eyebrow}
-          </motion.h6>
+          </motion.p>
 
           <motion.h1
             className="mx-auto max-w-6xl capitalize pb-3"
@@ -423,10 +423,10 @@ export default function HomePage() {
       {/*===== section 2 =====*/}
       <section className="container py-10">
         <div className="text-center">
-          <p className="text-h6 mb-5 font-bold capitalize tracking-wide text-primary">
+          <p className="lg:text-h6 text-body2 md:text-body3 font-bold mb-5 capitalize tracking-wide text-primary">
             {featureSection.title}
           </p>
-          <h2 className="text-black hidden md:block ">
+          <h2 className="text-black ">
             {featureSection.description}
           </h2>
         </div>
@@ -452,10 +452,10 @@ export default function HomePage() {
       <section className="relative overflow-hidden bg-ink">
         <div className="container mx-auto">
           <div className="text-center">
-            <p className="text-h6 mb-5 font-bold capitalize tracking-wide text-primary">
+            <p className="lg:text-h6 text-body2 md:text-body3 font-bold mb-5 capitalize tracking-wide text-primary">
               {experienceSection.eyebrow}
             </p>
-            <h2 className="text-white hidden md:block ">
+            <h2 className="text-white">
               {experienceSection.title}
             </h2>
           </div>

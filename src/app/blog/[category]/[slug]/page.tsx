@@ -365,10 +365,10 @@ export default function BlogDetailPage() {
                     </div>
                 </div>
                 <div className=" mx-auto">
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-8 lg:px-[4.25rem] ">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-12 lg:px-[4.25rem] ">
                         {/* Main Content */}
                         <article className="col-span-1 lg:col-span-8 ">
-                            <h1 className="text-h2 font-bold text-black mb-6">{blog.title}</h1>
+                            <h1>{blog.title}</h1>
                             <p className="text-body2 mb-6">
                                 Ngày cập nhật:{" "}
                                 {blog.createdAt
@@ -379,7 +379,7 @@ export default function BlogDetailPage() {
                                     })
                                     : ""}
                             </p>
-                            <p className="text-body2 mb-6">{blog.description}</p>
+                            <p className="text-body2 mb-6 text-justify">{blog.description}</p>
                             <Image
                                 src={blog.coverImage?.url}
                                 alt={blog.alt || blog.title}
@@ -425,9 +425,9 @@ export default function BlogDetailPage() {
                                                 <li
                                                     key={item.id}
                                                     className={`cursor-pointer transition-colors 
-    ${activeId === item.id ? "text-primary font-bold" : "text-colordescription"}
-    ${item.level === 3 ? "pl-4 text-body2" : "text-sub2 font-medium"}
-  `}
+                                                                ${activeId === item.id ? "text-primary " : "text-colordescription"}
+                                                                ${item.level === 3 ? "pl-4 text-body2" : "text-sub2"}
+                                                            `}
                                                 >
                                                     <a onClick={handleTocClick(item.id)}>
                                                         {item.text}
