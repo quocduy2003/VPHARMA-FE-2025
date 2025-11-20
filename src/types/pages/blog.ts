@@ -1,3 +1,5 @@
+import { CTASection } from "@/types/common";
+
 export interface BlogCategory {
   id: number;
   name: string;
@@ -61,6 +63,7 @@ export interface BlogData {
   description: string;
   mainBlog: BlogPost;
   featuredNews: BlogPost[];
+  ctaSection: CTASection;
 }
 
 // Type for Table of Contents item

@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import { useRef } from "react";
 import Link from "next/link";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { FeaturedNews } from "@/components/blog/FeaturedNews";
-import { BlogPostCard } from "@/components/blog/BlogCard";
+import { BlogPostCard } from "@/components/blog/BlogTableView";
 import Image from "next/image";
 
 import {
@@ -24,6 +25,8 @@ import { HeroSkeleton, BlogCardSkeleton, FeaturedNewsSkeleton } from "@/componen
 export default function BlogHomePage() {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get("category");
+  const listRef = useRef<HTMLDivElement | null>(null);
+
 
   const activeCategory = categoryParam || "home";
 
@@ -34,6 +37,10 @@ export default function BlogHomePage() {
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 6;
   const [totalPages, setTotalPages] = useState(1);
+  const [shouldScroll, setShouldScroll] = useState(false);
+
+
+
 
   const activeCategoryObj = blogCategories.find(
     (cat) => cat.slug === activeCategory
@@ -79,15 +86,35 @@ export default function BlogHomePage() {
   const handlePageChange = (pageNumber: number) => {
     if (pageNumber > 0 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      setShouldScroll(true)
     }
   };
+
+  // Scroll sau khi trang đã load dữ liệu mới
+  useEffect(() => {
+    if (!isLoading && shouldScroll) {
+      const el = listRef.current;
+      if (el) {
+        // Cộng tổng chiều cao các header
+        let HEADER_HEIGHT = 0;
+        document.querySelectorAll('header').forEach(header => {
+          HEADER_HEIGHT += header.offsetHeight;
+        });
+        console.log("Total HEADER_HEIGHT:", HEADER_HEIGHT);
+        HEADER_HEIGHT += 20;
+        const y = el.getBoundingClientRect().top + window.scrollY - HEADER_HEIGHT;
+        window.scrollTo({ top: y, behavior: "smooth" });
+
+      }
+      setShouldScroll(false);
+    }
+  }, [currentPage, isLoading, shouldScroll]);
 
 
 
   return (
     <div className="bg-gray-50 py-10">
-      <div className="container mx-auto">
+      <div className="container">
         {/* Header */}
         <div className="mb-10 text-center">
           <h1 className="text-black mb-5">{title}</h1>
@@ -142,7 +169,7 @@ export default function BlogHomePage() {
         </div>
 
         {/* Danh sách bài */}
-        <div className="container">
+        <div ref={listRef} className="container">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {isLoading
               ? Array.from({ length: 6 }).map((_, i) => <BlogCardSkeleton key={i} />)
@@ -160,6 +187,8 @@ export default function BlogHomePage() {
           {/* Pagination */}
           {totalPages > 1 && (
             <div className="mt-12 flex items-center justify-center gap-2">
+
+              {/* Previous */}
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
@@ -168,19 +197,95 @@ export default function BlogHomePage() {
                 <FiArrowLeft />
               </button>
 
-              {Array.from({ length: totalPages }, (_, index) => (
+              {/* Trang 1 */}
+              <button
+                onClick={() => handlePageChange(1)}
+                className={`flex h-9 w-9 items-center justify-center rounded-full border transition ${currentPage === 1
+                  ? "border-primary text-primary"
+                  : "border-gray-200 text-gray-500 hover:border-primary hover:text-primary"
+                  }`}
+              >
+                1
+              </button>
+
+              {/* Nếu chỉ có <=3 trang giữa thì render trực tiếp (2..totalPages-1) */}
+              {totalPages <= 5 ? (
+                Array.from({ length: Math.max(0, totalPages - 2) }).map((_, i) => {
+                  const page = i + 2;
+                  return (
+                    <button
+                      key={page}
+                      onClick={() => handlePageChange(page)}
+                      className={`flex h-9 w-9 items-center justify-center rounded-full border transition ${currentPage === page
+                        ? "border-primary text-primary"
+                        : "border-gray-200 text-gray-500 hover:border-primary hover:text-primary"
+                        }`}
+                    >
+                      {page}
+                    </button>
+                  );
+                })
+              ) : (
+                (() => {
+                  // Tính start/end cho phần giữa (không bao gồm trang 1 và trang cuối)
+                  let start = Math.max(2, currentPage - 1);
+                  let end = Math.min(totalPages - 1, currentPage + 1);
+
+                  // Nếu đang ở trang cuối, muốn hiển thị 3 trang phía trước: totalPages-2, totalPages-1, totalPages
+                  if (currentPage === totalPages) {
+                    start = Math.max(2, totalPages - 2);
+                    end = totalPages - 1;
+                  }
+
+                  // Nếu đang ở trang 2 hoặc 3 đảm bảo start ít nhất là 2 và không trùng nhau
+                  if (currentPage <= 3) {
+                    start = 2;
+                    end = Math.min(4, totalPages - 1);
+                  }
+
+                  const items = [];
+
+                  if (start > 2) {
+                    items.push(<span key="left-ellipsis" className="px-1 text-gray-400">…</span>);
+                  }
+
+                  for (let p = start; p <= end; p++) {
+                    items.push(
+                      <button
+                        key={p}
+                        onClick={() => handlePageChange(p)}
+                        className={`flex h-9 w-9 items-center justify-center rounded-full border transition ${currentPage === p
+                          ? "border-primary text-primary"
+                          : "border-gray-200 text-gray-500 hover:border-primary hover:text-primary"
+                          }`}
+                      >
+                        {p}
+                      </button>
+                    );
+                  }
+
+                  if (end < totalPages - 1) {
+                    items.push(<span key="right-ellipsis" className="px-1 text-gray-400">…</span>);
+                  }
+
+                  return items;
+                })()
+              )}
+
+              {/* Trang cuối */}
+              {totalPages > 1 && (
                 <button
-                  key={index + 1}
-                  onClick={() => handlePageChange(index + 1)}
-                  className={`flex h-9 w-9 items-center justify-center rounded-full border text-sub1 transition ${currentPage === index + 1
+                  onClick={() => handlePageChange(totalPages)}
+                  className={`flex h-9 w-9 items-center justify-center rounded-full border transition ${currentPage === totalPages
                     ? "border-primary text-primary"
                     : "border-gray-200 text-gray-500 hover:border-primary hover:text-primary"
                     }`}
                 >
-                  {index + 1}
+                  {totalPages}
                 </button>
-              ))}
+              )}
 
+              {/* Next */}
               <button
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
@@ -190,6 +295,8 @@ export default function BlogHomePage() {
               </button>
             </div>
           )}
+
+
         </div>
       </div>
     </div>

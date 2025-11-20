@@ -37,6 +37,16 @@ export function transformBlogForHomePage(response: any): BlogData {
         },
         slug: post.slug,
       })) || [],
+    ctaSection: {
+      title:
+        data?.ctaSection?.title ||
+        "Bắt đầu hành trình chuyển đổi số ngay hôm nay",
+      description: data?.ctaSection?.description || "",
+      ctaButton: {
+        title: data?.ctaSection?.ctaButton?.title || "Tìm hiểu thêm",
+        link: data?.ctaSection?.ctaButton?.link || "#",
+      },
+    },
   };
 }
 

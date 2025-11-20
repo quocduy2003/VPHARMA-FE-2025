@@ -6,14 +6,19 @@ import {
 } from "@/lib/transformers/blog";
 import { BlogResponse, BlogCategory } from "@/types";
 import qs from "qs";
-
-export async function getBlogsForHomePage(): Promise<BlogData> {
+//Get page blog
+async function getBlogsForHomePage(): Promise<BlogData> {
   const query = qs.stringify(
     {
       populate: {
         featuredNews: {
           populate: {
             coverImage: { populate: true },
+          },
+        },
+        ctaSection: {
+          populate: {
+            ctaButton: true,
           },
         },
       },
@@ -24,7 +29,7 @@ export async function getBlogsForHomePage(): Promise<BlogData> {
   const response = await fetchAPI(`blog?${query}`);
   return transformBlogForHomePage(response);
 }
-
+//Get the category name
 async function getBlogCategories(): Promise<BlogCategory[]> {
   const query = qs.stringify(
     {
@@ -73,11 +78,40 @@ export async function getBlogPosts(
   const response = await fetchAPI(`blog-posts?${query}`);
   return response;
 }
+//Get blog posts by category
+export async function getBlogPostByCategories(
+  categorySlug: string,
+  page: number = 1,
+  pageSize: number = 10
+): Promise<BlogCardData> {
+  const query = qs.stringify(
+    {
+      filters: {
+        blog_category: {
+          slug: { $eq: categorySlug },
+        },
+      },
+      populate: {
+        coverImage: true,
+        blog_category: true,
+      },
+      sort: ["createdAt:desc"],
+      pagination: {
+        page,
+        pageSize,
+      },
+    },
+    { encodeValuesOnly: true }
+  );
 
+  const response = await fetchAPI(`blog-posts?${query}`);
+  return response as BlogCardData;
+}
+
+//Get the latest blog post
 export async function getBlogLastest(
   categorySlug?: string
 ): Promise<BlogCardData> {
-  console.log("Fetching latest blog for category:", categorySlug);
   const filters =
     categorySlug && categorySlug !== "home"
       ? {
@@ -106,6 +140,7 @@ export async function getBlogLastest(
   return response as BlogCardData;
 }
 
+//Get blog post by slug
 export async function getBlogPostBySlug(slug: string): Promise<BlogPost> {
   const query = qs.stringify(
     {

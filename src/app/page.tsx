@@ -384,7 +384,7 @@ export default function HomePage() {
 
       {/*===== section 1 =====*/}
       <section className="mx-auto py-10">
-        <div className="container bg-ink rounded-2xl p-10 mb-5">
+        <div className="container bg-ink rounded-2xl p-10 ">
           <div className="text-center ">
             <h2 className=" text-white mb-5">{solutionSection.title}</h2>
             <p className="text-h6 mx-auto max-w-2xl text-white hidden md:block">

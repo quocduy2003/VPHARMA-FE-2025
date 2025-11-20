@@ -29,10 +29,10 @@ const searchInputVariants = {
   },
 };
 
-const searchTransition = {
-  duration: 0.3,
-  ease: "easeInOut",
-} as const;
+// const searchTransition = {
+//   duration: 0.3,
+//   ease: "easeInOut",
+// } as const;
 
 export function BlogHeader() {
   const pathname = usePathname();
