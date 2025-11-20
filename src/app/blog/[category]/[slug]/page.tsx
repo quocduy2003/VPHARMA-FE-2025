@@ -6,9 +6,9 @@ import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { FiFacebook, FiLinkedin, FiList } from "react-icons/fi";
 import { SiZalo } from "react-icons/si";
-import { BlogPost } from "@/types";
+import { BlogCard, BlogPost } from "@/types";
 import { getBlogPostBySlug } from "@/lib/api/blog";
-import { transformBlogPostData } from "@/lib/transformers/blog";
+import { transformBlogPostData, transformBlogListData } from "@/lib/transformers/blog";
 import { normalizeHeadings } from "@/lib/utils/normalizeHeadings";
 import { generateTableOfContents } from "@/lib/utils/generateTOC";
 import { TocItem } from "@/types";
@@ -16,15 +16,80 @@ import Image from "next/image";
 import { Button } from "@/components/ui/CTAButton";
 import { blogData, getBlogPostByCategories } from '@/lib/api';
 import CTASection from "@/components/CTA";
+import RelatedPostsCarousel from "@/components/blog/BlogCardView";
+
+
+const articles = [
+    {
+        image: "/features-dashboard1.png",
+        views: 34795,
+        title: "Tổng đài ShopeeFood là gì?",
+        desc: "Các cách liên hệ với Shopee...",
+    },
+    {
+        image: "/features-dashboard2.png",
+        views: 19155,
+        title: "Ship hóa tốc Shopee là gì?",
+        desc: "Giao hàng hoả tốc Shopee...",
+    },
+    {
+        image: "/features-dashboard3.jpg",
+        views: 721,
+        title: "Conversational Commerce là gì?",
+        desc: "Từ A-Z về thương mại hội thoại...",
+    },
+    {
+        image: "/features-dashboard5.jpg",
+        views: 7615,
+        title: "Shopee, TikTok đồng loạt tăng phí",
+        desc: "Và những điều nhà bán cần chú ý...",
+    },
+    {
+        image: "/features-dashboard1.png",
+        views: 4321,
+        title: "Ưu đãi tài khoản Shopee mới",
+        desc: "Hướng dẫn đăng ký Shopee...",
+    },
+    {
+        image: "/features-dashboard1.png",
+        views: 5678,
+        title: "Làm content Shopee hiệu quả",
+        desc: "Bí quyết viết content bán hàng...",
+    },
+    {
+        image: "/features-dashboard1.png",
+        views: 1234,
+        title: "Quy trình xử lý đơn Shopee",
+        desc: "Các bước xử lý đơn nhanh chóng...",
+    },
+    {
+        image: "/features-dashboard1.png",
+        views: 2525,
+        title: "Cách quảng cáo trên TikTok Shop",
+        desc: "Làm sao chạy quảng cáo hiệu quả...",
+    },
+    {
+        image: "/features-dashboard1.png",
+        views: 1100,
+        title: "Kinh nghiệm livestream bán hàng",
+        desc: "Tăng tỷ lệ chốt đơn qua livestream...",
+    },
+    {
+        image: "/features-dashboard1.png",
+        views: 4699,
+        title: "Tips giữ chân khách Shopee",
+        desc: "Chiến lược giữ chân khách hàng lâu...",
+    },
+];
 export default function BlogDetailPage() {
     const { ctaSection } = blogData;
     const params = useParams();
     const [blog, setBlog] = useState<BlogPost | null>(null);
+    const [relatedPosts, setRelatedPosts] = useState<BlogCard[]>([]);
     const [safeContent, setSafeContent] = useState<string>("");
     const [toc, setToc] = useState<TocItem[]>([]);
     const [activeId, setActiveId] = useState<string>("");
     const [isLoading, setIsLoading] = useState(true);
-
 
 
     const { slug, category } = params;
@@ -35,8 +100,8 @@ export default function BlogDetailPage() {
         const fetchData = async () => {
             setIsLoading(true);
             const data = await getBlogPostByCategories(category as string);
-            const transformed = transformBlogPostData(data);
-            setBlog(transformed);
+            const transformed = transformBlogListData(data);
+            setRelatedPosts(transformed);
             console.log("Fetched blog data:", transformed);
             setIsLoading(false);
 
@@ -276,10 +341,8 @@ export default function BlogDetailPage() {
                 </div>
 
             </div>
-            <div className="container h-100">
-                <div className="h-2 bg-primary "></div>
-
-            </div>
+            {/* <RelatedPostsCarousel posts={relatedPosts} visibleCount={6}/> */}
+            <RelatedPostsCarousel posts={relatedPosts} visibleCount={3} />
             <CTASection ctaSection={ctaSection} />
 
         </div>
