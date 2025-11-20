@@ -24,7 +24,7 @@ function FaqItem({
         className="flex w-full items-center justify-between text-left hover:text-primary transition-colors"
         onClick={onClick}
       >
-        <span className="text-black text-sub1 font-semibold">{item.question}</span>
+        <span className="text-black text-sub2 md:text-sub1 font-semibold">{item.question}</span>
 
         {/* icon không nền, nhẹ, giống Google */}
         <span className="text-gray-700">
@@ -36,12 +36,12 @@ function FaqItem({
         </span>
       </button>
 
-      {/* hiệu ứng mở/đóng mượt */}
+      {/* hiệu ứng mở/đóng */}
       <div
         className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-[500px] opacity-100 mt-4" : "max-h-0 opacity-0"
           }`}
       >
-        <RichTextRenderer content={item.answer} className="text-body2 leading-relaxed text-colordescription pr-6 pb-1" />
+        <RichTextRenderer content={item.answer} className="text-sm leading-relaxed text-colordescription pr-6 pb-1" />
       </div>
     </div>
   );
@@ -55,8 +55,8 @@ export default function FaqSection({ title, items }: FaqSectionProps) {
   }
 
   return (
-    <section className="container mx-auto max-w-5xl px-4 py-15">
-      <h2 className="text-center text-black font-bold mb-12">
+    <section className="container mx-auto max-w-5xl  py-15">
+      <h2 className="text-center text-black font-bold">
         {title}
       </h2>
 
