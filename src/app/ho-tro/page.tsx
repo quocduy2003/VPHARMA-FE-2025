@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, Fragment } from "react";
 import FadeInOnScroll from "@/components/animations/FadeInOnScroll";
-import PhoneInputField from "@/components/ho-tro/PhoneInputField";
+import PhoneInputField from "@/components/ho-tro/PhoneInputField"; // Đảm bảo đường dẫn đúng
 import type { IconType } from "react-icons";
 import {
   FiLoader,
@@ -35,9 +35,13 @@ const subjectOptions = [
 ];
 
 export default function HoTro() {
-
-  const { headline, contactForm, contactInformation, supportSoftware, faqSection } = contactData ?? {};
-  console.log("Contact Data:", contactData);
+  const {
+    headline,
+    contactForm,
+    contactInformation,
+    supportSoftware,
+    faqSection,
+  } = contactData ?? {};
 
   const [fullName, setFullName] = useState("");
   const [fullNameError, setFullNameError] = useState("");
@@ -48,8 +52,7 @@ export default function HoTro() {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
 
-  // Sửa state của subject để lưu object (hoặc id)
-  const [subject, setSubject] = useState(subjectOptions[0]); // Có thể set mặc định
+  const [subject, setSubject] = useState(subjectOptions[0]);
   const [subjectError, setSubjectError] = useState("");
 
   const [description, setDescription] = useState("");
@@ -57,7 +60,7 @@ export default function HoTro() {
   const [formError, setFormError] = useState<string>("");
   const [formSuccess, setFormSuccess] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  //icon 
+
   const socialIcons: Record<string, IconType> = {
     facebook: BiLogoFacebookCircle,
     youtube: FiYoutube,
@@ -68,8 +71,17 @@ export default function HoTro() {
     github: FiGithub,
   };
 
-  // --- Logic Validation (onBlur) ---
+  // --- STANDARDIZED STYLING (From Register Page) ---
+  // Đây là logic style giống hệt trang Register bạn yêu cầu
+  const getInputClass = (hasError: boolean) =>
+    `w-full rounded-lg border-2 px-2 py-2 text-base placeholder-gray-400 text-sm md:text-body2 lg:text-sub2 text-black
+     ${hasError ? "border-red-500" : "border-gray-300"}
+     outline-none focus:border-blue-500 transition-all bg-white`;
 
+  const labelClass =
+    "block text-black font-semibold text-sm md:text-body2 lg:text-sub2 mb-2";
+
+  // --- Logic Validation ---
   const validateFullName = () => {
     const value = fullName.trim();
     if (!value) {
@@ -90,14 +102,12 @@ export default function HoTro() {
   };
 
   const validatePhone = () => {
-    const value = phone.replace(/\s+/g, ""); // Xóa khoảng trắng
+    const value = phone.replace(/\s+/g, "");
     if (!value) {
       setPhoneError("Vui lòng nhập số điện thoại.");
       return false;
     }
-    // Giả sử mã quốc gia có thể từ 1-3 số, sđt từ 9-12 số
-    // PhoneInput trả về bao gồm mã quốc gia, vd: +84911000038
-    const onlyNumber = /^\+[0-9]{10,15}$/; // Regex đơn giản cho SĐT quốc tế
+    const onlyNumber = /^\+[0-9]{10,15}$/;
     if (!onlyNumber.test(phone)) {
       setPhoneError("Vui lòng kiểm tra lại số điện thoại.");
       return false;
@@ -131,78 +141,70 @@ export default function HoTro() {
   };
 
   // --- Logic Submit ---
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormError("");
     setFormSuccess("");
 
-    // Validate tất cả các trường
     const isFullNameValid = validateFullName();
     const isEmailValid = validateEmail();
     const isPhoneValid = validatePhone();
     const isSubjectValid = validateSubject();
 
     if (!isFullNameValid || !isEmailValid || !isPhoneValid || !isSubjectValid) {
-      return; // Dừng nếu có lỗi
+      return;
     }
 
     setIsSubmitting(true);
-
-    // --- Giả lập gọi API ---
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    // Giả lập trường hợp thành công
-    const isSuccess = true; // (Thay đổi giá trị này để test lỗi)
+    // Demo success logic
+    const isSuccess = true;
 
     if (isSuccess) {
       setFormSuccess(
         "Đã gửi thành công. Cảm ơn bạn đã liên hệ với VPharma. Chúng tôi sẽ phản hồi lại trong vòng 24 giờ làm việc."
       );
-      // Reset form
       setFullName("");
       setPhone("");
       setEmail("");
       setSubject(subjectOptions[0]);
       setDescription("");
     } else {
-      // Giả lập trường hợp lỗi
       setFormError(
         "Rất tiếc, đã có lỗi xảy ra. Bạn có thể thử lại, hoặc liên hệ trực tiếp với chúng tôi qua hotline hoặc email để được hỗ trợ."
       );
     }
     setIsSubmitting(false);
   };
-
+ 
+  const iconClass ="mt-1 flex-shrink-0 text-success mr-3 md:mr-4 w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7";
   return (
     <div>
       {/** Dashboard */}
       <section className="bg-gradient-to-b from-blue-100 to-white py-10 text-center">
         <div className="container ">
-          <h1 className="mt-10">{headline.title}</h1>
-          <p className="mx-auto text-colordescription text-h6 mb-15 max-w-3xl">
-            {headline.description}
+          <h1 className="mt-10">{headline?.title}</h1>
+          <p className="mx-auto text-colordescription text-sub2 md:text-sub1 lg:text-h6 md:mb-15 max-w-3xl">
+            {headline?.description}
           </p>
         </div>
       </section>
 
       {/* Phần Form và Thông tin liên hệ */}
       <FadeInOnScroll>
-        <section className="bg-white pb-10">
-          <div className="max-w-6xl mx-auto  grid grid-cols-1 md:grid-cols-2 gap-20">
+        <section className="bg-white pb-10 px-4">
+          <div className="max-w-6xl px-4 lg:px-0  mx-auto grid grid-cols-1 md:grid-cols-2 gap-20">
             {/* Form Liên hệ */}
             <div>
-              <h2 className="text-black font-bold mb-5">{contactForm?.title}</h2>
-              <p className="mb-5 text-sub1 text-colordescription">
+              <h2 className="text-black mb-3 md:mb-5">{contactForm?.title}</h2>
+              <p className="mb-4 md:mb-5 text-body2 md:text-sub2 lg:text-sub1 text-colordescription">
                 {contactForm?.description}
               </p>
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Họ và Tên */}
                 <div>
-                  <label
-                    htmlFor="fullName"
-                    className="block text-black font-bold text-sub2 mb-2"
-                  >
+                  <label htmlFor="fullName" className={labelClass}>
                     Họ và Tên
                   </label>
                   <input
@@ -211,13 +213,12 @@ export default function HoTro() {
                     value={fullName}
                     onChange={(e) => {
                       setFullName(e.target.value.trimStart());
-                      if (fullNameError) setFullNameError(""); // Xóa lỗi khi người dùng bắt đầu gõ
+                      if (fullNameError) setFullNameError("");
                     }}
-                    onBlur={validateFullName} // Validate khi rời khỏi ô
+                    onBlur={validateFullName}
                     required
-                    className={`w-full rounded-lg border-2 px-4 py-3 text-base placeholder-gray-400 text-sub2
-                      ${fullNameError ? "border-red-500" : "border-gray-300"}
-                      outline-none focus:border-blue-500 transition-all`}
+                    // SỬ DỤNG CLASS MỚI
+                    className={getInputClass(!!fullNameError)}
                     placeholder="Họ và Tên"
                   />
                   {fullNameError && (
@@ -229,10 +230,7 @@ export default function HoTro() {
 
                 {/* Số điện thoại */}
                 <div>
-                  <label
-                    htmlFor="phone"
-                    className="block text-black font-bold text-sub2 mb-2"
-                  >
+                  <label htmlFor="phone" className={labelClass}>
                     Số điện thoại
                   </label>
                   <PhoneInputField
@@ -248,10 +246,7 @@ export default function HoTro() {
 
                 {/* Email */}
                 <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-black font-bold text-sub2 mb-2"
-                  >
+                  <label htmlFor="email" className={labelClass}>
                     Địa chỉ Email
                   </label>
                   <input
@@ -260,13 +255,12 @@ export default function HoTro() {
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
-                      if (emailError) setEmailError(""); // Xóa lỗi khi gõ
+                      if (emailError) setEmailError("");
                     }}
-                    onBlur={validateEmail} // Validate khi rời khỏi ô
+                    onBlur={validateEmail}
                     required
-                    className={`w-full rounded-lg border-2 px-4 py-3 text-base placeholder-gray-400 text-sub2
-                    ${emailError ? "border-red-500" : "border-gray-300"}
-                    outline-none focus:border-blue-500 transition-all`}
+                    // SỬ DỤNG CLASS MỚI
+                    className={getInputClass(!!emailError)}
                     placeholder="Địa chỉ Email"
                   />
                   {emailError && (
@@ -276,27 +270,21 @@ export default function HoTro() {
                   )}
                 </div>
 
-                {/* Chủ đề chính */}
+                {/* Chủ đề chính (ListBox) */}
                 <div>
-                  <label
-                    htmlFor="subject"
-                    className="block text-black font-bold text-sub2 mb-2"
-                  >
+                  <label htmlFor="subject" className={labelClass}>
                     Chủ đề chính
                   </label>
                   <Listbox value={subject} onChange={setSubject}>
                     <div className="relative">
                       <Listbox.Button
-                        className={`relative w-full cursor-default rounded-lg border-2 bg-white 
-                                    px-4 py-3 text-left text-base text-sub2
-                                    ${subjectError
-                            ? "border-red-500"
-                            : "border-gray-300"
-                          }
-                                    focus:outline-none focus:border-blue-500`}
+                        // SỬ DỤNG CLASS MỚI + text-left
+                        className={`${getInputClass(
+                          !!subjectError
+                        )} text-left relative`}
                       >
-                        <span className="text-sub2">{subject.name}</span>
-                        <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
+                        <span className="block truncate">{subject.name}</span>
+                        <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                           <FiChevronDown
                             className="h-5 w-5 text-gray-400"
                             aria-hidden="true"
@@ -311,17 +299,17 @@ export default function HoTro() {
                       >
                         <Listbox.Options
                           className="absolute z-10 mt-1 max-h-60 w-full overflow-auto 
-                                                    rounded-lg bg-white py-1 text-sub2 shadow-lg 
-                                                    ring-1 ring-opacity-5 
-                                                    focus:outline-none"
+                                    rounded-lg bg-white py-1 text-sm md:text-body2 lg:text-sub2 shadow-lg 
+                                    ring-1 ring-opacity-5 focus:outline-none"
                         >
                           {subjectOptions.map((option) => (
                             <Listbox.Option
                               key={option.id}
                               className={({ active }) =>
-                                `relative cursor-default select-none py-2 pl-10 pr-4 ${active
-                                  ? "bg-blue-100 text-primary" // Style khi hover
-                                  : "text-gray-900"
+                                `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                  active
+                                    ? "bg-blue-100 text-primary"
+                                    : "text-gray-900"
                                 }`
                               }
                               value={option}
@@ -329,12 +317,13 @@ export default function HoTro() {
                               {({ selected }) => (
                                 <>
                                   <span
-                                    className={`block truncate ${selected ? "font-medium" : "font-normal"
-                                      }`}
+                                    className={`block truncate ${
+                                      selected ? "font-medium" : "font-normal"
+                                    }`}
                                   >
                                     {option.name}
                                   </span>
-                                  {selected ? ( // Hiển thị dấu check nếu được chọn
+                                  {selected ? (
                                     <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-blue-600">
                                       <FiCheck
                                         className="h-5 w-5"
@@ -359,10 +348,7 @@ export default function HoTro() {
 
                 {/* Mô tả chi tiết */}
                 <div>
-                  <label
-                    htmlFor="description"
-                    className="block text-black font-bold text-sub2 mb-2"
-                  >
+                  <label htmlFor="description" className={labelClass}>
                     Mô tả chi tiết (không bắt buộc)
                   </label>
                   <textarea
@@ -370,9 +356,10 @@ export default function HoTro() {
                     rows={4}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    // ĐỒNG BỘ STYLE: px-4 py-3
-                    className="w-full rounded-lg border-2 border-gray-300 px-4 py-3 text-base  text-sub2
-                               outline-none resize-none focus:border-blue-500 transition-all min-h-[90px]"
+                    // SỬ DỤNG CLASS MỚI + resize-none
+                    className={`${getInputClass(
+                      false
+                    )} resize-none min-h-[90px]`}
                     placeholder="Nhà thuốc của tôi có 2 chi nhánh, đang cần quản lý tồn kho..."
                   />
                 </div>
@@ -384,6 +371,7 @@ export default function HoTro() {
                       <FiXCircle className="mr-2 flex-shrink-0" /> {formError}
                     </div>
                     <button
+                      type="button"
                       onClick={() => setFormError("")}
                       className="text-red-700 hover:text-red-900"
                       aria-label="Đóng thông báo"
@@ -399,6 +387,7 @@ export default function HoTro() {
                       {formSuccess}
                     </div>
                     <button
+                      type="button"
                       onClick={() => setFormSuccess("")}
                       className="text-green-700 hover:text-green-900"
                       aria-label="Đóng thông báo"
@@ -409,10 +398,10 @@ export default function HoTro() {
                 )}
 
                 {/* Link Chính sách bảo mật */}
-                <p className="!mt-4 text-sub2 text-gray-600">
+                <p className="!mt-4 text-sm md:text-body2 lg:text-sub2 text-gray-600">
                   Chúng tôi cam kết bảo mật thông tin của bạn. Xem chi tiết tại{" "}
                   <Link
-                    href="/chinh-sach-bao-mat" // Cập nhật đường dẫn nếu cần
+                    href="/chinh-sach-bao-mat"
                     className="text-primary hover:underline font-medium"
                   >
                     Chính sách Bảo mật
@@ -423,7 +412,7 @@ export default function HoTro() {
                 {/* Submit button */}
                 <button
                   type="submit"
-                  className="w-full md:w-auto !mt-6 rounded-full text-sub2 bg-primary hover:bg-blue-600 px-8 py-3 font-bold text-white transition-colors duration-200 flex items-center justify-center disabled:bg-blue-300"
+                  className=" mx-auto w-full sm:w-auto rounded-full text-base md:text-lg bg-primary px-6 py-3 font-bold text-white hover:opacity-90 transition-all"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
@@ -436,9 +425,11 @@ export default function HoTro() {
 
             {/* Thông tin liên hệ + bản đồ */}
             <div>
-              <h2 className="text-black font-bold mb-5">{contactInformation.title}</h2>
-              <p className="mb-5 text-sub1 text-colordescription">
-                {contactInformation.description}
+              <h2 className="text-black mb-3 md:mb-5">
+                {contactInformation?.title}
+              </h2>
+              <p className="mb-4 md:mb-5 text-body2 md:text-sub2 lg:text-sub1 text-colordescription">
+                {contactInformation?.description}
               </p>
 
               {/* Bản đồ */}
@@ -458,47 +449,42 @@ export default function HoTro() {
               <ul className="space-y-4">
                 <li className="flex items-start mb-10">
                   <FiPhone
-                    className="mr-4 mt-1 flex-shrink-0 text-success "
-                    size={27}
+                    className= {iconClass}
                   />
                   <div>
-                    {/* Thêm tel: link */}
                     <a
                       href={`tel:${contactInformation?.phone}`}
-                      className=" hover:text-blue-500 text-sub1"
+                      className="hover:text-blue-500 text-body2 md:text-sub2 lg:text-sub1"
                     >
-                      {contactInformation?.phone.platform}
+                      {contactInformation?.phone?.platform}
                     </a>
                   </div>
                 </li>
                 <li className="flex items-start mb-10">
                   <FiMail
-                    className="mr-4 mt-1 flex-shrink-0 text-success"
-                    size={27}
+                    className={iconClass}
                   />
                   <div>
                     <a
                       href={`mailto:${contactInformation?.email}`}
-                      className="hover:text-blue-500 text-sub1"
+                      className="hover:text-blue-500 text-body2 md:text-sub2 lg:text-sub1"
                     >
-                      {contactInformation?.email.platform}
+                      {contactInformation?.email?.platform}
                     </a>
                   </div>
                 </li>
                 <li className="flex items-start">
                   <FiMapPin
-                    className="mr-4 mt-1 flex-shrink-0 text-success"
-                    size={27}
+                    className={iconClass}
                   />
                   <div>
-                    {/* Thêm link Google Maps */}
                     <a
-                      href={contactData.contactInformation?.address.url}
+                      href={contactData?.contactInformation?.address?.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="hover:text-blue-500 text-sub1"
+                      className="hover:text-blue-500 text-body2 md:text-sub2 lg:text-sub1"
                     >
-                      {contactData.contactInformation?.address.platform}
+                      {contactData?.contactInformation?.address?.platform}
                     </a>
                   </div>
                 </li>
@@ -518,7 +504,7 @@ export default function HoTro() {
                         rel="noopener noreferrer"
                         className="text-success hover:text-blue-500 transition-colors"
                       >
-                        <Icon size={27} />
+                        <Icon className={iconClass} />
                       </Link>
                     )
                   );
@@ -530,25 +516,24 @@ export default function HoTro() {
       </FadeInOnScroll>
 
       {/* --- SECTION FAQ --- */}
-      <FaqSection
-        title={faqSection.title}
-        items={faqSection.faqItems}
-      />
+      <FaqSection title={faqSection?.title} items={faqSection?.faqItems} />
 
       {/* --- SECTION PHẦN MỀM HỖ TRỢ  */}
       <section className="bg-white py-10">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-center mb-5 text-black">{supportSoftware.title}</h2>
-          <p className="text-center text-h6 text-colordescription max-w-3xl mx-auto mb-15">
-            {supportSoftware.description}
+          <h2 className="text-center mb-5 text-black">
+            {supportSoftware?.title}
+          </h2>
+          <p className="mb-5 md:mb-10 lg:mb-15 text-body2 md:text-sub2 lg:text-sub1 text-colordescription text-center mx-auto max-w-3xl">
+            {supportSoftware?.description}
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ">
-            {supportSoftware.supportCards.map((software, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
+            {supportSoftware?.supportCards?.map((software, index) => (
               <div
                 key={index}
-                className="bg-white p-8 rounded-lg border shadow-md text-center flex flex-col items-center"
+                className=" bg-white p-4 md:p-5 lg:p-8 rounded-lg border shadow-md text-center flex flex-col items-center"
               >
-                <div className="w-24 h-24 relative mb-6">
+                <div className="w-18 h-18 md:w-20 md:h-20 lg:w-24 lg:h-24 relative mb-6">
                   <Image
                     src={software.icon}
                     alt={`Logo ${software.title}`}
@@ -556,17 +541,17 @@ export default function HoTro() {
                     className="object-contain"
                   />
                 </div>
-                <h3 className="text-sub1 font-bold text-black mb-5">
+                <h3 className="text-body2 md:text-sub2 lg:text-sub1 font-bold text-black mb-3 md:mb-5">
                   {software.title}
                 </h3>
-                <p className="text-sub2 mb-10 flex-grow">
+                <p className="text-sm md:text-body2 lg:text-sub2 mb-5 md:mb-8 flex-grow">
                   {software.description}
                 </p>
                 <a
                   href={software.ctaButton.link ?? "#"}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-auto text-sub2 rounded-lg bg-primary hover:bg-blue-700 px-8 py-3 font-bold text-white transition-colors duration-200"
+                  className=" text-sm md:text-body2 lg:text-sub2 rounded-lg bg-primary hover:bg-blue-700 px-4 py-1 md:px-6 py-2 lg:px-8 lg:py-3font-bold text-white transition-colors duration-200"
                 >
                   {software.ctaButton.title}
                 </a>

@@ -1,11 +1,19 @@
 "use client";
-import Link from 'next/link';
-import { FiYoutube, FiPhone, FiMapPin, FiMail, FiGlobe, FiLinkedin, FiTwitter, FiInstagram } from 'react-icons/fi';
-import { BiLogoFacebookCircle } from 'react-icons/bi';
-import Image from 'next/image';
-import { footerData } from '@/lib/api/footer';
-import { IconType } from 'react-icons';
-
+import Link from "next/link";
+import {
+  FiYoutube,
+  FiPhone,
+  FiMapPin,
+  FiMail,
+  FiGlobe,
+  FiLinkedin,
+  FiTwitter,
+  FiInstagram,
+} from "react-icons/fi";
+import { BiLogoFacebookCircle } from "react-icons/bi";
+import Image from "next/image";
+import { footerData } from "@/lib/api/footer";
+import { IconType } from "react-icons";
 
 export function Footer() {
   const socialIcons: Record<string, IconType> = {
@@ -16,7 +24,8 @@ export function Footer() {
     linkedin: FiLinkedin,
     twitter: FiTwitter,
   };
-  const { logo, socials, footerMenu, phone, email, location } = footerData || {};
+  const { logo, socials, footerMenu, phone, email, location } =
+    footerData || {};
 
   // Tách riêng component để tái sử dụng
   const renderSocials = () => (
@@ -31,49 +40,56 @@ export function Footer() {
               href={social.link ?? "#"}
               target="_blank"
               rel="noopener noreferrer"
-              className="h-7 w-7 hover:text-primary"
+              
             >
-              <Icon size={27} />
+              <Icon className={iconClass} />
             </Link>
           )
         );
       })}
     </>
   );
-
+  const iconClass =
+    "mt-1 flex-shrink-0 text-success mr-3 md:mr-4 w-5 h-5 lg:w-6 lg:h-6 ";
   // Tách riêng component để tái sử dụng
   const renderContactInfo = () => (
     <>
       <li className="flex items-start gap-3">
-        <FiPhone className="mt-1 flex-shrink-0 text-success" />
+        <FiPhone className={iconClass} />
         <Link
-          href={`tel:${(phone.link || "(+84) 911 000 038").replace(/[^\d+]/g, "")}`}
+          href={`tel:${(phone.link || "(+84) 911 000 038").replace(
+            /[^\d+]/g,
+            ""
+          )}`}
           aria-label={`Gọi số ${phone.title || "(+84) 911 000 038"}`}
-          className="hover:text-white"
+          className="hover:text-white text-body2 lg:text-sub2"
         >
           {phone.title || "(+84) 911 000 038"}
         </Link>
       </li>
       <li className="flex items-start gap-3">
-        <FiMapPin className="mt-1 flex-shrink-0 text-success" />
+        <FiMail className={iconClass} />
+        <Link
+          href={`mailto:${email?.link || "contact@amitgroup.asia"}`}
+          aria-label={`Gửi email tới ${
+            email?.title || "contact@amitgroup.asia"
+          }`}
+          className="hover:text-white text-body2 lg:text-sub2"
+        >
+          {email?.title || "contact@amitgroup.asia"}
+        </Link>
+      </li>
+      <li className="flex items-start gap-3">
+        <FiMapPin className={iconClass} />
         <Link
           href={location?.link || "https://maps.app.goo.gl/xnSXqtouAAk2yewr7"}
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`Xem bản đồ: ${location?.title || "Vị trí công ty"}`}
-          className="hover:text-white"
+          className="hover:text-white text-body2 lg:text-sub2"
         >
-          {location?.title || "Số 7, Đường 7C, Khu đô thị An Phú An Khánh, Phường Bình Trưng, TP. Hồ Chí Minh"}
-        </Link>
-      </li>
-      <li className="flex items-start gap-3">
-        <FiMail className="mt-1 flex-shrink-0 text-success" />
-        <Link
-          href={`mailto:${email?.link || "contact@amitgroup.asia"}`}
-          aria-label={`Gửi email tới ${email?.title || "contact@amitgroup.asia"}`}
-          className="hover:text-white"
-        >
-          {email?.title || "contact@amitgroup.asia"}
+          {location?.title ||
+            "Số 7, Đường 7C, Khu đô thị An Phú An Khánh, Phường Bình Trưng, TP. Hồ Chí Minh"}
         </Link>
       </li>
     </>
@@ -82,24 +98,30 @@ export function Footer() {
   return (
     <footer className="bg-ink text-sm text-white rounded-t-4xl">
       <div className="container mx-auto grid grid-cols-1 gap-10 px-8 md:grid-cols-6">
-        
         {/* Cột 1: Thông tin (Logo, Desc, và Contact/Socials CHO TABLET+) */}
         <div className="md:col-span-2">
-          <Link href="/" className="flex items-center gap-2 w-fit mx-auto md:mx-0 md:w-auto">
-            <Image src={logo?.url || "/Vpharma-AMIT.png"} alt={logo?.alt || "Vpharma-AMIT"} width={200}
-              height={68} className="h-17" />
+          <Link
+            href="/"
+            className="flex items-center gap-2 w-fit mx-auto md:mx-0 md:w-auto"
+          >
+            <Image
+              src={logo?.url || "/Vpharma-AMIT.png"}
+              alt={logo?.alt || "Vpharma-AMIT"}
+              width={200}
+              height={68}
+              className="h-17"
+            />
           </Link>
-          
+
           {/* SỬA 1: Thêm 'hidden md:block' để ẩn description trên mobile */}
-          <p className="mt-4 text-sub2 text-white/80 text-center md:text-left hidden md:block">
-            {footerData?.description || "Giải pháp phần mềm giúp nhà thuốc tăng 30% doanh thu và đạt 99,9% độ chính xác trong 120 ngày — tối ưu hiệu quả, tập trung chăm sóc khách hàng."}
+          <p className="mt-4 text-body2 lg:text-sub2 text-white/80 text-center md:text-left hidden md:block">
+            {footerData?.description ||
+              "Giải pháp phần mềm giúp nhà thuốc tăng 30% doanh thu và đạt 99,9% độ chính xác trong 120 ngày — tối ưu hiệu quả, tập trung chăm sóc khách hàng."}
           </p>
-          
+
           {/* Socials cho TABLET+ (Ẩn trên mobile < 768px) */}
-          <div className="hidden md:flex mt-6 gap-4">
-            {renderSocials()}
-          </div>
-          
+          <div className="hidden md:flex mt-6 gap-4">{renderSocials()}</div>
+
           {/* Contact Info cho TABLET+ (Ẩn trên mobile < 768px) */}
           <ul className="hidden md:block mt-8 space-y-4 text-sub2 text-white/80">
             {renderContactInfo()}
@@ -109,7 +131,7 @@ export function Footer() {
         {/* Contact Info cho MOBILE (Chỉ hiện < 768px) */}
         {/* SỬA 3: Thêm 'w-fit mx-auto' để canh giữa khối contact info */}
         <ul className="space-y-4 text-sub2 text-white/80 md:hidden w-fit mx-auto">
-            {renderContactInfo()}
+          {renderContactInfo()}
         </ul>
 
         {/* Wrapper cho các cột link, chiếm 4 cột trên 'md' */}
@@ -120,10 +142,12 @@ export function Footer() {
               return (
                 // 'text-center' có sẵn đã canh giữa tiêu đề
                 <div key={index} className="text-center md:text-left">
-                  <h4 className="mb-4 font-semibold text-success text-h6">{menu.title}</h4>
-                  
+                  <h4 className="mb-4 font-semibold text-success text-sub1 lg:text-h6">
+                    {menu.title}
+                  </h4>
+
                   {/* SỬA 2: Đổi 'text-left' thành 'text-center' và thêm 'md:text-left' */}
-                  <ul className="space-y-3 text-sub2 text-white/80 inline-block text-center mx-auto md:mx-0 md:text-left">
+                  <ul className="space-y-3 text-body2 lg:text-sub2 text-white/80 inline-block text-center mx-auto md:mx-0 md:text-left">
                     {menus.length > 0 ? (
                       menus.map((menu) => (
                         <li key={menu.id}>
@@ -138,7 +162,9 @@ export function Footer() {
                       ))
                     ) : (
                       <li>
-                        <span className="text-sub2 text-white/80 italic">Không có mục nào</span>
+                        <span className="text-body2 lg:text-sub2 text-white/80 italic">
+                          Không có mục nào
+                        </span>
                       </li>
                     )}
                   </ul>
@@ -150,14 +176,15 @@ export function Footer() {
 
         {/* Socials cho MOBILE (Chỉ hiện < 768px) */}
         <div className="flex justify-center gap-4 md:hidden">
-            {renderSocials()}
+          {renderSocials()}
         </div>
       </div>
 
       {/* Khối Copyright */}
       <div className="container mx-auto mt-8 py-6 border-t border-white/20 text-center">
         <p className="text-xs text-white/60">
-          Copyright © {new Date().getFullYear()} AMIT GROUP. All Rights Reserved | Designed by AMIT GROUP
+          Copyright © {new Date().getFullYear()} AMIT GROUP. All Rights Reserved
+          | Designed by AMIT GROUP
         </p>
       </div>
     </footer>

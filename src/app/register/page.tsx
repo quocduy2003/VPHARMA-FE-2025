@@ -156,12 +156,12 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-b from-blue-100 to-white px-4 ">
+    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-b from-blue-100 to-white md:px-4 p-4">
       <div className="w-full max-w-5xl bg-white rounded-2xl px-8 shadow-xl overflow-hidden flex flex-col ">
         {/* Header */}
         <div className="pt-8 pb-4 text-center ">
           <h1 className="">Đăng Ký</h1>
-          <p className="text-center text-body2  md:text-sub1 lg:text-h6 text-colordescription text-colordescription">
+          <p className="text-center text-sub2  md:text-sub1 lg:text-h6 text-colordescription">
             Hãy hoàn tất các thông tin dưới đây để có thể bắt đầu cùng với Vpharma.
           </p>
         </div>
@@ -339,7 +339,7 @@ export default function Register() {
             </div>
 
             {/* Footer */}
-            <div className="mt-8 flex flex-col items-center">
+            <div className="mt-8 flex flex-col">
               <div className="flex  mb-6">
                 <div className="flex cursor-pointer items-center ">
                   <input
@@ -368,7 +368,6 @@ export default function Register() {
                     <div className="flex items-center">
                       <FiXCircle className="mr-2" /> {formError}
                     </div>
-                    {/* --- SỬA LỖI: Thêm aria-label --- */}
                     <button type="button" aria-label="Đóng thông báo lỗi" onClick={() => setFormError("")}><FiX /></button>
                   </div>
                 )}
@@ -377,7 +376,6 @@ export default function Register() {
                     <div className="flex items-center">
                       <FiCheckCircle className="mr-2" /> {formSuccess}
                     </div>
-                    {/* --- SỬA LỖI: Thêm aria-label --- */}
                     <button type="button" aria-label="Đóng thông báo thành công" onClick={() => setFormSuccess("")}><FiX /></button>
                   </div>
                 )}
@@ -385,7 +383,7 @@ export default function Register() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full sm:w-auto min-w-[200px] rounded-full text-sub2 bg-primary hover:bg-blue-600 px-8 py-2 font-bold text-white transition-colors duration-200 flex items-center justify-center disabled:opacity-70"
+                className="mx-auto w-full sm:w-auto rounded-full text-base md:text-lg bg-primary px-6 py-3 font-bold text-white hover:opacity-90 transition-all"
               >
                 {isSubmitting ? <FiLoader className="mr-2 animate-spin" /> : "Đăng ký"}
               </button>

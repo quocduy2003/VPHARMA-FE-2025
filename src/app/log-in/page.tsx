@@ -88,7 +88,7 @@ export default function Login() {
           <h1 className="text-primary mb-2">
             Đăng Nhập
           </h1>
-          <p className="text-center text-body2  md:text-sub1 lg:text-h6 text-colordescription">
+          <p className="text-center text-sub2  md:text-sub1 lg:text-h6 text-colordescription">
             Chào mừng quay trở lại với Vpharma.
           </p>
         </div>
@@ -206,7 +206,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full rounded-full text-sub2 bg-primary hover:bg-blue-600 px-8 py-3 font-bold text-white transition-colors duration-200 flex items-center justify-center disabled:opacity-70 shadow-md hover:shadow-lg"
+            className="mx-auto w-full sm:w-auto rounded-full text-base md:text-lg bg-primary px-6 py-3 font-bold text-white hover:opacity-90 transition-all"
           >
             {isSubmitting ? (
               <FiLoader className="mr-2 animate-spin" />
@@ -216,7 +216,7 @@ export default function Login() {
           </button>
 
           {/* Footer Link */}
-          <div className="text-center mt-6 text-sm md:text-body2">
+          <div className="text-center text-sm md:text-body2">
             <span className="text-gray-600">Bạn chưa có tài khoản? </span>
             <Link
               href="/register"
