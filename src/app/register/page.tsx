@@ -1,3 +1,4 @@
+
 "use client";
 import Link from "next/link";
 import { useState } from "react";
@@ -10,597 +11,385 @@ import {
   FiX,
 } from "react-icons/fi";
 
-
 export default function Register() {
-  // --- State cho các trường input ---
+  // --- State quản lý dữ liệu ---
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(""); // Email không bắt buộc
   const [businessName, setBusinessName] = useState("");
 
-  // --- State cho checkbox quy mô ---
+  // Checkbox quy mô
   const [isIndependent, setIsIndependent] = useState(false);
   const [isChain, setIsChain] = useState(false);
   const [isClinic, setIsClinic] = useState(false);
 
-  // --- State cho checkbox điều khoản ---
+  // Checkbox điều khoản
   const [agreedToTerms, setAgreedToTerms] = useState(false);
 
-  // --- State cho ẩn/hiện mật khẩu ---
+  // Ẩn hiện mật khẩu
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  // --- State cho lỗi/thành công của form ---
+  // Trạng thái form
   const [formError, setFormError] = useState<string>("");
   const [formSuccess, setFormSuccess] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // --- State cho lỗi của từng trường ---
-  const [fullNameError, setFullNameError] = useState("");
-  const [usernameError, setUsernameError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [confirmPasswordError, setConfirmPasswordError] = useState("");
-  const [phoneError, setPhoneError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [businessNameError, setBusinessNameError] = useState("");
-  const [businessScaleError, setBusinessScaleError] = useState("");
-  const [termsError, setTermsError] = useState("");
+  // State lỗi
+  const [errors, setErrors] = useState({
+    fullName: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
+    phone: "",
+    email: "",
+    businessName: "",
+    businessScale: "",
+    terms: "",
+  });
 
-  // --- Logic Validation (onBlur) ---
-  // Mượn từ trang HoTro
-  const validateFullName = () => {
-    const value = fullName.trim();
-    if (!value) {
-      setFullNameError("Vui lòng nhập họ và tên.");
-      return false;
+  // --- Helper Styles ---
+  const inputClass = (hasError: boolean) =>
+    `w-full rounded-lg border-2 px-2 py-2 text-base placeholder-gray-400 text-sm md:text-body2 lg:text-sub2
+    ${hasError ? "border-red-500" : "border-gray-300"}
+    outline-none focus:border-blue-500 transition-all`;
+
+  const labelClass = "block text-black font-semibold text-sm md:text-body2 lg:text-sub2 mb-2";
+
+  // --- Validate Logic ---
+  const validateField = (name: string, value: string) => {
+    let error = "";
+    switch (name) {
+      case "fullName":
+        if (!value.trim()) error = "Vui lòng nhập họ và tên.";
+        break;
+      case "username":
+        if (!value.trim()) error = "Vui lòng nhập tên đăng nhập.";
+        else if (value.length < 5) error = "Tên đăng nhập tối thiểu 5 ký tự.";
+        break;
+      case "password":
+        if (!value) error = "Vui lòng nhập mật khẩu.";
+        else if (value.length < 6) error = "Mật khẩu tối thiểu 6 ký tự.";
+        break;
+      case "confirmPassword":
+        if (!value) error = "Vui lòng xác nhận mật khẩu.";
+        else if (value !== password) error = "Mật khẩu không khớp.";
+        break;
+      case "phone":
+        const phoneRegex = /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/;
+        if (!value.trim()) error = "Vui lòng nhập số điện thoại.";
+        else if (!phoneRegex.test(value)) error = "Số điện thoại không hợp lệ.";
+        break;
+      case "email":
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (value.trim() && !emailRegex.test(value)) {
+            error = "Email sai định dạng.";
+        }
+        break;
+      case "businessName":
+        if (!value.trim()) error = "Vui lòng nhập tên nhà thuốc/doanh nghiệp.";
+        break;
+      default:
+        break;
     }
-    if (value.length < 3) {
-      setFullNameError("Họ và tên phải từ 3 ký tự trở lên.");
-      return false;
-    }
-    const validNameRegex = /^[A-Za-zÀ-ỹ\s'-]+$/u;
-    if (!validNameRegex.test(value)) {
-      setFullNameError("Họ và tên không chứa số hoặc ký tự đặc biệt.");
-      return false;
-    }
-    setFullNameError("");
-    return true;
+    setErrors((prev) => ({ ...prev, [name]: error }));
+    return error === "";
   };
 
-  // Mượn từ trang HoTro
-  const validateEmail = () => {
-    const value = email.trim();
-    if (!value) {
-      setEmailError("Vui lòng nhập email.");
-      return false;
-    }
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!re.test(value)) {
-      setEmailError("Email cần có định dạng ten@domain.com.");
-      return false;
-    }
-    setEmailError("");
-    return true;
-  };
+  const validateForm = () => {
+    const isFullNameValid = validateField("fullName", fullName);
+    const isUserValid = validateField("username", username);
+    const isPassValid = validateField("password", password);
+    const isConfirmValid = validateField("confirmPassword", confirmPassword);
+    const isPhoneValid = validateField("phone", phone);
+    const isEmailValid = validateField("email", email);
+    const isBusinessValid = validateField("businessName", businessName);
 
-  // Mới: Validation cho Tên đăng nhập
-  const validateUsername = () => {
-    const value = username.trim();
-    if (!value) {
-      setUsernameError("Vui lòng nhập tên đăng nhập.");
-      return false;
-    }
-    if (value.length < 5) {
-      setUsernameError("Tên đăng nhập phải từ 5 ký tự trở lên.");
-      return false;
-    }
-    const validUsernameRegex = /^[a-zA-Z0-9_]+$/;
-    if (!validUsernameRegex.test(value)) {
-      setUsernameError("Tên đăng nhập chỉ chứa chữ, số và dấu gạch dưới.");
-      return false;
-    }
-    setUsernameError("");
-    return true;
-  };
-
-  // Mới: Validation cho Mật khẩu
-  const validatePassword = () => {
-    const value = password; // Không trim mật khẩu
-    if (!value) {
-      setPasswordError("Vui lòng nhập mật khẩu.");
-      return false;
-    }
-    if (value.length < 8) {
-      setPasswordError("Mật khẩu phải từ 8 ký tự trở lên.");
-      return false;
-    }
-    setPasswordError("");
-    return true;
-  };
-
-  // Mới: Validation cho Xác nhận Mật khẩu
-  const validateConfirmPassword = () => {
-    const value = confirmPassword;
-    if (!value) {
-      setConfirmPasswordError("Vui lòng xác nhận mật khẩu.");
-      return false;
-    }
-    if (value !== password) {
-      setConfirmPasswordError("Mật khẩu xác nhận không khớp.");
-      return false;
-    }
-    setConfirmPasswordError("");
-    return true;
-  };
-
-  // Mới: Validation cho SĐT (Input thường)
-  const validatePhone = () => {
-    const value = phone.replace(/\s+/g, "");
-    if (!value) {
-      setPhoneError("Vui lòng nhập số điện thoại.");
-      return false;
-    }
-    // Regex SĐT Việt Nam cơ bản (10 số, bắt đầu bằng 0)
-    const vietnamPhoneRegex = /^0[0-9]{9}$/;
-    if (!vietnamPhoneRegex.test(value)) {
-      setPhoneError("Số điện thoại không hợp lệ (cần 10 số, bắt đầu bằng 0).");
-      return false;
-    }
-    setPhoneError("");
-    return true;
-  };
-
-  // Mới: Validation cho Tên nhà thuốc
-  const validateBusinessName = () => {
-    const value = businessName.trim();
-    if (!value) {
-      setBusinessNameError("Vui lòng nhập tên nhà thuốc/doanh nghiệp.");
-      return false;
-    }
-    setBusinessNameError("");
-    return true;
-  };
-
-  // Mới: Validation cho Quy mô
-  const validateBusinessScale = () => {
+    let scaleValid = true;
     if (!isIndependent && !isChain && !isClinic) {
-      setBusinessScaleError("Vui lòng chọn ít nhất một quy mô kinh doanh.");
-      return false;
+      setErrors((prev) => ({
+        ...prev,
+        businessScale: "Vui lòng chọn quy mô.",
+      }));
+      scaleValid = false;
+    } else {
+      setErrors((prev) => ({ ...prev, businessScale: "" }));
     }
-    setBusinessScaleError("");
-    return true;
-  };
 
-  // Mới: Validation cho Điều khoản
-  const validateTerms = () => {
+    let termValid = true;
     if (!agreedToTerms) {
-      setTermsError("Bạn cần đồng ý với điều khoản sử dụng.");
-      return false;
+      setErrors((prev) => ({ ...prev, terms: "Bạn chưa đồng ý điều khoản." }));
+      termValid = false;
+    } else {
+      setErrors((prev) => ({ ...prev, terms: "" }));
     }
-    setTermsError("");
-    return true;
+
+    return (
+      isFullNameValid &&
+      isUserValid &&
+      isPassValid &&
+      isConfirmValid &&
+      isPhoneValid &&
+      isEmailValid &&
+      isBusinessValid &&
+      scaleValid &&
+      termValid
+    );
   };
 
-  // --- Logic Submit ---
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  // --- Submit Handler ---
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormError("");
     setFormSuccess("");
 
-    // Validate tất cả các trường
-    const isFullNameValid = validateFullName();
-    const isEmailValid = validateEmail();
-    const isPhoneValid = validatePhone();
-    const isUsernameValid = validateUsername();
-    const isPasswordValid = validatePassword();
-    const isConfirmPasswordValid = validateConfirmPassword();
-    const isBusinessNameValid = validateBusinessName();
-    const isBusinessScaleValid = validateBusinessScale();
-    const isTermsValid = validateTerms();
-
-    if (
-      !isFullNameValid ||
-      !isEmailValid ||
-      !isPhoneValid ||
-      !isUsernameValid ||
-      !isPasswordValid ||
-      !isConfirmPasswordValid ||
-      !isBusinessNameValid ||
-      !isBusinessScaleValid ||
-      !isTermsValid
-    ) {
-      return; // Dừng nếu có lỗi
-    }
+    if (!validateForm()) return;
 
     setIsSubmitting(true);
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
-    // --- Giả lập gọi API (giống trang HoTro) ---
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    // Giả lập trường hợp thành công
-    const isSuccess = true; // (Thay đổi giá trị này để test lỗi)
-
-    if (isSuccess) {
-      setFormSuccess(
-        "Đăng ký thành công. Chào mừng bạn đến với V-Pharma! Chúng tôi sẽ liên hệ xác nhận trong thời gian sớm nhất."
-      );
-      // Reset form
-      setFullName("");
-      setUsername("");
-      setPassword("");
-      setConfirmPassword("");
-      setPhone("");
-      setEmail("");
-      setBusinessName("");
-      setIsIndependent(false);
-      setIsChain(false);
-      setIsClinic(false);
-      setAgreedToTerms(false);
-    } else {
-      // Giả lập trường hợp lỗi
-      setFormError(
-        "Rất tiếc, đã có lỗi xảy ra. Bạn có thể thử lại, hoặc liên hệ trực tiếp với chúng tôi qua hotline để được hỗ trợ."
-      );
-    }
+    setFormSuccess("Đăng ký thành công! Vui lòng kiểm tra email (nếu có).");
     setIsSubmitting(false);
   };
 
-  // --- STYLING ---
-  // Mượn class input từ trang HoTro
-  const inputClass = (hasError: boolean): string =>
-    `w-full rounded-lg border-2 px-4 py-3 text-base placeholder-gray-400 text-sub2
-    ${hasError ? "border-red-500" : "border-gray-300"}
-    outline-none focus:border-blue-500 transition-all`;
-
-  // Mượn class label từ trang HoTro
-  const labelClass = "block text-black font-bold text-sub2 mb-2";
-
   return (
-    // Sử dụng layout nền gradient giống trang HoTro
-    <div className="flex min-h-screen w-full items-center justify-center bg-gradient-to-b from-blue-100 to-white py-20 ">
-      {/* Đặt form trong một card trắng có bóng, giới hạn chiều rộng */}
-      <div className="w-full max-w-4xl rounded-xl bg-white p-8 shadow-xl md:p-10">
-        <h1 className="text-center ">
-          Đăng Ký
-        </h1>
-        <p className=" text-center text-h6 text-colordescription">
-          Hãy hoàn tất tất cả thông tin dưới đây để có thể bắt đầu cùng với
-          V-Pharma.
-        </p>
+    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-b from-blue-100 to-white md:px-4 p-4">
+      <div className="w-full max-w-5xl bg-white rounded-2xl px-8 shadow-xl overflow-hidden flex flex-col ">
+        {/* Header */}
+        <div className="pt-8 pb-4 text-center ">
+          <h1 className="">Đăng Ký</h1>
+          <p className="text-center text-sub2  md:text-sub1 lg:text-h6 text-colordescription">
+            Hãy hoàn tất các thông tin dưới đây để có thể bắt đầu cùng với Vpharma.
+          </p>
+        </div>
 
-        <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-          {/* Họ và Tên */}
-          <div>
-            <label htmlFor="fullName" className={labelClass}>
-              Họ và Tên <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              id="fullName"
-              value={fullName}
-              onChange={(e) => {
-                setFullName(e.target.value.trimStart());
-                if (fullNameError) setFullNameError("");
-              }}
-              onBlur={validateFullName}
-              required
-              className={inputClass(!!fullNameError)}
-              placeholder="Nguyễn Văn A"
-            />
-            {fullNameError && (
-              <div className="mt-1 text-sm text-red-600">{fullNameError}</div>
-            )}
-          </div>
+        {/* Body Form */}
+        <div className=" pb-8">
+          <form onSubmit={handleSubmit}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5">
+              
+              {/* Cột Trái */}
+              <div className="space-y-5">
+                <div>
+                  <label htmlFor="fullName" className={labelClass}>
+                    Họ và Tên <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="fullName"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    onBlur={() => validateField("fullName", fullName)}
+                    className={inputClass(!!errors.fullName)}
+                    placeholder="Nguyễn Văn A"
+                  />
+                  {errors.fullName && <span className="text-red-500 text-sm">{errors.fullName}</span>}
+                </div>
 
-          {/* Tên đăng nhập */}
-          <div>
-            <label htmlFor="username" className={labelClass}>
-              Tên đăng nhập <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => {
-                setUsername(e.target.value.trim());
-                if (usernameError) setUsernameError("");
-              }}
-              onBlur={validateUsername}
-              required
-              className={inputClass(!!usernameError)}
-              placeholder="tendangnhap_cua_ban"
-            />
-            {usernameError && (
-              <div className="mt-1 text-sm text-red-600">{usernameError}</div>
-            )}
-          </div>
+                <div>
+                  <label htmlFor="username" className={labelClass}>
+                    Tên đăng nhập <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    onBlur={() => validateField("username", username)}
+                    className={inputClass(!!errors.username)}
+                  />
+                   {errors.username && <span className="text-red-500 text-sm">{errors.username}</span>}
+                </div>
 
-          {/* Nhập mật khẩu */}
-          <div>
-            <label htmlFor="password" className={labelClass}>
-              Nhập mật khẩu <span className="text-red-500">*</span>
-            </label>
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                id="password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  if (passwordError) setPasswordError("");
-                }}
-                onBlur={validatePassword}
-                required
-                className={inputClass(!!passwordError)}
-                placeholder="Mật khẩu (ít nhất 8 ký tự)"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-500 hover:text-gray-700"
-                aria-label={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
-              >
-                {showPassword ? (
-                  <FiEyeOff className="h-5 w-5" />
-                ) : (
-                  <FiEye className="h-5 w-5" />
+                <div>
+                  <label htmlFor="phone" className={labelClass}>
+                    Số điện thoại <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="phone"
+                    value={phone}
+                    onChange={(e) => {
+                        const val = e.target.value;
+                        if (!val || /^\d+$/.test(val)) setPhone(val);
+                    }}
+                    onBlur={() => validateField("phone", phone)}
+                    className={inputClass(!!errors.phone)}
+                    placeholder="0912..."
+                  />
+                   {errors.phone && <span className="text-red-500 text-sm">{errors.phone}</span>}
+                </div>
+
+                <div>
+                  <label htmlFor="email" className={labelClass}>
+                    Email <span className="text-gray-400 font-normal text-sm">(Không bắt buộc)</span>
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    onBlur={() => validateField("email", email)}
+                    className={inputClass(!!errors.email)}
+                    placeholder="ten@example.com"
+                  />
+                   {errors.email && <span className="text-red-500 text-sm">{errors.email}</span>}
+                </div>
+              </div>
+
+              {/* Cột Phải */}
+              <div className="space-y-5">
+                 {/* Password */}
+                 <div>
+                  <label htmlFor="password" className={labelClass}>
+                    Nhập mật khẩu <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      id="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      onBlur={() => validateField("password", password)}
+                      className={inputClass(!!errors.password)}
+                    />
+                    {/* --- SỬA LỖI: Thêm aria-label --- */}
+                    <button
+                      type="button"
+                      aria-label={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-primary"
+                    >
+                      {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+                    </button>
+                  </div>
+                  {errors.password && <span className="text-red-500 text-sm">{errors.password}</span>}
+                </div>
+
+                {/* Confirm Password */}
+                <div>
+                  <label htmlFor="confirmPassword" className={labelClass}>
+                    Xác nhận mật khẩu <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={showConfirmPassword ? "text" : "password"}
+                      id="confirmPassword"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      onBlur={() => validateField("confirmPassword", confirmPassword)}
+                      className={inputClass(!!errors.confirmPassword)}
+                    />
+                    {/* --- SỬA LỖI: Thêm aria-label --- */}
+                    <button
+                      type="button"
+                      aria-label={showConfirmPassword ? "Ẩn mật khẩu xác nhận" : "Hiện mật khẩu xác nhận"}
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-primary"
+                    >
+                      {showConfirmPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+                    </button>
+                  </div>
+                  {errors.confirmPassword && <span className="text-red-500 text-sm">{errors.confirmPassword}</span>}
+                </div>
+
+                <div>
+                  <label htmlFor="businessName" className={labelClass}>
+                    Tên nhà thuốc/ doanh nghiệp <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="businessName"
+                    value={businessName}
+                    onChange={(e) => setBusinessName(e.target.value)}
+                    onBlur={() => validateField("businessName", businessName)}
+                    className={inputClass(!!errors.businessName)}
+                  />
+                   {errors.businessName && <span className="text-red-500 text-sm">{errors.businessName}</span>}
+                </div>
+                
+                {/* Quy mô */}
+                <div>
+                  <label className={labelClass}>
+                    Quy mô kinh doanh <span className="text-red-500">*</span>
+                  </label>
+                  <div className="flex flex-row flex-wrap gap-4 mt-2">
+                    <label className="flex items-center cursor-pointer">
+                        <input type="checkbox" className="w-3 h-3 lg:w-4 lg:h-4 text-primary border-gray-300 rounded focus:ring-blue-500" 
+                            checked={isIndependent} onChange={(e) => setIsIndependent(e.target.checked)} />
+                        <span className="ml-2 text-sm md:text-body2 lg:text-sub2 text-gray-700">Độc lập</span>
+                    </label>
+                    <label className="flex items-center cursor-pointer">
+                        <input type="checkbox" className="w-3 h-3 lg:w-4 lg:h-4 text-primary border-gray-300 rounded focus:ring-blue-500" 
+                             checked={isChain} onChange={(e) => setIsChain(e.target.checked)} />
+                        <span className="ml-2 text-sm md:text-body2 lg:text-sub2 text-gray-700">Chuỗi</span>
+                    </label>
+                    <label className="flex items-center cursor-pointer">
+                        <input type="checkbox" className="w-3 h-3 lg:w-4 lg:h-4 text-primary border-gray-300 rounded focus:ring-blue-500" 
+                             checked={isClinic} onChange={(e) => setIsClinic(e.target.checked)} />
+                        <span className="ml-2 text-sm md:text-body2 lg:text-sub2 text-gray-700">Phòng khám</span>
+                    </label>
+                  </div>
+                  {errors.businessScale && <span className="text-red-500 text-sm">{errors.businessScale}</span>}
+                </div>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="mt-8 flex flex-col">
+              <div className="flex  mb-6">
+                <div className="flex cursor-pointer items-center ">
+                  <input
+                    id="terms"
+                    type="checkbox"
+                    checked={agreedToTerms}
+                    onChange={(e) => setAgreedToTerms(e.target.checked)}
+                    className="w-3 h-3 lg:w-4 lg:h-4 text-primary border-gray-300 rounded focus:ring-blue-500"
+                  />
+                </div>
+                <div className="ml-3 text-sm md:text-body2 lg:text-sub2">
+                  <label htmlFor="terms" className="font-medium text-gray-700">
+                    Tôi đã đọc và đồng ý với{" "}
+                    <Link href="/terms" className="text-primary hover:underline">
+                      Điều khoản sử dụng
+                    </Link>
+                    .
+                  </label>
+                  {errors.terms && <p className="text-red-500 text-sm mt-1">{errors.terms}</p>}
+                </div>
+              </div>
+
+               {/* Alerts */}
+               {formError && (
+                  <div className="w-full mb-4 p-3 rounded-lg bg-red-100 text-red-700 flex items-center justify-between max-w-md">
+                    <div className="flex items-center">
+                      <FiXCircle className="mr-2" /> {formError}
+                    </div>
+                    <button type="button" aria-label="Đóng thông báo lỗi" onClick={() => setFormError("")}><FiX /></button>
+                  </div>
                 )}
-              </button>
-            </div>
-            {passwordError && (
-              <div className="mt-1 text-sm text-red-600">{passwordError}</div>
-            )}
-          </div>
-
-          {/* Xác nhận mật khẩu */}
-          <div>
-            <label htmlFor="confirmPassword" className={labelClass}>
-              Xác nhận mật khẩu <span className="text-red-500">*</span>
-            </label>
-            <div className="relative">
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                id="confirmPassword"
-                value={confirmPassword}
-                onChange={(e) => {
-                  setConfirmPassword(e.target.value);
-                  if (confirmPasswordError) setConfirmPasswordError("");
-                }}
-                onBlur={validateConfirmPassword}
-                required
-                className={inputClass(!!confirmPasswordError)}
-                placeholder="Nhập lại mật khẩu của bạn"
-              />
-              <button
-                type="button"
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-500 hover:text-gray-700"
-                aria-label={
-                  showConfirmPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"
-                }
-              >
-                {showConfirmPassword ? (
-                  <FiEyeOff className="h-5 w-5" />
-                ) : (
-                  <FiEye className="h-5 w-5" />
+                {formSuccess && (
+                  <div className="w-full mb-4 p-3 rounded-lg bg-green-100 text-green-700 flex items-center justify-between max-w-md">
+                    <div className="flex items-center">
+                      <FiCheckCircle className="mr-2" /> {formSuccess}
+                    </div>
+                    <button type="button" aria-label="Đóng thông báo thành công" onClick={() => setFormSuccess("")}><FiX /></button>
+                  </div>
                 )}
-              </button>
-            </div>
-            {confirmPasswordError && (
-              <div className="mt-1 text-sm text-red-600">
-                {confirmPasswordError}
-              </div>
-            )}
-          </div>
 
-          {/* Số điện thoại (theo yêu cầu là input thường) */}
-          <div>
-            <label htmlFor="phone" className={labelClass}>
-              Số điện thoại <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="tel"
-              id="phone"
-              value={phone}
-              onChange={(e) => {
-                setPhone(e.target.value.trim());
-                if (phoneError) setPhoneError("");
-              }}
-              onBlur={validatePhone}
-              required
-              className={inputClass(!!phoneError)}
-              placeholder="0912345678"
-            />
-            {phoneError && (
-              <div className="mt-1 text-sm text-red-600">{phoneError}</div>
-            )}
-          </div>
-
-          {/* Email */}
-          <div>
-            <label htmlFor="email" className={labelClass}>
-              Email <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value.trim());
-                if (emailError) setEmailError("");
-              }}
-              onBlur={validateEmail}
-              required
-              className={inputClass(!!emailError)}
-              placeholder="ten@domain.com"
-            />
-            {emailError && (
-              <div className="mt-1 text-sm text-red-600">{emailError}</div>
-            )}
-          </div>
-
-          {/* Tên nhà thuốc/ doanh nghiệp */}
-          <div>
-            <label htmlFor="businessName" className={labelClass}>
-              Tên nhà thuốc/ doanh nghiệp{" "}
-              <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              id="businessName"
-              value={businessName}
-              onChange={(e) => {
-                setBusinessName(e.target.value.trimStart());
-                if (businessNameError) setBusinessNameError("");
-              }}
-              onBlur={validateBusinessName}
-              required
-              className={inputClass(!!businessNameError)}
-              placeholder="Nhà thuốc V-Pharma"
-            />
-            {businessNameError && (
-              <div className="mt-1 text-sm text-red-600">
-                {businessNameError}
-              </div>
-            )}
-          </div>
-
-          {/* Quy mô kinh doanh */}
-          <div>
-            <label className={labelClass}>
-              Quy mô kinh doanh <span className="text-red-500">*</span>
-            </label>
-            <div className="flex flex-col space-y-2 pt-1 sm:flex-row sm:space-y-0 sm:space-x-6">
-              <label className="flex items-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={isIndependent}
-                  onChange={(e) => {
-                    setIsIndependent(e.target.checked);
-                    if (businessScaleError) setBusinessScaleError("");
-                  }}
-                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-blue-500"
-                />
-                <span className="ml-2 text-sub2 text-gray-800">
-                  Nhà thuốc độc lập
-                </span>
-              </label>
-              <label className="flex items-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={isChain}
-                  onChange={(e) => {
-                    setIsChain(e.target.checked);
-                    if (businessScaleError) setBusinessScaleError("");
-                  }}
-                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-blue-500"
-                />
-                <span className="ml-2 text-sub2 text-gray-800">
-                  Chuỗi nhà thuốc
-                </span>
-              </label>
-              <label className="flex items-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={isClinic}
-                  onChange={(e) => {
-                    setIsClinic(e.target.checked);
-                    if (businessScaleError) setBusinessScaleError("");
-                  }}
-                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-blue-500"
-                />
-                <span className="ml-2 text-sub2 text-gray-800">
-                  Phòng khám/phòng mạch
-                </span>
-              </label>
-            </div>
-            {businessScaleError && (
-              <div className="mt-1 text-sm text-red-600">
-                {businessScaleError}
-              </div>
-            )}
-          </div>
-
-          {/* Điều khoản sử dụng */}
-          <div className="!mt-4">
-            <div className="flex items-start">
-              <input
-                id="terms"
-                type="checkbox"
-                checked={agreedToTerms}
-                onChange={(e) => {
-                  setAgreedToTerms(e.target.checked);
-                  if (termsError) setTermsError("");
-                }}
-                className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-blue-500 mt-1 flex-shrink-0"
-              />
-              <label
-                htmlFor="terms"
-                className="ml-2 block text-sub2 text-gray-700"
-              >
-                Tôi đã đọc và đồng ý với{" "}
-                <Link
-                  href="/dieu-khoan-su-dung" // Cập nhật đường dẫn nếu cần
-                  target="_blank" // Mở tab mới cho điều khoản
-                  className="font-medium text-primary hover:underline"
-                >
-                  Điều khoản sử dụng
-                </Link>
-                <span className="text-red-500"> *</span>
-              </label>
-            </div>
-            {termsError && (
-              <div className="mt-1 text-sm text-red-600 ml-6">
-                {termsError}
-              </div>
-            )}
-          </div>
-
-          {/* Trạng thái lỗi/ thành công (giống trang HoTro) */}
-          {formError && (
-            <div className="!mt-4 w-full p-4 rounded-lg bg-red-100 text-red-700 flex items-center justify-between">
-              <div className="flex items-center">
-                <FiXCircle className="mr-2 flex-shrink-0" /> {formError}
-              </div>
               <button
-                type="button"
-                onClick={() => setFormError("")}
-                className="text-red-700 hover:text-red-900"
-                aria-label="Đóng thông báo"
+                type="submit"
+                disabled={isSubmitting}
+                className="mx-auto w-full sm:w-auto rounded-full text-base md:text-lg bg-primary px-6 py-3 font-bold text-white hover:opacity-90 transition-all"
               >
-                <FiX />
+                {isSubmitting ? <FiLoader className="mr-2 animate-spin" /> : "Đăng ký"}
               </button>
             </div>
-          )}
-          {formSuccess && (
-            <div className="!mt-4 w-full p-4 rounded-lg bg-green-100 text-green-700 flex items-center justify-between">
-              <div className="flex items-center">
-                <FiCheckCircle className="mr-2 flex-shrink-0" /> {formSuccess}
-              </div>
-              <button
-                type="button"
-                onClick={() => setFormSuccess("")}
-                className="text-green-700 hover:text-green-900"
-                aria-label="Đóng thông báo"
-              >
-                <FiX />
-              </button>
-            </div>
-          )}
-
-          {/* Submit button (giống trang HoTro) */}
-          <button
-            type="submit"
-            className="w-full !mt-6 rounded-full text-sub2 bg-primary hover:bg-blue-600 px-8 py-3 font-bold text-white transition-colors duration-200 flex items-center justify-center disabled:bg-blue-300"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? <FiLoader className="mr-2 animate-spin" /> : null}
-            Đăng ký
-          </button>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   );

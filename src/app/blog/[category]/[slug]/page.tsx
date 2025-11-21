@@ -342,7 +342,7 @@ export default function BlogDetailPage() {
 
             </div>
             {/* <RelatedPostsCarousel posts={relatedPosts} visibleCount={6}/> */}
-            <RelatedPostsCarousel posts={relatedPosts} visibleCount={3} />
+            <RelatedPostsCarousel posts={relatedPosts} />
             <CTASection ctaSection={ctaSection} />
 
         </div>

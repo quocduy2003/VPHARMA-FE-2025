@@ -212,7 +212,7 @@ export default function HomePage() {
       <section
         id="hero"
         ref={heroRef}
-        className="relative min-h-[80vh] md:h-screen max-h-[1100px] bg-gradient-to-b from-blue-100 to-white overflow-hidden"
+        className="flex flex-col justify-center relative min-h-[80vh] md:h-screen max-h-[1100px] bg-gradient-to-b from-blue-100 to-white overflow-hidden"
       >
         {/* 1. Viên thuốc xanh (float-bounce) */}
         <motion.div
