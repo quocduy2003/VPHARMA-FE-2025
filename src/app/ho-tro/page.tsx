@@ -193,12 +193,12 @@ export default function HoTro() {
 
       {/* Phần Form và Thông tin liên hệ */}
       <FadeInOnScroll>
-        <section className="bg-white pb-10 px-4">
+        <section className="bg-white pb-10 ">
           <div className="max-w-6xl px-4 lg:px-0  mx-auto grid grid-cols-1 md:grid-cols-2 gap-20">
             {/* Form Liên hệ */}
             <div>
               <h2 className="text-black mb-3 md:mb-5">{contactForm?.title}</h2>
-              <p className="mb-4 md:mb-5 text-body2 md:text-sub2 lg:text-sub1 text-colordescription">
+              <p className="mb-4 md:mb-5 text-sub2 md:text-sub1 lg:text-h6 text-colordescription">
                 {contactForm?.description}
               </p>
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -428,7 +428,7 @@ export default function HoTro() {
               <h2 className="text-black mb-3 md:mb-5">
                 {contactInformation?.title}
               </h2>
-              <p className="mb-4 md:mb-5 text-body2 md:text-sub2 lg:text-sub1 text-colordescription">
+              <p className="mb-4 md:mb-5 text-sub2 md:text-sub1 lg:text-h6 text-colordescription">
                 {contactInformation?.description}
               </p>
 
@@ -524,7 +524,7 @@ export default function HoTro() {
           <h2 className="text-center mb-5 text-black">
             {supportSoftware?.title}
           </h2>
-          <p className="mb-5 md:mb-10 lg:mb-15 text-body2 md:text-sub2 lg:text-sub1 text-colordescription text-center mx-auto max-w-3xl">
+          <p className="mb-5 md:mb-10 lg:mb-15 text-sub2 md:text-sub1 lg:text-h6 text-colordescription text-center mx-auto max-w-3xl">
             {supportSoftware?.description}
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 lg:gap-8">

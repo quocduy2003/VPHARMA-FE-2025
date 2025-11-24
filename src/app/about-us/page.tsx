@@ -4,7 +4,6 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import FadeInOnScroll from "@/components/animations/FadeInOnScroll";
 import CTASection from "@/components/CTA";
-import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { aboutUsData } from "@/lib/api/aboutUs";
 import { BlockItems } from "@/types";
 
@@ -13,15 +12,15 @@ const StorySection = ({
 }: {
   data: Extract<BlockItems, { __component: "about.story-section" }>;
 }) => (
-  <section className="bg-white py-10">
+  <section className="bg-white py-5 md:py-10">
     <div className="container ">
       <div className="rounded-2xl bg-ink p-8 text-white shadow-xl md:p-12 lg:p-16">
         <div className=" text-center">
-          <p className="mb-5 text-h6 font-bold capitalize tracking-wide text-primary">
+          <p className="mb-5 text-sub2 md:text-sub1 lg:text-h6 font-bold capitalize tracking-wide text-primary">
             {data.eyebrow}
           </p>
           <h2 className="mb-5 text-white">{data.title}</h2>
-          <p className="mx-auto max-w-6xl text-h6 leading-relaxed text-white mb-10">
+          <p className="mx-auto max-w-6xl text-sub2 md:text-sub1 lg:text-h6 leading-relaxed text-white mb-10">
             {data.description}
           </p>
         </div>
@@ -30,11 +29,11 @@ const StorySection = ({
             <div key={index} className="text-left">
               <div className="relative mb-5">
                 <div className="absolute left-0 top-0 h-full w-1 bg-primary" />
-                <h3 className="pl-6 text-h4 font-bold text-primary">
+                <h3 className="pl-6 text-h6 md:text-h5 lg:text-h4 font-bold text-primary">
                   {item.title}
                 </h3>
               </div>
-              <p className="text-sub1 max-w-xl text-white">
+              <p className="text-body2 md:text-sub2 lg:text-sub1 max-w-xl text-white">
                 {item.description}
               </p>
             </div>
@@ -51,15 +50,15 @@ const ValuesSection = ({
 }: {
   data: Extract<BlockItems, { __component: "about.values-section" }>;
 }) => (
-  <section className="bg-gradient-to-b from-white to-cyan-50 py-10">
-    <div className="container mx-auto px-4">
+  <section className="bg-gradient-to-b from-white to-cyan-50 py-5 md:py-10">
+    <div className="container mx-auto ">
       <div className="text-center">
-        <p className="mb-5 text-h6 font-bold capitalize tracking-wide text-primary">
+        <p className="mb-5 text-sub2 md:text-sub1 lg:text-h6 font-bold capitalize tracking-wide text-primary">
           {data.eyebrow}
         </p>
-        <h2 className="mb-15 text-black">{data.title}</h2>
+        <h2 className="mb-10 text-black">{data.title}</h2>
       </div>
-      <div className="grid grid-cols-1 gap-9 md:grid-cols-2 lg:grid-cols-3 px-4">
+      <div className="grid grid-cols-1 gap-9 md:grid-cols-2 lg:grid-cols-3 ">
         {data.cards.map((card, index) => (
           <div
             key={index}
@@ -81,6 +80,7 @@ const ValuesSection = ({
   </section>
 );
 
+
 const FounderSection = ({
   data,
   currentIndex,
@@ -97,7 +97,7 @@ const FounderSection = ({
 
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // MỚI: Logic cho Autoplay
+  // Logic Autoplay
   const startAutoplay = useCallback(() => {
     if (totalMembers > 1) {
       if (intervalRef.current) clearInterval(intervalRef.current);
@@ -112,24 +112,24 @@ const FounderSection = ({
       clearInterval(intervalRef.current);
     }
   }, []);
+
   useEffect(() => {
     startAutoplay();
     return () => {
       stopAutoplay();
     };
-  }, [startAutoplay, stopAutoplay]); // Chạy lại nếu các hàm này thay đổi
+  }, [startAutoplay, stopAutoplay]);
 
-  // ... (phần code fallback khi không có founder giữ nguyên) ...
   if (totalMembers === 0) {
     return (
-      <section className="bg-gradient-to-b from-cyan-50 to-white py-10">
-        <div className="container mx-auto px-4 text-center">
-        </div>
+      <section className="bg-gradient-to-b from-cyan-50 to-white py-5 md:py-10">
+        <div className="container mx-auto px-4 text-center"></div>
       </section>
     );
   }
+
   const getCardPosition = (
-    index: number,
+    index: number
   ): "center" | "left" | "right" | "hidden" => {
     if (index === currentIndex) return "center";
     const prevIndex = (currentIndex - 1 + totalMembers) % totalMembers;
@@ -140,15 +140,15 @@ const FounderSection = ({
   };
 
   return (
-    <section className=" bg-gradient-to-b from-cyan-50 to-white py-10 overflow-hidden">
+    <section className=" bg-gradient-to-b from-cyan-50 to-white py-5 md:py-10 overflow-hidden">
       <div className="container">
-        {/* === 1. KHỐI HEADER (Giữ nguyên) === */}
+        {/* === 1. KHỐI HEADER === */}
         <div className="text-center">
-          <p className="mb-5 text-h6 font-bold capitalize tracking-wide text-primary">
+          <p className="mb-5 text-sub2 md:text-sub1 lg:text-h6 font-bold capitalize tracking-wide text-primary">
             {data?.eyebrow || ""}
           </p>
           <h2 className="mb-5 text-black">{data?.title || ""}</h2>
-          <p className="mx-auto max-w-3xl text-h6 mb-15">
+          <p className="mx-auto max-w-3xl text-sub2 md:text-sub1 lg:text-h6 mb-15">
             {data?.description || ""}
           </p>
         </div>
@@ -158,7 +158,7 @@ const FounderSection = ({
           onMouseEnter={stopAutoplay}
           onMouseLeave={startAutoplay}
         >
-          {/* 2a. "Sân khấu" (Stage) */}
+          {/* 2. "Sân khấu" (Stage) */}
           <div className="mb-10 relative flex h-120 items-center justify-center overflow-hidden">
             {founders.map((founder, index) => {
               const position = getCardPosition(index);
@@ -166,22 +166,28 @@ const FounderSection = ({
               let classes = "transition-all duration-500 ease-in-out";
               let infoClasses = "transition-opacity duration-300 delay-200";
 
+              // Xác định xem card này có bấm được không để thêm cursor-pointer
+              const isClickable = position === "left" || position === "right";
+
               switch (position) {
                 case "center":
-                  classes += " z-10 scale-[1.6]"; // Giữ nguyên scale 1.6 cho card
-                  // SỬA: Thêm scale-0.625 để "hủy" phóng to cho khối text
+                  classes += " z-10 scale-[1.6]";
                   infoClasses += " opacity-100 scale-[0.625]";
                   break;
                 case "left":
-                  classes += " z-0 scale-90 -translate-x-[150%] opacity-60";
+                  // Thêm hover effect nhẹ để người dùng biết có thể bấm
+                  classes +=
+                    " z-20 scale-90 -translate-x-[150%] opacity-60 hover:opacity-80";
                   infoClasses += " opacity-0";
                   break;
                 case "right":
-                  classes += " z-0 scale-90 translate-x-[150%] opacity-60";
+                  // Thêm hover effect nhẹ để người dùng biết có thể bấm
+                  classes +=
+                    " z-20 scale-90 translate-x-[150%] opacity-60 hover:opacity-80";
                   infoClasses += " opacity-0";
                   break;
                 default:
-                  classes += " z-0 scale-0 opacity-0";
+                  classes += " z-0 scale-0 opacity-0 pointer-events-none"; // Không cho bấm vào hidden
                   infoClasses += " opacity-0";
                   break;
               }
@@ -189,7 +195,14 @@ const FounderSection = ({
               return (
                 <div
                   key={index}
-                  className={`absolute flex w-64 flex-col items-center text-center ${classes}`}
+                  // Logic Click trực tiếp vào ảnh
+                  onClick={() => {
+                    if (position === "left") handlePrev();
+                    if (position === "right") handleNext();
+                  }}
+                  className={`absolute flex w-64 flex-col items-center text-center ${classes} ${
+                    isClickable ? "cursor-pointer" : ""
+                  }`}
                 >
                   <Image
                     src={founder.photo || "/placeholder.jpg"}
@@ -210,28 +223,13 @@ const FounderSection = ({
               );
             })}
           </div>
-          <div className=" flex justify-center gap-4">
-            <button
-              onClick={handlePrev}
-              className="rounded-full bg-blue-100 p-3 text-primary shadow-lg transition hover:bg-primary hover:text-white hover:scale-110"
-              aria-label="Thành viên trước"
-            >
-              <FiArrowLeft size={24} />
-            </button>
-            <button
-              onClick={handleNext}
-              className="rounded-full bg-blue-100 p-3 text-primary shadow-lg transition hover:bg-primary hover:text-white hover:scale-110"
-              aria-label="Thành viên kế tiếp"
-            >
-              <FiArrowRight size={24} />
-            </button>
-          </div>
+
+          {/* Đã xóa khối nút bấm (ArrowLeft/Right) ở đây */}
         </div>
       </div>
     </section>
   );
 };
-
 // --- COMPONENT CHÍNH ---
 export default function AboutUsPage() {
   const [currentMemberIndex, setCurrentMemberIndex] = useState(0);
@@ -276,11 +274,11 @@ export default function AboutUsPage() {
         <FadeInOnScroll>
           <div className="h-screen flex items-center mx-auto max-w-6xl text-center">
             <div className="container">
-              <p className="mb-5 text-h6 font-bold capitalize tracking-wide text-primary">
+              <p className="mb-5 text-sub2 md:text-sub1 lg:text-h6 font-bold capitalize tracking-wide text-primary">
                 {aboutUsData.eyebrow}
               </p>
               <h1 >{aboutUsData.title}</h1>
-              <p className="mx-auto max-w-6xl text-h6">
+              <p className="mx-auto max-w-3xl text-sub2 md:text-sub1 lg:text-h6 text-colordescription">
                 {aboutUsData.description}
               </p>
             </div>
