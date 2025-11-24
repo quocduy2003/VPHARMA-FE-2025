@@ -45,41 +45,83 @@ const StorySection = ({
 );
 
 // Hàm render cho phần "Giá trị"
+// const ValuesSection = ({
+//   data,
+// }: {
+//   data: Extract<BlockItems, { __component: "about.values-section" }>;
+// }) => (
+//   <section className="bg-gradient-to-b from-white to-cyan-50 py-5 md:py-10">
+//     <div className="container mx-auto ">
+//       <div className="text-center">
+//         <p className="mb-5 text-sub2 md:text-sub1 lg:text-h6 font-bold capitalize tracking-wide text-primary">
+//           {data.eyebrow}
+//         </p>
+//         <h2 className="mb-10 text-black">{data.title}</h2>
+//       </div>
+//       <div className="grid grid-cols-1 gap-9 md:grid-cols-2 lg:grid-cols-3 ">
+//         {data.cards.map((card, index) => (
+//           <div
+//             key={index}
+//             className="group cursor-pointer rounded-2xl border border-black/20 bg-white p-8 text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/40"
+//           >
+//             <Image
+//               src={card.image}
+//               alt={card.title}
+//               width={200}
+//               height={150}
+//               className="mx-auto mb-6 rounded-lg object-contain"
+//             />
+//             <h3 className="mb-5 text-sub1 text-black font-bold">{card.title}</h3>
+//             <p className="text-sub2 max-w-xs mx-auto">{card.description}</p>
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   </section>
+// );
+
 const ValuesSection = ({
   data,
 }: {
   data: Extract<BlockItems, { __component: "about.values-section" }>;
 }) => (
   <section className="bg-gradient-to-b from-white to-cyan-50 py-5 md:py-10">
-    <div className="container mx-auto ">
+    <div className="container mx-auto px-4">
       <div className="text-center">
         <p className="mb-5 text-sub2 md:text-sub1 lg:text-h6 font-bold capitalize tracking-wide text-primary">
           {data.eyebrow}
         </p>
         <h2 className="mb-10 text-black">{data.title}</h2>
       </div>
-      <div className="grid grid-cols-1 gap-9 md:grid-cols-2 lg:grid-cols-3 ">
+
+      {/* SỬA Ở ĐÂY: Thay md:grid-cols-2 thành md:grid-cols-3 và điều chỉnh gap */}
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-3 lg:gap-9">
         {data.cards.map((card, index) => (
           <div
             key={index}
-            className="group cursor-pointer rounded-2xl border border-black/20 bg-white p-8 text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/40"
+            // SỬA Ở ĐÂY: Giảm padding ở md (md:p-4) để tiết kiệm diện tích, lg trả về p-8
+            className="group cursor-pointer rounded-2xl border border-black/20 bg-white p-6 md:p-4 lg:p-8 text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/40"
           >
             <Image
               src={card.image}
               alt={card.title}
               width={200}
               height={150}
-              className="mx-auto mb-6 rounded-lg object-contain"
+              className="mx-auto mb-6 rounded-lg object-contain w-auto h-auto max-h-[150px]"
             />
-            <h3 className="mb-5 text-sub1 text-black font-bold">{card.title}</h3>
-            <p className="text-sub2 max-w-xs mx-auto">{card.description}</p>
+            {/* SỬA FONT: Điều chỉnh text nhỏ lại một chút ở breakpoint md */}
+            <h3 className="mb-3 md:mb-5 text-body2 md:text-sub2 lg:text-sub1 text-black font-bold">
+              {card.title}
+            </h3>
+            <p className="text-sm md:text-body2 lg:text-sub2 max-w-xs mx-auto">
+              {card.description}
+            </p>
           </div>
         ))}
       </div>
     </div>
   </section>
 );
-
 
 const FounderSection = ({
   data,
