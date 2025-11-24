@@ -1,12 +1,11 @@
-// src/components/PhoneInputField.tsx (hoặc đường dẫn của bạn)
 
 "use client";
 
 import React from "react";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css"; // Bắt buộc import CSS cơ bản
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
+import vi from "react-phone-number-input/locale/vi.json";
 
-// Interface giữ nguyên, không cần đổi
 interface PhoneInputFieldProps {
   value: string;
   onChange: (value: string) => void;
@@ -20,70 +19,88 @@ const PhoneInputField: React.FC<PhoneInputFieldProps> = ({
   onBlur,
   error,
 }) => {
-  // === ĐỊNH NGHĨA CLASS MỚI ===
-
-  // 1. Class cho ô input: Bỏ border, bỏ rounded-l
-  const inputClasses = `
-    !w-full !h-auto !min-h-[50px]
-    !px-4 !py-3 !pl-14
-    !text-base !placeholder-gray-400 !text-sub2
-    !border-0 !outline-none
-    !rounded-r-lg
-    !bg-white
-  `;
-
-  // 2. Class cho nút bấm (lá cờ): Bỏ border, bỏ rounded-r
-  const buttonClasses = `
-    !border-0 !outline-none
-    !rounded-l-lg
-    !bg-white
-  `;
-
-  // 3. Class cho DIV BỌC BÊN NGOÀI (CHÌA KHÓA)
-  // Div này sẽ chứa border và hiệu ứng focus-within
-  const containerWrapperClasses = `
-    flex items-center
+  // === 1. Class cho Wrapper (Khung viền bên ngoài) ===
+  // Chịu trách nhiệm: Viền, Bo góc, Màu nền, Focus state
+  const wrapperClasses = `
+    flex items-center w-full
     rounded-lg border-2
-    transition-all
+    bg-white
+    py-2
+    overflow-hidden
+    transition-all duration-200
     ${
       error
-        ? "border-red-500" // Style khi có lỗi
-        : "border-gray-300" // Style mặc định
+        ? "border-red-500"
+        : "border-gray-300 focus-within:border-blue-500" // Thường: Viền xám -> Xanh khi focus
     }
-    focus-within:border-blue-500 // Style khi active (focus)
+  `;
+
+  // === 2. Class cho Ô Input (Bên trong) ===
+  // Chịu trách nhiệm: Cỡ chữ, Padding, Reset style mặc định
+  const inputClasses = `
+    w-full 
+    bg-transparent 
+    border-none outline-none 
+    h-auto pr-2       /* Padding 8px giống input thường */
+    
+    /* --- RESPONSIVE FONT SIZE --- */
+    text-sm                /* Mobile */
+    md:text-body2          /* Tablet */
+    lg:text-sub2           /* Desktop */
+    
+    text-black
+    placeholder-gray-400
   `;
 
   return (
-    <div>
-      {/* Bọc PhoneInput trong div wrapper */}
-      <div className={containerWrapperClasses}>
+    <div className="w-full">
+      {/* Vùng chứa tạo viền giả */}
+      <div className={wrapperClasses}>
         <PhoneInput
-          country={"vn"} // Đặt quốc gia mặc định là Việt Nam
+          // Cấu hình cơ bản
+          international
+          defaultCountry="VN"
+          labels={vi} // Hiển thị tên nước tiếng Việt
+          
+          // Dữ liệu
           value={value}
-          onChange={onChange}
-          onBlur={onBlur} // Gán onBlur
+          onChange={(val) => onChange(val || "")} // Xử lý null/undefined
+          onBlur={onBlur}
           placeholder="Số điện thoại"
           
-          // Class cho container GỐC của thư viện:
-          // Cho nó full-width và đảm bảo nó không tạo border/shadow
-          containerClass="w-full"
+          // --- CUSTOM STYLE ---
+          // Class cho container flex (Cờ + Input)
+          className="flex items-center w-full pl-3" 
           
-          // Gán class cho input và button
-          inputClass={inputClasses}
-          buttonClass={buttonClasses}
-          
-          // Class cho dropdown menu
-          dropdownClass="!rounded-lg !border-gray-300"
-          
-          inputProps={{
-            name: "phone",
-            required: true,
+          // Truyền class vào thẻ <input> thật sự bên trong
+          numberInputProps={{
+            className: inputClasses, // Áp dụng style responsive ở trên
+            required: true, 
           }}
         />
       </div>
-      
-      {/* Phần hiển thị lỗi nằm bên ngoài div wrapper */}
-      {error && <div className="mt-2 text-sm text-red-600">{error}</div>}
+
+      {/* Hiển thị lỗi */}
+      {error && <div className="mt-1 text-sm text-red-600">{error}</div>}
+
+      {/* --- CSS TÙY CHỈNH NHỎ ĐỂ GHI ĐÈ STYLE CỜ CỦA THƯ VIỆN --- */}
+      <style jsx global>{`
+        /* Xóa viền mặc định của thư viện khi focus */
+        .PhoneInputInput:focus {
+          outline: none !important;
+          border: none !important;
+          box-shadow: none !important;
+        }
+        /* Chỉnh lại lá cờ cho cân đối với padding mới */
+        .PhoneInputCountry {
+          margin-right: 0.5rem; 
+        }
+        /* Chỉnh mũi tên dropdown */
+        .PhoneInputCountrySelectArrow {
+          opacity: 0.5;
+          color: inherit;
+        }
+      `}</style>
     </div>
   );
 };

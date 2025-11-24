@@ -153,7 +153,7 @@ function ChallengeStackedCards({ challengeCards }: { challengeCards: Card[] }) {
   }
 
   return (
-    <div className="mx-auto w-full max-w-5xl px-4">
+    <div className="mx-auto w-full max-w-5xl ">
       <div
         ref={cardRef}
         onTouchStart={handleTouchStart}
@@ -264,7 +264,7 @@ function BlogSection({ slug }: { slug: string }) {
 
   return (
     <section>
-      <div className="container">
+      <div className="">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-10">
           {blogs.map((blog, index) => (
             <div
@@ -320,7 +320,7 @@ export default function KhachHang() {
             </p>
             <h1 className="mb-6 max-w-5xl mx-auto">{customerData.mainTitle}</h1>
 
-            <p className=" mx-auto mb-10 max-w-lg text-body2 md:text-sub1 lg:text-h6 text-colordescription md:max-w-xl lg:max-w-2xl">
+            <p className=" mx-auto mb-10 max-w-lg text-sub2 md:text-sub1 lg:text-h6 text-colordescription md:max-w-xl lg:max-w-2xl">
               {customerData.mainDescription}
             </p>
           </motion.div>
@@ -335,7 +335,7 @@ export default function KhachHang() {
               <h2 className="mb-4 md:mb-6 text-black">
                 {challengeSection.title}
               </h2>
-              <p className="text-[length:var(--text-body2)] md:text-[length:var(--text-sub1)] text-gray-600 mx-auto max-w-3xl">
+              <p className="text-sub2 md:text-sub1 lg:text-h6 text-colordescription mx-auto max-w-3xl">
                 {challengeSection.description}
               </p>
             </div>
@@ -349,7 +349,7 @@ export default function KhachHang() {
       <FadeInOnScroll>
         <section className="bg-white">
           <div className="container mx-auto">
-            <div className="mx-auto mb-10 md:mb-16 max-w-6xl text-center">
+            <div className="mx-auto  max-w-6xl text-center">
               <p className="mb-3 text-[length:var(--text-sub1)] font-bold capitalize tracking-wide text-primary">
                 {brandReviewSection.eyebrow.toLowerCase()}
               </p>
@@ -369,7 +369,7 @@ export default function KhachHang() {
           <div className="container mx-auto">
             <div className="text-center mb-10">
               <h2 className="mb-4 text-black">{custBlogSection.title}</h2>
-              <p className="text-[length:var(--text-body2)] md:text-[length:var(--text-sub1)] text-gray-600 mx-auto max-w-3xl">
+              <p className="text-sub2 md:text-sub1 lg:text-h6 text-colordescription mx-auto max-w-3xl">
                 {custBlogSection.description}
               </p>
             </div>
