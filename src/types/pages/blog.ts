@@ -72,3 +72,48 @@ export interface TocItem {
   text: string;
   level: number;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export interface SavedItem {
+  id: string;             // ID riêng của item (folder hoặc bài viết đã lưu)
+  type: 'folder' | 'post';
+  name: string;           // Tên folder hoặc Tiêu đề bài viết
+  parentId: string | null;// ID thư mục cha (null nếu ở thư mục gốc)
+  createdAt: string;
+  savedAt: string;
+  data?: BlogCard;        // Chứa dữ liệu bài viết nếu type là 'post'
+}

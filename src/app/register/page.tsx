@@ -160,7 +160,7 @@ export default function Register() {
       <div className="w-full max-w-5xl bg-white rounded-2xl px-8 shadow-xl overflow-hidden flex flex-col ">
         {/* Header */}
         <div className="pt-8 pb-4 text-center ">
-          <h1 className="">Đăng Ký</h1>
+          <h2 className="">Đăng Ký</h2>
           <p className="text-center text-sub2  md:text-sub1 lg:text-h6 text-colordescription">
             Hãy hoàn tất các thông tin dưới đây để có thể bắt đầu cùng với Vpharma.
           </p>
