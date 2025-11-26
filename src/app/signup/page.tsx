@@ -1,5 +1,6 @@
 
 "use client";
+import { useAuthStore } from "@/stores/useAuthStore";
 import Link from "next/link";
 import { useState } from "react";
 import {
@@ -10,8 +11,11 @@ import {
   FiEyeOff,
   FiX,
 } from "react-icons/fi";
+import { useRouter } from "next/navigation";
 
-export default function Register() {
+export default function SignUp() {
+  const router = useRouter();
+  const { signUp } = useAuthStore();
   // --- State quản lý dữ liệu ---
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
@@ -19,7 +23,7 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState(""); // Email không bắt buộc
-  const [businessName, setBusinessName] = useState("");
+  const [companyName, setBusinessName] = useState("");
 
   // Checkbox quy mô
   const [isIndependent, setIsIndependent] = useState(false);
@@ -46,7 +50,7 @@ export default function Register() {
     confirmPassword: "",
     phone: "",
     email: "",
-    businessName: "",
+    companyName: "",
     businessScale: "",
     terms: "",
   });
@@ -86,10 +90,10 @@ export default function Register() {
       case "email":
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (value.trim() && !emailRegex.test(value)) {
-            error = "Email sai định dạng.";
+          error = "Email sai định dạng.";
         }
         break;
-      case "businessName":
+      case "companyName":
         if (!value.trim()) error = "Vui lòng nhập tên nhà thuốc/doanh nghiệp.";
         break;
       default:
@@ -100,13 +104,14 @@ export default function Register() {
   };
 
   const validateForm = () => {
+
     const isFullNameValid = validateField("fullName", fullName);
     const isUserValid = validateField("username", username);
     const isPassValid = validateField("password", password);
     const isConfirmValid = validateField("confirmPassword", confirmPassword);
     const isPhoneValid = validateField("phone", phone);
     const isEmailValid = validateField("email", email);
-    const isBusinessValid = validateField("businessName", businessName);
+    const isBusinessValid = validateField("companyName", companyName);
 
     let scaleValid = true;
     if (!isIndependent && !isChain && !isClinic) {
@@ -151,8 +156,24 @@ export default function Register() {
     setIsSubmitting(true);
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
-    setFormSuccess("Đăng ký thành công! Vui lòng kiểm tra email (nếu có).");
     setIsSubmitting(false);
+    console.log("Form Data:", {
+      fullName,
+      username,
+      password,
+      phone,
+      email,
+      companyName,
+      businessScale: {
+        isIndependent,
+        isChain,
+        isClinic,
+      },
+      agreedToTerms,
+    });
+    // Gọi API đăng ký
+    await signUp(fullName, username, password, phone, companyName);
+    router.push("/signin");
   };
 
   return (
@@ -170,7 +191,7 @@ export default function Register() {
         <div className=" pb-8">
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5">
-              
+
               {/* Cột Trái */}
               <div className="space-y-5">
                 <div>
@@ -201,7 +222,7 @@ export default function Register() {
                     onBlur={() => validateField("username", username)}
                     className={inputClass(!!errors.username)}
                   />
-                   {errors.username && <span className="text-red-500 text-sm">{errors.username}</span>}
+                  {errors.username && <span className="text-red-500 text-sm">{errors.username}</span>}
                 </div>
 
                 <div>
@@ -213,14 +234,14 @@ export default function Register() {
                     id="phone"
                     value={phone}
                     onChange={(e) => {
-                        const val = e.target.value;
-                        if (!val || /^\d+$/.test(val)) setPhone(val);
+                      const val = e.target.value;
+                      if (!val || /^\d+$/.test(val)) setPhone(val);
                     }}
                     onBlur={() => validateField("phone", phone)}
                     className={inputClass(!!errors.phone)}
                     placeholder="0912..."
                   />
-                   {errors.phone && <span className="text-red-500 text-sm">{errors.phone}</span>}
+                  {errors.phone && <span className="text-red-500 text-sm">{errors.phone}</span>}
                 </div>
 
                 <div>
@@ -236,14 +257,14 @@ export default function Register() {
                     className={inputClass(!!errors.email)}
                     placeholder="ten@example.com"
                   />
-                   {errors.email && <span className="text-red-500 text-sm">{errors.email}</span>}
+                  {errors.email && <span className="text-red-500 text-sm">{errors.email}</span>}
                 </div>
               </div>
 
               {/* Cột Phải */}
               <div className="space-y-5">
-                 {/* Password */}
-                 <div>
+                {/* Password */}
+                <div>
                   <label htmlFor="password" className={labelClass}>
                     Nhập mật khẩu <span className="text-red-500">*</span>
                   </label>
@@ -297,20 +318,20 @@ export default function Register() {
                 </div>
 
                 <div>
-                  <label htmlFor="businessName" className={labelClass}>
+                  <label htmlFor="companyName" className={labelClass}>
                     Tên nhà thuốc/ doanh nghiệp <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
-                    id="businessName"
-                    value={businessName}
+                    id="companyName"
+                    value={companyName}
                     onChange={(e) => setBusinessName(e.target.value)}
-                    onBlur={() => validateField("businessName", businessName)}
-                    className={inputClass(!!errors.businessName)}
+                    onBlur={() => validateField("companyName", companyName)}
+                    className={inputClass(!!errors.companyName)}
                   />
-                   {errors.businessName && <span className="text-red-500 text-sm">{errors.businessName}</span>}
+                  {errors.companyName && <span className="text-red-500 text-sm">{errors.companyName}</span>}
                 </div>
-                
+
                 {/* Quy mô */}
                 <div>
                   <label className={labelClass}>
@@ -318,19 +339,19 @@ export default function Register() {
                   </label>
                   <div className="flex flex-row flex-wrap gap-4 mt-2">
                     <label className="flex items-center cursor-pointer">
-                        <input type="checkbox" className="w-3 h-3 lg:w-4 lg:h-4 text-primary border-gray-300 rounded focus:ring-blue-500" 
-                            checked={isIndependent} onChange={(e) => setIsIndependent(e.target.checked)} />
-                        <span className="ml-2 text-sm md:text-body2 lg:text-sub2 text-gray-700">Độc lập</span>
+                      <input type="checkbox" className="w-3 h-3 lg:w-4 lg:h-4 text-primary border-gray-300 rounded focus:ring-blue-500"
+                        checked={isIndependent} onChange={(e) => setIsIndependent(e.target.checked)} />
+                      <span className="ml-2 text-sm md:text-body2 lg:text-sub2 text-gray-700">Độc lập</span>
                     </label>
                     <label className="flex items-center cursor-pointer">
-                        <input type="checkbox" className="w-3 h-3 lg:w-4 lg:h-4 text-primary border-gray-300 rounded focus:ring-blue-500" 
-                             checked={isChain} onChange={(e) => setIsChain(e.target.checked)} />
-                        <span className="ml-2 text-sm md:text-body2 lg:text-sub2 text-gray-700">Chuỗi</span>
+                      <input type="checkbox" className="w-3 h-3 lg:w-4 lg:h-4 text-primary border-gray-300 rounded focus:ring-blue-500"
+                        checked={isChain} onChange={(e) => setIsChain(e.target.checked)} />
+                      <span className="ml-2 text-sm md:text-body2 lg:text-sub2 text-gray-700">Chuỗi</span>
                     </label>
                     <label className="flex items-center cursor-pointer">
-                        <input type="checkbox" className="w-3 h-3 lg:w-4 lg:h-4 text-primary border-gray-300 rounded focus:ring-blue-500" 
-                             checked={isClinic} onChange={(e) => setIsClinic(e.target.checked)} />
-                        <span className="ml-2 text-sm md:text-body2 lg:text-sub2 text-gray-700">Phòng khám</span>
+                      <input type="checkbox" className="w-3 h-3 lg:w-4 lg:h-4 text-primary border-gray-300 rounded focus:ring-blue-500"
+                        checked={isClinic} onChange={(e) => setIsClinic(e.target.checked)} />
+                      <span className="ml-2 text-sm md:text-body2 lg:text-sub2 text-gray-700">Phòng khám</span>
                     </label>
                   </div>
                   {errors.businessScale && <span className="text-red-500 text-sm">{errors.businessScale}</span>}
@@ -362,23 +383,23 @@ export default function Register() {
                 </div>
               </div>
 
-               {/* Alerts */}
-               {formError && (
-                  <div className="w-full mb-4 p-3 rounded-lg bg-red-100 text-red-700 flex items-center justify-between max-w-md">
-                    <div className="flex items-center">
-                      <FiXCircle className="mr-2" /> {formError}
-                    </div>
-                    <button type="button" aria-label="Đóng thông báo lỗi" onClick={() => setFormError("")}><FiX /></button>
+              {/* Alerts */}
+              {formError && (
+                <div className="w-full mb-4 p-3 rounded-lg bg-red-100 text-red-700 flex items-center justify-between max-w-md">
+                  <div className="flex items-center">
+                    <FiXCircle className="mr-2" /> {formError}
                   </div>
-                )}
-                {formSuccess && (
-                  <div className="w-full mb-4 p-3 rounded-lg bg-green-100 text-green-700 flex items-center justify-between max-w-md">
-                    <div className="flex items-center">
-                      <FiCheckCircle className="mr-2" /> {formSuccess}
-                    </div>
-                    <button type="button" aria-label="Đóng thông báo thành công" onClick={() => setFormSuccess("")}><FiX /></button>
+                  <button type="button" aria-label="Đóng thông báo lỗi" onClick={() => setFormError("")}><FiX /></button>
+                </div>
+              )}
+              {formSuccess && (
+                <div className="w-full mb-4 p-3 rounded-lg bg-green-100 text-green-700 flex items-center justify-between max-w-md">
+                  <div className="flex items-center">
+                    <FiCheckCircle className="mr-2" /> {formSuccess}
                   </div>
-                )}
+                  <button type="button" aria-label="Đóng thông báo thành công" onClick={() => setFormSuccess("")}><FiX /></button>
+                </div>
+              )}
 
               <button
                 type="submit"

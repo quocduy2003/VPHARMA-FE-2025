@@ -1,5 +1,7 @@
 "use client";
+import { useAuthStore } from "@/stores/useAuthStore";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   FiLoader,
@@ -10,7 +12,10 @@ import {
   FiX,
 } from "react-icons/fi";
 
-export default function Login() {
+export default function SignIn() {
+
+  const {signIn} = useAuthStore();
+  const router = useRouter();
   // --- State quản lý dữ liệu ---
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -68,16 +73,13 @@ export default function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormError("");
-    setFormSuccess("");
 
     if (!validateForm()) return;
-
     setIsSubmitting(true);
     // Giả lập API call
     await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    setFormSuccess("Đăng nhập thành công! Đang chuyển hướng...");
     setIsSubmitting(false);
+    await signIn(username, password);
   };
 
   return (
