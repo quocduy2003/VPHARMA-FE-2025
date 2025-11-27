@@ -23,13 +23,13 @@ export default function AccountNavFab() {
   const menuItems = [
     { 
       name: "Bài blog đã lưu", 
-      href: "/account/saved-blogs", 
+      href: "/account/saved-blog", 
       icon: FiFileText,
       color: "bg-orange-500"
     },
     { 
       name: "Thông tin tài khoản", 
-      href: "/account", 
+      href: "/account/thong-tin-tai-khoan", 
       icon: FiUser,
       color: "bg-blue-500"
     },

@@ -48,7 +48,7 @@ export default function CTASection({
         </p>
 
         {/* BUTTON RESPONSIVE */}
-        <Link href={ctaSection.ctaButton.link || "/dang-ky"} passHref>
+        <Link href={ctaSection.ctaButton.link || "/register"} passHref>
           <button className="mt-4 mx-auto w-full sm:w-auto rounded-full text-base md:text-lg bg-primary mb-4 px-6 py-3 font-bold text-white hover:opacity-90 transition-all">
             {ctaSection.ctaButton.title}
           </button>
