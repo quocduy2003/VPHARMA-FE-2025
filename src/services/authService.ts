@@ -1,4 +1,5 @@
 import api from "@/lib/api/auth";
+import { sign } from "crypto";
 
 export const authService = {
   signUp: async (
@@ -31,5 +32,8 @@ export const authService = {
       { withCredentials: true }
     );
     return response.data;
+  },
+  signOut: async () => {
+    return await api.post("/auth/signout", {}, { withCredentials: true });
   },
 };

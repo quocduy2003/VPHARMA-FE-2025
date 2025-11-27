@@ -14,7 +14,7 @@ import {
 
 export default function SignIn() {
 
-  const {signIn} = useAuthStore();
+  const { signIn } = useAuthStore();
   const router = useRouter();
   // --- State quản lý dữ liệu ---
   const [username, setUsername] = useState("");
@@ -80,6 +80,7 @@ export default function SignIn() {
     await new Promise((resolve) => setTimeout(resolve, 1500));
     setIsSubmitting(false);
     await signIn(username, password);
+    router.push("/profile");
   };
 
   return (
@@ -179,8 +180,8 @@ export default function SignIn() {
                 <FiXCircle className="mr-2" /> {formError}
               </div>
               {/* FIX: Thêm aria-label cho nút đóng alert */}
-              <button 
-                type="button" 
+              <button
+                type="button"
                 onClick={() => setFormError("")}
                 aria-label="Đóng thông báo lỗi"
               >
@@ -194,8 +195,8 @@ export default function SignIn() {
                 <FiCheckCircle className="mr-2" /> {formSuccess}
               </div>
               {/* FIX: Thêm aria-label cho nút đóng alert */}
-              <button 
-                type="button" 
+              <button
+                type="button"
                 onClick={() => setFormSuccess("")}
                 aria-label="Đóng thông báo thành công"
               >
