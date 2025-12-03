@@ -56,7 +56,7 @@ export default function HomePage() {
   const experienceIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const experienceResumeTimerRef = useRef<NodeJS.Timeout | null>(null);
   const heroRef = useRef<HTMLElement>(null);
-  const trailIconRefs = useRef(0); // Dùng để tạo id duy nhất
+  // const trailIconRefs = useRef(0); // Dùng để tạo id duy nhất
 
   // --- Constants & Motion Values ---
   const currentPage = 0;
@@ -162,11 +162,11 @@ export default function HomePage() {
     };
   }, [startExperienceCycle, stopExperienceCycle, totalExperienceItems]);
 
-  // Effect: Mouse Move (Parallax + Trail)
+ // Effect: Mouse Move (Parallax + Trail)
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
       if (heroRef.current) {
-        // Cập nhật motion values cho parallax
+        // ... giữ nguyên code parallax ...
         const rect = heroRef.current.getBoundingClientRect();
         const normalizedX = (event.clientX - rect.left) / rect.width;
         const normalizedY = (event.clientY - rect.top) / rect.height;
@@ -176,37 +176,37 @@ export default function HomePage() {
         // Tạo hiệu ứng trail
         const randomIcon =
           clickableIcons[Math.floor(Math.random() * clickableIcons.length)];
-        trailIconRefs.current++; // Tăng ID
+        
+        // Tạo ID duy nhất tại đây
+        const uniqueId = Date.now() + Math.random(); 
 
         setTrailIcons((prev) => {
-          // 1. Tạo mảng mới
           const newTrail = [
             ...prev,
             {
-              id: trailIconRefs.current,
+              id: uniqueId, // <--- SỬA LỖI Ở DÒNG NÀY (thay trailIconRefs.current bằng uniqueId)
               x: event.clientX,
               y: event.clientY,
               icon: randomIcon,
             },
           ];
-          // 2. Giới hạn số lượng
+          
           if (newTrail.length > 20) {
             return newTrail.slice(newTrail.length - 20);
           }
-          // 3. Trả về mảng mới
           return newTrail;
         });
       }
     };
-
+    
+    // ... phần addEventListener giữ nguyên
     const currentHeroRef = heroRef.current;
     currentHeroRef?.addEventListener("mousemove", handleMouseMove);
 
     return () => {
       currentHeroRef?.removeEventListener("mousemove", handleMouseMove);
     };
-  }, []); // --- SỬA: Đổi [x, y] thành [] để fix lỗi duplicate key ---
-
+  }, []);
   return (
     <>
       <section
@@ -426,9 +426,7 @@ export default function HomePage() {
           <p className="lg:text-h6 text-body2 md:text-body3 font-bold mb-5 capitalize tracking-wide text-primary">
             {featureSection.title}
           </p>
-          <h2 className="text-black ">
-            {featureSection.description}
-          </h2>
+          <h2 className="text-black ">{featureSection.description}</h2>
         </div>
 
         <div className="mt-10 space-y-16">
@@ -455,9 +453,7 @@ export default function HomePage() {
             <p className="lg:text-h6 text-body2 md:text-body3 font-bold mb-5 capitalize tracking-wide text-primary">
               {experienceSection.eyebrow}
             </p>
-            <h2 className="text-white">
-              {experienceSection.title}
-            </h2>
+            <h2 className="text-white">{experienceSection.title}</h2>
           </div>
           <div className={`grid items-center lg:grid-cols-2 gap-8 md:gap-12`}>
             {/* Features bên trái */}

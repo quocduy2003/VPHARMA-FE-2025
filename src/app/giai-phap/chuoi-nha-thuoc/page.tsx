@@ -20,7 +20,6 @@ import { Button } from "@/components/ui/CTAButton";
 import { AccordionItem } from "@/components/ui/AccordionIteam";
 import FeatureCardTest from "@/components/ui/FeatureCardTest";
 import FaqSection from "@/components/Faq";
-// --- DỮ LIỆU CŨ (Không dùng cho Section 4) ---
 
 function DashboardCarousel({
   images,
@@ -233,54 +232,65 @@ export default function ChuoiNhaThuoc() {
   ]);
 
   return (
-    <div className="bg-white pt-10">
+    <div className="bg-white pt-0 md:pt-10">
       {/* SECTION: HERO*/}
-      <section className="container mx-auto py-10 ">
-        <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
-          <div>
-            <p className="text-h6 mb-2 font-bold tracking-wide text-primary capitalize">
+      <section className="container mx-auto py-10">
+        <div className="grid grid-cols-1 items-center gap-y-8 gap-x-12 md:grid-cols-2">
+          {/* KHỐI 1: VĂN BẢN (TITLE & DESC) */}
+          {/* Mobile: Order 1, Center. Tablet/Desktop: Text Left */}
+          <div className="order-1 text-center md:text-left">
+            <p className="text-sub2 md:text-sub1 lg:text-h6 mb-2 font-bold tracking-wide text-primary capitalize">
               {heroSection?.eyebrow?.toLowerCase() ||
                 "Giải pháp chuỗi nhà thuốc"}
             </p>
             <h1>{heroSection?.title || "Giải pháp chuỗi nhà thuốc"}</h1>
-            <p className="mb-10 text-colordescription text-h6">
+            <p className="mx-auto md:mx-0 max-w-lg text-sub2 md:text-sub1 lg:text-h6 text-colordescription">
               {heroSection?.description || ""}
             </p>
-            <div className="flex gap-4 ">
-              {Array.isArray(heroSection?.ctaButtons) &&
-                heroSection.ctaButtons.map((button, index) => (
-                  <Button
-                    key={index}
-                    variant={index === 0 ? "primary" : "secondary"}
-                    size="md"
-                    href={button.link || "#"}
-                  >
-                    {button.title}
-                  </Button>
-                ))}
-            </div>
           </div>
-          <div>
+
+          {/* KHỐI 2: HÌNH ẢNH */}
+          {/* Mobile: Order 3 (Dưới cùng). Tablet: Cột phải. Desktop: Cột phải, chiếm 2 dòng (để nút nằm gọn bên trái dưới text) */}
+          <div className="order-3 md:order-2 lg:row-span-2">
             <Image
               src="/hero-dashboard.jpg"
               alt="Dashboard"
               width={600}
               height={500}
-              className="rounded-xl shadow-2xl"
+              className="mx-auto rounded-xl shadow-2xl"
             />
+          </div>
+
+          {/* KHỐI 3: BUTTONS (Được tách riêng ra khỏi Khối 1) */}
+          {/* - Mobile: Order 2 (Giữa Text và Hình), Flex Center.
+       - Tablet (md): Order 3 (Dưới cùng), Col-span-2 (Full width), Flex Center.
+       - Desktop (lg): Tự động về cột trái (do hình bên phải chiếm 2 dòng), Justify Start.
+    */}
+          <div className="order-2 flex gap-4 justify-center md:order-3 md:col-span-2 md:justify-center lg:col-span-1 lg:justify-start lg:mt-[-2rem]">
+            {/* Lưu ý: lg:mt-[-2rem] là tùy chọn để kéo nút lên gần text hơn nếu gap của grid quá rộng */}
+            {Array.isArray(heroSection?.ctaButtons) &&
+              heroSection.ctaButtons.map((button, index) => (
+                <Button
+                  key={index}
+                  variant={index === 0 ? "primary" : "secondary"}
+                  size="md"
+                  href={button.link || "#"}
+                >
+                  {button.title}
+                </Button>
+              ))}
           </div>
         </div>
       </section>
-
       {/* SECTION 1: Thách thức */}
       <FadeInOnScroll>
         <section className="bg-gradient-to-b from-white to-blue-100 rounded-b-4xl py-10">
           <div className="container mx-auto ">
-            <div className=" mb-15 ">
+            <div className=" mb-5 md:mb-15 ">
               <h2 className="mb-5 mx-auto max-w-5xl text-center text-black">
                 {pharmacyChainChallengesSection.title}
               </h2>
-              <p className="text-h6 mx-auto max-w-3xl text-center">
+              <p className="text-body2 md:text-sub1 lg:text-h6 mx-auto max-w-3xl text-center">
                 {pharmacyChainChallengesSection.description}
               </p>
             </div>
@@ -288,7 +298,9 @@ export default function ChuoiNhaThuoc() {
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
               {Array.isArray(pharmacyChainChallengesSection.challengeCards) &&
                 pharmacyChainChallengesSection.challengeCards.map(
-                  (card, index) => <FlipCard key={index} challengeCard={card} />
+                  (card, index) => (
+                    <FlipCard key={index} challengeCard={card} index={index} />
+                  )
                 )}
             </div>
           </div>
@@ -296,46 +308,57 @@ export default function ChuoiNhaThuoc() {
       </FadeInOnScroll>
 
       {/* SECTION 2: tối ưu và luân chuyển*/}
-      <section className="bg-white ">
+      <section className="bg-white">
         <FadeInOnScroll>
-          <div className="container mx-auto py-15">
-            <div className="mx-auto mb-15 max-w-5xl text-center">
+          <div className="container mx-auto py-15 px-4">
+            {/* 1. Header Section */}
+            <div className="mx-auto mb-8 md:mb-12 max-w-5xl text-center">
               <h2 className="text-black mb-5">
                 {featureBenefitsSection.title}
               </h2>
-              <p className="mx-auto  max-w-3xl text-center text-h6 text-colordescription">
+              <p className="mx-auto max-w-3xl text-center text-body2 md:text-sub1 lg:text-h6 text-colordescription leading-relaxed">
                 {featureBenefitsSection.description}
               </p>
             </div>
-            <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2 ">
-              <div className="relative aspect-video rounded-lg bg-white p-2 shadow-xl">
-                <Image
-                  src={featureBenefitsSection.image}
-                  alt="Marketing Dashboards"
-                  layout="fill"
-                  objectFit="contain"
-                />
+
+            {/* 2. Grid Layout: Giống section Commitment trong page.tsx */}
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 md:px-4 xl:gap-20 items-start">
+              {/* --- LEFT COLUMN: IMAGE (STICKY) --- */}
+              {/* Thêm sticky để hình đi theo khi scroll accordion */}
+              <div className="order-1 relative xl:sticky xl:top-24">
+                <div className="relative aspect-video w-full rounded-lg bg-white p-2 shadow-xl">
+                  <Image
+                    src={featureBenefitsSection.image}
+                    alt="Marketing Dashboards"
+                    layout="fill"
+                    objectFit="contain"
+                  />
+                </div>
               </div>
-              <div className="relative w-full max-w-[800px] mx-auto flex flex-col items-center justify-center">
-                {Array.isArray(featureBenefitsSection.contents) &&
-                  featureBenefitsSection.contents.map((item, index) => (
-                    <AccordionItem
-                      key={index}
-                      title={item.title}
-                      description={item.description}
-                      isOpen={openAccordion === index}
-                      onClick={() =>
-                        setOpenAccordion(openAccordion === index ? -1 : index)
-                      }
-                      buttonClassName="bg-primary/9 w-full"
-                    />
-                  ))}
+
+              {/* --- RIGHT COLUMN: ACCORDION LIST --- */}
+              <div className="order-2 w-full">
+                <div className="flex flex-col gap-4">
+                  {Array.isArray(featureBenefitsSection.contents) &&
+                    featureBenefitsSection.contents.map((item, index) => (
+                      <AccordionItem
+                        key={index}
+                        title={item.title}
+                        description={item.description}
+                        isOpen={openAccordion === index}
+                        onClick={() =>
+                          setOpenAccordion(openAccordion === index ? -1 : index)
+                        }
+                        // Style chuẩn từ page.tsx: Nền primary nhạt, full width
+                        buttonClassName="bg-primary/9 w-full"
+                      />
+                    ))}
+                </div>
               </div>
             </div>
           </div>
         </FadeInOnScroll>
       </section>
-
       {/* SECTION 3: Chuẩn Hóa Vận Hành*/}
       <FadeInOnScroll>
         <section className="bg-white ">
@@ -564,7 +587,7 @@ export default function ChuoiNhaThuoc() {
 
       {/* SECTION 10: FAQ */}
       <FadeInOnScroll>
-        <section className="py-10">
+        <section className="py-0 md:py-10">
           <FaqSection title={faqSection.title} items={faqSection.faqItems} />
         </section>
       </FadeInOnScroll>
