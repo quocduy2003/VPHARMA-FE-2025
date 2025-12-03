@@ -90,7 +90,7 @@ export function BlogPostCard({ post }: { post: BlogCard }) {
         </h3>
 
         {/* Description - Ẩn trên mobile để tiết kiệm diện tích, hiện trên desktop */}
-        <p className=" text-sm md:text-body2 lg:text-sub2 text-gray-500 line-clamp-2 leading-relaxed">
+        <p className="hidden sm:line-clamp-2 text-sm sm:text-body2 lg:text-sub2 text-gray-500 text-ellipsis leading-relaxed">
           {post.description}
         </p>
       </div>

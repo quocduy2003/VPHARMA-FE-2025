@@ -45,11 +45,18 @@ export default function SavedBlogPage() {
   const [sortBy, setSortBy] = useState<SortOption>("savedAt");
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
 
-  // --- HELPER: Breadcrumbs ---
+  // --- LOGIC ĐỆ QUY (RECURSION) ---
+  // Input: ID thư mục hiện tại
+  // Output: Mảng các thư mục cha theo thứ tự từ Gốc -> Ngọn
   const getBreadcrumbs = (folderId: string | null): SavedItem[] => {
+    // 1. Base case (Điều kiện dừng): Nếu folderId là null (về tới Root) -> Trả về mảng rỗng
     if (!folderId) return [];
+    // 2. Tìm object thư mục hiện tại trong danh sách dữ liệu
     const folder = savedItems.find((i) => i.id === folderId);
+    // 3. Fallback: Nếu không tìm thấy (lỗi dữ liệu) -> Dừng
     if (!folder) return [];
+    // 4. Recursive step (Bước đệ quy):
+    // Gọi lại hàm với parentId của thư mục hiện tại, sau đó nối thư mục hiện tại vào cuối mảng
     return [...getBreadcrumbs(folder.parentId), folder];
   };
 
@@ -61,8 +68,10 @@ export default function SavedBlogPage() {
     ? currentFolder.name
     : "Danh sách các bài blog đã lưu";
 
-  // Logic lọc và sắp xếp
+  // --- LOGIC LỌC VÀ SẮP XẾP (MEMOIZED) ---
+// useMemo giúp cache kết quả, chỉ tính toán lại khi dependency thay đổi
   const filteredItems = useMemo(() => {
+    // Tạo bản sao cạn (shallow copy) để tránh mutate state gốc
     const result = savedItems.filter((item) => {
       if (searchQuery) {
         return item.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -101,17 +110,21 @@ export default function SavedBlogPage() {
 
   // --- Handlers ---
 
+  // Hàm Toggle: Chọn hoặc Bỏ chọn một Item
   const toggleSelect = (id: string) => {
-    const newSet = new Set(selectedIds);
-    if (newSet.has(id)) newSet.delete(id);
+    const newSet = new Set(selectedIds); // Clone Set cũ
+    if (newSet.has(id)) newSet.delete(id); // Nếu đã có -> Xóa (Uncheck)
     else newSet.add(id);
-    setSelectedIds(newSet);
+    setSelectedIds(newSet); // Nếu chưa có -> Thêm (Check)
   };
 
+ // Hàm Select All: Chọn tất cả hoặc Bỏ chọn tất cả
   const toggleSelectAll = () => {
+    // Nếu đã chọn hết thì bỏ chọn, ngược lại chọn hết
     if (selectedIds.size === filteredItems.length && filteredItems.length > 0) {
-      setSelectedIds(new Set());
+      setSelectedIds(new Set()); // Clear toàn bộ
     } else {
+      // Tạo Set mới từ danh sách ID hiện có
       setSelectedIds(new Set(filteredItems.map((i) => i.id)));
     }
   };
@@ -583,7 +596,7 @@ export default function SavedBlogPage() {
         </section>
 
         {/* CTA SECTION */}
-        <section>
+        <section className="md:container">
           <FadeInOnScroll>
             <CTASection
               ctaSection={{

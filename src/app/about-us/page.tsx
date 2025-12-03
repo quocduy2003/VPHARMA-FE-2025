@@ -16,11 +16,11 @@ const StorySection = ({
     <div className="container ">
       <div className="rounded-2xl bg-ink p-8 text-white shadow-xl md:p-12 lg:p-16">
         <div className=" text-center">
-          <p className="mb-5 text-sub2 md:text-sub1 lg:text-h6 font-bold capitalize tracking-wide text-primary">
+          <p className="mb-5 text-body2 md:text-sub1 lg:text-h6 font-bold capitalize tracking-wide text-primary">
             {data.eyebrow}
           </p>
           <h2 className="mb-5 text-white">{data.title}</h2>
-          <p className="mx-auto max-w-6xl text-sub2 md:text-sub1 lg:text-h6 leading-relaxed text-white mb-10">
+          <p className="mx-auto max-w-5xl text-body2 md:text-sub1 lg:text-h6 leading-relaxed text-white mb-10">
             {data.description}
           </p>
         </div>
@@ -44,42 +44,6 @@ const StorySection = ({
   </section>
 );
 
-// Hàm render cho phần "Giá trị"
-// const ValuesSection = ({
-//   data,
-// }: {
-//   data: Extract<BlockItems, { __component: "about.values-section" }>;
-// }) => (
-//   <section className="bg-gradient-to-b from-white to-cyan-50 py-5 md:py-10">
-//     <div className="container mx-auto ">
-//       <div className="text-center">
-//         <p className="mb-5 text-sub2 md:text-sub1 lg:text-h6 font-bold capitalize tracking-wide text-primary">
-//           {data.eyebrow}
-//         </p>
-//         <h2 className="mb-10 text-black">{data.title}</h2>
-//       </div>
-//       <div className="grid grid-cols-1 gap-9 md:grid-cols-2 lg:grid-cols-3 ">
-//         {data.cards.map((card, index) => (
-//           <div
-//             key={index}
-//             className="group cursor-pointer rounded-2xl border border-black/20 bg-white p-8 text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/40"
-//           >
-//             <Image
-//               src={card.image}
-//               alt={card.title}
-//               width={200}
-//               height={150}
-//               className="mx-auto mb-6 rounded-lg object-contain"
-//             />
-//             <h3 className="mb-5 text-sub1 text-black font-bold">{card.title}</h3>
-//             <p className="text-sub2 max-w-xs mx-auto">{card.description}</p>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   </section>
-// );
-
 const ValuesSection = ({
   data,
 }: {
@@ -88,7 +52,7 @@ const ValuesSection = ({
   <section className="bg-gradient-to-b from-white to-cyan-50 py-5 md:py-10">
     <div className="container mx-auto px-4">
       <div className="text-center">
-        <p className="mb-5 text-sub2 md:text-sub1 lg:text-h6 font-bold capitalize tracking-wide text-primary">
+        <p className="mb-5 text-body2 md:text-sub1 lg:text-h6 font-bold capitalize tracking-wide text-primary">
           {data.eyebrow}
         </p>
         <h2 className="mb-10 text-black">{data.title}</h2>
@@ -186,11 +150,11 @@ const FounderSection = ({
       <div className="container">
         {/* === 1. KHỐI HEADER === */}
         <div className="text-center">
-          <p className="mb-5 text-sub2 md:text-sub1 lg:text-h6 font-bold capitalize tracking-wide text-primary">
+          <p className="mb-5 text-body2 md:text-sub1 lg:text-h6 font-bold capitalize tracking-wide text-primary">
             {data?.eyebrow || ""}
           </p>
           <h2 className="mb-5 text-black">{data?.title || ""}</h2>
-          <p className="mx-auto max-w-3xl text-sub2 md:text-sub1 lg:text-h6 mb-15">
+          <p className="mx-auto max-w-3xl text-body2 md:text-sub1 lg:text-h6 mb-15">
             {data?.description || ""}
           </p>
         </div>
@@ -213,23 +177,23 @@ const FounderSection = ({
 
               switch (position) {
                 case "center":
-                  classes += " z-10 scale-[1.6]";
+                  classes += " z-10 scale-[1.6]"; // Nổi bật nhất
                   infoClasses += " opacity-100 scale-[0.625]";
                   break;
                 case "left":
                   // Thêm hover effect nhẹ để người dùng biết có thể bấm
                   classes +=
-                    " z-20 scale-90 -translate-x-[150%] opacity-60 hover:opacity-80";
+                    " z-20 scale-90 -translate-x-[150%] opacity-60 hover:opacity-80"; // Mờ và nhỏ hơn
                   infoClasses += " opacity-0";
                   break;
                 case "right":
                   // Thêm hover effect nhẹ để người dùng biết có thể bấm
                   classes +=
-                    " z-20 scale-90 translate-x-[150%] opacity-60 hover:opacity-80";
+                    " z-20 scale-90 translate-x-[150%] opacity-60 hover:opacity-80"; // Mờ và nhỏ hơn
                   infoClasses += " opacity-0";
                   break;
                 default:
-                  classes += " z-0 scale-0 opacity-0 pointer-events-none"; // Không cho bấm vào hidden
+                  classes += " z-0 scale-0 opacity-0 pointer-events-none"; 
                   infoClasses += " opacity-0";
                   break;
               }
@@ -237,7 +201,6 @@ const FounderSection = ({
               return (
                 <div
                   key={index}
-                  // Logic Click trực tiếp vào ảnh
                   onClick={() => {
                     if (position === "left") handlePrev();
                     if (position === "right") handleNext();
@@ -316,7 +279,7 @@ export default function AboutUsPage() {
         <FadeInOnScroll>
           <div className="h-screen flex items-center mx-auto max-w-6xl text-center">
             <div className="container">
-              <p className="mb-5 text-sub2 md:text-sub1 lg:text-h6 font-bold capitalize tracking-wide text-primary">
+              <p className="mb-5 text-body2 md:text-sub1 lg:text-h6 font-bold capitalize tracking-wide text-primary">
                 {aboutUsData.eyebrow}
               </p>
               <h1 >{aboutUsData.title}</h1>

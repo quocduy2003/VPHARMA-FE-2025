@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import FadeInOnScroll from "@/components/animations/FadeInOnScroll";
 import PharmacyCarousel from "@/components/PharmacyCarousel";
@@ -8,8 +9,18 @@ import CTASection from "@/components/CTA";
 import { customerData, getBlogsByCategorySlug } from "@/lib/api";
 import { Card, CustBlogPost } from "@/types";
 import { transformCustomerBlogData } from "@/lib/transformers/customer";
-import { FiArrowRight, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Button } from "@/components/ui/CTAButton";
+
+// --- 1. TYPE DEFINITION FIX ---
+// Mở rộng interface để bao gồm cả 'createdAt' và 'category'
+// Giúp TS hiểu đúng kiểu dữ liệu trả về từ API mà không cần dùng 'any'
+interface ExtendedCustBlogPost extends CustBlogPost {
+  createdAt?: string | Date;
+  category?: {
+    name: string;
+    slug: string;
+  };
+}
 
 function useWindowSize() {
   const [windowSize, setWindowSize] = useState({
@@ -30,42 +41,29 @@ function useWindowSize() {
   return windowSize;
 }
 
-function ChallengeStackedCards({ challengeCards }: { challengeCards: Card[] }) {
+function StackedCards({ challengeCards }: { challengeCards: Card[] }) {
   const [active, setActive] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-
-  // State mới: Kiểm soát việc tạm dừng do tương tác người dùng
   const [isUserInteracting, setIsUserInteracting] = useState(false);
-
   const isScrolling = useRef(false);
   const cardRef = useRef<HTMLDivElement>(null);
-
-  // Ref mới: Lưu trữ ID của bộ đếm ngược 5s
   const interactionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
 
   const { width } = useWindowSize();
   const isDesktop = width >= 1280;
 
-  // --- 1. HELPER: RESET TIMER 5S ---
-  // Hàm này sẽ được gọi mỗi khi người dùng cuộn hoặc vuốt
   const resetInteractionTimer = () => {
-    setIsUserInteracting(true); // Tạm dừng Auto Scroll ngay
-
-    // Xóa timer cũ nếu người dùng liên tục cuộn
+    setIsUserInteracting(true);
     if (interactionTimeoutRef.current) {
       clearTimeout(interactionTimeoutRef.current);
     }
-
-    // Thiết lập timer mới: Sau 5s không làm gì thì cho chạy lại
     interactionTimeoutRef.current = setTimeout(() => {
       setIsUserInteracting(false);
     }, 5000);
   };
 
-  // Cleanup timer khi component unmount
   useEffect(() => {
     return () => {
       if (interactionTimeoutRef.current)
@@ -73,29 +71,21 @@ function ChallengeStackedCards({ challengeCards }: { challengeCards: Card[] }) {
     };
   }, []);
 
-  // --- 2. AUTO SCROLL LOGIC ---
   useEffect(() => {
-    // Auto scroll chỉ chạy khi: KHÔNG hover VÀ KHÔNG đang tương tác (trong 5s chờ)
     if (isHovered || isUserInteracting) return;
-
     const interval = setInterval(() => {
       setActive((prev) => (prev + 1) % challengeCards.length);
     }, 4000);
-
     return () => clearInterval(interval);
   }, [isHovered, isUserInteracting, challengeCards.length]);
 
-  // --- 3. WHEEL LOGIC (Desktop) ---
   useEffect(() => {
     const node = cardRef.current;
     if (!node || !isDesktop) return;
 
     const wheelHandler = (e: WheelEvent) => {
-      // Chặn cuộn trang
       e.preventDefault();
       e.stopPropagation();
-
-      // Kích hoạt logic tạm dừng 5s
       resetInteractionTimer();
 
       if (isScrolling.current) return;
@@ -120,7 +110,6 @@ function ChallengeStackedCards({ challengeCards }: { challengeCards: Card[] }) {
     return () => node.removeEventListener("wheel", wheelHandler);
   }, [challengeCards.length, isDesktop]);
 
-  // --- 4. SWIPE LOGIC (Mobile/Tablet) ---
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.targetTouches[0].clientX;
     setIsHovered(true);
@@ -130,8 +119,6 @@ function ChallengeStackedCards({ challengeCards }: { challengeCards: Card[] }) {
   };
   const handleTouchEnd = () => {
     setIsHovered(false);
-
-    // Cũng áp dụng logic 5s cho thao tác vuốt tay
     resetInteractionTimer();
 
     if (!touchStartX.current || !touchEndX.current) return;
@@ -145,7 +132,6 @@ function ChallengeStackedCards({ challengeCards }: { challengeCards: Card[] }) {
     touchEndX.current = null;
   };
 
-  // --- RENDER ---
   const stackCards = [];
   for (let i = 0; i < 3; i++) {
     const idx = (active + i) % challengeCards.length;
@@ -251,13 +237,16 @@ function ChallengeStackedCards({ challengeCards }: { challengeCards: Card[] }) {
 }
 
 function BlogSection({ slug }: { slug: string }) {
-  const [blogs, setBlogs] = useState<CustBlogPost[]>([]);
+  const [blogs, setBlogs] = useState<ExtendedCustBlogPost[]>([]);
   const pageSize = 6;
 
   useEffect(() => {
     async function fetchData() {
       const response = await getBlogsByCategorySlug(slug, 1, pageSize);
-      setBlogs(transformCustomerBlogData(response));
+      // Ép kiểu an toàn sang ExtendedCustBlogPost
+      setBlogs(
+        transformCustomerBlogData(response) as unknown as ExtendedCustBlogPost[]
+      );
     }
     fetchData();
   }, [slug]);
@@ -265,36 +254,57 @@ function BlogSection({ slug }: { slug: string }) {
   return (
     <section>
       <div className="">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-10">
-          {blogs.map((blog, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-xl cursor-pointer transition-all duration-300 hover:-translate-y-1 flex flex-col h-full"
-            >
-              <div className="relative w-full aspect-[16/9] rounded-t-xl overflow-hidden">
-                <Image
-                  fill
-                  src={blog.coverImage.url}
-                  alt={blog.title || "Blog Image"}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-500 hover:scale-105"
-                />
-              </div>
-              <div className="p-5 flex flex-col flex-grow">
-                <h3 className="font-bold text-[length:var(--text-sub1)] mb-3 line-clamp-2 text-ink leading-[1.4]">
-                  {blog.title}
-                </h3>
-                <div className="mt-auto pt-2">
-                  <button className="text-primary text-[length:var(--text-body2)] font-bold flex items-center gap-2 group hover:underline decoration-primary underline-offset-4">
-                    Đọc thêm{" "}
-                    <span className="group-hover:translate-x-1 transition-transform">
-                      <FiArrowRight className="h-4 w-4" />
-                    </span>
-                  </button>
+        {/* Container Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-10">
+          {blogs.map((blog, index) => {
+            return (
+              <Link
+                key={index}
+                href={`/blog/${slug}/${blog.slug}`}
+                // --- QUAN TRỌNG: RESPONSIVE LOGIC ---
+                // Mặc định (Screen < 480px): flex-row (LIST VIEW - Ngang)
+                // sm: (Screen >= 480px): flex-col (CARD VIEW - Dọc)
+                className="group flex flex-row sm:flex-col gap-4 bg-white rounded-lg transition-all h-full sm:p-0 border border-transparent sm:border-gray-100 sm:hover:shadow-lg sm:rounded-xl"
+              >
+                {/* --- KHỐI HÌNH ẢNH --- */}
+                {/* < 480px: w-32 cố định. >= 480px: full width */}
+                <div className="relative shrink-0 overflow-hidden rounded-lg w-32 h-24 sm:w-full sm:h-48 sm:rounded-t-xl sm:rounded-b-none">
+                  <Image
+                    fill
+                    src={blog.coverImage.url}
+                    alt={blog.title || "Blog Image"}
+                    sizes="(max-width: 480px) 128px, (max-width: 1280px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
                 </div>
-              </div>
-            </div>
-          ))}
+
+                {/* --- KHỐI NỘI DUNG --- */}
+                <div className="flex flex-col flex-1 justify-center sm:p-4 sm:pt-2">
+                  {/* Category & Date */}
+                  <div className="mb-1 sm:mb-2 flex items-center flex-wrap text-xs sm:text-sm lg:text-body2 font-bold text-primary uppercase tracking-wider">
+                    {/* TS Fix: Đã khai báo category trong interface nên không còn lỗi */}
+                    {blog.category?.name || "Tin tức"}
+                    <span className="mx-1 sm:mx-2 text-gray-300">•</span>
+                    <span className="font-normal text-gray-500 text-xs sm:text-sm lg:text-body2 normal-case">
+                      {blog.createdAt
+                        ? new Date(blog.createdAt).toLocaleDateString("vi-VN", {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                          })
+                        : new Date().toLocaleDateString("vi-VN")}
+                    </span>
+                  </div>
+                  <h3 className="mb-1 sm:mb-2 text-body2 sm:text-sub2 lg:text-body3 font-bold text-gray-900 line-clamp-2 group-hover:text-primary transition-colors leading-snug">
+                    {blog.title}
+                  </h3>
+                  <p className="hidden sm:line-clamp-2 text-sm sm:text-body2 lg:text-sub2 text-gray-500 text-ellipsis leading-relaxed">
+                    {blog.description}
+                  </p>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -307,7 +317,6 @@ export default function KhachHang() {
 
   return (
     <>
-      {/* HERO SECTION */}
       <section className="relative min-h-[60vh] md:min-h-[80vh] lg:h-screen bg-gradient-to-b from-blue-50 to-white flex items-center justify-center ">
         <div className="container text-center">
           <motion.div
@@ -327,7 +336,6 @@ export default function KhachHang() {
         </div>
       </section>
 
-      {/* CHALLENGE SECTION */}
       <section className="">
         <FadeInOnScroll>
           <div className="container mx-auto">
@@ -335,27 +343,24 @@ export default function KhachHang() {
               <h2 className="mb-4 md:mb-6 text-black">
                 {challengeSection.title}
               </h2>
-              <p className="text-sub2 md:text-sub1 lg:text-h6 text-colordescription mx-auto max-w-3xl">
+              <p className="text-body2 md:text-sub1 lg:text-h6 text-colordescription mx-auto max-w-3xl">
                 {challengeSection.description}
               </p>
             </div>
-
-            <ChallengeStackedCards challengeCards={challengeSection.cards} />
+            <StackedCards challengeCards={challengeSection.cards} />
           </div>
         </FadeInOnScroll>
       </section>
 
-      {/* BRAND REVIEW SECTION */}
       <FadeInOnScroll>
         <section className="bg-white">
           <div className="container mx-auto">
             <div className="mx-auto  max-w-6xl text-center">
-              <p className="mb-3 text-[length:var(--text-sub1)] font-bold capitalize tracking-wide text-primary">
+              <p className="mb-5 text-sub2 md:text-sub1 lg:text-h6 font-bold capitalize tracking-wide text-primary">
                 {brandReviewSection.eyebrow.toLowerCase()}
               </p>
               <h2 className="text-black">{brandReviewSection.title}</h2>
             </div>
-            {/* Giả sử PharmacyCarousel đã handle responsive bên trong, nếu chưa hãy bọc div overflow-hidden */}
             <div className="w-full">
               <PharmacyCarousel cards={brandReviewSection.reviewCards} />
             </div>
@@ -363,13 +368,12 @@ export default function KhachHang() {
         </section>
       </FadeInOnScroll>
 
-      {/* BLOG SECTION */}
       <FadeInOnScroll>
         <section className="bg-white">
           <div className="container mx-auto">
             <div className="text-center mb-10">
               <h2 className="mb-4 text-black">{custBlogSection.title}</h2>
-              <p className="text-sub2 md:text-sub1 lg:text-h6 text-colordescription mx-auto max-w-3xl">
+              <p className="text-body2 md:text-sub1 lg:text-h6 text-colordescription mx-auto max-w-3xl">
                 {custBlogSection.description}
               </p>
             </div>
@@ -388,10 +392,8 @@ export default function KhachHang() {
         </section>
       </FadeInOnScroll>
 
-      {/* CTA SECTION */}
       <section className="">
         <FadeInOnScroll>
-          {/* CTASection thường đã có container bên trong, nếu không thì bọc thêm */}
           <CTASection ctaSection={ctaSection} />
         </FadeInOnScroll>
       </section>

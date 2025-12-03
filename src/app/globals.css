@@ -490,3 +490,23 @@
 .animate-sway-fade-fast {
   animation: sway-fade 4s ease-in-out infinite;
 }
+
+/* globals.css */
+
+@layer utilities {
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* Chạy từ 0 đến -50% chiều dài */
+  }
+
+  .animate-marquee {
+    display: flex;
+    width: max-content; /* Quan trọng: Nội dung phải dài hơn màn hình */
+    animation: marquee 30s linear infinite; /* 30s là tốc độ chạy */
+  }
+
+  /* Tạm dừng khi rê chuột vào (trên mobile là chạm giữ) */
+  .animate-marquee:hover {
+    animation-play-state: paused;
+  }
+}
