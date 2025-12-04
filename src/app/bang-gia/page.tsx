@@ -73,7 +73,7 @@ export default function PricePage() {
         <div className=" container py-15 text-center">
           <div className=" mx-auto lg:px-80">
             <h1 className="mb-6 ">{pricingPageData.title}</h1>
-            <p className="mx-auto mb-10 max-w-lg text-body2 md:text-sub1 lg:text-h6 text-colordescription md:max-w-xl lg:max-w-2xl">
+            <p className="mx-auto mb-10 max-w-lg text-sub2 md:text-sub1 lg:text-h6 text-colordescription md:max-w-xl lg:max-w-2xl">
               {pricingPageData.description}
             </p>
           </div>
@@ -95,7 +95,7 @@ export default function PricePage() {
                       </span>
                     </h2>
                     <Button
-                      size="lg"
+                      size="md"
                       href="/dang-ky"
                       className="hover:shadow-primary/40 hover:shadow-lg "
                     >

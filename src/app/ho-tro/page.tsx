@@ -185,7 +185,7 @@ export default function HoTro() {
       <section className="bg-gradient-to-b from-blue-100 to-white py-10 text-center">
         <div className="container ">
           <h1 className="mt-10">{headline?.title}</h1>
-          <p className="mx-auto text-colordescription text-sub2 md:text-sub1 lg:text-h6 md:mb-15 max-w-3xl">
+          <p className="mx-auto text-colordescription text-sub2 md:text-sub1 lg:text-h6  md:mb-15 max-w-3xl">
             {headline?.description}
           </p>
         </div>
@@ -198,7 +198,7 @@ export default function HoTro() {
             {/* Form Liên hệ */}
             <div>
               <h2 className="text-black mb-3 md:mb-5">{contactForm?.title}</h2>
-              <p className="mb-4 md:mb-5 text-sub2 md:text-sub1 lg:text-h6 text-colordescription">
+              <p className="mb-4 md:mb-5 text-body2 md:text-sub1 lg:text-h6 text-colordescription">
                 {contactForm?.description}
               </p>
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -412,7 +412,7 @@ export default function HoTro() {
                 {/* Submit button */}
                 <button
                   type="submit"
-                  className=" mx-auto w-full sm:w-auto rounded-full text-base md:text-lg bg-primary px-6 py-3 font-bold text-white hover:opacity-90 transition-all"
+                  className=" mx-auto w-full sm:w-auto rounded-full text-body2 md:text-sub2 lg:text-sub1 bg-primary px-6 py-3 font-bold text-white hover:opacity-90 transition-all"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
@@ -420,6 +420,7 @@ export default function HoTro() {
                   ) : null}
                   Gửi yêu cầu
                 </button>
+                
               </form>
             </div>
 
@@ -428,7 +429,7 @@ export default function HoTro() {
               <h2 className="text-black mb-3 md:mb-5">
                 {contactInformation?.title}
               </h2>
-              <p className="mb-4 md:mb-5 text-sub2 md:text-sub1 lg:text-h6 text-colordescription">
+              <p className="mb-4 md:mb-5 text-body2 md:text-sub1 lg:text-h6 text-colordescription">
                 {contactInformation?.description}
               </p>
 
@@ -524,7 +525,7 @@ export default function HoTro() {
           <h2 className="text-center mb-5 text-black">
             {supportSoftware?.title}
           </h2>
-          <p className="mb-5 md:mb-10 lg:mb-15 text-sub2 md:text-sub1 lg:text-h6 text-colordescription text-center mx-auto max-w-3xl">
+          <p className="mb-5 md:mb-10 lg:mb-15 text-body2 md:text-sub1 lg:text-h6 text-colordescription text-center mx-auto max-w-3xl">
             {supportSoftware?.description}
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 lg:gap-8">

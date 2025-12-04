@@ -38,8 +38,9 @@ export default function ReviewCarousel({ sectionData }: Props) {
     let pos = 0;
 
     const move = () => {
-      pos += 0.3;
+      pos += 0.3; // Tốc độ di chuyển
       if (track) {
+        // Logic reset vị trí để tạo hiệu ứng vô tận
         const width = track.scrollWidth / repeat;
         if (pos >= width) pos = 0;
         track.style.transform = `translateX(-${pos}px)`;

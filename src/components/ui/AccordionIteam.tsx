@@ -26,7 +26,7 @@ export function AccordionItem({
         className={`flex w-full items-center p-4 justify-between text-left font-semibold ${textColor} ${buttonClassName}`}
         onClick={onClick}
       >
-        <span className={`text-sub1 font-bold ${textColor}`}>{title}</span>
+        <span className={`text-sub2 md:text-sub1 font-bold ${textColor}`}>{title}</span>
         {isOpen ? (
           <FiMinus className="text-white bg-primary rounded text-h6" />
         ) : (
@@ -35,7 +35,7 @@ export function AccordionItem({
       </button>
       {isOpen && (
         <div className={`overflow-hidden transition-all duration-300 ${isOpen ? "max-h-[500px]" : "max-h-0"
-          } p-4 text-sm text-sub2 ${textColor}`}>
+          } p-4 text-body2 md:text-sub1 ${textColor}`}>
           {description}
         </div>
       )}
