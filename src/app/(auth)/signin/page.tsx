@@ -77,10 +77,10 @@ export default function SignIn() {
     if (!validateForm()) return;
     setIsSubmitting(true);
     // Giả lập API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    await new Promise((resolve) => setTimeout(resolve, 200));
     setIsSubmitting(false);
     await signIn(username, password);
-    router.push("/profile");
+    router.replace("/profile");
   };
 
   return (

@@ -1,5 +1,5 @@
 import api from "@/lib/api/auth";
-import { sign } from "crypto";
+
 
 export const authService = {
   signUp: async (
@@ -22,6 +22,7 @@ export const authService = {
     );
     return response.data;
   },
+
   signIn: async (username: string, password: string) => {
     const response = await api.post(
       "/auth/signin",
@@ -33,7 +34,18 @@ export const authService = {
     );
     return response.data;
   },
+
   signOut: async () => {
     return await api.post("/auth/signout", {}, { withCredentials: true });
   },
+
+  fetchMe: async () => {
+    const response = await api.get("/users/me", { withCredentials: true });
+    return response.data.user;
+  },
+
+  refreshToken: async () => {
+    const response = await api.post("/auth/refresh", { withCredentials: true });
+    return response.data.accessToken;
+  }
 };

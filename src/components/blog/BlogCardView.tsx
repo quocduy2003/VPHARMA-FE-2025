@@ -541,6 +541,7 @@ export default function RelatedPostsCarousel({
   const clonedCardsEnd = safePosts.slice(-cardsPerView);
   const displayPosts = [...clonedCardsEnd, ...safePosts, ...clonedCardsStart];
 
+  
   // --- 2. NAVIGATION LOGIC ---
   const handleNext = useCallback(() => {
     if (isAnimating) return;
@@ -665,7 +666,7 @@ export default function RelatedPostsCarousel({
           onClick={handlePrev}
           // Thay đổi class: flex (luôn hiện), left-[-20px] hoặc left-2 tùy style (ở đây để left-2 cho nằm trong phạm vi như hình)
           // Thêm z-20 để nổi lên trên card
-          className="absolute left-2 z-20 top-1/2 -translate-y-1/2 flex h-10 w-10 lg:h-12 lg:w-12 items-center justify-center rounded-full bg-white/90 text-primary shadow-lg border border-gray-100 transition hover:bg-blue-50 backdrop-blur-sm"
+          className="absolute left-2 z-10 top-1/2 -translate-y-1/2 flex h-10 w-10 lg:h-12 lg:w-12 items-center justify-center rounded-full bg-white/90 text-primary shadow-lg border border-gray-100 transition hover:bg-blue-50 backdrop-blur-sm"
           aria-label="Previous"
           disabled={isAnimating}
         >
@@ -737,7 +738,7 @@ export default function RelatedPostsCarousel({
         <button
           onClick={handleNext}
           // absolute right-2 để nằm sát mép phải bên trong
-          className="absolute right-2 z-20 top-1/2 -translate-y-1/2 flex h-10 w-10 lg:h-12 lg:w-12 items-center justify-center rounded-full bg-white/90 text-primary shadow-lg border border-gray-100 transition hover:bg-blue-50 backdrop-blur-sm"
+          className="absolute right-2 z-10 top-1/2 -translate-y-1/2 flex h-10 w-10 lg:h-12 lg:w-12 items-center justify-center rounded-full bg-white/90 text-primary shadow-lg border border-gray-100 transition hover:bg-blue-50 backdrop-blur-sm"
           aria-label="Next"
           disabled={isAnimating}
         >

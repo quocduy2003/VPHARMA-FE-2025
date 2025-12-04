@@ -28,22 +28,22 @@ export default function AccountNavFab() {
       await signOut();
 
       setIsOpen(false);
-      router.push("/signin");
+      router.replace("/signin");
     } catch (error) {
       console.error("Lỗi đăng xuất:", error);
     }
 
   }
   const menuItems = [
-    {
-      name: "Bài blog đã lưu",
-      href: "/account/saved-blogs",
+    { 
+      name: "Bài blog đã lưu", 
+      href: "/saved-blog", 
       icon: FiFileText,
       color: "bg-orange-500"
     },
-    {
-      name: "Thông tin tài khoản",
-      href: "/account",
+    { 
+      name: "Thông tin tài khoản", 
+      href: "/account/thong-tin-tai-khoan", 
       icon: FiUser,
       color: "bg-blue-500"
     },

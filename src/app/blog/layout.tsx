@@ -7,7 +7,7 @@ export default function BlogLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div>
+    <div className="min-h-screen">
       <Suspense>
         <BlogHeader />
       </Suspense>
