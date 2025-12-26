@@ -54,6 +54,7 @@ export function transformBlogListData(response: any): BlogCard[] {
   const { data } = response;
   return (
     data?.map((item: any) => ({
+      id: item?.id,
       title: item?.title,
       description: item?.description,
       alt: item?.alt,
@@ -74,6 +75,7 @@ export function transformBlogCardData(response: any): BlogCardData {
   const post = response.data?.[0];
   return {
     posts: {
+      id: post?.id,
       title: post?.title,
       description: post?.description,
       alt: post?.alt,

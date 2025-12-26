@@ -40,7 +40,7 @@
 //     </Link>
 //   );
 // }
-
+"use client";
 import Link from "next/link";
 import { BlogCard } from "@/types";
 import Image from "next/image";

@@ -1,4 +1,5 @@
 import { BlogHeader } from "@/components/layout/BlogHeader";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 import React, { Suspense } from "react";
 
 export default function BlogLayout({
@@ -8,6 +9,7 @@ export default function BlogLayout({
 }) {
   return (
     <div className="min-h-screen">
+
       <Suspense>
         <BlogHeader />
       </Suspense>
@@ -16,5 +18,6 @@ export default function BlogLayout({
         {children}
       </Suspense>
     </div>
+
   );
 }

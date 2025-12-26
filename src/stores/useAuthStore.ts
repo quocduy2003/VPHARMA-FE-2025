@@ -3,16 +3,16 @@ import { toast } from "sonner";
 import { authService } from "@/services/authService";
 import { AuthState } from "@/types/stores/store";
 import { persist } from "zustand/middleware";
-import { useSavePostStore } from "./useSavePost";
+import { useFolderStore } from "./useFolderStore";
+import { ChangePasswordPayload, User } from "@/types/stores/user";
+import { AxiosError } from "axios";
 
 export const useAuthStore = create<AuthState>()(
   persist(
     (set, get) => ({
       accessToken: null,
-      authReady: false,
       user: null,
       loading: false,
-      setAuthReady: (ready: boolean) => set({ authReady: ready }),
       clearState: () => {
         set({ accessToken: null, user: null, loading: false });
         localStorage.clear();
@@ -44,13 +44,14 @@ export const useAuthStore = create<AuthState>()(
         try {
           set({ loading: true });
           localStorage.clear();
-          useSavePostStore.getState().reset();
+          useFolderStore.getState().reset();
 
           const { accessToken } = await authService.signIn(username, password);
           get().setAccessToken(accessToken);
           await get().fetchMe();
 
-          useSavePostStore.getState().fetchFolders();
+          useFolderStore.getState().fetchFolders();
+          useFolderStore.getState().fetchFolderTree();
           toast.success("Chào mừng bạn quay lại VPharma 🎉");
         } catch (e) {
           console.log(e);
@@ -94,6 +95,9 @@ export const useAuthStore = create<AuthState>()(
           const accessToken = await authService.refreshToken();
 
           setAccessToken(accessToken);
+          if (accessToken) {
+            useFolderStore.getState().fetchFolders();
+          }
 
           if (!user && accessToken) {
             await fetchMe();
@@ -103,13 +107,57 @@ export const useAuthStore = create<AuthState>()(
           get().clearState();
           toast.error("Phiên đăng nhập đã hết hạn. Hãy thử lại!");
         } finally {
-          set({ loading: false, authReady: true });
+          set({ loading: false});
         }
       },
+      updateMe: async (data: Partial<User>) => {
+        try {
+          set({ loading: true });
+          // Gọi API
+          const res = await authService.updateProfile(data);
+
+          // CẬP NHẬT NGAY user state để UI hiển thị thông tin mới
+          set((state) => ({
+            user: { ...state.user, ...res }
+          }));
+
+          toast.success("Cập nhật thông tin thành công!");
+        } catch (error) {
+          console.error(error);
+          if (error instanceof AxiosError) {
+            const message = error.response?.data?.message || "Đổi mật khẩu thất bại";
+            toast.error(message);
+          } else {
+            toast.error("Lỗi hệ thống.");
+          }
+        } finally {
+          set({ loading: false });
+        }
+      },
+      changePassword: async (data: ChangePasswordPayload) => { // ✅ Đã thay any
+        try {
+          set({ loading: true });
+          await authService.changePassword(data);
+
+          toast.success("Đổi mật khẩu thành công. Vui lòng đăng nhập lại!");
+          get().clearState();
+
+        } catch (error) { // ⚠️ Xử lý lỗi chuẩn
+          console.error(error);
+          if (error instanceof AxiosError) {
+            const message = error.response?.data?.message || "Đổi mật khẩu thất bại";
+            toast.error(message);
+          } else {
+            toast.error("Lỗi hệ thống.");
+          }
+        } finally {
+          set({ loading: false });
+        }
+      }
     }),
-    {
-      name: "auth-storage",
-      partialize: (state) => ({ user: state.user }),
+{
+  name: "auth-storage",
+    partialize: (state) => ({ user: state.user }),
     }
   )
 );

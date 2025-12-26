@@ -2,7 +2,9 @@
 
 import { Button } from '@/components/ui/CTAButton';
 import api from '@/lib/api/auth';
-import React, { useState, useRef } from 'react';
+import { useAuthStore } from '@/stores/useAuthStore';
+import { User } from '@/types/stores/user';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   FiCamera,
   FiLoader,
@@ -131,8 +133,10 @@ const AvatarUploader = ({ avatarUrl, name, businessName, onUpload }: AvatarProps
 
 // --- 3. TRANG CHÍNH ---
 export default function AccountPage({ initialData, demoData }: AccountPageProps) {
-  const [formData, setFormData] = useState<UserProfile>(initialData || MOCK_USER_DATA);
+  const [formData, setFormData] = useState<Partial<User>>({});
   const currentDemoData = demoData || MOCK_DEMO_DATA;
+  const { user } = useAuthStore();
+  const [datatest, setDatatest] = useState<UserProfile>(initialData || MOCK_USER_DATA);
 
   const [passData, setPassData] = useState<PasswordData>({ oldPass: '', newPass: '', confirmPass: '' });
   const [showOldPass, setShowOldPass] = useState(false);
@@ -140,13 +144,52 @@ export default function AccountPage({ initialData, demoData }: AccountPageProps)
   const [showConfirmPass, setShowConfirmPass] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+
+
   // Styles utility classes
   const labelClass = "block text-black font-semibold text-sm md:text-base mb-2";
   const inputClass = "w-full rounded-lg border-2 border-gray-300 px-2 py-2 text-base placeholder-gray-400 focus:border-blue-500 outline-none transition-all bg-white";
   const disabledInputClass = "w-full rounded-lg border-2 border-gray-200 px-2 py-2 text-base bg-gray-100 text-gray-500 cursor-not-allowed";
 
+
+  const updatedProfile = (
+    formData: Partial<User>,
+    user: User
+  ): Partial<User> => {
+    const updated: Partial<User> = {};
+
+    (["displayName", "phone", "email", "companyName"] as const).forEach(
+      (key) => {
+        if (
+          formData[key] !== undefined &&
+          formData[key] !== user[key]
+        ) {
+          updated[key] = formData[key];
+        }
+      }
+    );
+
+    return updated;
+  };
+
+  const isProfileChanged = React.useMemo(() => {
+    if (!user) return false;
+
+    return Object.keys(updatedProfile(formData, user)).length > 0;
+  }, [formData, user]);
+
+  const isPasswordChanged = React.useMemo(() => {
+    return (
+      passData.oldPass.length > 0 ||
+      passData.newPass.length > 0 ||
+      passData.confirmPass.length > 0
+    );
+  }, [passData]);
+
+  const canSubmit = isProfileChanged || isPasswordChanged;
+
   // Handlers
-  const handleChange = <K extends keyof UserProfile>(field: K, value: UserProfile[K]) => {
+  const handleChange = <K extends keyof User>(field: K, value: User[K]) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
@@ -160,29 +203,67 @@ export default function AccountPage({ initialData, demoData }: AccountPageProps)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    console.log("Submitting Data:", formData);
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setIsSubmitting(false);
-    alert("Cập nhật thông tin thành công!");
+    if (!user) return;
+
+    // ======================
+    // 1. CHECK PROFILE CHANGE
+    const updatedProfileData = updatedProfile(formData, user);
+
+
+    // ======================
+    // 2. CHECK PASSWORD CHANGE
+    const { oldPass, newPass, confirmPass } = passData;
+    const hasPasswordChange = oldPass || newPass || confirmPass;
+
+    // Validate nếu có nhập mật khẩu
+    if (hasPasswordChange) {
+      if (!oldPass || !newPass || !confirmPass) {
+        toast.error("Vui lòng nhập đầy đủ thông tin đổi mật khẩu");
+        return;
+      }
+
+      if (newPass !== confirmPass) {
+        toast.error("Mật khẩu xác nhận không khớp");
+        return;
+      }
+
+      if (newPass.length < 6) {
+        toast.error("Mật khẩu mới phải có ít nhất 6 ký tự");
+        return;
+      }
+    }
+
+    // 4. GỌI API
+    try {
+      setIsSubmitting(true);
+
+      // 4.1 Update profile (nếu có)
+      if (Object.keys(updatedProfileData).length > 0) {
+        console.log('profile', updatedProfileData);
+        await useAuthStore.getState().updateMe(updatedProfileData);
+      }
+
+
+      // 4.2 Change password (nếu có)
+      if (hasPasswordChange) {
+        await useAuthStore.getState().changePassword({
+          oldPass,
+          newPass,
+        });
+
+        // reset password form
+        setPassData({
+          oldPass: "",
+          newPass: "",
+          confirmPass: "",
+        });
+      }
+
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const businessScaleOptions: { label: string; value: BusinessScaleType }[] = [
-    { label: "Độc lập", value: "independent" },
-    { label: "Chuỗi", value: "chain" },
-    { label: "Phòng khám", value: "clinic" }
-  ];
-  const handleOnClick = async () => {
-    console.log("Clicked");
-    try {
-      await api.get('/users/test', { withCredentials: true });
-      toast.success("Thành công");
-      console.log("Thành công");
-    } catch (error) {
-      console.log(error);
-      toast.error("Thất bại");
-    }
-  }
 
   return (
     <div className="w-full min-h-screen">
@@ -206,9 +287,9 @@ export default function AccountPage({ initialData, demoData }: AccountPageProps)
 
           <div className="order-1 shadow-sm border border-gray-100 rounded-xl bg-white p-6">
             <AvatarUploader
-              avatarUrl={formData.avatar}
-              name={formData.fullName}
-              businessName={formData.businessName}
+              avatarUrl={datatest.avatar}
+              name={user?.displayName || ""}
+              businessName={user?.companyName || ""}
               onUpload={handleAvatarUpload}
             />
           </div>
@@ -271,15 +352,6 @@ export default function AccountPage({ initialData, demoData }: AccountPageProps)
           <div className="border-b mb-4">
             <h2 className="text-black mb-4">Thông tin chi tiết</h2>
           </div>
-          <Button
-            type="button"
-            className="mb-4"
-            onClick={handleOnClick}
-            aria-label="Quay về đầu trang"
-            title="test"
-          >
-            aaaaaaaaaaaaaaaaaaaaaaaaaaa
-          </Button>
 
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 gap-x-6 gap-y-5 md:grid-cols-2">
@@ -292,8 +364,8 @@ export default function AccountPage({ initialData, demoData }: AccountPageProps)
                 <input
                   id="fullName"
                   type="text"
-                  value={formData.fullName}
-                  onChange={(e) => handleChange('fullName', e.target.value)}
+                  value={formData.displayName ?? user?.displayName ?? ""}
+                  onChange={(e) => handleChange('displayName', e.target.value)}
                   className={inputClass}
                   placeholder="Nguyễn Văn A"
                 />
@@ -307,7 +379,7 @@ export default function AccountPage({ initialData, demoData }: AccountPageProps)
                 <input
                   id="username"
                   type="text"
-                  value={formData.username}
+                  value={user?.username}
                   readOnly
                   className={disabledInputClass}
                 />
@@ -321,7 +393,7 @@ export default function AccountPage({ initialData, demoData }: AccountPageProps)
                 <input
                   id="phone"
                   type="text"
-                  value={formData.phone}
+                  value={formData.phone ?? user?.phone ?? ""}
                   onChange={(e) => handleChange('phone', e.target.value)}
                   className={inputClass}
                 />
@@ -335,7 +407,7 @@ export default function AccountPage({ initialData, demoData }: AccountPageProps)
                 <input
                   id="email"
                   type="email"
-                  value={formData.email}
+                  value={formData.email ?? user?.email ?? ""}
                   onChange={(e) => handleChange('email', e.target.value)}
                   className={inputClass}
                   placeholder="ten@example.com"
@@ -350,33 +422,12 @@ export default function AccountPage({ initialData, demoData }: AccountPageProps)
                 <input
                   id="businessName"
                   type="text"
-                  value={formData.businessName}
-                  onChange={(e) => handleChange('businessName', e.target.value)}
+                  value={formData.companyName ?? user?.companyName ?? ""}
+                  onChange={(e) => handleChange('companyName', e.target.value)}
                   className={inputClass}
                 />
               </div>
 
-              {/* Quy mô */}
-              <div className="col-span-1 md:col-span-2">
-                <label className={labelClass}>
-                  Quy mô kinh doanh <span className="text-red-500">*</span>
-                </label>
-                <div className="flex flex-row flex-wrap gap-6 mt-2">
-                  {businessScaleOptions.map((item) => (
-                    <label key={item.value} className="flex items-center cursor-pointer group">
-                      <input
-                        type="checkbox"
-                        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                        checked={formData.businessScale === item.value}
-                        onChange={() => handleChange('businessScale', item.value)}
-                      />
-                      <span className="ml-2 text-gray-700 group-hover:text-blue-600 transition-colors">
-                        {item.label}
-                      </span>
-                    </label>
-                  ))}
-                </div>
-              </div>
 
               {/* Đổi mật khẩu */}
               <div className="col-span-1 md:col-span-2 mt-4 pt-4 border-t border-black">
@@ -455,8 +506,12 @@ export default function AccountPage({ initialData, demoData }: AccountPageProps)
               <div className="col-span-1 md:col-span-2 flex justify-end pt-6 mt-2">
                 <button
                   type="submit"
-                  disabled={isSubmitting}
-                  className="flex items-center gap-2 rounded-full bg-blue-600 px-8 py-3 font-bold text-white shadow-md hover:bg-blue-700 hover:shadow-lg transition-all disabled:opacity-70"
+                  disabled={!canSubmit || isSubmitting}
+                  className={`flex items-center gap-2 rounded-full px-8 py-3 font-bold text-white shadow-md transition-all
+                      ${canSubmit
+                      ? "bg-blue-600 hover:bg-blue-700 hover:shadow-lg"
+                      : "bg-gray-300 cursor-not-allowed"}
+                `}
                 >
                   {isSubmitting ? <FiLoader className="animate-spin" /> : <FiSave />}
                   Lưu thay đổi

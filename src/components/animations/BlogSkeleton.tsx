@@ -42,3 +42,31 @@ export function FeaturedNewsSkeleton() {
     );
 }
 
+
+// Component Skeleton đơn giản sử dụng Tailwind animate-pulse
+export const SkeletonLoader = () => (
+  <div className="animate-pulse">
+    {/* Skeleton cho phần Header Folders */}
+    <div className="h-8 w-48 bg-gray-200 rounded mb-6"></div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
+      {[1, 2, 3].map((i) => (
+        <div key={i} className="h-20 bg-gray-100 rounded-xl border border-gray-200"></div>
+      ))}
+    </div>
+
+    {/* Skeleton cho phần Bài viết */}
+    <div className="h-8 w-32 bg-gray-200 rounded mb-6"></div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      {[1, 2, 3, 4, 5, 6].map((i) => (
+        <div key={i} className="flex flex-col gap-3">
+           {/* Giả lập hình ảnh */}
+          <div className="h-48 w-full bg-gray-200 rounded-2xl"></div> 
+           {/* Giả lập text */}
+          <div className="h-4 w-3/4 bg-gray-200 rounded"></div>
+          <div className="h-4 w-1/2 bg-gray-200 rounded"></div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+

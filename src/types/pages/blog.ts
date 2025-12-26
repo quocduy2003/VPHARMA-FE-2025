@@ -7,6 +7,7 @@ export interface BlogCategory {
 }
 
 export interface BlogCard {
+  id: string;
   title: string;
   description: string;
   alt: string;
@@ -56,6 +57,7 @@ export interface BlogResponse {
 
 export interface BlogCardData {
   posts: BlogCard;
+  total?: number;
 }
 
 export interface BlogData {

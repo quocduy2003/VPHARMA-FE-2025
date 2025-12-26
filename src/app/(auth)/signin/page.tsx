@@ -84,7 +84,7 @@ export default function SignIn() {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-b from-blue-100 to-white px-4">
+    <div className="min-h-screen container w-full flex items-center justify-center bg-gradient-to-b from-blue-100 to-white px-4">
       <div className="w-full max-w-lg bg-white rounded-2xl px-8 py-10 shadow-xl overflow-hidden flex flex-col">
         {/* Header */}
         <div className="text-center mb-8">

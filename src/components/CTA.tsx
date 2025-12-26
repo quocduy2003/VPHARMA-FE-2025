@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+
 import type { CTASection as CTASectionType } from "@/types";
 import { Button } from "@/components/ui/CTAButton";
 

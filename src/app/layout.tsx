@@ -29,7 +29,6 @@
 
 // src/app/layout.tsx
 import './globals.css';
-import { SavedPostProvider } from "@/context/SavedPostContext";
 import type { Metadata } from 'next';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
@@ -49,13 +48,10 @@ export default function RootLayout({
     <html lang="vi">
       <body>
         <Toaster position="top-right" richColors />
-        <SavedPostProvider>
           <Header />
         <main className="flex-1">{children}</main>
         <ScrollToTopButton />
         <Footer />
-        </SavedPostProvider>
-        
 
       </body>
     </html>

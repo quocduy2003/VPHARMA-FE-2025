@@ -3,19 +3,19 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { FiBookmark, FiFolder, FiX, FiCheck, FiPlus, FiLoader } from "react-icons/fi";
-import { BlogCard } from "@/types";
-import { useSavedPost } from "@/context/SavedPostContext";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/CTAButton";
-import { useSavePostStore } from "@/stores/useSavePost";
+import { useFolderStore } from "@/stores/useFolderStore";
+import { useFolderArticleStore } from "@/stores/useFolderArticleStore";
 
-export function SavePostWidget({ post }: { post: BlogCard }) {
+export function SavePostWidget({ postId }: { postId: string }) {
   const router = useRouter();
   const { user } = useAuthStore();
-  
-  const { savedItems, savePost, createFolder } = useSavedPost();
-  const { folders } = useSavePostStore();
+
+  const { folders, createFolder } = useFolderStore();
+  const { addArticle } = useFolderArticleStore();
+
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -29,7 +29,7 @@ export function SavePostWidget({ post }: { post: BlogCard }) {
     setMounted(true);
   }, []);
 
-  const handleOpen = () => {
+  const handleOpen = async () => {
     if (!user) {
       router.push("/signin");
       return;
@@ -43,13 +43,21 @@ export function SavePostWidget({ post }: { post: BlogCard }) {
 
 
   const handleSave = () => {
-    savePost(post, selectedFolderId);
+    if (!selectedFolderId) return;
+
+    // Lưu bài viết vào folder đã chọn
+    addArticle(postId, selectedFolderId);
     setIsOpen(false);
   };
 
   const handleCreateFolder = () => {
     if (!newFolderName.trim()) return;
-    createFolder(newFolderName, null);
+
+    const rootFolder = folders.find(f => f.parentId === null);
+    if (!rootFolder) return;
+
+    createFolder(newFolderName, rootFolder.id);
+
     setNewFolderName("");
     setIsCreating(false);
   };
@@ -76,7 +84,7 @@ export function SavePostWidget({ post }: { post: BlogCard }) {
       </div>
 
       {/* PORTAL MODAL */}
-      {/* {mounted &&
+      {mounted &&
         isOpen &&
         createPortal(
           <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
@@ -92,10 +100,10 @@ export function SavePostWidget({ post }: { post: BlogCard }) {
                 </button>
               </div>
 
-
               <div className="max-h-[50vh] overflow-y-auto px-2 py-2">
                 <div className="space-y-1">
 
+                  {/* Tạo mới thư mục */}
                   {!isCreating ? (
                     <button
                       onClick={() => setIsCreating(true)}
@@ -139,55 +147,69 @@ export function SavePostWidget({ post }: { post: BlogCard }) {
 
                   <div className="h-px bg-gray-100 my-2 mx-4"></div>
 
-                  <button
-                    onClick={() => setSelectedFolderId(null)}
-                    className={`flex w-full items-center gap-3 rounded-lg px-4 py-3 text-left transition-colors ${selectedFolderId === null
-                      ? "bg-blue-50 text-primary border border-blue-100"
-                      : "hover:bg-gray-50 text-gray-700 border border-transparent"
-                      }`}
-                  >
-                    <div
-                      className={`flex h-10 w-10 items-center justify-center rounded-full ${selectedFolderId === null
-                        ? "bg-white text-primary shadow-sm"
-                        : "bg-gray-100 text-gray-500"
-                        }`}
-                    >
-                      <FiBookmark size={18} />
-                    </div>
-                    <div className="flex-1">
-                      <div className="font-medium">Lưu trữ chung</div>
-                      <div className="text-xs opacity-70">Không vào thư mục nào</div>
-                    </div>
-                    {selectedFolderId === null && <FiCheck className="text-primary" />}
-                  </button>
+                  {/* Lấy rootFolder từ dữ liệu */}
+                  {(() => {
+                    const rootFolder = folders.find(f => f.parentId === null);
+                    if (!rootFolder) return null;
 
-                  {folders.map((folder) => (
-                    <button
-                      key={folder.id}
-                      onClick={() => setSelectedFolderId(folder.id)}
-                      className={`flex w-full items-center gap-3 rounded-lg px-4 py-3 text-left transition-colors ${selectedFolderId === folder.id
-                        ? "bg-blue-50 text-primary border border-blue-100"
-                        : "hover:bg-gray-50 text-gray-700 border border-transparent"
-                        }`}
-                    >
-                      <div
-                        className={`flex h-10 w-10 items-center justify-center rounded-full ${selectedFolderId === folder.id
-                          ? "bg-white text-primary shadow-sm"
-                          : "bg-gray-100 text-gray-500"
+                    return (
+                      <button
+                        onClick={() => setSelectedFolderId(rootFolder.id)}
+                        className={`flex w-full items-center gap-3 rounded-lg px-4 py-3 text-left transition-colors ${selectedFolderId === rootFolder.id
+                          ? "bg-blue-50 text-primary border border-blue-100"
+                          : "hover:bg-gray-50 text-gray-700 border border-transparent"
                           }`}
                       >
-                        <FiFolder size={18} />
-                      </div>
-                      <div className="flex-1">
-                        <div className="font-medium truncate">{folder.name}</div>
-                        <div className="text-xs opacity-70">Thư mục</div>
-                      </div>
-                      {selectedFolderId === folder.id && <FiCheck className="text-primary" />}
-                    </button>
-                  ))}
+                        <div
+                          className={`flex h-10 w-10 items-center justify-center rounded-full ${selectedFolderId === rootFolder.id
+                            ? "bg-white text-primary shadow-sm"
+                            : "bg-gray-100 text-gray-500"
+                            }`}
+                        >
+                          <FiBookmark size={18} />
+                        </div>
+
+                        <div className="flex-1">
+                          <div className="font-medium">{rootFolder.name}</div>
+                          <div className="text-xs opacity-70">Thư mục gốc</div>
+                        </div>
+
+                        {selectedFolderId === rootFolder.id && <FiCheck className="text-primary" />}
+                      </button>
+                    );
+                  })()}
+
+                  {/* Render các folder con */}
+                  {folders
+                    .filter((f) => f.parentId !== null)
+                    .map((folder) => (
+                      <button
+                        key={folder.id}
+                        onClick={() => setSelectedFolderId(folder.id)}
+                        className={`flex w-full items-center gap-3 rounded-lg px-4 py-3 text-left transition-colors ${selectedFolderId === folder.id
+                          ? "bg-blue-50 text-primary border border-blue-100"
+                          : "hover:bg-gray-50 text-gray-700 border border-transparent"
+                          }`}
+                      >
+                        <div
+                          className={`flex h-10 w-10 items-center justify-center rounded-full ${selectedFolderId === folder.id
+                            ? "bg-white text-primary shadow-sm"
+                            : "bg-gray-100 text-gray-500"
+                            }`}
+                        >
+                          <FiFolder size={18} />
+                        </div>
+
+                        <div className="flex-1">
+                          <div className="font-medium truncate">{folder.name}</div>
+                          <div className="text-xs opacity-70">Thư mục</div>
+                        </div>
+
+                        {selectedFolderId === folder.id && <FiCheck className="text-primary" />}
+                      </button>
+                    ))}
                 </div>
               </div>
-
 
               <div className="flex items-center justify-end gap-3 border-t bg-gray-50 px-6 py-4">
                 <button
@@ -203,10 +225,11 @@ export function SavePostWidget({ post }: { post: BlogCard }) {
                   Lưu ngay
                 </button>
               </div>
+
             </div>
           </div>,
           document.body
-        )} */}
+        )}
     </div>
   );
 }

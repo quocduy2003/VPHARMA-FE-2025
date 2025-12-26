@@ -6,6 +6,7 @@ import {
   useRef,
   useCallback,
   useEffect,
+  useMemo,
 } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -13,6 +14,7 @@ import { FiChevronDown, FiMenu, FiX } from "react-icons/fi";
 import Image from "next/image";
 import { headerData } from "@/lib/api/header";
 import { Button } from "./ui/CTAButton";
+import { useAuthStore } from "@/stores/useAuthStore";
 
 const cn = (...classes: string[]) => classes.filter(Boolean).join(" ");
 const itemGap = 12;
@@ -23,9 +25,12 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMoreMenuOpen, setIsMoreMenuOpen] = useState(false);
   const { menus, ctaButtons } = headerData || {};
+  const { user } = useAuthStore();
 
-  const mainMenus =
-    menus?.filter((m) => m.level === 1 && m.parent === null) ?? [];
+  const mainMenus = useMemo(
+    () => menus?.filter((m) => m.level === 1 && m.parent === null) ?? [],
+    [menus]
+  );
 
   const [visibleMenus, setVisibleMenus] = useState(mainMenus);
   const [hiddenMenus, setHiddenMenus] = useState<typeof mainMenus>([]);
@@ -70,7 +75,7 @@ export function Header() {
         }
         if (
           finalVisibleWidth + moreMenuWidth + itemGap + safetyBuffer >
-            navContainerWidth &&
+          navContainerWidth &&
           newVisible.length > 0
         ) {
           const itemToHide = newVisible.pop();
@@ -302,17 +307,34 @@ export function Header() {
 
         {/* Desktop CTA */}
         <div className="hidden lg:flex items-center gap-3 flex-shrink-0">
-          {ctaButtons?.map((button, index) => (
-            <Button
-              key={index}
-              href={button.link || "#"}
-              variant={index === 1 ? "primary" : "secondary"}
-              size="ssm"
-              className="text-body2 font-bold px-6 py-2.5 rounded-full whitespace-nowrap min-w-[120px]"
+          {user ? (
+            /* ===== ĐÃ ĐĂNG NHẬP ===== */
+            <Link
+              href="/account"
+              className="flex items-center gap-3 px-4 py-2 rounded-full transition"
             >
-              {button.title}
-            </Button>
-          ))}
+              <div className="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center font-bold text-primary">
+                {user.displayName?.charAt(0).toUpperCase()}
+              </div>
+              <span className="text-body2 font-semibold text-black">
+                {user.displayName}
+              </span>
+            </Link>
+          ) : (
+            <>
+              {ctaButtons?.map((button, index) => (
+                <Button
+                  key={index}
+                  href={button.link || "#"}
+                  variant={index === 1 ? "primary" : "secondary"}
+                  size="ssm"
+                  className="text-body2 font-bold px-6 py-2.5 rounded-full whitespace-nowrap min-w-[120px]"
+                >
+                  {button.title}
+                </Button>
+              ))}
+            </>
+          )}
         </div>
 
         {/* Hamburger Button */}

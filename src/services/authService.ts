@@ -1,4 +1,5 @@
 import api from "@/lib/api/auth";
+import { ChangePasswordPayload, User } from "@/types/stores/user";
 
 
 export const authService = {
@@ -47,5 +48,25 @@ export const authService = {
   refreshToken: async () => {
     const response = await api.post("/auth/refresh", { withCredentials: true });
     return response.data.accessToken;
-  }
+  },
+
+  updateProfile: async (data: Partial<User>) => {
+    const response = await api.patch(
+      "/users/me",
+      data,
+      { withCredentials: true }
+    );
+    return response.data.user;
+  },
+
+  changePassword: async (data: ChangePasswordPayload) => {
+  const response = await api.patch(
+    "/users/me/password",
+    data,
+    { withCredentials: true }
+  );
+  return response.data;
+},
+
+
 };
