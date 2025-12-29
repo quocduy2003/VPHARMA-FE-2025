@@ -264,27 +264,59 @@ export function Header() {
 
           {/* Footer Sidebar (CTA) */}
           <div className="p-5 border-t border-gray-100 bg-gray-50">
-            <div className="flex flex-col gap-3">
-              <Link
-                href="/log-in"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center justify-center w-full rounded-full border border-gray-300 bg-white py-3 text-body2 font-bold text-gray-700 hover:border-primary hover:text-primary transition-all"
-              >
-                Đăng nhập
-              </Link>
-              <Link
-                href="/register"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center justify-center w-full rounded-full bg-primary py-3 text-body2 font-bold text-white shadow-md hover:bg-primary/90 transition-all"
-              >
-                Đăng ký dùng thử
-              </Link>
-            </div>
+            {renderCTA(() => setIsMobileMenuOpen(false), "mobile")}
           </div>
         </div>
       </div>
     );
   };
+  const renderCTA = (onClick?: () => void, layout: "desktop" | "mobile" = "desktop") => {
+    if (user) {
+      return (
+        <Link
+          href="/profile"
+          onClick={onClick}
+          className={cn(
+            "flex items-center gap-3 px-4 py-2 rounded-full transition",
+            layout === "mobile" ? "px-3 py-3" : ""
+          )}
+        >
+          <div className="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center font-bold text-primary">
+            {user.displayName?.charAt(0).toUpperCase()}
+          </div>
+          <span className="text-body2 font-semibold text-black">
+            {user.displayName}
+          </span>
+        </Link>
+      );
+    }
+
+    return (
+      <div
+        className={cn(
+          "flex gap-3",
+          layout === "mobile" ? "flex-col" : ""
+        )}
+      >
+        {ctaButtons?.map((button, index) => (
+          <Button
+            key={index}
+            href={button.link || "#"}
+            onClick={onClick}
+            variant={index === 1 ? "primary" : "secondary"}
+            size="ssm"
+            className={cn(
+              "text-body2 font-bold px-6 py-2.5 rounded-full whitespace-nowrap",
+              layout === "mobile" ? "w-full justify-center py-3" : ""
+            )}
+          >
+            {button.title}
+          </Button>
+        ))}
+      </div>
+    );
+  };
+
 
   return (
     <header className="sticky top-0 z-40 bg-white shadow-sm h-[70px] flex items-center">
@@ -304,37 +336,11 @@ export function Header() {
         </Link>
 
         {renderDesktopNav()}
+        {renderMobileNav()}
 
         {/* Desktop CTA */}
         <div className="hidden lg:flex items-center gap-3 flex-shrink-0">
-          {user ? (
-            /* ===== ĐÃ ĐĂNG NHẬP ===== */
-            <Link
-              href="/account"
-              className="flex items-center gap-3 px-4 py-2 rounded-full transition"
-            >
-              <div className="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center font-bold text-primary">
-                {user.displayName?.charAt(0).toUpperCase()}
-              </div>
-              <span className="text-body2 font-semibold text-black">
-                {user.displayName}
-              </span>
-            </Link>
-          ) : (
-            <>
-              {ctaButtons?.map((button, index) => (
-                <Button
-                  key={index}
-                  href={button.link || "#"}
-                  variant={index === 1 ? "primary" : "secondary"}
-                  size="ssm"
-                  className="text-body2 font-bold px-6 py-2.5 rounded-full whitespace-nowrap min-w-[120px]"
-                >
-                  {button.title}
-                </Button>
-              ))}
-            </>
-          )}
+          {renderCTA()}
         </div>
 
         {/* Hamburger Button */}
@@ -349,7 +355,7 @@ export function Header() {
       </div>
 
       {/* SỬA: Luôn gọi hàm render, không dùng điều kiện {isMobileMenuOpen && ...} */}
-      {renderMobileNav()}
+
     </header>
   );
 }

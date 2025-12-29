@@ -68,11 +68,12 @@ export function transformCustomerBlogData(response: any): CustBlogPost[] {
     data?.map((item: any) => ({
       id: item.id,
       title: item.title,
-        description: item.description,
-        coverImage: {
-          url: createImageUrl(item.coverImage.url),
-          alt: item.title || "Blog Image",
-        },
+      slug: item.slug,
+      description: item.description,
+      coverImage: {
+        url: createImageUrl(item.coverImage.url) || "",
+        alt: item.title || "Blog Image",
+      },
     })) || []
   );
 }

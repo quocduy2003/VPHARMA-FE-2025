@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRef } from "react";
 import Link from "next/link";
-import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { FeaturedNews } from "@/components/blog/FeaturedNews";
 import { BlogPostCard } from "@/components/blog/BlogTableView";
 import BlogPagination from "@/components/blog/BlogPagination";

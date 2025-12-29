@@ -20,7 +20,7 @@ import { blogData, getBlogPostByCategories } from "@/lib/api";
 import CTASection from "@/components/CTA";
 import RelatedPostsCarousel from "@/components/blog/BlogCardView";
 import { SavePostWidget } from "@/components/blog/SavePostWidget";
-import { ProtectedRoute } from "@/components/ProtectedRoute"; `    `
+
 
 
 
@@ -275,11 +275,10 @@ export default function BlogDetailPage() {
                   </div>
                 )}
                 <div className="z-[9999] relative">
-                  <ProtectedRoute>
-                    <SavePostWidget
-                      postId={blog.id.toString()}
-                    />
-                  </ProtectedRoute>
+
+                  <SavePostWidget
+                    postId={blog.id.toString()}
+                  />
                 </div>
               </div>
 

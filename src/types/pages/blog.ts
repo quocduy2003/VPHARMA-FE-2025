@@ -63,7 +63,6 @@ export interface BlogCardData {
 export interface BlogData {
   title: string;
   description: string;
-  mainBlog: BlogPost;
   featuredNews: BlogPost[];
   ctaSection: CTASection;
 }

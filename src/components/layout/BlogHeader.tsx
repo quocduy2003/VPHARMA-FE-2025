@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
@@ -57,8 +56,8 @@ export function BlogHeader() {
     }, [isSearchOpen]);
 
   return (
-    <header className="fixed top-[64px] z-30 w-full bg-ink">
-      <div className="container mx-auto flex items-center justify-between py-3">
+    <header className="fixed top-[64px] z-50 w-full bg-ink  ">
+      <div className="container mx-auto flex items-center justify-between py-3 relative">
         <div className="flex items-center gap-9">
           <Link
             href="/blog/blog-home"
@@ -94,7 +93,7 @@ export function BlogHeader() {
                   <span>Chủ đề khác</span>
                   <FiChevronDown className="text-base" />
                 </button>
-                <div className="absolute left-0 right-0 h-2 top-full" />
+                <div className="absolute left-0 right-0 h-2 top-full " />
                 <div className="absolute left-0 top-full z-100 mt-2 hidden w-48 flex-col rounded-lg bg-white p-2 shadow-lg group-hover:flex">
                   {dropdownLinks.map((link) => (
                     <Link
@@ -128,7 +127,7 @@ export function BlogHeader() {
           </nav>
         </div>
 
-        <div className="flex items-center relative">
+        <div className="flex items-center relative ">
           <AnimatePresence>
             {isSearchOpen && (
               <motion.input
@@ -161,7 +160,7 @@ export function BlogHeader() {
           <button
             type="button"
             onClick={() => setIsSearchOpen(!isSearchOpen)} 
-            className="group flex items-center justify-center "
+            className="group flex items-center justify-center pointer-events-auto"
             aria-label={isSearchOpen ? "Đóng tìm kiếm" : "Mở tìm kiếm"}
           >
             {isSearchOpen ? (

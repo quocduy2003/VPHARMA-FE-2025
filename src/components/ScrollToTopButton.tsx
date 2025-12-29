@@ -5,6 +5,12 @@ import { FiArrowUp } from "react-icons/fi"; // Dùng icon giống dự án của
 
 export default function ScrollToTopButton() {
   const [isVisible, setIsVisible] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Ensure component is mounted on client
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // 1. Logic: Hiện/ẩn nút
   useEffect(() => {
@@ -34,6 +40,11 @@ export default function ScrollToTopButton() {
       behavior: "smooth", // Cuộn mượt mà
     });
   };
+
+  // Don't render anything until mounted on client
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <>

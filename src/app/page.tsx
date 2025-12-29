@@ -2,7 +2,7 @@
 // React & Next.js Core
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
 // Thư viện bên ngoài (Framer Motion)
 import {
@@ -93,7 +93,7 @@ export default function HomePage() {
   };
 
   // --- Handlers (Functions) ---
-  const stopExperienceCycle = () => {
+  const stopExperienceCycle = useCallback(() => {
     if (experienceIntervalRef.current) {
       clearInterval(experienceIntervalRef.current);
       experienceIntervalRef.current = null;
@@ -102,9 +102,9 @@ export default function HomePage() {
       clearTimeout(experienceResumeTimerRef.current);
       experienceResumeTimerRef.current = null;
     }
-  };
+  }, []);
 
-  const startExperienceCycle = () => {
+  const startExperienceCycle = useCallback(() => {
     stopExperienceCycle();
     if (totalExperienceItems > 0) {
       experienceIntervalRef.current = setInterval(() => {
@@ -113,7 +113,7 @@ export default function HomePage() {
         );
       }, 2000);
     }
-  };
+  }, [stopExperienceCycle, totalExperienceItems]);
 
   const handleExperienceUserHover = (index: number) => {
     stopExperienceCycle();
@@ -340,25 +340,15 @@ export default function HomePage() {
 
         {/* Phần nội dung văn bản (z-index cao hơn) */}
         <div className="container h-full w-full flex items-center justify-center flex-col text-center relative z-20">
-          <motion.p
-            className="capitalize lg:text-h6 text-body2 md:text-body3 font-bold text-primary mb-5"
-            initial="hidden"
-            animate="visible"
-            variants={textVariants}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
+          <p
+            className="capitalize lg:text-h6 text-body2 md:text-body3 font-bold text-primary mb-5">
             {homePageData.eyebrow}
-          </motion.p>
+          </p>
 
-          <motion.h1
-            className="mx-auto max-w-6xl capitalize pb-3"
-            initial="hidden"
-            animate="visible"
-            variants={textVariants}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
+          <h1
+            className="mx-auto max-w-6xl capitalize pb-3">
             {homePageData.title}
-          </motion.h1>
+          </h1>
 
           <motion.div
             className="flex items-center justify-center "

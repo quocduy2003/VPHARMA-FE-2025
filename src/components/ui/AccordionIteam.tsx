@@ -1,4 +1,4 @@
-
+"use client";
 import { FiMinus, FiPlus } from "react-icons/fi";
 
 

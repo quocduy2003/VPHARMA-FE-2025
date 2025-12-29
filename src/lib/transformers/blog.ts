@@ -16,16 +16,6 @@ export function transformBlogForHomePage(response: any): BlogData {
     description:
       data?.description ||
       "Cập nhật xu hướng và kiến thức mới nhất về chuyển đổi số trong ngành dược.",
-    mainBlog:
-      data?.mainBlogPosts?.map((post: BlogPost) => ({
-        id: post.id,
-        title: post.title,
-        description: post.description,
-        coverImage: {
-          url: createImageUrl(post.coverImage.url),
-          alt: post.title || "Blog Image",
-        },
-      })) || [],
     featuredNews:
       data?.featuredNews?.map((post: any) => ({
         id: post.id,
@@ -59,7 +49,7 @@ export function transformBlogListData(response: any): BlogCard[] {
       description: item?.description,
       alt: item?.alt,
       coverImage: {
-        url: createImageUrl(item?.coverImage?.url),
+        url: createImageUrl(item?.coverImage?.url) || "",
       },
       category: {
         name: item?.blog_category?.name || "Chưa có danh mục",
